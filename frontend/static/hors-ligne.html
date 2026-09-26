@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Hors connexion — La Frangine</title>
+		<style>
+			body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #fbf6ee; color: #1b1f24;
+				font: 17px/1.55 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; text-align: center; padding: 24px; }
+			h1 { color: #1f3d63; font-size: 1.8rem; margin: 16px 0 8px; }
+			p { color: #5b6470; max-width: 28rem; margin: 0 auto; }
+			button { margin-top: 24px; min-height: 48px; padding: 0 24px; border: 0; border-radius: 12px; background: #c2410c;
+				color: #fff; font-weight: 600; font-size: 1rem; cursor: pointer; }
+		</style>
+	</head>
+	<body>
+		<main>
+			<svg viewBox="0 0 40 40" width="64" height="64" aria-hidden="true">
+				<circle cx="20" cy="20" r="15" fill="none" stroke="#1F3D63" stroke-width="5" stroke-dasharray="22 2.6" transform="rotate(-90 20 20)" />
+				<circle cx="20" cy="20" r="6" fill="#F2B632" />
+			</svg>
+			<h1>Pas de connexion pour le moment</h1>
+			<p>Les pages que vous avez déjà consultées restent disponibles. Dès que le réseau revient, tout se remet à jour.</p>
+			<button onclick="location.reload()">Réessayer</button>
+		</main>
+	</body>
+</html>

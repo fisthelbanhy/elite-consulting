@@ -1,0 +1,16 @@
+{
+	"name": "La Frangine — la grande sœur de ceux qui se lancent",
+	"short_name": "La Frangine",
+	"description": "Conseil, Likelemba, financement et opportunités pour entreprendre au Congo.",
+	"lang": "fr",
+	"start_url": "/?source=pwa",
+	"scope": "/",
+	"display": "standalone",
+	"background_color": "#FBF6EE",
+	"theme_color": "#1F3D63",
+	"icons": [
+		{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+		{ "src": "/icone-192.png", "sizes": "192x192", "type": "image/png" },
+		{ "src": "/icone-512.png", "sizes": "512x512", "type": "image/png" }
+	]
+}

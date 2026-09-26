@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Node / SvelteKit
+node_modules/
+.svelte-kit/
+build/
+.env
+.env.*
+!.env.example
+
+# Données locales / uploads / bases
+backend/data/
+backend/media/
+*.sqlite3
+*.db
+
+# Données et sources de l'ancien site — NE JAMAIS PUBLIER
+# (dump de production : données personnelles et mots de passe ;
+#  code PHP legacy : identifiants de connexion à la base de production)
+cp1019011_lafrangine.sql
+site.txt
+lafrangine/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Archives locales
+site.zip
+*.zip
