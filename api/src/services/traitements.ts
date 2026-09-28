@@ -11,6 +11,7 @@
 import './boutique.js';
 import './distributeur.js';
 import './ecommerce.js';
+import './fonds.js';
 
 /** Appelé une fois au démarrage, pour rendre l'intention explicite à la lecture. */
 export function chargerTraitements(): void {

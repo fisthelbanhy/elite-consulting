@@ -478,13 +478,13 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Épargne solidaire (10)
 
-- [ ] `GET /api/epargne/fonds` — Lister Fonds
-- [ ] `POST /api/epargne/fonds` — Souscrire
-- [ ] `GET /api/epargne/fonds/{id_}` — Detail Fond
-- [ ] `PUT /api/epargne/fonds/{id_}` — Modifier Fond
-- [ ] `POST /api/epargne/fonds/{id_}/etat` — Etat Fond
-- [ ] `GET /api/epargne/pointages` — Lister Pointages
-- [ ] `POST /api/epargne/pointages` — Pointer
-- [ ] `GET /api/epargne/pointages/titulaires` — Titulaires
-- [ ] `GET /api/epargne/pointages/titulaires/{id_}` — Titulaire
-- [ ] `GET /api/epargne/statut` — Statut
+- [x] `GET /api/epargne/fonds` — Lister Fonds
+- [x] `POST /api/epargne/fonds` — Souscrire
+- [x] `GET /api/epargne/fonds/{id_}` — Detail Fond
+- [x] `PUT /api/epargne/fonds/{id_}` — Modifier Fond
+- [x] `POST /api/epargne/fonds/{id_}/etat` — Etat Fond
+- [x] `GET /api/epargne/pointages` — Lister Pointages
+- [x] `POST /api/epargne/pointages` — Pointer
+- [x] `GET /api/epargne/pointages/titulaires` — Titulaires
+- [x] `GET /api/epargne/pointages/titulaires/{id_}` — Titulaire
+- [x] `GET /api/epargne/statut` — Statut

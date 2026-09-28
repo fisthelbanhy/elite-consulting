@@ -19,6 +19,7 @@ import * as dialogues from './dialogues.js';
 import * as distributeur from './distributeur.js';
 import * as emplois from './emplois.js';
 import * as entreprises from './entreprises.js';
+import * as epargne from './epargne.js';
 import * as espace from './espace.js';
 import * as immobilier from './immobilier.js';
 import * as marches from './marches.js';
@@ -54,6 +55,7 @@ export const ROUTEURS: ModuleRoute[] = [
 	distributeur,
 	emplois,
 	entreprises,
+	epargne,
 	espace,
 	immobilier,
 	{ prefixe: marches.prefixeProjets, routeur: marches.routeurProjets },
