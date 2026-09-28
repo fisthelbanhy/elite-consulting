@@ -448,33 +448,33 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Trésorerie (27)
 
-- [ ] `GET /api/tresorerie/compteurs` — Compteurs
-- [ ] `GET /api/tresorerie/contentieux` — Lister Contentieux
-- [ ] `POST /api/tresorerie/contentieux` — Creer Contentieux
-- [ ] `DELETE /api/tresorerie/contentieux/{id_}` — Annuler Contentieux
-- [ ] `GET /api/tresorerie/contentieux/{id_}` — Detail Contentieux
-- [ ] `PUT /api/tresorerie/contentieux/{id_}` — Modifier Contentieux
-- [ ] `POST /api/tresorerie/contentieux/{id_}/etat` — Etat Contentieux
-- [ ] `GET /api/tresorerie/credits` — Lister Credits
-- [ ] `POST /api/tresorerie/credits` — Creer Credit
-- [ ] `DELETE /api/tresorerie/credits/{id_}` — Annuler Credits
-- [ ] `GET /api/tresorerie/credits/{id_}` — Detail Credit
-- [ ] `PUT /api/tresorerie/credits/{id_}` — Modifier Credit
-- [ ] `POST /api/tresorerie/credits/{id_}/etat` — Etat Credits
-- [ ] `GET /api/tresorerie/operations` — Lister Operations
-- [ ] `POST /api/tresorerie/operations` — Creer Operations
-- [ ] `GET /api/tresorerie/operations/synthese` — Synthese Operations
-- [ ] `DELETE /api/tresorerie/operations/{id_}` — Annuler Operations
-- [ ] `GET /api/tresorerie/operations/{id_}` — Detail Operation
-- [ ] `PUT /api/tresorerie/operations/{id_}` — Modifier Operation
-- [ ] `POST /api/tresorerie/operations/{id_}/etat` — Etat Operations
-- [ ] `POST /api/tresorerie/operations/{id_}/mail` — Renvoyer Mail
-- [ ] `GET /api/tresorerie/placements` — Lister Placements
-- [ ] `POST /api/tresorerie/placements` — Creer Placement
-- [ ] `DELETE /api/tresorerie/placements/{id_}` — Annuler Placements
-- [ ] `GET /api/tresorerie/placements/{id_}` — Detail Placement
-- [ ] `PUT /api/tresorerie/placements/{id_}` — Modifier Placement
-- [ ] `POST /api/tresorerie/placements/{id_}/etat` — Etat Placements
+- [x] `GET /api/tresorerie/compteurs` — Compteurs
+- [x] `GET /api/tresorerie/contentieux` — Lister Contentieux
+- [x] `POST /api/tresorerie/contentieux` — Creer Contentieux
+- [x] `DELETE /api/tresorerie/contentieux/{id_}` — Annuler Contentieux
+- [x] `GET /api/tresorerie/contentieux/{id_}` — Detail Contentieux
+- [x] `PUT /api/tresorerie/contentieux/{id_}` — Modifier Contentieux
+- [x] `POST /api/tresorerie/contentieux/{id_}/etat` — Etat Contentieux
+- [x] `GET /api/tresorerie/credits` — Lister Credits
+- [x] `POST /api/tresorerie/credits` — Creer Credit
+- [x] `DELETE /api/tresorerie/credits/{id_}` — Annuler Credits
+- [x] `GET /api/tresorerie/credits/{id_}` — Detail Credit
+- [x] `PUT /api/tresorerie/credits/{id_}` — Modifier Credit
+- [x] `POST /api/tresorerie/credits/{id_}/etat` — Etat Credits
+- [x] `GET /api/tresorerie/operations` — Lister Operations
+- [x] `POST /api/tresorerie/operations` — Creer Operations
+- [x] `GET /api/tresorerie/operations/synthese` — Synthese Operations
+- [x] `DELETE /api/tresorerie/operations/{id_}` — Annuler Operations
+- [x] `GET /api/tresorerie/operations/{id_}` — Detail Operation
+- [x] `PUT /api/tresorerie/operations/{id_}` — Modifier Operation
+- [x] `POST /api/tresorerie/operations/{id_}/etat` — Etat Operations
+- [x] `POST /api/tresorerie/operations/{id_}/mail` — Renvoyer Mail
+- [x] `GET /api/tresorerie/placements` — Lister Placements
+- [x] `POST /api/tresorerie/placements` — Creer Placement
+- [x] `DELETE /api/tresorerie/placements/{id_}` — Annuler Placements
+- [x] `GET /api/tresorerie/placements/{id_}` — Detail Placement
+- [x] `PUT /api/tresorerie/placements/{id_}` — Modifier Placement
+- [x] `POST /api/tresorerie/placements/{id_}/etat` — Etat Placements
 
 ## Épargne solidaire (10)
 
