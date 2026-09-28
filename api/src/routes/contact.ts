@@ -17,11 +17,10 @@ import { erreur, introuvable } from '../erreurs.js';
 import { contact } from '../schema/contenu.js';
 import { parametre } from '../schema/core.js';
 import { membre as tableMembre, type Membre } from '../schema/membres.js';
-import { ok, valider } from '../schemas/commun.js';
+import { ok, telephoneFacultatif, valider } from '../schemas/commun.js';
 import { envoyerEnArrierePlan } from '../services/emails.js';
 import { paginer, recherche } from '../services/fiches.js';
 import { notifier } from '../services/messages.js';
-import { normaliserTelephone, telephoneValide, MESSAGE_TELEPHONE } from '../services/validation.js';
 
 export const routeur = Router();
 export const prefixe = '/contact';
@@ -46,11 +45,7 @@ const emailFacultatif = z
 const contactEntreeSchema = z.object({
 	nom: z.string().max(120).default(''),
 	email: emailFacultatif,
-	telephone: z
-		.string()
-		.default('')
-		.transform((v) => normaliserTelephone(v))
-		.refine((v) => telephoneValide(v), { message: MESSAGE_TELEPHONE }),
+	telephone: telephoneFacultatif,
 	objet: z.string().max(200).default(''),
 	texte: z.string().max(5000).default(''),
 	// Anti-robot (ADR-0005) : champ piège invisible + délai minimal de remplissage.

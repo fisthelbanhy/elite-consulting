@@ -6,9 +6,8 @@ import { z } from 'zod';
 import type { annonceEmploi } from '../schema/rh.js';
 import type { interet } from '../schema/rh.js';
 import type { Membre } from '../schema/membres.js';
-import { auteur, type Auteur } from './commun.js';
+import { auteur, telephoneFacultatif, type Auteur } from './commun.js';
 import { url } from '../services/fichiers.js';
-import { normaliserTelephone, telephoneValide, MESSAGE_TELEPHONE } from '../services/validation.js';
 
 export type Annonce = typeof annonceEmploi.$inferSelect;
 export type Interet = typeof interet.$inferSelect;
@@ -132,13 +131,6 @@ export function vueDetail(a: Annonce, contexte: ContexteDetail): AnnonceDetail {
 }
 
 // --- Entrées ---------------------------------------------------------------------------------
-
-/** Téléphone facultatif ici (l'obligation dépend du type d'annonce, voir le routeur). */
-const telephoneFacultatif = z
-	.string()
-	.default('')
-	.transform((v) => normaliserTelephone(v))
-	.refine((v) => telephoneValide(v), { message: MESSAGE_TELEPHONE });
 
 const emailFacultatif = z
 	.union([z.literal(''), z.null(), z.email()])

@@ -171,15 +171,15 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Entreprises (9)
 
-- [ ] `GET /api/entreprises` — Lister
-- [ ] `POST /api/entreprises` — Creer
-- [ ] `GET /api/entreprises/miennes` — Miennes
-- [ ] `GET /api/entreprises/modele` — Modele
-- [ ] `DELETE /api/entreprises/{id_}` — Effacer
-- [ ] `GET /api/entreprises/{id_}` — Detail
-- [ ] `PUT /api/entreprises/{id_}` — Modifier
-- [ ] `POST /api/entreprises/{id_}/etat` — Etat
-- [ ] `POST /api/entreprises/{id_}/logo` — Logo
+- [x] `GET /api/entreprises` — Lister
+- [x] `POST /api/entreprises` — Creer
+- [x] `GET /api/entreprises/miennes` — Miennes
+- [x] `GET /api/entreprises/modele` — Modele
+- [x] `DELETE /api/entreprises/{id_}` — Effacer
+- [x] `GET /api/entreprises/{id_}` — Detail
+- [x] `PUT /api/entreprises/{id_}` — Modifier
+- [x] `POST /api/entreprises/{id_}/etat` — Etat
+- [x] `POST /api/entreprises/{id_}/logo` — Logo
 
 ## Espace membre (4)
 
@@ -307,21 +307,21 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Marchés (15)
 
-- [ ] `GET /api/marches` — Lister
-- [ ] `POST /api/marches` — Creer
-- [ ] `GET /api/marches/compteurs` — Compteurs
-- [ ] `GET /api/marches/projets` — Lister Projets
-- [ ] `POST /api/marches/projets` — Creer Projet
-- [ ] `DELETE /api/marches/projets/{id_}` — Effacer Projet
-- [ ] `GET /api/marches/projets/{id_}` — Detail Projet
-- [ ] `PUT /api/marches/projets/{id_}` — Modifier Projet
-- [ ] `POST /api/marches/projets/{id_}/etat` — Etat Projet
-- [ ] `DELETE /api/marches/{id_}` — Effacer
-- [ ] `GET /api/marches/{id_}` — Detail
-- [ ] `PUT /api/marches/{id_}` — Modifier
-- [ ] `DELETE /api/marches/{id_}/document` — Retirer Document
-- [ ] `POST /api/marches/{id_}/document` — Document
-- [ ] `POST /api/marches/{id_}/etat` — Etat Marche
+- [x] `GET /api/marches` — Lister
+- [x] `POST /api/marches` — Creer
+- [x] `GET /api/marches/compteurs` — Compteurs
+- [x] `GET /api/marches/projets` — Lister Projets
+- [x] `POST /api/marches/projets` — Creer Projet
+- [x] `DELETE /api/marches/projets/{id_}` — Effacer Projet
+- [x] `GET /api/marches/projets/{id_}` — Detail Projet
+- [x] `PUT /api/marches/projets/{id_}` — Modifier Projet
+- [x] `POST /api/marches/projets/{id_}/etat` — Etat Projet
+- [x] `DELETE /api/marches/{id_}` — Effacer
+- [x] `GET /api/marches/{id_}` — Detail
+- [x] `PUT /api/marches/{id_}` — Modifier
+- [x] `DELETE /api/marches/{id_}/document` — Retirer Document
+- [x] `POST /api/marches/{id_}/document` — Document
+- [x] `POST /api/marches/{id_}/etat` — Etat Marche
 
 ## Messagerie (5)
 

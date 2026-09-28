@@ -10,8 +10,10 @@ import * as auth from './auth.js';
 import * as contact from './contact.js';
 import * as dialogues from './dialogues.js';
 import * as emplois from './emplois.js';
+import * as entreprises from './entreprises.js';
 import * as espace from './espace.js';
 import * as immobilier from './immobilier.js';
+import * as marches from './marches.js';
 import * as messages from './messages.js';
 import * as paiements from './paiements.js';
 import * as partenariats from './partenariats.js';
@@ -32,8 +34,11 @@ export const ROUTEURS: ModuleRoute[] = [
 	contact,
 	dialogues,
 	emplois,
+	entreprises,
 	espace,
 	immobilier,
+	{ prefixe: marches.prefixeProjets, routeur: marches.routeurProjets },
+	marches,
 	messages,
 	paiements,
 	partenariats,

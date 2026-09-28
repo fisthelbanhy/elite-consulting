@@ -5,6 +5,11 @@
 import { z, type ZodType } from 'zod';
 import { ErreurMetier, traduire } from '../erreurs.js';
 import { url } from '../services/fichiers.js';
+import {
+	MESSAGE_TELEPHONE,
+	normaliserTelephone,
+	telephoneValide
+} from '../services/validation.js';
 
 /**
  * Contrôles portant sur **plusieurs champs à la fois** (confirmation d'un mot de passe, cohérence
@@ -142,6 +147,16 @@ export const entier = z.coerce.number().int();
 export const entierFacultatif = z
 	.union([z.literal(''), z.null(), z.undefined(), z.coerce.number().int()])
 	.transform((v) => (v === '' || v === null || v === undefined ? null : v));
+
+/**
+ * Champ téléphone facultatif : normalisé puis validé **par Zod** (et non par une erreur métier),
+ * pour que le format invalide réponde 422 comme le faisait le validateur Pydantic d'origine.
+ */
+export const telephoneFacultatif = z
+	.string()
+	.default('')
+	.transform((v) => normaliserTelephone(v))
+	.refine((v) => telephoneValide(v), { message: MESSAGE_TELEPHONE });
 
 /** Chaîne nettoyée de ses espaces de bord, vide par défaut. */
 export const texte = z.string().trim();
