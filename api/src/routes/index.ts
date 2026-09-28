@@ -21,6 +21,10 @@ import * as emplois from './emplois.js';
 import * as entreprises from './entreprises.js';
 import * as epargne from './epargne.js';
 import * as espace from './espace.js';
+import * as gestion from './gestion.js';
+import * as gestionJournaux from './gestion-journaux.js';
+import * as gestionMembres from './gestion-membres.js';
+import * as gestionReferentiels from './gestion-referentiels.js';
 import * as immobilier from './immobilier.js';
 import * as likelemba from './likelemba.js';
 import * as marches from './marches.js';
@@ -60,6 +64,10 @@ export const ROUTEURS: ModuleRoute[] = [
 	entreprises,
 	epargne,
 	espace,
+	gestion,
+	gestionMembres,
+	gestionReferentiels,
+	gestionJournaux,
 	immobilier,
 	likelemba,
 	{ prefixe: marches.prefixeProjets, routeur: marches.routeurProjets },

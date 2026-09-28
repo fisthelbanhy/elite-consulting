@@ -190,90 +190,90 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Gestion (3)
 
-- [ ] `GET /api/gestion/compteurs` — Compteurs
-- [ ] `GET /api/gestion/moderation` — Moderation
-- [ ] `GET /api/gestion/tableau-de-bord` — Tableau De Bord
+- [x] `GET /api/gestion/compteurs` — Compteurs
+- [x] `GET /api/gestion/moderation` — Moderation
+- [x] `GET /api/gestion/tableau-de-bord` — Tableau De Bord
 
 ## Gestion — journaux (3)
 
-- [ ] `GET /api/gestion/journaux/connexions` — Connexions
-- [ ] `GET /api/gestion/journaux/visites` — Visites
-- [ ] `POST /api/gestion/journaux/{journal}/purger` — Purger
+- [x] `GET /api/gestion/journaux/connexions` — Connexions
+- [x] `GET /api/gestion/journaux/visites` — Visites
+- [x] `POST /api/gestion/journaux/{journal}/purger` — Purger
 
 ## Gestion — membres (15)
 
-- [ ] `GET /api/gestion/membres` — Lister
-- [ ] `POST /api/gestion/membres` — Creer
-- [ ] `GET /api/gestion/membres/export` — Exporter
-- [ ] `GET /api/gestion/membres/options` — Options
-- [ ] `DELETE /api/gestion/membres/{id_}` — Supprimer
-- [ ] `GET /api/gestion/membres/{id_}` — Detail
-- [ ] `PUT /api/gestion/membres/{id_}` — Modifier
-- [ ] `POST /api/gestion/membres/{id_}/code-pointage` — Code Pointage
-- [ ] `PUT /api/gestion/membres/{id_}/droits` — Droits
-- [ ] `POST /api/gestion/membres/{id_}/etat` — Etat
-- [ ] `POST /api/gestion/membres/{id_}/photo` — Photo
-- [ ] `POST /api/gestion/membres/{id_}/reinitialisation` — Reinitialisation
-- [ ] `GET /api/gestion/reinitialisations` — Reinitialisations
-- [ ] `POST /api/gestion/reinitialisations/{id_}/ignorer` — Ignorer
-- [ ] `POST /api/gestion/reinitialisations/{id_}/traiter` — Traiter
+- [x] `GET /api/gestion/membres` — Lister
+- [x] `POST /api/gestion/membres` — Creer
+- [x] `GET /api/gestion/membres/export` — Exporter
+- [x] `GET /api/gestion/membres/options` — Options
+- [x] `DELETE /api/gestion/membres/{id_}` — Supprimer
+- [x] `GET /api/gestion/membres/{id_}` — Detail
+- [x] `PUT /api/gestion/membres/{id_}` — Modifier
+- [x] `POST /api/gestion/membres/{id_}/code-pointage` — Code Pointage
+- [x] `PUT /api/gestion/membres/{id_}/droits` — Droits
+- [x] `POST /api/gestion/membres/{id_}/etat` — Etat
+- [x] `POST /api/gestion/membres/{id_}/photo` — Photo
+- [x] `POST /api/gestion/membres/{id_}/reinitialisation` — Reinitialisation
+- [x] `GET /api/gestion/reinitialisations` — Reinitialisations
+- [x] `POST /api/gestion/reinitialisations/{id_}/ignorer` — Ignorer
+- [x] `POST /api/gestion/reinitialisations/{id_}/traiter` — Traiter
 
 ## Gestion — référentiels (54)
 
-- [ ] `GET /api/gestion/parametres` — Parametres
-- [ ] `PUT /api/gestion/parametres` — Modifier Parametres
-- [ ] `GET /api/gestion/referentiels` — Sommaire
-- [ ] `GET /api/gestion/referentiels/banques` — Banques
-- [ ] `POST /api/gestion/referentiels/banques` — Creer Banque
-- [ ] `DELETE /api/gestion/referentiels/banques/{id_}` — Supprimer Banque
-- [ ] `GET /api/gestion/referentiels/banques/{id_}` — Banque
-- [ ] `PUT /api/gestion/referentiels/banques/{id_}` — Modifier Banque
-- [ ] `GET /api/gestion/referentiels/diplomes` — Diplomes
-- [ ] `POST /api/gestion/referentiels/diplomes` — Creer Diplome
-- [ ] `DELETE /api/gestion/referentiels/diplomes/{id_}` — Supprimer Diplome
-- [ ] `GET /api/gestion/referentiels/diplomes/{id_}` — Diplome
-- [ ] `PUT /api/gestion/referentiels/diplomes/{id_}` — Modifier Diplome
-- [ ] `GET /api/gestion/referentiels/domaines` — Domaines
-- [ ] `POST /api/gestion/referentiels/domaines` — Creer Domaine
-- [ ] `DELETE /api/gestion/referentiels/domaines/{id_}` — Supprimer Domaine
-- [ ] `GET /api/gestion/referentiels/domaines/{id_}` — Domaine
-- [ ] `PUT /api/gestion/referentiels/domaines/{id_}` — Modifier Domaine
-- [ ] `GET /api/gestion/referentiels/familles` — Familles
-- [ ] `POST /api/gestion/referentiels/familles` — Creer Famille
-- [ ] `DELETE /api/gestion/referentiels/familles/{id_}` — Supprimer Famille
-- [ ] `GET /api/gestion/referentiels/familles/{id_}` — Famille
-- [ ] `PUT /api/gestion/referentiels/familles/{id_}` — Modifier Famille
-- [ ] `GET /api/gestion/referentiels/maladies` — Maladies
-- [ ] `POST /api/gestion/referentiels/maladies` — Creer Maladie
-- [ ] `DELETE /api/gestion/referentiels/maladies/{id_}` — Supprimer Maladie
-- [ ] `GET /api/gestion/referentiels/maladies/{id_}` — Maladie
-- [ ] `PUT /api/gestion/referentiels/maladies/{id_}` — Modifier Maladie
-- [ ] `GET /api/gestion/referentiels/produits` — Produits
-- [ ] `POST /api/gestion/referentiels/produits` — Creer Produit
-- [ ] `GET /api/gestion/referentiels/produits-comparateur` — Produits Comparateur
-- [ ] `POST /api/gestion/referentiels/produits-comparateur` — Creer Produit Comparateur
-- [ ] `DELETE /api/gestion/referentiels/produits-comparateur/{id_}` — Supprimer Produit Comparateur
-- [ ] `GET /api/gestion/referentiels/produits-comparateur/{id_}` — Produit Comparateur
-- [ ] `PUT /api/gestion/referentiels/produits-comparateur/{id_}` — Modifier Produit Comparateur
-- [ ] `DELETE /api/gestion/referentiels/produits/{id_}` — Supprimer Produit
-- [ ] `GET /api/gestion/referentiels/produits/{id_}` — Produit
-- [ ] `PUT /api/gestion/referentiels/produits/{id_}` — Modifier Produit
-- [ ] `POST /api/gestion/referentiels/produits/{id_}/photo` — Photo Produit
-- [ ] `GET /api/gestion/referentiels/quartiers` — Quartiers
-- [ ] `POST /api/gestion/referentiels/quartiers` — Creer Quartier
-- [ ] `DELETE /api/gestion/referentiels/quartiers/{id_}` — Supprimer Quartier
-- [ ] `GET /api/gestion/referentiels/quartiers/{id_}` — Quartier
-- [ ] `PUT /api/gestion/referentiels/quartiers/{id_}` — Modifier Quartier
-- [ ] `GET /api/gestion/referentiels/secteurs` — Secteurs
-- [ ] `POST /api/gestion/referentiels/secteurs` — Creer Secteur
-- [ ] `DELETE /api/gestion/referentiels/secteurs/{id_}` — Supprimer Secteur
-- [ ] `GET /api/gestion/referentiels/secteurs/{id_}` — Secteur
-- [ ] `PUT /api/gestion/referentiels/secteurs/{id_}` — Modifier Secteur
-- [ ] `GET /api/gestion/referentiels/villes` — Villes
-- [ ] `POST /api/gestion/referentiels/villes` — Creer Ville
-- [ ] `DELETE /api/gestion/referentiels/villes/{id_}` — Supprimer Ville
-- [ ] `GET /api/gestion/referentiels/villes/{id_}` — Ville
-- [ ] `PUT /api/gestion/referentiels/villes/{id_}` — Modifier Ville
+- [x] `GET /api/gestion/parametres` — Parametres
+- [x] `PUT /api/gestion/parametres` — Modifier Parametres
+- [x] `GET /api/gestion/referentiels` — Sommaire
+- [x] `GET /api/gestion/referentiels/banques` — Banques
+- [x] `POST /api/gestion/referentiels/banques` — Creer Banque
+- [x] `DELETE /api/gestion/referentiels/banques/{id_}` — Supprimer Banque
+- [x] `GET /api/gestion/referentiels/banques/{id_}` — Banque
+- [x] `PUT /api/gestion/referentiels/banques/{id_}` — Modifier Banque
+- [x] `GET /api/gestion/referentiels/diplomes` — Diplomes
+- [x] `POST /api/gestion/referentiels/diplomes` — Creer Diplome
+- [x] `DELETE /api/gestion/referentiels/diplomes/{id_}` — Supprimer Diplome
+- [x] `GET /api/gestion/referentiels/diplomes/{id_}` — Diplome
+- [x] `PUT /api/gestion/referentiels/diplomes/{id_}` — Modifier Diplome
+- [x] `GET /api/gestion/referentiels/domaines` — Domaines
+- [x] `POST /api/gestion/referentiels/domaines` — Creer Domaine
+- [x] `DELETE /api/gestion/referentiels/domaines/{id_}` — Supprimer Domaine
+- [x] `GET /api/gestion/referentiels/domaines/{id_}` — Domaine
+- [x] `PUT /api/gestion/referentiels/domaines/{id_}` — Modifier Domaine
+- [x] `GET /api/gestion/referentiels/familles` — Familles
+- [x] `POST /api/gestion/referentiels/familles` — Creer Famille
+- [x] `DELETE /api/gestion/referentiels/familles/{id_}` — Supprimer Famille
+- [x] `GET /api/gestion/referentiels/familles/{id_}` — Famille
+- [x] `PUT /api/gestion/referentiels/familles/{id_}` — Modifier Famille
+- [x] `GET /api/gestion/referentiels/maladies` — Maladies
+- [x] `POST /api/gestion/referentiels/maladies` — Creer Maladie
+- [x] `DELETE /api/gestion/referentiels/maladies/{id_}` — Supprimer Maladie
+- [x] `GET /api/gestion/referentiels/maladies/{id_}` — Maladie
+- [x] `PUT /api/gestion/referentiels/maladies/{id_}` — Modifier Maladie
+- [x] `GET /api/gestion/referentiels/produits` — Produits
+- [x] `POST /api/gestion/referentiels/produits` — Creer Produit
+- [x] `GET /api/gestion/referentiels/produits-comparateur` — Produits Comparateur
+- [x] `POST /api/gestion/referentiels/produits-comparateur` — Creer Produit Comparateur
+- [x] `DELETE /api/gestion/referentiels/produits-comparateur/{id_}` — Supprimer Produit Comparateur
+- [x] `GET /api/gestion/referentiels/produits-comparateur/{id_}` — Produit Comparateur
+- [x] `PUT /api/gestion/referentiels/produits-comparateur/{id_}` — Modifier Produit Comparateur
+- [x] `DELETE /api/gestion/referentiels/produits/{id_}` — Supprimer Produit
+- [x] `GET /api/gestion/referentiels/produits/{id_}` — Produit
+- [x] `PUT /api/gestion/referentiels/produits/{id_}` — Modifier Produit
+- [x] `POST /api/gestion/referentiels/produits/{id_}/photo` — Photo Produit
+- [x] `GET /api/gestion/referentiels/quartiers` — Quartiers
+- [x] `POST /api/gestion/referentiels/quartiers` — Creer Quartier
+- [x] `DELETE /api/gestion/referentiels/quartiers/{id_}` — Supprimer Quartier
+- [x] `GET /api/gestion/referentiels/quartiers/{id_}` — Quartier
+- [x] `PUT /api/gestion/referentiels/quartiers/{id_}` — Modifier Quartier
+- [x] `GET /api/gestion/referentiels/secteurs` — Secteurs
+- [x] `POST /api/gestion/referentiels/secteurs` — Creer Secteur
+- [x] `DELETE /api/gestion/referentiels/secteurs/{id_}` — Supprimer Secteur
+- [x] `GET /api/gestion/referentiels/secteurs/{id_}` — Secteur
+- [x] `PUT /api/gestion/referentiels/secteurs/{id_}` — Modifier Secteur
+- [x] `GET /api/gestion/referentiels/villes` — Villes
+- [x] `POST /api/gestion/referentiels/villes` — Creer Ville
+- [x] `DELETE /api/gestion/referentiels/villes/{id_}` — Supprimer Ville
+- [x] `GET /api/gestion/referentiels/villes/{id_}` — Ville
+- [x] `PUT /api/gestion/referentiels/villes/{id_}` — Modifier Ville
 
 ## Immobilier (10)
 
