@@ -1,4 +1,4 @@
-/** Likelemba (tontines) — alignés sur `backend/app/schemas/likelemba.py`. */
+/** Likelemba (tontines) — alignés sur `api/src/routes/likelemba.ts`. */
 import type { Auteur } from '$lib/types';
 
 export interface GroupeResume {

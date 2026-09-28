@@ -1,4 +1,4 @@
-/** Appels de fonds et engagements d'apport — alignés sur `backend/app/schemas/projets.py`. */
+/** Appels de fonds et engagements d'apport — alignés sur `api/src/routes/projets.ts`. */
 import type { Auteur, Liste } from '$lib/types';
 
 export interface ProjetResume {

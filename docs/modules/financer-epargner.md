@@ -14,11 +14,11 @@ Arbitrages : ADR-0004, ADR-0006, ADR-0007 (S4a à S4d), ADR-0009.
 
 | Couche | Fichiers |
 |---|---|
-| API | `backend/app/routers/{projets,likelemba,epargne}.py` |
-| Schémas | `backend/app/schemas/{projets,likelemba,epargne}.py` |
-| Service | `backend/app/services/fonds.py` : agrégats des appels de fonds, versements, interrupteur du module d'épargne, `Traitement` des paiements types 5, 7 et 8 (déclarés à l'import par les 3 routeurs) |
-| Modèle | `backend/app/models/fonds.py` : **colonne ajoutée** `cotisation_likelemba.paiement_id` (FK `paiement.id`, nullable) |
-| Tests | `backend/tests/test_{projets,likelemba,epargne}.py` (23 tests) |
+| API | `api/src/routes/{projets,likelemba,epargne}.ts` |
+| Schémas | Zod, dans chaque routeur |
+| Service | `api/src/services/fonds.ts` : agrégats des appels de fonds, versements, interrupteur du module d'épargne, `Traitement` des paiements types 5, 7 et 8 (déclarés à l'import par les 3 routeurs) |
+| Modèle | `api/src/schema/fonds.ts` : **colonne ajoutée** `cotisation_likelemba.paiement_id` (FK `paiement.id`, nullable) |
+| Tests | `api/tests/{projets,likelemba,epargne}.test.ts` (23 tests) |
 | Pages | `/financer` · `/projets`, `/projets/nouveau`, `/projets/[id]`, `/projets/[id]/modifier`, `/projets/apports`, `/projets/apports/[id]` · `/likelemba`, `/likelemba/nouveau`, `/likelemba/[id]`, `/likelemba/[id]/modifier`, `/likelemba/[id]/adherer`, `/likelemba/[id]/cotiser`, `/likelemba/[id]/adhesions/[adhesion]` · `/epargne`, `/epargne/dons-placements`, `/epargne/dons-placements/nouveau`, `/epargne/dons-placements/[id]`, `/epargne/carte-pointage`, `/epargne/carte-pointage/nouvelle` |
 | Composants | `lib/components/projets/*` (CarteProjet, ChiffresProjet, FormulaireProjet, FormulaireApport, ListeApports, GestionApport, EvaluationProjet, AvertissementProjets), `lib/components/likelemba/*` (CarteGroupe, CommentCaMarche, FormulaireGroupe, FormulaireAdhesion, ListeAdherents, Calendrier, TableauCotisations), `lib/components/epargne/*` (OngletsEpargne, AvertissementEpargne, ModuleDesactive, FormulaireFond, TableauPointages) |
 | Serveur | `lib/server/projets.ts` (`enregistrerProjet` + PDF/photo), `lib/server/likelemba.ts` (`lireGroupe`, `lireAdhesion`), `lib/server/epargne.ts` (`statutEpargne`, `exigerEpargne`) |
@@ -26,7 +26,7 @@ Arbitrages : ADR-0004, ADR-0006, ADR-0007 (S4a à S4d), ADR-0009.
 
 ## Endpoints (`/api`)
 
-### Appels de fonds — `projets.py`
+### Appels de fonds — `projets.ts`
 
 | Méthode et chemin | Accès | Rôle |
 |---|---|---|
@@ -46,7 +46,7 @@ Arbitrages : ADR-0004, ADR-0006, ADR-0007 (S4a à S4d), ADR-0009.
 | `POST /projets/apports/{id}/annuler` | droit Activation | → 3 ; retire du « promis » la seule part non versée |
 | `POST /projets/apports/{id}/versements` | droit Activation | Versement reçu (≤ reste, date non future, anti-doublon), créancier prévenu |
 
-### Likelemba — `likelemba.py`
+### Likelemba — `likelemba.ts`
 
 | Méthode et chemin | Accès | Rôle |
 |---|---|---|
@@ -64,7 +64,7 @@ Arbitrages : ADR-0004, ADR-0006, ADR-0007 (S4a à S4d), ADR-0009.
 | `POST /likelemba/adhesions/{id}/etat` | droit Activation | « Attente » ↔ active, retrait |
 | `POST /likelemba/cotisations/{id}/valider` | responsable ou gestionnaire habilité | Génère le reçu manquant ou tronqué (legacy) et marque la cotisation validée |
 
-### Épargne solidaire — `epargne.py` (toutes les routes sauf `/statut` : 403 si le module est désactivé)
+### Épargne solidaire — `epargne.ts` (toutes les routes sauf `/statut` : 403 si le module est désactivé)
 
 | Méthode et chemin | Accès | Rôle |
 |---|---|---|
@@ -77,7 +77,7 @@ Arbitrages : ADR-0004, ADR-0006, ADR-0007 (S4a à S4d), ADR-0009.
 | `GET /epargne/pointages/titulaires?q=`, `GET …/titulaires/{id}` | agent (`point_caisse_actif`) ou gestionnaire | Membres pointables ; solde, dernière opération, photo, PIN attribué ? |
 | `POST /epargne/pointages` | agent ou gestionnaire | Versement / retrait (voir règles) |
 
-### Paiements (service `fonds.py`, page générique `/paiement/{type}?objet=`)
+### Paiements (service `fonds.ts`, page générique `/paiement/{type}?objet=`)
 
 | Type | Objet | Montant | Qui paie | Enregistrement | Confirmation caisse | Rejet caisse |
 |---|---|---|---|---|---|---|
@@ -171,4 +171,4 @@ Arbitrages : ADR-0004, ADR-0006, ADR-0007 (S4a à S4d), ADR-0009.
 - Espace membre (autre domaine) : peut exploiter `GET /likelemba/mes-adhesions`,
   `GET /projets/apports` et `GET /epargne/pointages` pour un tableau de bord.
 - Gestion des paiements (autre domaine) : les libellés des types 5, 7 et 8 viennent de
-  `services/fonds.py` ; le rejet d'un type 5 annule la cotisation correspondante.
+  `services/fonds.ts` ; le rejet d'un type 5 annule la cotisation correspondante.

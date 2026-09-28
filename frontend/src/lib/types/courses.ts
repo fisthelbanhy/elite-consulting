@@ -1,4 +1,4 @@
-/** Types des courses & livraison et du catalogue boutique, alignés sur `backend/app/schemas/courses.py`. */
+/** Types des courses & livraison et du catalogue boutique, alignés sur `api/src/routes/courses.ts`. */
 import type { Auteur } from '$lib/types';
 import type { ContactMembre } from './immobilier';
 

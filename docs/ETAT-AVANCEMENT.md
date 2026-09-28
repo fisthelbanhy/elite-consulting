@@ -1,24 +1,29 @@
 # État d'avancement de la refonte
 
-> Mis à jour le 22/09/2026. Remplace l'ancien `MIGRATION_STATUS.md` (tentative Django, archivée
+> Mis à jour le 28/09/2026. Remplace l'ancien `MIGRATION_STATUS.md` (tentative Django, archivée
 > dans [historique/](historique/MIGRATION_STATUS-tentative-django.md) — son code n'existait plus).
 
 ## En bref
 
 La refonte est **fonctionnellement complète** : les 7 sections du site legacy, les écrans
-d'administration et les services transverses sont réécrits en SvelteKit 2 / Svelte 5 + FastAPI,
+d'administration et les services transverses sont réécrits en SvelteKit 2 / Svelte 5 + Express 5,
 réorganisés en 3 piliers + boutique, et alimentés par les vraies données de production.
+
+Le backend FastAPI a été remplacé par Express/TypeScript le 28/09/2026 (ADR-0013) : un seul
+langage sur tout le projet, et surtout **un seul processus Node** en production, donc un seul
+service à héberger. La bascule s'est faite à parité vérifiée, pas à l'estime — cinq outils de
+comparaison le prouvent, détaillés dans l'ADR-0013.
 
 | Indicateur | Valeur |
 |---|---|
 | Pages SvelteKit | 149 (173 composants) |
 | Endpoints API | 381 (259 chemins) |
-| Tests automatisés backend | **185, tous verts** (`pytest`, ~2 min 30) |
+| Tests automatisés backend | **211, tous verts** (Vitest, ~17 s) |
 | Typage frontend | `svelte-check` : **0 erreur** (26 avertissements mineurs « valeur initiale capturée » dans des formulaires) |
-| Lint backend | `ruff` : aucune remarque |
+| Lint backend | Prettier + ESLint : aucune remarque ; `tsc` : 0 erreur |
 | Build de production | OK (`npm run build`, adapter-node) |
 | Poids de l'accueil (production) | ≈ 215 Ko transférés dont 83 Ko de JS (budget : 500 Ko / 100 Ko) — HTML non compressé par Node, à gzipper au reverse proxy |
-| Code | ≈ 19 000 lignes Python (app) + ≈ 31 600 lignes Svelte/TS |
+| Code | ≈ 26 000 lignes TypeScript (API, hors table d'entités engendrée) + ≈ 31 650 lignes Svelte/TS (site) |
 
 ## 1. Analyse — terminée
 
@@ -27,7 +32,7 @@ réorganisés en 3 piliers + boutique, et alimentés par les vraies données de 
 | Visite du site en production | 7 sections × 3 onglets relevés en visiteur |
 | Inventaire fonctionnel exhaustif | [inventaire/](inventaire/) : **483 points de recette** |
 | Étude de marché et concurrence | [analyse-marche-concurrence.md](analyse-marche-concurrence.md) |
-| Décisions | **11 ADR** dans [decisions/](decisions/README.md) |
+| Décisions | **13 ADR** dans [decisions/](decisions/README.md) |
 
 ## 2. Réalisation
 
@@ -54,10 +59,31 @@ réorganisés en 3 piliers + boutique, et alimentés par les vraies données de 
 
 Les écarts volontaires au legacy sont tous consignés dans les ADR 0004, 0007, 0008 et 0011.
 
+### Migration du backend vers Express (28/09/2026)
+
+Le contrat des 381 opérations a été gelé **avant** toute modification
+([migration-express-parite.md](migration-express-parite.md)), puis chaque module porté et comparé
+à l'original. Cinq outils, dans `api/scripts/`, transforment la promesse de parité en
+vérification mécanique — ils disparaîtront avec l'ancien backend :
+
+| Vérification | Résultat |
+|---|---|
+| Tables et colonnes | 62 tables, 718 colonnes identiques |
+| Opérations exposées | 381 montées / 381 attendues |
+| Réponses JSON, sur la même donnée | 162 routes de lecture identiques, champ par champ |
+| Reprise des données legacy | 62 tables, 110 lignes identiques, même rapport |
+| Mots de passe repris par Python | acceptés par Express ; les mauvais restent refusés |
+
+La dernière ligne est la plus importante : les 68 membres gardent leur mot de passe, sans aucune
+réinitialisation. La comparaison des réponses a révélé cinq régressions du portage (format des
+dates, validation des paramètres de requête, dates du tableau de bord, apostrophes, ordre des
+listes), toutes corrigées et consignées en I10 à I14 de l'ADR-0011.
+
 ## 3. Recette réalisée
 
-- **Tests unitaires et d'API** : 185 tests (règles legacy, droits, machines à états, paiements,
-  formats de références, sécurité).
+- **Tests unitaires et d'API** : 211 tests (règles legacy, droits, machines à états, paiements,
+  formats de références, sécurité). Chacun des 31 fichiers de tests de l'ancien backend a son
+  équivalent, et trois s'y ajoutent (socle, référentiels, reprise legacy).
 - **Parcours automatique en lecture** : robot suivant tous les liens avec 3 profils (visiteur,
   membre, gestionnaire) — ≈ 1 500 pages chargées, **aucune erreur serveur**, aucune page > 400 Ko.
 - **Vérification des liens** : tous les liens internes (frontend et liens construits par l'API)
@@ -79,20 +105,23 @@ Les écarts volontaires au legacy sont tous consignés dans les ADR 0004, 0007, 
 | Séance photo (vraies personnes) pour remplacer les illustrations provisoires | Porteur | ADR-0008 |
 | Convertir la vidéo produit legacy `pub3.WMV` en MP4 | — | ADR-0011 §6 |
 | Recette métier par la frangine sur la checklist (483 points) avant mise en ligne | Porteur | `docs/inventaire/` |
-| Déploiement : PostgreSQL, reverse proxy HTTPS + gzip, `LF_COOKIE_SECRET`, SMTP, sauvegardes | Exploitation | README |
+| Déploiement : reverse proxy HTTPS + gzip, `LF_SITE_URL`, `LF_COOKIE_SECRET`, SMTP, sauvegardes du fichier SQLite | Exploitation | README |
 | Tests de bout en bout navigateur automatisés (Playwright) — seuls des robots HTTP existent | Développement | — |
+| Rejouer la reprise legacy sur le **vrai dump**, avec le script TypeScript, et relire le rapport | Porteur (poste local) | README § « vraies données » |
 
 ## 5. Commandes utiles
 
 ```bash
 # Lancer l'API et le site ensemble (depuis la racine ; Ctrl+C arrête les deux)
 npm run dev
+# Production : un seul processus Node sert le site et l'API
+npm run build && LF_SITE_URL=https://… npm start
 # Recharger la base de dev avec les données de production (le dump reste local, ADR-0012)
-npm run donnees:legacy
+npm run donnees:legacy -- ../cp1019011_lafrangine.sql --images ../lafrangine/V04/image/ig
 # Repartir du jeu de démonstration versionné (sans données personnelles)
 npm run donnees:demo
 # Comptes de démonstration (dev) : affiche des jetons de session à poser dans le cookie lf_session
-node scripts/py.mjs scripts/comptes_demo.py
-# Nouvelle migration après modification d'un modèle
-node scripts/py.mjs -m alembic revision --autogenerate -m "description"
+npm --prefix api run comptes:demo
+# Nouvelle migration après modification du schéma, puis application
+npm run migration && npm run migrer
 ```

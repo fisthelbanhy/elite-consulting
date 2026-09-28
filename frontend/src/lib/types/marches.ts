@@ -1,4 +1,4 @@
-/** Marchés (appels d'offres) et projets — aligné sur `backend/app/schemas/marches.py`. */
+/** Marchés (appels d'offres) et projets — aligné sur `api/src/routes/marches.ts`. */
 import type { Auteur } from '$lib/types';
 
 export interface MarcheResume {

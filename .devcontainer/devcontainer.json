@@ -1,14 +1,11 @@
 {
-	"name": "La Frangine (SvelteKit + FastAPI)",
-	"image": "mcr.microsoft.com/devcontainers/python:1-3.12-bookworm",
-	"features": {
-		"ghcr.io/devcontainers/features/node:1": { "version": "22" }
-	},
+	"name": "La Frangine (SvelteKit + Express)",
+	"image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
 	"postCreateCommand": "npm run setup",
 	"forwardPorts": [5173, 8000],
 	"portsAttributes": {
 		"5173": { "label": "Site SvelteKit" },
-		"8000": { "label": "API FastAPI" }
+		"8000": { "label": "API Express" }
 	},
 	"remoteEnv": {
 		"LF_ENVIRONNEMENT": "dev",
@@ -16,7 +13,12 @@
 	},
 	"customizations": {
 		"vscode": {
-			"extensions": ["svelte.svelte-vscode", "bradlc.vscode-tailwindcss", "charliermarsh.ruff", "ms-python.python"]
+			"extensions": [
+				"svelte.svelte-vscode",
+				"bradlc.vscode-tailwindcss",
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode"
+			]
 		}
 	}
 }

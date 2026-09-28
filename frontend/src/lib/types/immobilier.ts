@@ -1,4 +1,4 @@
-/** Types de l'immobilier, alignés sur `backend/app/schemas/immobilier.py`. */
+/** Types de l'immobilier, alignés sur `api/src/schemas/immobilier.ts`. */
 import type { Auteur } from '$lib/types';
 
 export interface QuartierBien {

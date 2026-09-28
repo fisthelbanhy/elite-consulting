@@ -14,10 +14,10 @@ Inventaire : `03-…` §2 (S5-0 à S5-5, F-S5-01 à F-S5-53) ; `01-…` E-S1-05 
 
 | Couche | Fichiers |
 |---|---|
-| API | `backend/app/routers/{boutique,distributeur,business_plan,partenariats}.py` (`boutique.py` expose 3 routeurs : `/boutique`, `/panier`, `/bien-etre`) |
-| Schémas | `backend/app/schemas/{boutique,distributeur,business_plan,partenariats}.py` |
-| Services | `backend/app/services/boutique.py` (prix selon le statut, panier, `Traitement` type 1), `backend/app/services/distributeur.py` (assistant, `est_distributeur`, `Traitement` type 6) |
-| Tests | `backend/tests/test_{boutique,distributeur,business_plan,partenariats}.py` (21 tests) |
+| API | `api/src/routes/{boutique,distributeur,business-plan,partenariats}.ts` (`boutique.ts` expose 3 routeurs : `/boutique`, `/panier`, `/bien-etre`) |
+| Schémas | Zod, dans chaque routeur (aucun de ces modules n'a assez de schémas pour justifier un fichier à part) |
+| Services | `api/src/services/boutique.ts` (prix selon le statut, panier, `Traitement` type 1), `api/src/services/distributeur.ts` (assistant, `est_distributeur`, `Traitement` type 6) |
+| Tests | `api/tests/{boutique,distributeur,business-plan,partenariats}.test.ts` (21 tests) |
 | Pages | `/boutique`, `/boutique/[id]`, `/panier`, `/panier/suivi` (gestionnaires), `/bien-etre`, `/bien-etre/[id]`, `/devenir-distributeur`, `/devenir-distributeur/adhesion`, `/devenir-distributeur/suivi`, `/devenir-distributeur/suivi/[id]`, `/business-plan`, `/business-plan/fiches`, `/business-plan/fiches/[id]`, `/partenariats`, `/partenariats/nouveau`, `/partenariats/[id]`, `/partenariats/[id]/modifier` |
 | Composants | `lib/components/boutique/*` (CarteProduit, GrilleProduits, Prix, SelecteurQuantite, EtatStock, Rayons, TableauPanier, SectionArticles, BandeauDistributeur, AvertissementBienEtre, ModuleIndisponible), `lib/components/distributeur/*` (contenus.ts = textes legacy, Chapitres, AppelAdhesion, Progression, Etape*, StatutSouscription, TexteBloc), `lib/components/business-plan/*` (questions.ts, FormulaireBusinessPlan), `lib/components/partenariats/*` |
 | Serveur | `lib/server/boutique.ts` (`ajouterAuPanier`), `distributeur.ts` (`corpsEtape`), `business-plan.ts`, `partenariats.ts` |

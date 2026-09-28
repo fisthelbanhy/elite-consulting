@@ -11,10 +11,10 @@ E-TRV-05 ; `02-…` §4.5 (écran des paiements). ADR : 0005, 0006, 0007 (T1, T2
 
 | Couche | Fichiers |
 |---|---|
-| API | `backend/app/routers/gestion.py` (tableau de bord, compteurs, modération ; agrège les 3 suivants), `gestion_membres.py`, `gestion_referentiels.py`, `gestion_journaux.py`, `espace.py` |
-| Schémas | `backend/app/schemas/gestion.py`, `gestion_referentiels.py`, `espace.py` |
-| Service | `backend/app/services/gestion.py` : file de modération transverse (`MODULES_MODERES`), code de pointage, lien de réinitialisation, unicité, pagination 50 → 500 |
-| Tests | `backend/tests/test_gestion.py` (11), `test_gestion_referentiels.py` (6, dont journaux), `test_espace.py` (4) |
+| API | `api/src/routes/gestion.ts` (tableau de bord, compteurs, modération ; agrège les 3 suivants), `gestion-membres.ts`, `gestion-referentiels.ts`, `gestion-journaux.ts`, `espace.ts` |
+| Schémas | Zod, dans chaque routeur |
+| Service | `api/src/services/gestion.ts` : file de modération transverse (`MODULES_MODERES`), code de pointage, lien de réinitialisation, unicité, pagination 50 → 500 |
+| Tests | `api/tests/gestion.test.ts` (11), `gestion-referentiels.test.ts` (6, dont journaux), `espace.test.ts` (4) |
 | Pages gestion | `/gestion` (tableau de bord), `/gestion/membres`, `/gestion/membres/nouveau`, `/gestion/membres/[id]`, `/gestion/membres/[id]/modifier`, `/gestion/membres/export` (CSV), `/gestion/paiements`, `/gestion/moderation`, `/gestion/referentiels`, `/gestion/referentiels/[type]` (villes, quartiers, secteurs, domaines, diplomes, familles, produits-comparateur, banques), `/gestion/referentiels/produits[/id]`, `/gestion/referentiels/maladies[/id]`, `/gestion/parametres`, `/gestion/journaux`, `/gestion/reinitialisations` |
 | Chrome | `routes/gestion/+layout.server.ts` (exige un gestionnaire) et `+layout.svelte` (barre latérale fixe, tiroir sur mobile) ; les pages Messages, Contacts, Suggestions, Publicités (module Communication) sont simplement reliées |
 | Pages espace | `/espace` (tableau de bord), `/espace/profil`, `/espace/paiements` ; `routes/espace/+layout.server.ts` exige la connexion (la page `/espace/messages` appartient au module Communication) |
@@ -134,5 +134,5 @@ Doublons comparés sans tenir compte de la casse, lettres accentuées comprises 
 
 ## 7. Colonnes ajoutées
 
-Aucune (les modèles `core.py` et `membres.py` couvraient tout : `code_pointage_hash`,
+Aucune (les tables de `core.ts` et `membres.ts` couvraient tout : `code_pointage_hash`,
 `ReinitialisationMotDePasse.traitee_par_id`, interrupteurs de `parametre`).

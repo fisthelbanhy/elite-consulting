@@ -9,10 +9,10 @@
 
 | Couche | Fichiers |
 |---|---|
-| API | `backend/app/routers/immobilier.py`, `annonces.py`, `courses.py` |
-| Schémas | `backend/app/schemas/immobilier.py` (+ intérêts, états partagés), `annonces.py`, `courses.py` |
-| Service | `backend/app/services/ecommerce.py` : panier articles, contrôle de stock, `Traitement` de paiement types 2 et 4, notifications |
-| Tests | `backend/tests/test_immobilier.py`, `test_annonces.py`, `test_courses.py` (17 tests) |
+| API | `api/src/routes/{immobilier,annonces,courses}.ts` |
+| Schémas | `api/src/schemas/immobilier.ts` (+ intérêts, états partagés) ; Zod dans les routeurs pour `annonces` et `courses` |
+| Service | `api/src/services/ecommerce.ts` : panier articles, contrôle de stock, `Traitement` de paiement types 2 et 4, notifications |
+| Tests | `api/tests/immobilier.test.ts`, `annonces.test.ts`, `courses.test.ts` (17 tests) |
 | BFF | `frontend/src/lib/server/immobilier.ts`, `annonces.ts`, `courses.ts` |
 | Types | `frontend/src/lib/types/immobilier.ts`, `annonces.ts`, `courses.ts` |
 | Composants | `frontend/src/lib/components/immobilier/*` (CarteBien, FiltresBiens, FormulaireBien, libelles.ts), `annonces/*` (CarteArticle, FormulaireArticle, BlocAchat, BlocInteret, InteretsRecus, EncartFiches, Vignette — les quatre derniers sont partagés avec l'immobilier), `courses/*` (CarteCourse, FiltresCourses, TableauGeneral, FormulaireCourse, LignesCourse, ChoixCatalogue, ChoixBoutique, RecapCourse, EtapesCourse, BadgeEtatCourse, PresentationCourses, FormulaireArticleCatalogue) |
@@ -43,7 +43,7 @@ Aucune colonne ajoutée aux modèles ; aucun fichier partagé modifié.
 
 **Courses** : `GET /courses/boutiques`, `GET|POST /courses/catalogue`, `GET|PUT|DELETE /courses/catalogue/{id}`, `POST /courses/catalogue/{id}/photo|etat`, `GET /courses` (`etat_course, commande_min/max, achat_min/max, livraison_min/max, q, role=client|boutique, boutique_id, etat`), `POST /courses/verifier` (`?course_id=` en modification), `POST /courses`, `GET|PUT|DELETE /courses/{id}`, `POST /courses/{id}/etat-course`, `POST /courses/{id}/etat`.
 
-**Paiement** (page générique, `services/ecommerce.py`) : type 2 « Article » — montant = total du panier articles non payé du membre ; `enregistrer` décrémente les stocks, marque les lignes payées (+ date, `paiement_id`) ; `rejeter` restitue les stocks, remet les lignes impayées et prévient le membre. Type 4 « Course » — montant = achats + frais ; `enregistrer` : `course.paye = Oui`, `mode_paiement`, boutique prévenue ; `rejeter` : course de nouveau à payer, client prévenu. Libellé/montant refusés (400/403) si panier vide, stock insuffisant, course d'un autre, annulée ou déjà payée : le formulaire de paiement n'est alors plus proposé.
+**Paiement** (page générique, `services/ecommerce.ts`) : type 2 « Article » — montant = total du panier articles non payé du membre ; `enregistrer` décrémente les stocks, marque les lignes payées (+ date, `paiement_id`) ; `rejeter` restitue les stocks, remet les lignes impayées et prévient le membre. Type 4 « Course » — montant = achats + frais ; `enregistrer` : `course.paye = Oui`, `mode_paiement`, boutique prévenue ; `rejeter` : course de nouveau à payer, client prévenu. Libellé/montant refusés (400/403) si panier vide, stock insuffisant, course d'un autre, annulée ou déjà payée : le formulaire de paiement n'est alors plus proposé.
 
 ## 4. Règles appliquées (extraits)
 
@@ -89,4 +89,4 @@ Aucune colonne ajoutée aux modèles ; aucun fichier partagé modifié.
 ## 7. Besoins sur des fichiers partagés
 
 - Pied de page (`components/layout`) : lien « Vos articles » → `/courses/catalogue` pour les boutiques et les gestionnaires (F-S3-69). En attendant, le lien figure sur `/courses`.
-- `app/routers/paiements.py` / page `/paiement/[type]` : afficher le libellé « Course » (type 4) dans la liste de la caisse — l'énumération `TypeObjetPaye` le porte déjà.
+- `api/src/routes/paiements.ts` / page `/paiement/[type]` : afficher le libellé « Course » (type 4) dans la liste de la caisse — l'énumération `TypeObjetPaye` le porte déjà.

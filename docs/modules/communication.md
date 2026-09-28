@@ -9,10 +9,10 @@ Inventaire : E-TRV-07 à E-TRV-10, E-TRV-12, E-ADM-12 à E-ADM-14. Arbitrages : 
 
 | Couche | Fichiers |
 |---|---|
-| API | `backend/app/routers/{contact,suggestions,publicites,messages}.py` |
-| Schémas | `backend/app/schemas/{contact,suggestions,publicites,messages}.py` |
-| Services | `backend/app/services/messages.py` (présence, marquage lu, notification système), `backend/app/services/publicites.py` (fenêtre de diffusion, vrai type du fichier, texte nettoyé, vues) |
-| Tests | `backend/tests/test_{contact,suggestions,publicites,messages}.py` (16 tests) |
+| API | `api/src/routes/{contact,suggestions,publicites,messages}.ts` |
+| Schémas | Zod, dans chaque routeur |
+| Services | `api/src/services/messages.ts` (présence, marquage lu, notification système), `api/src/services/publicites.ts` (fenêtre de diffusion, vrai type du fichier, texte nettoyé, vues) |
+| Tests | `api/tests/{contact,suggestions,publicites,messages}.test.ts` (16 tests) |
 | Pages | `/contact`, `/suggestion`, `/publicites`, `/publicites/[id]`, `/espace/messages`, `/aide`, `/mentions-legales`, `/confidentialite`, `/conditions` |
 | Gestion | `/gestion/contacts`, `/gestion/contacts/[id]`, `/gestion/suggestions`, `/gestion/publicites`, `/gestion/publicites/nouvelle`, `/gestion/publicites/[id]`, `/gestion/messages`, `/gestion/messages/[membre]` |
 | Composants | `lib/components/contact/{CarteContact,ACompleter}`, `lib/components/messages/{FilMessages,FormulaireMessage,Presence}`, `lib/components/publicites/{EncartPublicites,CartePublicite,MediaPublicite,DevenirAnnonceur,FormulairePublicite,FiltresPublicites,ListePublicitesGestion}` |

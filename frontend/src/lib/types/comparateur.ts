@@ -1,4 +1,4 @@
-/** Comparateur de prix B2B — aligné sur `backend/app/schemas/comparateur.py`. */
+/** Comparateur de prix B2B — aligné sur `api/src/routes/comparateur.ts`. */
 import type { EntrepriseOption, VilleCourte } from '$lib/types/entreprises';
 
 export type MotifRefus = 'visiteur' | 'personne_physique' | 'sans_entreprise';

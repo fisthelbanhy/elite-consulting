@@ -10,10 +10,10 @@ F-S1-01 à F-S1-26, F-S6-34. Arbitrages : ADR-0004, ADR-0007 S1a, S1c, S6b, ADR-
 
 | Couche | Fichiers |
 |---|---|
-| API | `backend/app/routers/{questions,decouverte,reussites}.py` |
-| Schémas | `backend/app/schemas/{questions,decouverte,reussites}.py` |
-| Service | `backend/app/services/decouverte.py` (questions du diagnostic, validation des codes, restitution, report dans la fiche, message à la conseillère) |
-| Tests | `backend/tests/test_{questions,decouverte,reussites}.py` (18 tests) |
+| API | `api/src/routes/{questions,decouverte,reussites}.ts` |
+| Schémas | Zod, dans chaque routeur |
+| Service | `api/src/services/decouverte.ts` (questions du diagnostic, validation des codes, restitution, report dans la fiche, message à la conseillère) |
+| Tests | `api/tests/{questions,decouverte,reussites}.test.ts` (18 tests) |
 | Pages | `/se-lancer`, `/diagnostic`, `/diagnostic/resultat`, `/diagnostic/enregistrer` (point d'entrée GET, sans page), `/diagnostic/merci`, `/decouverte-de-soi`, `/decouverte-de-soi/fiches`, `/decouverte-de-soi/fiches/[id]`, `/questions`, `/questions/nouveau`, `/questions/[id]`, `/questions/[id]/modifier`, `/reussites`, `/reussites/[id]`, `/reussites/ma-fiche` |
 | Composants | `lib/components/questions/{CarteSujet,FormulaireSujet,ReponseSujet}`, `lib/components/decouverte/{questions.ts,ChampQuestion,Questionnaire,ReponsesFiche,Correspondance,Presentation,PanneauSuivi}`, `lib/components/diagnostic/{EtapeQuestion,Restitution,PlanAction}`, `lib/components/reussites/{CarteReussite,FormulaireReussite}` |
 | Serveur | `lib/server/questions.ts` (`enregistrerSujet`, `actionsReponses`), `lib/server/decouverte.ts` (`enregistrerFiche`, `cloturerFiche`), `lib/server/diagnostic.ts` (cookie signé, questions en cache), `lib/server/reussites.ts` (`enregistrerReussite`) |

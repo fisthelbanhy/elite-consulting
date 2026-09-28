@@ -4,7 +4,7 @@
 		{
 			"name": "api",
 			"runtimeExecutable": "node",
-			"runtimeArgs": ["scripts/py.mjs", "-m", "uvicorn", "app.main:app", "--port", "8000", "--reload", "--reload-dir", "app"],
+			"runtimeArgs": ["scripts/dev.mjs", "api"],
 			"port": 8000
 		},
 		{

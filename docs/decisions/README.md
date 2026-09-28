@@ -7,7 +7,7 @@ remplace et on marque l'ancien « Remplacé par ADR-XXXX ».
 
 | N° | Titre | Statut | Date |
 |---|---|---|---|
-| [0001](0001-stack-technique.md) | Stack technique : SvelteKit 2 / Svelte 5 + FastAPI | Accepté | 2026-09-22 |
+| [0001](0001-stack-technique.md) | Stack technique : SvelteKit 2 / Svelte 5 + FastAPI | Accepté ; couche backend remplacée par [0013](0013-backend-express-et-processus-unique.md) | 2026-09-22 |
 | [0002](0002-architecture-bff-et-authentification.md) | Architecture BFF et authentification par session | Accepté | 2026-09-22 |
 | [0003](0003-modele-de-donnees.md) | Modèle de données et reprise des données legacy | Accepté | 2026-09-22 |
 | [0004](0004-regles-metier-et-bugs-legacy.md) | Règles métier conservées, bugs legacy corrigés | Accepté | 2026-09-22 |
