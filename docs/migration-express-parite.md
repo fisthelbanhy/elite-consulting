@@ -98,13 +98,13 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Contact (7)
 
-- [ ] `GET /api/contact` — Lister
-- [ ] `POST /api/contact` — Envoyer
-- [ ] `GET /api/contact/compteurs` — Compteurs
-- [ ] `GET /api/contact/expediteurs` — Expediteurs
-- [ ] `GET /api/contact/{id_}` — Detail
-- [ ] `POST /api/contact/{id_}/etat` — Etat
-- [ ] `POST /api/contact/{id_}/reponse` — Repondre
+- [x] `GET /api/contact` — Lister
+- [x] `POST /api/contact` — Envoyer
+- [x] `GET /api/contact/compteurs` — Compteurs
+- [x] `GET /api/contact/expediteurs` — Expediteurs
+- [x] `GET /api/contact/{id_}` — Detail
+- [x] `POST /api/contact/{id_}/etat` — Etat
+- [x] `POST /api/contact/{id_}/reponse` — Repondre
 
 ## Courses & livraison (16)
 
@@ -137,9 +137,9 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Dialogue (3)
 
-- [ ] `GET /api/dialogues` — Lister
-- [ ] `POST /api/dialogues` — Ecrire
-- [ ] `GET /api/dialogues/conversations` — Conversations
+- [x] `GET /api/dialogues` — Lister
+- [x] `POST /api/dialogues` — Ecrire
+- [x] `GET /api/dialogues/conversations` — Conversations
 
 ## Découverte de soi (12)
 
@@ -325,11 +325,11 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Messagerie (5)
 
-- [ ] `GET /api/messages` — Mon Fil
-- [ ] `POST /api/messages` — Ecrire
-- [ ] `GET /api/messages/fils` — Fils
-- [ ] `GET /api/messages/fils/{membre_id}` — Fil Membre
-- [ ] `POST /api/messages/fils/{membre_id}` — Repondre
+- [x] `GET /api/messages` — Mon Fil
+- [x] `POST /api/messages` — Ecrire
+- [x] `GET /api/messages/fils` — Fils
+- [x] `GET /api/messages/fils/{membre_id}` — Fil Membre
+- [x] `POST /api/messages/fils/{membre_id}` — Repondre
 
 ## Paiements (6)
 
@@ -422,10 +422,10 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Suggestions (4)
 
-- [ ] `GET /api/suggestions` — Lister
-- [ ] `POST /api/suggestions` — Deposer
-- [ ] `GET /api/suggestions/compteurs` — Compteurs
-- [ ] `POST /api/suggestions/{id_}/etat` — Etat
+- [x] `GET /api/suggestions` — Lister
+- [x] `POST /api/suggestions` — Deposer
+- [x] `GET /api/suggestions/compteurs` — Compteurs
+- [x] `POST /api/suggestions/{id_}/etat` — Etat
 
 ## Système (1)
 

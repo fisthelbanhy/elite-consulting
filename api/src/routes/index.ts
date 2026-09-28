@@ -7,11 +7,15 @@
 import type { Router } from 'express';
 import * as annonces from './annonces.js';
 import * as auth from './auth.js';
+import * as contact from './contact.js';
+import * as dialogues from './dialogues.js';
 import * as emplois from './emplois.js';
 import * as espace from './espace.js';
 import * as immobilier from './immobilier.js';
+import * as messages from './messages.js';
 import * as paiements from './paiements.js';
 import * as partenariats from './partenariats.js';
+import * as suggestions from './suggestions.js';
 import * as referentiels from './referentiels.js';
 
 export interface ModuleRoute {
@@ -22,11 +26,15 @@ export interface ModuleRoute {
 export const ROUTEURS: ModuleRoute[] = [
 	annonces,
 	auth,
+	contact,
+	dialogues,
 	emplois,
 	espace,
 	immobilier,
+	messages,
 	paiements,
 	partenariats,
 	referentiels,
+	suggestions,
 	{ prefixe: referentiels.prefixeVisites, routeur: referentiels.routeurVisites }
 ];
