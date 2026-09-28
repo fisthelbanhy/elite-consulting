@@ -257,4 +257,4 @@ maladie ──> produit (index1pdt..index5pdt)
 parametre: singleton référencé par quasi tous les modules pour les séquences
 ```
 
-**Recommandation migration**: le legacy ne fait jamais de suppression physique (toujours `etat=3` soft delete) → utiliser `on_delete=PROTECT` ou `SET_NULL` plutôt que `CASCADE` sur les FK Django, pour rester fidèle au comportement d'origine.
+**Recommandation migration**: le legacy ne fait jamais de suppression physique (toujours `etat=3` soft delete) → préférer une clé étrangère qui protège ou met à NULL plutôt qu'une suppression en cascade, pour rester fidèle au comportement d'origine.

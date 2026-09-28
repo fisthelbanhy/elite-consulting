@@ -22,8 +22,8 @@ export class ErreurMetier extends Error {
 /**
  * `throw erreur('…', { champ: '…' })` — erreur de validation métier (400).
  *
- * En Python les champs étaient passés en arguments nommés ; ici un objet, pour la même raison
- * qu'en Python le message était positionnel : un champ de formulaire peut s'appeler « message ».
+ * Les champs sont passés dans un objet plutôt qu'un à un : un champ de formulaire peut très bien
+ * s'appeler « message », et se confondrait alors avec le message global.
  */
 export function erreur(message: string, champs: Record<string, string> = {}): ErreurMetier {
 	return new ErreurMetier(message, 400, champs);
@@ -47,7 +47,7 @@ export function nonAuthentifie(
 
 /**
  * Traduit une anomalie Zod en message français, en reprenant mot pour mot les messages que
- * `app/erreurs.py` produisait à partir des codes Pydantic.
+ * l'ancien backend produisait. Le site les affiche sous le champ fautif.
  */
 export function traduire(issue: ZodIssue): string {
 	switch (issue.code) {
@@ -104,7 +104,7 @@ export function traduire(issue: ZodIssue): string {
 				: 'Valeur invalide.';
 		}
 		case 'custom':
-			// Message posé par une règle métier (`.refine(…)`), équivalent du `value_error` Pydantic.
+			// Message posé par une règle métier (`.refine(…)`).
 			return issue.message || 'Valeur invalide.';
 		default:
 			return issue.message || 'Valeur invalide.';
@@ -113,7 +113,7 @@ export function traduire(issue: ZodIssue): string {
 
 /**
  * Transforme une `ZodError` en `ErreurMetier` 422, avec un message par champ.
- * Le premier message rencontré pour un champ gagne (comme le `setdefault` de Python).
+ * Le premier message rencontré pour un champ gagne.
  */
 export function erreurDeValidation(zodError: ZodError): ErreurMetier {
 	const champs: Record<string, string> = {};

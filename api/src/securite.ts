@@ -2,7 +2,7 @@
  * Hachage des mots de passe et jetons de session (portage de `app/security.py`).
  *
  * Argon2id, au format PHC `$argon2id$v=19$m=…`. Ce format porte ses propres paramètres de coût :
- * les hash écrits par l'ancien backend Python (`pwdlib`) sont donc relus ici sans conversion, et
+ * les hash écrits par l'ancien backend sont donc relus ici sans conversion, et
  * réciproquement — vérifié avant la migration, voir ADR-0013.
  */
 import { createHash, randomBytes, timingSafeEqual } from 'node:crypto';

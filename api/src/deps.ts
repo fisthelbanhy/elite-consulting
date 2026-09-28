@@ -131,7 +131,7 @@ export interface Pagination {
 }
 
 /**
- * Lit `?page=&taille=` avec les mêmes bornes que FastAPI (`page ≥ 1`, `1 ≤ taille ≤ 100`).
+ * Lit `?page=&taille=` avec les bornes du contrat d'API (`page ≥ 1`, `1 ≤ taille ≤ 100`).
  * Une valeur hors bornes est ramenée dans l'intervalle plutôt que refusée — c'est ce que faisait
  * déjà le frontend en construisant ses liens de pagination.
  */

@@ -58,7 +58,7 @@ function d(v: ValeurDump): JourSeul | null {
 	if (!m) return null;
 	const [an, mois, jour] = [Number(m[1]), Number(m[2]), Number(m[3])];
 	const date = new JourSeul(an, mois - 1, jour);
-	// Python lève `ValueError` sur une date impossible (31 février) et rend `None`.
+	// Une date impossible (31 février) ne vaut pas une date : elle est écartée.
 	return date.getFullYear() === an && date.getMonth() === mois - 1 && date.getDate() === jour
 		? date
 		: null;
@@ -542,8 +542,7 @@ async function reprendre(dump: string, images: string | null): Promise<void> {
 		};
 		zonesSga.forEach((champ, i) => {
 			const v = r[`zone${String(i + 1).padStart(2, '0')}sga`]!;
-			// Le type de la colonne décide de la conversion, comme le faisait la réflexion
-			// SQLAlchemy de l'original (`.type.python_type is int`).
+			// Le type déclaré de la colonne décide de la conversion, comme dans l'original.
 			ligne[champ] = colonnesSga[champ]?.dataType === 'number' ? n(v) : txt(v);
 		});
 		lignesSga.push(ligne);
@@ -1515,7 +1514,7 @@ async function reprendre(dump: string, images: string | null): Promise<void> {
 	);
 }
 
-/** `str(date)` de Python : `2026-09-28`, chaîne vide quand la date est absente. */
+/** Date en texte ISO (`2026-09-28`), chaîne vide quand la date est absente. */
 function texteDate(jour: JourSeul | null): string {
 	if (!jour) return '';
 	const deux = (x: number): string => String(x).padStart(2, '0');

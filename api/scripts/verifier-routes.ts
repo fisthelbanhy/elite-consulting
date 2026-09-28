@@ -6,8 +6,7 @@
  * opérations que l'ancien ? ». À lancer avec `npx tsx scripts/verifier-routes.ts` ; il sort en
  * erreur dès qu'une route manque ou qu'une route inattendue apparaît.
  *
- * Il reste utilisable après la suppression de `backend/` : il ne dépend que de fichiers
- * versionnés ici.
+ * Il garde son intérêt après la bascule : il signale toute route perdue ou apparue par mégarde.
  */
 import { readFileSync } from 'node:fs';
 import { ROUTEURS } from '../src/routes/index.js';

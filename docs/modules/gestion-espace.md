@@ -86,7 +86,7 @@ Le frontend utilise en plus `PUT /auth/profil`, `POST /auth/profil/photo`, `POST
 | Produits du comparateur | nom ≥ 4, unique | logique |
 | Banques | sigle en majuscules, nom ≥ 3, doublon sigle + nom | logique |
 
-Doublons comparés sans tenir compte de la casse, lettres accentuées comprises (`casefold` en Python :
+Doublons comparés sans tenir compte de la casse, lettres accentuées comprises (
 `lower()` de SQLite ignore « É »). Chaque écriture de référentiel ou de paramètre appelle
 `invaliderReferentiels()` côté SvelteKit.
 

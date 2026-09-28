@@ -1,5 +1,5 @@
 /**
- * Applique les migrations de schéma en attente (remplace `alembic upgrade head`, ADR-0013).
+ * Applique les migrations de schéma en attente (ADR-0013).
  *
  * Usage : `npm run migrer` — ou, en déploiement, appelé au démarrage du serveur.
  */

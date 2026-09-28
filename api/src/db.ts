@@ -1,11 +1,10 @@
 /**
- * Connexion à la base et types de colonnes communs (portage de `app/db.py`).
+ * Connexion à la base et types de colonnes communs.
  *
  * Moteur : SQLite (ADR-0013). Le schéma, les noms de colonnes **et les formats de stockage**
- * reprennent ceux qu'écrivait SQLAlchemy, pour que la base de production existante soit lisible
- * par ce backend sans conversion.
+ * sont ceux de la base de production existante, pour qu'elle reste lisible sans conversion.
  *
- * Point de vigilance : SQLAlchemy écrit les dates SQLite sous forme de **texte**
+ * Point de vigilance : les dates y sont stockées sous forme de **texte**
  * (`2026-09-28 14:30:00.000000`), pas d'entiers Unix comme le ferait Drizzle par défaut. Les types
  * `dateHeure` et `dateSeule` ci-dessous reproduisent exactement ce format.
  */
@@ -16,13 +15,13 @@ import { drizzle } from 'drizzle-orm/better-sqlite3';
 import { customType, integer, text } from 'drizzle-orm/sqlite-core';
 import { config } from './config.js';
 
-// --- Types de colonnes reproduisant le stockage de SQLAlchemy ---------------------------------
+// --- Types de colonnes reproduisant le stockage de la base existante -------------------------
 
 function deuxChiffres(n: number): string {
 	return String(n).padStart(2, '0');
 }
 
-/** `2026-09-28 14:30:00.000000` — heure locale naïve, comme le `datetime.now()` de Python. */
+/** `2026-09-28 14:30:00.000000` — heure locale, sans fuseau, comme dans la base existante. */
 export function formaterDateHeure(d: Date): string {
 	const micro = String(d.getMilliseconds()).padStart(3, '0') + '000';
 	return (
@@ -37,9 +36,8 @@ export function formaterDate(d: Date): string {
 }
 
 /**
- * Relit une date écrite par SQLAlchemy ou par ce backend. Le texte est interprété en heure
- * **locale** (et non UTC) : c'est ce que faisait Python, et l'interpréter en UTC décalerait
- * toutes les dates existantes.
+ * Relit une date de la base. Le texte est interprété en heure **locale** et non UTC : c'est
+ * ainsi qu'il a été écrit, et l'interpréter en UTC décalerait toutes les dates existantes.
  */
 export function analyserDateHeure(valeur: string): Date {
 	const m = /^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2})(?::(\d{2})(?:\.(\d+))?)?)?/.exec(
@@ -77,7 +75,7 @@ export function maintenant(): Date {
 	return new Date(derniereHorodate);
 }
 
-/** Colonne `DATETIME` stockée en texte, comme SQLAlchemy. */
+/** Colonne `DATETIME` stockée en texte, comme dans la base existante. */
 export const dateHeure = customType<{ data: Date; driverData: string }>({
 	dataType: () => 'DATETIME',
 	toDriver: (valeur) => formaterDateHeure(valeur),
@@ -92,7 +90,7 @@ export const dateHeure = customType<{ data: Date; driverData: string }>({
 export class JourSeul extends Date {}
 
 /**
- * Format JSON d'une date, identique à celui de Pydantic : heure **locale et naïve**, sans « Z ».
+ * Format JSON d'une date : heure **locale, sans fuseau**, sans « Z » — ce que le site attend.
  *
  * `JSON.stringify` écrirait `2026-09-28T13:30:00.000Z` là où l'ancien backend écrivait
  * `2026-09-28T14:30:00` : le site, qui relit ces chaînes avec `new Date(…)`, afficherait une heure
@@ -101,11 +99,11 @@ export class JourSeul extends Date {}
 export function serialiserDate(d: Date): string {
 	if (d instanceof JourSeul) return formaterDate(d);
 	const base = formaterDateHeure(d).replace(' ', 'T');
-	// Millisecondes seulement si elles sont significatives (comme `datetime.isoformat()`).
+	// Millisecondes seulement si elles sont significatives.
 	return d.getMilliseconds() === 0 ? base.slice(0, 19) : base.slice(0, 23);
 }
 
-/** Colonne `DATE` (sans heure) stockée en texte, comme SQLAlchemy. */
+/** Colonne `DATE` (sans heure) stockée en texte, comme dans la base existante. */
 export const dateSeule = customType<{ data: Date; driverData: string }>({
 	dataType: () => 'DATE',
 	toDriver: (valeur) => formaterDate(valeur),
@@ -116,7 +114,7 @@ export const dateSeule = customType<{ data: Date; driverData: string }>({
 });
 
 /**
- * Colonne `JSON`, déclarée avec le même type SQL que SQLAlchemy (et non `TEXT`, ce qu'écrirait
+ * Colonne `JSON`, déclarée avec le type SQL `JSON` (et non `TEXT`, ce qu'écrirait
  * le mode json de Drizzle) : le contenu est identique, mais le type déclaré est conservé pour que
  * le schéma de la base de production reste exactement le même.
  */
@@ -128,7 +126,7 @@ export function json<T>(nom: string) {
 	})(nom);
 }
 
-/** Booléen stocké en 0/1, comme `Boolean` de SQLAlchemy sous SQLite. */
+/** Booléen stocké en 0/1, comme dans la base existante. */
 export function booleen(nom?: string) {
 	return nom ? integer(nom, { mode: 'boolean' }) : integer({ mode: 'boolean' });
 }

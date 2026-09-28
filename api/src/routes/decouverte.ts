@@ -84,7 +84,7 @@ const QUESTIONNAIRE_VIDE = ficheEntreeSchema.parse({});
 const correspondanceEntreeSchema = z.object({
 	notes_conseillere: z.string().max(5000).default('')
 });
-/** `cloturee` est obligatoire (comme le schéma Pydantic) mais tolère les formes des formulaires. */
+/** `cloturee` est obligatoire, mais tolère les formes que produisent les formulaires. */
 const clotureEntreeSchema = z.object({
 	cloturee: z
 		.union([

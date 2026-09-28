@@ -112,7 +112,7 @@ Sections: Identification entreprise/promoteur (04-13), Environnement socio-éco 
 | `typeimb` | `type_bien` (`TypeBien`, 10 valeurs) | |
 | `indexqtr` | `quartier` (FK) | |
 | `localisationimb` | `localisation` (libre) | |
-| `surfaceimb` | `surface_m2` | ⚠ **type SQL `tinyint` (max 255) incompatible avec l'UI 0-2000 m²** → risque de troncature réelle en legacy. **Migrer en IntegerField standard en Django.** |
+| `surfaceimb` | `surface_m2` | ⚠ **type SQL `tinyint` (max 255) incompatible avec l'UI 0-2000 m²** → risque de troncature réelle en legacy. **Migrer vers un entier standard.** |
 | `nbpieceimb`/`nbchambreimb` | `nombre_pieces`/`nombre_chambres` | |
 | `situationimb` | `situation` (1=Disponible,2=Occupé; 3,4 réservés inutilisés) | |
 | `priximb` | `prix` | |
@@ -189,7 +189,7 @@ Sections: Identification entreprise/promoteur (04-13), Environnement socio-éco 
 | `indexcrs1` | `id` | |
 | `indexmbr` | `membre` (client) | |
 | `referencecrs1` | `reference` (préfixe crs) | |
-| `datecrs1` | `date_creation` | ⚠ stockée `varchar(14)` format YmdHis, pas un vrai type date — **convertir en DateTimeField Django** |
+| `datecrs1` | `date_creation` | ⚠ stockée `varchar(14)` format YmdHis, pas un vrai type date — **convertir en vraie date-heure** |
 | `indexbtq` | `boutique` (FK membre, banqboutqmbr=2) | |
 | `magasincrs1` | `lieu_achat` | |
 | `dateachatcrs1` | `date_achat` (varchar(8) Ymd) | |
@@ -208,7 +208,7 @@ Sections: Identification entreprise/promoteur (04-13), Environnement socio-éco 
 ### `course2` (lignes articles)
 `indexcrs2`→`id`, `indexcrs1`→`commande`(FK), `indexartcse`→`article_catalogue`(FK nullable, rempli seulement en mode catalogue), `articlecrs2`→`nom_article`, `prixcrs2`→`prix_plafond`("Prix maxi à ne pas dépasser", pas figé), `quantitecrs2`→`quantite`, `observationcrs2`→`observation`, `etatcrs2`→`etat_fiche`(non géré dans ce périmètre).
 
-⚠ **Point à clarifier**: deux fichiers concurrents (`incl-course.php` catalogue-lié vs `incl-course-1.php` texte libre) gèrent la même table différemment. Identifier lequel est réellement actif avant de choisir le modèle Django cible.
+⚠ **Point à clarifier**: deux fichiers concurrents (`incl-course.php` catalogue-lié vs `incl-course-1.php` texte libre) gèrent la même table différemment. Identifier lequel est réellement actif avant de choisir le modèle cible.
 
 ---
 
@@ -238,7 +238,7 @@ Sections: Identification entreprise/promoteur (04-13), Environnement socio-éco 
 
 `indexbsn`→`id`, `typebsn`→`type_objet`(3=immobilier/article selon FK renseignée, 6=partenariat; 1,2,4,5 hors périmètre: RH/likelemba), `indexmbr`→`membre`(auteur intérêt), `indexhmn`→`ressource_humaine`(FK, hors périmètre), `indeximb`→`immobilier`(FK conditionnelle), `indexart`→`article`(FK conditionnelle), `indexptn`→`partenariat`(FK conditionnelle), `datebsn`→`date_creation`, `besoinbsn`→`message`, `interesebsn`→`sous_type`(variable selon contexte), `etatbsn`→`etat_fiche`.
 
-**Recommandation Django**: modéliser via relation générique (GenericForeignKey) ou sous-classes plutôt que 3 FK nullables, mais conserver le comportement (1 seule cible renseignée à la fois par ligne).
+**Recommandation**: modéliser via une relation générique plutôt que 3 clés étrangères nullables, mais conserver le comportement (une seule cible renseignée à la fois par ligne).
 
 ---
 
@@ -294,7 +294,7 @@ payement <(1:N)- panier.indexpay / course1 / souscriptoportuniteaffaire (état s
 3. `souscriptoportuniteaffaire.referencesoa`: jamais alimentée — décider si on la génère rétroactivement ou si on la laisse vide comme le legacy.
 4. `souscriptoportuniteaffaire.etatsoa`: pas de vrai workflow de validation dans ce périmètre — vérifier si géré ailleurs (fichiers hors périmètre choix5.php).
 5. `accompbusinessplan`: même bug UPDATE zone53/44 que documenté dans le rapport finance.
-6. `entreprise.indexsat`: champ mort dans l'UI, fragilise l'unicité — décider si on réactive la saisie du secteur en Django.
+6. `entreprise.indexsat`: champ mort dans l'UI, fragilise l'unicité — décider si on réactive la saisie du secteur.
 7. `immobilier.surfaceimb`: type SQL trop étroit (tinyint) vs plage UI réelle — corriger en IntegerField.
 8. `course1`/`course2`: deux flux concurrents (catalogue vs texte libre) — clarifier lequel migrer.
 9. `course1` dates en varchar formaté — convertir en vrais DateTimeField.

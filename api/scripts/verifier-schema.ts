@@ -1,12 +1,11 @@
 /**
- * Vérification de parité du schéma (ADR-0013).
+ * Vérification du schéma contre le relevé figé avant la bascule (ADR-0013).
  *
- * Construit une base SQLite à partir de la migration Drizzle, puis compare chaque colonne au
- * relevé du schéma que produisait SQLAlchemy (`schema-sqlalchemy.json`, extrait de l'ancien
- * backend Python avant la migration) : type, NOT NULL, clé primaire, valeur par défaut.
+ * Construit une base SQLite à partir de la migration Drizzle, puis compare chaque colonne à
+ * `schema-reference.json` — le schéma de la base de production, relevé avant toute modification :
+ * type, NOT NULL, clé primaire, valeur par défaut.
  *
- * Il reste utilisable après la suppression de `backend/` : il ne dépend que de fichiers
- * versionnés ici.
+ * C'est la garantie que la base existante, avec ses 68 membres, reste lisible telle quelle.
  * Usage : `npm run verifier:schema`
  */
 import { readFileSync } from 'node:fs';
@@ -23,7 +22,7 @@ interface ColonneRef {
 
 const ICI = dirname(fileURLToPath(import.meta.url));
 const reference: Record<string, Record<string, ColonneRef>> = JSON.parse(
-	readFileSync(join(ICI, 'schema-sqlalchemy.json'), 'utf8')
+	readFileSync(join(ICI, 'schema-reference.json'), 'utf8')
 );
 
 // --- Base construite depuis la migration Drizzle -------------------------------------------------
@@ -114,17 +113,17 @@ console.log(`  défauts SQL retirés : ${defautsRetires.length}`);
 
 if (defautsRetires.length) {
 	console.log(
-		'\nNote : SQLAlchemy posait ses valeurs par défaut côté Python (aucune clause DEFAULT en base),\n' +
-			'Drizzle les inscrit dans le SQL — un raw INSERT obtient donc désormais la même valeur que\n' +
-			"via l'ORM. Dans l'autre sens, les colonnes `date_creation` perdent leur DEFAULT\n" +
-			'CURRENT_TIMESTAMP : la date est posée par le code (heure locale), exactement comme le\n' +
-			'faisait le `default=datetime.now` de Python, qui primait déjà sur le défaut SQL.'
+		"\nNote : l'ancien backend posait ses valeurs par défaut dans le code (aucune clause DEFAULT en\n" +
+			'base), Drizzle les inscrit dans le SQL — un INSERT direct obtient donc désormais la même\n' +
+			"valeur que via l'ORM. Dans l'autre sens, les colonnes `date_creation` perdent leur DEFAULT\n" +
+			'CURRENT_TIMESTAMP : la date est posée par le code, en heure locale, exactement comme avant —\n' +
+			'le défaut applicatif primait déjà sur le défaut SQL.'
 	);
 }
 
 console.log(
 	bloquants.length === 0
-		? '\n✓ Schéma identique à celui de SQLAlchemy.'
+		? '\n✓ Schéma identique au relevé de référence.'
 		: `\n✗ ${bloquants.length} écart(s) bloquant(s).`
 );
 process.exit(bloquants.length === 0 ? 0 : 1);

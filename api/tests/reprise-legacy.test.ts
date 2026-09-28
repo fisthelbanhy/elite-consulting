@@ -1,10 +1,9 @@
 /**
  * Briques de la reprise des données legacy : lecture du dump MySQL et décodage des entités HTML.
  *
- * La reprise complète, elle, se vérifie en comparant les deux scripts sur un dump de synthèse
- * (`scripts/dump-synthetique.ts` puis `scripts/comparer-reprise.ts`) : elle écrit dans la base et
- * ne se prête pas à un test unitaire. Les valeurs attendues ci-dessous ont toutes été relevées sur
- * l'ancien backend Python.
+ * La reprise complète, elle, s'éprouve sur un dump de synthèse (`scripts/dump-synthetique.ts`) :
+ * elle écrit dans la base et ne se prête pas à un test unitaire. Les valeurs attendues ci-dessous
+ * ont toutes été relevées sur l'ancien backend avant la bascule.
  */
 import { describe, expect, it } from 'vitest';
 import { analyserDump } from '../src/scripts/lire-dump.js';
@@ -56,7 +55,7 @@ describe('lecture du dump MySQL', () => {
 });
 
 describe('décodage des entités HTML', () => {
-	it('reproduit `html.unescape` de Python', () => {
+	it('décode les entités comme la norme HTML le prescrit', () => {
 		// Les artefacts de `htmlspecialchars()`, y compris appliqué deux fois.
 		expect(deshtml('&amp;amp;')).toBe('&amp;');
 		expect(deshtml('l&#039;apostrophe')).toBe("l'apostrophe");

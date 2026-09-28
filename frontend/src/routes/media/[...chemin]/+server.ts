@@ -1,4 +1,4 @@
-/** Fichiers téléversés (photos, CV, publicités) servis depuis FastAPI, sur la même origine. */
+/** Fichiers téléversés (photos, CV, publicités) servis depuis l'API, sur la même origine. */
 import type { RequestHandler } from './$types';
 import { BACKEND_URL } from '$lib/server/api';
 

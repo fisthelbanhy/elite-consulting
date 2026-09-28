@@ -1,7 +1,7 @@
 # Inventaire fonctionnel — Transverse, Administration, Section 1 « Le saviez-vous ? », Section 2 « Ressources humaines »
 
 > Source : code legacy en production `lafrangine/V04/prog/` (PHP 5, `mysql_*`), lu intégralement pour le périmètre ci-dessous, et contrôles d'agrégats sur le dump `cp1019011_lafrangine.sql` (comptages uniquement, aucune donnée personnelle recopiée).
-> Cible : réécriture SvelteKit 2 / Svelte 5 + FastAPI. Ce document décrit **ce que fait réellement le legacy** (y compris ses défauts), puis ce qu'il ne faut **pas** reproduire.
+> Cible : réécriture SvelteKit 2 / Svelte 5 + Express. Ce document décrit **ce que fait réellement le legacy** (y compris ses défauts), puis ce qu'il ne faut **pas** reproduire.
 
 ---
 
@@ -38,7 +38,7 @@ Hors périmètre (cités seulement quand ils sont appelés d'ici) : `paportfond.
 
 Libellés des droits affichés en infobulle (`$arraydroitmembre1`) : Droit = « Donne et retire les droits aux autres membres » ; Caisse = « Confirme un payement » ; Activation = « Crée, Active, Annule, ou Supprime une fiche ». Le 4ᵉ libellé « Point caisse » de `$arraydroitmembre` n'est pas stocké dans `droitmbr` : il correspond à la colonne `pointcaissembr` (1 = Oui, 2 = Non).
 
-> **Avertissement général d'accès.** Les écrans d'administration n'ont **aucun contrôle d'accès serveur** : ils incluent le menu gestionnaire sans condition et répondent à toute personne qui connaît l'URL. Le profil de n'importe quel membre (mot de passe compris) est lisible et modifiable par URL (§ 1.5). La colonne « Accès » ci-dessous décrit **l'intention** (visibilité des liens). La nouvelle version doit l'imposer côté serveur (FastAPI).
+> **Avertissement général d'accès.** Les écrans d'administration n'ont **aucun contrôle d'accès serveur** : ils incluent le menu gestionnaire sans condition et répondent à toute personne qui connaît l'URL. Le profil de n'importe quel membre (mot de passe compris) est lisible et modifiable par URL (§ 1.5). La colonne « Accès » ci-dessous décrit **l'intention** (visibilité des liens). La nouvelle version doit l'imposer côté serveur.
 
 ### 0.4 Conventions techniques du legacy (utiles pour lire les tableaux)
 

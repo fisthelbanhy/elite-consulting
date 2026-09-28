@@ -25,7 +25,7 @@ des données ; `acomp*` (4), `benchmarking1/2/3`, `adhesion`, `aide`, `client`, 
    écartées et journalisées par le script de reprise (intégrité déjà rompue à la source).
 4. **Pas de suppression physique** (comme le legacy) : l'état `Supprimé` (3) sert de corbeille.
    Exceptions reprises telles quelles : lignes de panier et lignes du comparateur de prix.
-5. **Énumérations** : chaque `$arrayXXX` de `incl-variable.php` devient une `IntEnum` Python
+5. **Énumérations** : chaque `$arrayXXX` de `incl-variable.php` devient une énumération numérotée
    (valeurs numériques identiques au legacy) exposée au frontend avec ses libellés via
    `GET /api/referentiels/enums`.
 6. **Références métier** (`DEI112117`, `ALF111217`…) : même algorithme que `fonctreference()` —
@@ -52,7 +52,7 @@ des données ; `acomp*` (4), `benchmarking1/2/3`, `adhesion`, `aide`, `client`, 
     `lafrangine/V04/image/ig/` vers `backend/media/`.
 11. **Dates** : `varchar` legacy (`YmdHis`) convertis en vrais `DATETIME` ; `0000-00-00` → `NULL`.
 12. **Montants** en `BigInteger` (FCFA, pas de décimales) ; taux de placement en `Float`.
-13. **Schéma versionné par Alembic** ; SQLite en dev, PostgreSQL en prod.
+13. **Schéma versionné par migrations** (drizzle-kit, ADR-0013) ; base SQLite.
 
 ## Conséquences
 

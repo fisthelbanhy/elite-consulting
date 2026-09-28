@@ -1,5 +1,5 @@
 /**
- * Configuration de drizzle-kit : génération des migrations de schéma (remplace Alembic, ADR-0013).
+ * Configuration de drizzle-kit : génération des migrations de schéma (ADR-0013).
  *
  *   npm run migration -- --name description_du_changement   → écrit un fichier dans migrations/
  *   npm run migrer                                          → applique les migrations en attente

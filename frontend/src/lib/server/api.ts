@@ -1,6 +1,6 @@
 /**
- * Client de l'API FastAPI, utilisable uniquement côté serveur (architecture BFF, ADR-0002).
- * Le jeton de session vit dans un cookie httpOnly ; il est relayé à FastAPI en Bearer.
+ * Client de l'API, utilisable uniquement côté serveur (architecture BFF, ADR-0002).
+ * Le jeton de session vit dans un cookie httpOnly ; il est relayé à l'API en Bearer.
  */
 import { env } from '$env/dynamic/private';
 import { error, fail, redirect, type ActionFailure, type RequestEvent } from '@sveltejs/kit';
@@ -209,7 +209,7 @@ export function fichierJoint(fd: FormData, champ: string): File | null {
 	return f instanceof File && f.size > 0 ? f : null;
 }
 
-/** Envoie un fichier vers un endpoint d'upload FastAPI (multipart). */
+/** Envoie un fichier vers une route de téléversement de l'API (multipart). */
 export async function televerser<T>(event: Evenement, chemin: string, champ: string, fichier: File): Promise<T> {
 	const fd = new FormData();
 	fd.set(champ, fichier, fichier.name);

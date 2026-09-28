@@ -21,7 +21,7 @@ export type VerificationsCroisees = (
  * Valide un corps de requête et lève une erreur 422 listant **tous** les champs en faute.
  *
  * Pourquoi ne pas utiliser seulement `schema.parse()` : Zod abandonne les contrôles croisés
- * (`.check()`) dès qu'un champ échoue, alors que Pydantic signalait les deux à la fois. Comme le
+ * (`.check()`) dès qu'un champ échoue, alors que l'ancien backend signalait les deux. Comme le
  * frontend affiche un message sous chaque champ, perdre la moitié des messages dégraderait le
  * formulaire — les contrôles croisés sont donc exécutés séparément, sur le corps brut.
  */
@@ -151,8 +151,8 @@ export const entier = z.coerce.number().int();
  * Entier facultatif : `""`, `null` et la clé absente donnent `null`.
  *
  * `.optional()` est indispensable : une union contenant `z.undefined()` ne rend pas la clé
- * facultative dans un objet Zod — la clé absente serait refusée, là où Pydantic acceptait
- * `int | None = None`.
+ * facultative dans un objet Zod — la clé absente serait refusée, là où un entier facultatif doit
+ * l'accepter.
  */
 export const entierFacultatif = z
 	.union([z.literal(''), z.null(), z.coerce.number().int()])
@@ -164,7 +164,7 @@ export const entierFacultatif = z
  *
  * Pourquoi ne pas écrire simplement `z.coerce.number().int()` : la coercition transforme aussi
  * bien la clé absente que `"abc"` en `NaN`, si bien que les deux cas donneraient le même message.
- * Pydantic les distinguait (« Ce champ est obligatoire. » contre « Nombre entier attendu. ») et le
+ * Ce sont deux messages différents (« Ce champ est obligatoire. » / « Nombre entier attendu. ») et le
  * frontend affiche ce message sous le champ : la présence est donc contrôlée **avant** la
  * conversion, et le format par une expression régulière.
  */
@@ -201,7 +201,7 @@ function borne(min?: number, max?: number) {
 
 /**
  * Champ téléphone facultatif : normalisé puis validé **par Zod** (et non par une erreur métier),
- * pour que le format invalide réponde 422 comme le faisait le validateur Pydantic d'origine.
+ * pour qu'un format invalide réponde 422, et non une erreur métier en 400.
  */
 export const telephoneFacultatif = z
 	.string()

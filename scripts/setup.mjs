@@ -3,8 +3,6 @@
  * Installe l'environnement de développement, sur n'importe quel système (Windows, Linux, macOS) :
  * dépendances npm de l'API et du site, puis base de démonstration si aucune base n'existe. C'est
  * la commande lancée par une session cloud (`npm run setup`).
- *
- * Depuis l'ADR-0013, tout est en Node : il n'y a plus d'environnement Python à construire.
  */
 import { spawnSync } from 'node:child_process';
 import { existsSync } from 'node:fs';

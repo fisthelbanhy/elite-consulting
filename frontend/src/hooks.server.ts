@@ -12,7 +12,7 @@ const redirections: Handle = async ({ event, resolve }) => {
 	return resolve(event);
 };
 
-/** Session : le cookie httpOnly porte un jeton opaque, validé auprès de FastAPI. */
+/** Session : le cookie httpOnly porte un jeton opaque, validé auprès de l'API. */
 const authentification: Handle = async ({ event, resolve }) => {
 	event.locals.membre = null;
 	event.locals.jeton = event.cookies.get(COOKIE_SESSION) ?? null;

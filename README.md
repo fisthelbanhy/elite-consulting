@@ -15,7 +15,7 @@ non le langage, qui détermine le coût d'un hébergement (ADR-0013).
 
 ## Démarrer (Windows, Linux ou macOS)
 
-Prérequis : Node.js 22+. (Plus de Python : le backend FastAPI a été remplacé le 28/09/2026.)
+Prérequis : Node.js 22+, et rien d'autre.
 
 ```bash
 npm run setup      # dépendances de api/ et frontend/, base de démonstration
@@ -59,7 +59,7 @@ de démonstration : `npm run donnees:demo`.
 
 ## Configuration
 
-Toutes les variables de l'API gardent leur préfixe `LF_`, inchangé depuis FastAPI.
+Toutes les variables de l'API portent le préfixe `LF_`.
 
 | Variable | Rôle | Défaut |
 |---|---|---|

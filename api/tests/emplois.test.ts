@@ -1,6 +1,6 @@
 /**
  * Emplois — module de référence (portage de `tests/test_emplois.py`).
- * Mêmes cas, mêmes assertions que la suite pytest.
+ * Mêmes cas, mêmes assertions que la suite d'origine.
  */
 import { describe, expect, it } from 'vitest';
 import { basePropre, client, creerMembre, entetes } from './aides.js';

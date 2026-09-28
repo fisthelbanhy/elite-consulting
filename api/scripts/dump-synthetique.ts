@@ -1,13 +1,12 @@
 /**
- * Outil de migration : engendre un **dump legacy de synthèse**, pour vérifier que la reprise
- * TypeScript (`src/scripts/reprise-legacy.ts`) donne le même résultat que l'ancienne reprise
- * Python — sans jamais toucher au dump de production.
+ * Engendre un **dump legacy de synthèse**, pour éprouver la reprise
+ * (`src/scripts/reprise-legacy.ts`) sans jamais toucher au dump de production.
  *
  * Le dump de production contient les données personnelles des 68 membres et n'est pas versionné
  * (ADR-0012) : il n'est pas disponible en session cloud, et il serait de toute façon imprudent de
  * s'en servir comme banc d'essai. Ce fichier fabrique donc un dump qui a la **forme** du vrai —
- * mêmes tables, mêmes noms de colonnes — et qui exerce délibérément les bizarreries que les deux
- * scripts doivent traiter de la même façon :
+ * mêmes tables, mêmes noms de colonnes — et qui exerce délibérément les bizarreries que la reprise
+ * doit savoir traiter :
  *
  * - dates legacy sous toutes leurs formes (`0000-00-00`, `YYYYMMDD`, `YmdHis`, vides, impossibles) ;
  * - textes doublement encodés en entités HTML, échappés par `addslashes()` ;
@@ -17,15 +16,13 @@
  *   `indexmbr` porte le type de fiche, réponse de dialogue adressée au membre n° 1, produit rangé
  *   dans une catégorie inexistante.
  *
- * Chaque table reçoit **toutes** les colonnes citées par les deux scripts : une colonne absente
- * ferait lever un `KeyError` côté Python, et une colonne en trop est simplement ignorée des deux
- * côtés. La comparaison reste donc valable quelle que soit la table à laquelle une colonne
- * appartient réellement.
+ * Chaque table reçoit **toutes** les colonnes que la reprise sait lire : une colonne en trop est
+ * simplement ignorée, alors qu'une colonne absente ferait échouer la lecture. Le dump reste donc
+ * valable quelle que soit la table à laquelle une colonne appartient réellement.
  *
  * Usage : `npx tsx scripts/dump-synthetique.ts <fichier.sql>`
  *
- * Il reste utilisable après la suppression de `backend/` : il ne dépend que de fichiers
- * versionnés ici.
+ * Il ne dépend que de fichiers versionnés ici.
  */
 import { writeFileSync } from 'node:fs';
 

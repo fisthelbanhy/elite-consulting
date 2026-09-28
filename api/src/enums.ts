@@ -374,7 +374,7 @@ const TypeOperationBanqueLibelles: Libelles = {
 
 /**
  * Registre des énumérations, exposé au frontend par `GET /api/referentiels/enums`.
- * Les clés reprennent **exactement** les noms des classes Python, car le frontend les utilise
+ * Les clés reprennent **exactement** les noms de l'ancien backend, car le frontend les utilise
  * telles quelles : `libelle(enums, 'TypeBien', v)`.
  */
 export const ENUMS: Readonly<Record<string, Libelles>> = {
@@ -429,7 +429,7 @@ export function libelle(nom: string, valeur: number | null | undefined): string 
 /**
  * Liste `[{value, label}]` d'une énumération (équivalent de `Choix.options`). Les clés numériques
  * d'un objet JavaScript sont parcourues par valeur croissante, ce qui reproduit l'ordre des
- * déclarations Python — toutes les énumérations sont numérotées dans l'ordre.
+ * déclarations d'origine — toutes les énumérations sont numérotées dans l'ordre.
  */
 export function options(nom: string): Option[] {
 	const table = ENUMS[nom];
@@ -439,7 +439,7 @@ export function options(nom: string): Option[] {
 
 /**
  * Charge utile de `GET /api/referentiels/enums` : toutes les énumérations, plus `NiveauDiplome`
- * construit depuis `NIVEAUX_DIPLOME` (indices à partir de 0, comme l'`enumerate` de Python).
+ * construit depuis `NIVEAUX_DIPLOME`, les indices partant de 0.
  */
 export function toutesLesEnumerations(): Record<string, Option[]> {
 	const data: Record<string, Option[]> = {};

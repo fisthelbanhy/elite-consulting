@@ -1,14 +1,14 @@
 /**
- * Table des entités de caractères HTML5, **engendrée** depuis `html.entities.html5` de Python.
+ * Table des entités de caractères **de la norme HTML** (section « Named character references »
+ * de la spécification WHATWG), avec les 2 231 noms qu'elle définit.
  *
  * Elle n'existe que pour la reprise des données legacy : le PHP d'origine stockait les saisies
- * passées par `htmlspecialchars()`/`htmlentities()`, et l'ancien script de reprise les décodait
- * avec `html.unescape`. Reproduire ce décodage à l'identique est la seule façon de garantir que
- * les textes repris sont les mêmes, caractère pour caractère.
+ * passées par `htmlspecialchars()`/`htmlentities()`, et il faut les rendre lisibles à l'identique
+ * — un caractère de différence est une régression invisible à la lecture.
  *
  * Les clés sans point-virgule final sont les formes tolérées par la norme (`&amp` vaut `&`).
  *
- * Ne pas modifier à la main : régénérer depuis Python si besoin.
+ * Fichier de données : ne pas modifier à la main.
  */
 
 /** Nom d'entité (avec ou sans `;` final) → caractères correspondants. */

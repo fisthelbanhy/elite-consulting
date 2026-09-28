@@ -64,7 +64,7 @@ export async function envoyer(
 
 /**
  * Envoie sans attendre et sans jamais propager d'erreur — remplace le `BackgroundTasks` de
- * FastAPI. À utiliser quand l'e-mail accompagne une action mais ne la conditionne pas.
+ * réponse. À utiliser quand l'e-mail accompagne une action mais ne la conditionne pas.
  */
 export function envoyerEnArrierePlan(
 	destinataire: string,

@@ -166,7 +166,7 @@ Arbitrages : ADR-0004, ADR-0006, ADR-0007 (S4a à S4d), ADR-0009.
 ## Besoins sur des fichiers partagés
 
 - Base de dev : ajouter la colonne `cotisation_likelemba.paiement_id` (relancer la reprise ou
-  migration Alembic) — sans elle, les lectures de cotisations échouent sur la base partagée.
+  migration de schéma) — sans elle, les lectures de cotisations échouent sur la base partagée.
 - `lib/navigation.ts` : rien à changer (liens du pilier déjà présents).
 - Espace membre (autre domaine) : peut exploiter `GET /likelemba/mes-adhesions`,
   `GET /projets/apports` et `GET /epargne/pointages` pour un tableau de bord.

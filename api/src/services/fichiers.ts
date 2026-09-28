@@ -3,7 +3,7 @@
  * l'extension ou le type annoncé par le navigateur), taille limitée, images ré-encodées et
  * redimensionnées — ce qui supprime au passage les métadonnées EXIF (géolocalisation notamment).
  *
- * Portage de `app/services/fichiers.py` (Pillow → sharp).
+ * Redimensionnement et enregistrement des fichiers téléversés (sharp).
  */
 import { randomBytes } from 'node:crypto';
 import { mkdirSync, unlinkSync } from 'node:fs';

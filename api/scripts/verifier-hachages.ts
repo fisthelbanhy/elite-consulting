@@ -1,6 +1,5 @@
 /**
- * Outil de migration : vérifie que les **mots de passe** repris par l'ancien script Python restent
- * valides pour le backend Express — et réciproquement.
+ * Vérifie que les **mots de passe** repris depuis le legacy permettent bien de se connecter.
  *
  * C'est la propriété la plus lourde de conséquences de toute la migration : si elle est fausse,
  * les 68 membres perdent l'accès à leur compte et il faut réinitialiser chaque mot de passe à la
@@ -18,8 +17,7 @@
  * issues du dump de synthèse (`dump-synthetique.ts`), où le mot de passe du membre n° i est
  * `motdepassei` et le code de pointage du membre n° 1 est `1234`.
  *
- * Il reste utilisable après la suppression de `backend/` : il ne dépend que de fichiers
- * versionnés ici.
+ * Il ne dépend que de fichiers versionnés ici.
  */
 import Database from 'better-sqlite3';
 import { verifierMotDePasse } from '../src/securite.js';

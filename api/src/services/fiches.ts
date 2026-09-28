@@ -24,7 +24,7 @@ export interface Liste<T> {
  * Exécute une requête paginée et compte le total.
  *
  * Le total est obtenu en enveloppant la requête dans un `select count(*)`, ce qui reprend
- * exactement le comportement de la version Python (mêmes filtres, mêmes jointures).
+ * exactement le comportement de l'ancienne version (mêmes filtres, mêmes jointures).
  */
 export function paginer<T>(requete: Requete, page: Pagination): Liste<T> {
 	const compte = db
@@ -52,7 +52,7 @@ interface RequetePaginable {
 /**
  * Condition « q apparaît dans une des colonnes » (insensible à la casse), ou `undefined`.
  *
- * Reproduit le `ilike` que SQLAlchemy traduisait en `lower(colonne) LIKE lower(motif)` :
+ * Recherche insensible à la casse : `lower(colonne) LIKE lower(motif)`, comme auparavant —
  * comme dans l'ancien backend, l'insensibilité à la casse ne vaut que pour l'ASCII (SQLite ne
  * connaît pas la casse des caractères accentués).
  */

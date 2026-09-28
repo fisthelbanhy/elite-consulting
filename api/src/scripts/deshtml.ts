@@ -1,12 +1,11 @@
 /**
- * Décodage des entités HTML, reproduction de `html.unescape` de Python.
+ * Décodage des entités HTML.
  *
  * Utilisé uniquement par la reprise des données legacy : le PHP d'origine stockait les saisies
- * déjà encodées (« &amp;amp; », « &eacute; », « &#039; »), et l'ancien script de reprise les
- * rendait lisibles avec `html.unescape`. Le même algorithme, appliqué à la même table
- * (`entites-html.ts`, engendrée depuis Python), donne les mêmes textes.
+ * déjà encodées (« &amp;amp; », « &eacute; », « &#039; »), qu'il faut rendre lisibles — et à
+ * l'identique de ce que faisait l'ancienne reprise, sinon les textes repris diffèrent.
  *
- * L'algorithme est celui de CPython, lui-même tiré de la norme HTML :
+ * L'algorithme est celui de la norme HTML :
  * - une référence numérique (`&#233;`, `&#xE9;`) donne le caractère de ce code, sauf pour les
  *   codes 0x80–0x9F que la norme réinterprète en Windows-1252, et sauf les codes interdits ;
  * - une référence nommée est cherchée telle quelle, puis — le point-virgule étant facultatif dans
@@ -16,7 +15,7 @@
  */
 import { CODES_SUPPRIMES, ENTITES_HTML, REFERENCES_INVALIDES } from './entites-html.js';
 
-/** Même expression que `html._charref` de CPython. */
+/** Une référence de caractère : `&#233;`, `&#xE9;` ou `&eacute;`, le `;` étant facultatif. */
 const REFERENCE = /&(#[0-9]+;?|#[xX][0-9a-fA-F]+;?|[^\t\n\f <&#;]{1,32};?)/g;
 
 /** U+FFFD, le « caractère de remplacement ». Nommé, car invisible dans un littéral. */

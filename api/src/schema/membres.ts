@@ -126,7 +126,7 @@ export const visiteMembre = sqliteTable(
 	(t) => [index('ix_visite_membre_membre_id').on(t.membre_id)]
 );
 
-// --- Règles portées depuis les propriétés du modèle Python ---------------------------------------
+// --- Règles portées depuis les propriétés du modèle legacy ---------------------------------------
 
 export function estGestionnaire(m: Pick<Membre, 'type_compte'> | null | undefined): boolean {
 	return m?.type_compte === TypeMembre.GESTIONNAIRE;

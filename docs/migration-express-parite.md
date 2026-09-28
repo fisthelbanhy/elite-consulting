@@ -1,6 +1,6 @@
 # Contrat de l API a porter (reference de parite)
 
-Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
+Releve automatique du contrat de l ancien backend, fige avant la bascule vers Express.
 **381 operations sur 259 chemins, 35 groupes.**
 
 ## Accompagnement (9)

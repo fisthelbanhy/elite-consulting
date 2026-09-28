@@ -55,7 +55,7 @@ function lignes(nom: string, table: SQLiteTable): Record<string, unknown>[] {
 		const ligne: Record<string, unknown> = {};
 		for (const colonne of colonnes) {
 			const valeur = brute[colonne];
-			// `isoformat()` côté Python : une date sort en texte, le reste tel quel.
+			// Une date sort en texte ISO, le reste tel quel.
 			ligne[colonne] = valeur instanceof Date ? serialiserDate(valeur) : valeur;
 		}
 		return ligne;

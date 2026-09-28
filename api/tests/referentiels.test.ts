@@ -18,7 +18,7 @@ describe('énumérations', () => {
 	it('expose chaque énumération sous la forme attendue par le frontend', async () => {
 		const r = await client().get('/api/referentiels/enums');
 		expect(r.status).toBe(200);
-		// Le frontend appelle libelle(enums, 'TypeBien', v) : la clé garde le nom de la classe Python.
+		// Le frontend appelle libelle(enums, 'TypeBien', v) : la clé garde son nom d'origine.
 		expect(r.body.TypeBien).toContainEqual({ value: 1, label: 'Maison' });
 		expect(r.body.Etat).toContainEqual({ value: 2, label: 'Autorisé' });
 		// NiveauDiplome est construit depuis la liste, indices à partir de 0.

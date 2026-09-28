@@ -1,7 +1,6 @@
 # État d'avancement de la refonte
 
-> Mis à jour le 28/09/2026. Remplace l'ancien `MIGRATION_STATUS.md` (tentative Django, archivée
-> dans [historique/](historique/MIGRATION_STATUS-tentative-django.md) — son code n'existait plus).
+> Mis à jour le 28/09/2026.
 
 ## En bref
 
@@ -9,7 +8,7 @@ La refonte est **fonctionnellement complète** : les 7 sections du site legacy, 
 d'administration et les services transverses sont réécrits en SvelteKit 2 / Svelte 5 + Express 5,
 réorganisés en 3 piliers + boutique, et alimentés par les vraies données de production.
 
-Le backend FastAPI a été remplacé par Express/TypeScript le 28/09/2026 (ADR-0013) : un seul
+Le backend a été réécrit en Express/TypeScript le 28/09/2026 (ADR-0013) : un seul
 langage sur tout le projet, et surtout **un seul processus Node** en production, donc un seul
 service à héberger. La bascule s'est faite à parité vérifiée, pas à l'estime — cinq outils de
 comparaison le prouvent, détaillés dans l'ADR-0013.
@@ -72,7 +71,7 @@ vérification mécanique — ils disparaîtront avec l'ancien backend :
 | Opérations exposées | 381 montées / 381 attendues |
 | Réponses JSON, sur la même donnée | 162 routes de lecture identiques, champ par champ |
 | Reprise des données legacy | 62 tables, 110 lignes identiques, même rapport |
-| Mots de passe repris par Python | acceptés par Express ; les mauvais restent refusés |
+| Mots de passe repris de l'ancien backend | acceptés ; les mauvais restent refusés |
 
 La dernière ligne est la plus importante : les 68 membres gardent leur mot de passe, sans aucune
 réinitialisation. La comparaison des réponses a révélé cinq régressions du portage (format des

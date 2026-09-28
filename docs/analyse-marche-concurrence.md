@@ -1,6 +1,6 @@
 # La Frangine — Analyse de marché, concurrence et stratégie de conversion (refonte 2026)
 
-> **Date** : 22 septembre 2026 · **Périmètre** : Congo-Brazzaville (focus Brazzaville et Pointe-Noire), zone CEMAC · **Objet** : repositionner lafrangine.com et concevoir une refonte (SvelteKit + API Python) qui **convertit**.
+> **Date** : 22 septembre 2026 · **Périmètre** : Congo-Brazzaville (focus Brazzaville et Pointe-Noire), zone CEMAC · **Objet** : repositionner lafrangine.com et concevoir une refonte qui **convertit**.
 > **Méthode** : recherche documentaire (sources officielles ARPCE, ARTF, BEAC, Banque mondiale, DataReportal, documentation des prestataires de paiement, sites concurrents), relevés StatCounter (CSV, août 2026), lecture de la page d'accueil legacy et du dictionnaire de données issu de la migration. Les sources sont citées en ligne et listées en fin de document. Les chiffres issus de blogs marketing (fiabilité faible) sont signalés comme tels et ne portent aucune recommandation clé.
 
 ---

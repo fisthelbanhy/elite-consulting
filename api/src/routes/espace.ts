@@ -79,7 +79,7 @@ routeur.get('/compteurs', membreRequis, (req, res) => {
 			.where(
 				and(
 					eq(tableMembre.type_compte, TypeMembre.GESTIONNAIRE),
-					// `gte` passe par le type de colonne, qui formate la date comme SQLAlchemy ;
+					// `gte` passe par le type de colonne, qui formate la date comme la base l'attend ;
 					// une date interpolée dans du SQL brut serait refusée par le pilote.
 					gte(tableMembre.derniere_activite, new Date(Date.now() - PRESENCE_MS))
 				)
@@ -91,13 +91,13 @@ routeur.get('/compteurs', membreRequis, (req, res) => {
 
 // --- Tableau de bord « Mon espace » ---------------------------------------------------------------
 
-/** Texte réduit à `n` caractères, espaces normalisés (comme `_court` en Python). */
+/** Texte réduit à `n` caractères, espaces normalisés. */
 function court(texte: string | null | undefined, n = 70): string {
 	const t = (texte ?? '').split(/\s+/).filter(Boolean).join(' ');
 	return t.length <= n ? t : `${t.slice(0, n - 1).trimEnd()}…`;
 }
 
-/** Montant en FCFA avec séparateur d'espace, comme le formatage Python d'origine. */
+/** Montant en FCFA avec séparateur d'espace, comme le formatage d'origine. */
 function fcfa(montant: number): string {
 	return `${montant.toLocaleString('fr-FR').replace(/ | /g, ' ')} FCFA`;
 }
@@ -121,15 +121,15 @@ interface Source {
 	lien: (f: Record<string, never>) => string;
 	/**
 	 * Colonne de date servant au tri. **Absente vaut `date_creation`** — c'était la valeur par
-	 * défaut du champ Python ; `null` explicite désigne une table qui n'a pas de date.
+	 * défaut d'origine ; `null` explicite désigne une table qui n'a pas de date.
 	 */
 	date?: string | null;
 	statut?: (f: Record<string, never>) => string;
 }
 
 /**
- * Le champ `date` de la fiche courte était déclaré `datetime | date | None` : Pydantic promouvait
- * une date seule en date-heure, si bien qu'une date de début de likelemba sortait en
+ * Le champ `date` de la fiche courte accepte une date comme une date-heure, et l'ancien backend
+ * promouvait la première en seconde : une date de début de likelemba sortait en
  * `2026-08-29T00:00:00`. On rend donc une `Date` ordinaire, jamais un `JourSeul`.
  */
 function dateHeureFiche(valeur: Date | null): Date | null {

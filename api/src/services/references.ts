@@ -48,7 +48,7 @@ function deuxChiffres(n: number): string {
 	return String(n).padStart(2, '0');
 }
 
-/** `%m` puis `%y` de la date, comme le formatage Python d'origine. */
+/** Mois puis année sur deux chiffres, dans l'ordre du format legacy. */
 function moisEtAnnee(d: Date): { mois: string; annee: string } {
 	return { mois: deuxChiffres(d.getMonth() + 1), annee: deuxChiffres(d.getFullYear() % 100) };
 }

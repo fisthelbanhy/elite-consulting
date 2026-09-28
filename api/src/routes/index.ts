@@ -2,7 +2,7 @@
  * Registre des routeurs (portage de `app/routers/__init__.py`).
  *
  * Chaque module de domaine expose `routeur` et `prefixe` ; ce registre les monte tous sous
- * `/api`. Un module = un fichier, comme côté Python (voir docs/CONVENTIONS.md).
+ * `/api`. Un module = un fichier (voir docs/CONVENTIONS.md).
  */
 import type { Router } from 'express';
 import * as accompagnement from './accompagnement.js';

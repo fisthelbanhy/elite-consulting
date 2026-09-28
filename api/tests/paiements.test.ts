@@ -57,7 +57,7 @@ describe('préparation', () => {
 		const h = await entetes('payeur');
 
 		// `type_objet` est obligatoire : la clé absente et une valeur illisible ne donnent pas le
-		// même message, comme du temps de Pydantic.
+		// même message.
 		const absent = await client().get('/api/paiements/preparer').set(h);
 		expect(absent.status).toBe(422);
 		expect(absent.body.champs).toEqual({ type_objet: 'Ce champ est obligatoire.' });

@@ -1,6 +1,6 @@
 /**
  * Schémas et vues du domaine « membre » (portage de `app/schemas/membres.py`).
- * Pydantic → Zod : mêmes contraintes, mêmes messages d'erreur en français.
+ * Mêmes contraintes et mêmes messages d'erreur en français que l'ancien backend.
  */
 import { z } from 'zod';
 import type { VerificationsCroisees } from './commun.js';
@@ -70,7 +70,7 @@ export const inscriptionSchema = champsProfilSchema.extend({
 
 /**
  * Contrôles croisés de l'inscription, exécutés même si un champ a déjà échoué — c'est ce que
- * faisaient les validateurs Pydantic, et le formulaire doit pouvoir tout signaler d'un coup.
+ * doit pouvoir tout signaler d'un coup, et non un champ à la fois.
  */
 export const verificationsInscription: VerificationsCroisees = (brut, champs) => {
 	const motDePasse = String(brut.mot_de_passe ?? '');
@@ -158,7 +158,7 @@ export interface MembreMoi {
 
 /**
  * Pourcentage de complétion du profil (incite à compléter l'inscription progressive).
- * Mêmes champs comptés que dans la version Python.
+ * Mêmes champs comptés que dans l'ancienne version.
  */
 function profilComplet(m: Membre): number {
 	const champs: unknown[] = [m.nom, m.pseudonyme, m.telephone, m.ville_id, m.email, m.adresse];

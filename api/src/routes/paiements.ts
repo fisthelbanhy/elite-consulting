@@ -55,7 +55,7 @@ function payeursDe(paiements: Paiement[]) {
 	);
 }
 
-/** `type_objet` est obligatoire, `objet_id` facultatif — comme la signature Python d'origine. */
+/** `type_objet` est obligatoire, `objet_id` facultatif — comme dans le contrat d'origine. */
 const preparerSchema = z.object({
 	type_objet: entierRequis(),
 	objet_id: entierFacultatifRequete()
