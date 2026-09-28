@@ -3,7 +3,7 @@
  * ville, quartier, secteuractivite, domaineactivite, diplome, familart, banque, visite).
  */
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
-import { booleen, dateHeure, texteVide } from '../db.js';
+import { booleen, dateHeure, maintenant, texteVide } from '../db.js';
 import { Etat } from '../enums.js';
 
 /** Singleton de configuration (legacy `parametre`, indexpmt=1). */
@@ -97,10 +97,11 @@ export const visite = sqliteTable(
 	{
 		id: integer('id').primaryKey(),
 		membre_id: integer('membre_id'),
-		date_heure: dateHeure('date_heure')
-			.notNull()
-			.$defaultFn(() => new Date()),
+		date_heure: dateHeure('date_heure').notNull().$defaultFn(maintenant),
 		adresse_ip: texteVide('adresse_ip')
 	},
-	(t) => [index('ix_visite_date_heure').on(t.date_heure), index('ix_visite_adresse_ip').on(t.adresse_ip)]
+	(t) => [
+		index('ix_visite_date_heure').on(t.date_heure),
+		index('ix_visite_adresse_ip').on(t.adresse_ip)
+	]
 );

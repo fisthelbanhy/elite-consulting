@@ -63,8 +63,7 @@ export function estDeclare(typeObjet: number): boolean {
 }
 
 export const CONSIGNES: Record<number, string> = {
-	[ModePaiement.CASH]:
-		'Vous pouvez saisir une remarque ou observation (lieu, personne remise…).',
+	[ModePaiement.CASH]: 'Vous pouvez saisir une remarque ou observation (lieu, personne remise…).',
 	[ModePaiement.CHARDEN_FARELL]:
 		"Indiquez le nom, le téléphone et l'agence de l'expéditeur, ainsi que le code Charden Farell.",
 	[ModePaiement.MOBILE_MONEY]:

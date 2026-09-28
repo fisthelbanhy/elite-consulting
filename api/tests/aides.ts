@@ -52,10 +52,12 @@ export function reinitialiserBase(): void {
 			commission_course: 4_000
 		})
 		.run();
-	db.insert(ville).values([
-		{ id: 2, nom: 'Brazzaville' },
-		{ id: 3, nom: 'Pointe-Noire' }
-	]).run();
+	db.insert(ville)
+		.values([
+			{ id: 2, nom: 'Brazzaville' },
+			{ id: 3, nom: 'Pointe-Noire' }
+		])
+		.run();
 	db.insert(quartier).values({ id: 1, ville_id: 2, nom: 'Bacongo' }).run();
 	db.insert(secteurActivite).values({ id: 1, libelle: 'Informatique' }).run();
 	db.insert(domaineActivite).values({ id: 1, secteur_id: 1, libelle: 'Développement web' }).run();

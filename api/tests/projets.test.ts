@@ -102,7 +102,7 @@ describe('création', () => {
 });
 
 describe('publication', () => {
-	it('publie d’emblée, garde le promoteur privé et compte les visites des tiers', async () => {
+	it("publie d'emblée, garde le promoteur privé et compte les visites des tiers", async () => {
 		await creerMembre('porteur');
 		await creerMembre('curieux');
 		await creerMembre('admin', { type_compte: TypeMembre.GESTIONNAIRE, droit_activation: true });
@@ -126,12 +126,20 @@ describe('publication', () => {
 		expect(public_.telephone_promoteur).toBeNull();
 		expect(public_.apports).toBeNull();
 
-		const autre = (await client().get(`/api/projets/${id}`).set(await entetes('curieux'))).body;
+		const autre = (
+			await client()
+				.get(`/api/projets/${id}`)
+				.set(await entetes('curieux'))
+		).body;
 		expect(autre.peut_apporter).toBe(true);
 		expect(autre.peut_modifier).toBe(false);
 		expect(autre.email_promoteur).toBeNull();
 
-		const admin = (await client().get(`/api/projets/${id}`).set(await entetes('admin'))).body;
+		const admin = (
+			await client()
+				.get(`/api/projets/${id}`)
+				.set(await entetes('admin'))
+		).body;
 		expect(admin.nom_promoteur).toBe('Mabiala Grâce');
 		expect(admin.peut_moderer).toBe(true);
 
@@ -258,7 +266,7 @@ describe('modération', () => {
 	});
 });
 
-describe('promesse d’apport', () => {
+describe("promesse d'apport", () => {
 	it('est comptée immédiatement dans « promis » (ADR-0007 S4a)', async () => {
 		await creerMembre('porteur');
 		await creerMembre('bailleur', { pseudonyme: 'tonton' });
@@ -398,7 +406,9 @@ describe('versements', () => {
 		expect(projet.montant_collecte).toBe(40_000);
 
 		// ADR-0004 : l'annulation tardive ne retire que la part non versée ; promis ≥ collecté.
-		expect((await client().post(`/api/projets/apports/${apport}/annuler`).set(hg)).status).toBe(200);
+		expect((await client().post(`/api/projets/apports/${apport}/annuler`).set(hg)).status).toBe(
+			200
+		);
 		projet = (await client().get(`/api/projets/${id}`)).body;
 		expect(projet.montant_promis).toBe(40_000);
 		expect(projet.montant_collecte).toBe(40_000);
@@ -410,7 +420,9 @@ describe('versements', () => {
 					.send({ montant: 1_000 })
 			).status
 		).toBe(400);
-		expect((await client().post(`/api/projets/apports/${apport}/annuler`).set(hg)).status).toBe(400);
+		expect((await client().post(`/api/projets/apports/${apport}/annuler`).set(hg)).status).toBe(
+			400
+		);
 	});
 
 	it('laisse le créancier déclarer son versement par un paiement (type 8)', async () => {

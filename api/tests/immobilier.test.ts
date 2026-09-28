@@ -32,7 +32,7 @@ const RECHERCHE = {
 };
 
 describe('création', () => {
-	it('applique les règles, la référence et l’unicité de la description', async () => {
+	it("applique les règles, la référence et l'unicité de la description", async () => {
 		await creerMembre('proprio');
 		const h = await entetes('proprio');
 
@@ -94,7 +94,9 @@ describe('confidentialité', () => {
 		expect(publique.body.peut_modifier).toBe(false);
 		expect(publique.body.peut_manifester).toBe(true);
 
-		await client().get(`/api/immobilier/${id}`).set(await entetes('curieux'));
+		await client()
+			.get(`/api/immobilier/${id}`)
+			.set(await entetes('curieux'));
 
 		const moi = await client().get(`/api/immobilier/${id}`).set(h);
 		expect(moi.body.localisation).toBe(OFFRE.localisation);
@@ -169,7 +171,9 @@ describe('droits', () => {
 		expect(sansDroit.status).toBe(403);
 
 		const ha = await entetes('admin');
-		expect((await client().post(`/api/immobilier/${id}/etat`).set(ha).send({ etat: 1 })).status).toBe(200);
+		expect(
+			(await client().post(`/api/immobilier/${id}/etat`).set(ha).send({ etat: 1 })).status
+		).toBe(200);
 
 		// Dépubliée : invisible du public, toujours visible de son auteur.
 		expect((await client().get(`/api/immobilier/${id}`)).status).toBe(404);
@@ -186,7 +190,7 @@ describe('droits', () => {
 });
 
 describe('besoin et intéressement', () => {
-	it('applique les règles de dépôt et prévient l’auteur', async () => {
+	it("applique les règles de dépôt et prévient l'auteur", async () => {
 		await creerMembre('proprio');
 		await creerMembre('locataire', { telephone: '061234567' });
 		await creerMembre('admin', { type_compte: TypeMembre.GESTIONNAIRE, droit_activation: true });
@@ -233,8 +237,12 @@ describe('besoin et intéressement', () => {
 
 		// Ni sur sa propre fiche, ni par un gestionnaire, ni sans être connecté.
 		expect(
-			(await client().post(`/api/immobilier/${offre}/interet`).set(hp).send({ message: 'Mon bien' }))
-				.status
+			(
+				await client()
+					.post(`/api/immobilier/${offre}/interet`)
+					.set(hp)
+					.send({ message: 'Mon bien' })
+			).status
 		).toBe(400);
 		const gestionnaire = await client()
 			.post(`/api/immobilier/${offre}/interet`)

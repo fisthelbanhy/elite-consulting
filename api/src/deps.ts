@@ -11,7 +11,12 @@ import type { NextFunction, Request, Response } from 'express';
 import { db } from './db.js';
 import { Etat } from './enums.js';
 import { interdit, nonAuthentifie } from './erreurs.js';
-import { membre as tableMembre, peutModerer, session as tableSession, type Membre } from './schema/membres.js';
+import {
+	membre as tableMembre,
+	peutModerer,
+	session as tableSession,
+	type Membre
+} from './schema/membres.js';
 import { hashJeton } from './securite.js';
 
 declare global {
@@ -108,9 +113,12 @@ export function peutModifier(membre: Membre | null, auteurId: number | null | un
 	return membre.id === auteurId || peutModerer(membre);
 }
 
-export function verifierModification(membre: Membre | null, auteurId: number | null | undefined): void {
+export function verifierModification(
+	membre: Membre | null,
+	auteurId: number | null | undefined
+): void {
 	if (!peutModifier(membre, auteurId)) {
-		throw interdit('Seul l’auteur de la fiche ou un gestionnaire habilité peut la modifier.');
+		throw interdit("Seul l'auteur de la fiche ou un gestionnaire habilité peut la modifier.");
 	}
 }
 

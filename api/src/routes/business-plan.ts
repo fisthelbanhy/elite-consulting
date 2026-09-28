@@ -10,7 +10,13 @@ import { and, desc, eq, inArray, ne, type SQL } from 'drizzle-orm';
 import { Router } from 'express';
 import { z } from 'zod';
 import { db } from '../db.js';
-import { exigerMembre, membreRequis, pagination, peutModifier, verifierModification } from '../deps.js';
+import {
+	exigerMembre,
+	membreRequis,
+	pagination,
+	peutModifier,
+	verifierModification
+} from '../deps.js';
 import { Etat } from '../enums.js';
 import { erreur, interdit, introuvable } from '../erreurs.js';
 import { message as tableMessage } from '../schema/contenu.js';
@@ -173,10 +179,7 @@ function champsBusinessPlan(d: BusinessPlanEntree) {
  */
 function soumettre(fiche: BusinessPlan, membre: Membre, typeActivite: string): void {
 	if (fiche.etat === Etat.AUTORISE) return;
-	db.update(businessPlan)
-		.set({ etat: Etat.AUTORISE })
-		.where(eq(businessPlan.id, fiche.id))
-		.run();
+	db.update(businessPlan).set({ etat: Etat.AUTORISE }).where(eq(businessPlan.id, fiche.id)).run();
 	if (membre.id === fiche.membre_id) {
 		db.insert(tableMessage)
 			.values({
@@ -259,7 +262,11 @@ routeur.post('/', membreRequis, (req, res) => {
 	const donnees = valider(businessPlanEntreeSchema, req.body);
 	validerBusinessPlan(donnees);
 
-	const existante = db.select().from(businessPlan).where(eq(businessPlan.membre_id, membre.id)).get();
+	const existante = db
+		.select()
+		.from(businessPlan)
+		.where(eq(businessPlan.membre_id, membre.id))
+		.get();
 	if (existante && existante.etat !== Etat.SUPPRIME) {
 		throw erreur('La fiche de business plan du membre est déjà enregistrée.');
 	}

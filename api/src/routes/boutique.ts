@@ -44,9 +44,7 @@ const GROUPES: number[] = Object.values(GroupeProduit);
 
 /** `groupe = 0` : produits rangés hors des 20 groupes FLP (données legacy). */
 function conditionGroupe(groupe: number): SQL {
-	return groupe === 0
-		? notInArray(tableProduit.groupe, GROUPES)
-		: eq(tableProduit.groupe, groupe);
+	return groupe === 0 ? notInArray(tableProduit.groupe, GROUPES) : eq(tableProduit.groupe, groupe);
 }
 
 function vueProduit(p: Produit, distributeur: boolean) {
@@ -104,7 +102,12 @@ routeur.get('/produits', (req, res) => {
 
 	const conditions: (SQL | undefined)[] = [eq(tableProduit.etat, Etat.AUTORISE)];
 	const brutGroupe = Number(req.query.groupe);
-	if (req.query.groupe !== undefined && Number.isFinite(brutGroupe) && brutGroupe >= 0 && brutGroupe <= 20) {
+	if (
+		req.query.groupe !== undefined &&
+		Number.isFinite(brutGroupe) &&
+		brutGroupe >= 0 &&
+		brutGroupe <= 20
+	) {
 		conditions.push(conditionGroupe(Math.trunc(brutGroupe)));
 	}
 	conditions.push(
@@ -294,9 +297,7 @@ routeurPanier.get('/suivi', gestionnaireRequis, (req, res) => {
 	const etatPaiement =
 		Number.isFinite(brutEtat) && brutEtat >= 1 && brutEtat <= 3 ? Math.trunc(brutEtat) : null;
 	if (etatPaiement === EtatPaiement.NON_PAYE) {
-		conditions.push(
-			or(eq(lignePanier.paye, false), eq(tablePaiement.etat, EtatPaiement.NON_PAYE))
-		);
+		conditions.push(or(eq(lignePanier.paye, false), eq(tablePaiement.etat, EtatPaiement.NON_PAYE)));
 	} else if (etatPaiement) {
 		conditions.push(eq(lignePanier.paye, true), eq(tablePaiement.etat, etatPaiement));
 	}
@@ -325,7 +326,9 @@ routeurPanier.get('/suivi', gestionnaireRequis, (req, res) => {
 
 	const somme =
 		db
-			.select({ s: sql<number>`coalesce(sum(${lignePanier.prix_unitaire} * ${lignePanier.quantite}), 0)` })
+			.select({
+				s: sql<number>`coalesce(sum(${lignePanier.prix_unitaire} * ${lignePanier.quantite}), 0)`
+			})
 			.from(lignePanier)
 			.leftJoin(tablePaiement, eq(lignePanier.paiement_id, tablePaiement.id))
 			.innerJoin(tableMembre, eq(lignePanier.membre_id, tableMembre.id))
@@ -333,9 +336,7 @@ routeurPanier.get('/suivi', gestionnaireRequis, (req, res) => {
 			.where(filtre)
 			.get()?.s ?? 0;
 
-	const requete = base()
-		.orderBy(desc(lignePanier.date_ajout), desc(lignePanier.id))
-		.$dynamic();
+	const requete = base().orderBy(desc(lignePanier.date_ajout), desc(lignePanier.id)).$dynamic();
 	const liste = paginer<{ ligne: Ligne; produit: Produit | null }>(requete, page);
 
 	// Coordonnées d'un acheteur : réservées aux gestionnaires.

@@ -7,15 +7,35 @@ import { and, desc, eq, ne, sql, type SQL } from 'drizzle-orm';
 import { Router } from 'express';
 import { z } from 'zod';
 import { db } from '../db.js';
-import { exigerMembre, membreRequis, pagination, peutModifier, verifierModification } from '../deps.js';
+import {
+	exigerMembre,
+	membreRequis,
+	pagination,
+	peutModifier,
+	verifierModification
+} from '../deps.js';
 import { Etat, TypeInteret } from '../enums.js';
 import { erreur, interdit } from '../erreurs.js';
 import { membre as tableMembre, peutModerer, type Membre } from '../schema/membres.js';
 import { partenariat } from '../schema/opportunite.js';
-import { auteur, ok, valider, vueInterets, type Auteur, type InteretOut } from '../schemas/commun.js';
+import {
+	auteur,
+	ok,
+	valider,
+	vueInterets,
+	type Auteur,
+	type InteretOut
+} from '../schemas/commun.js';
 import { etatEntreeSchema, interetEntreeSchema } from '../schemas/immobilier.js';
 import { auteursDe, contactsDe } from '../services/contacts.js';
-import { changerEtat, exigerVisible, paginer, recherche, supprimer, visibilite } from '../services/fiches.js';
+import {
+	changerEtat,
+	exigerVisible,
+	paginer,
+	recherche,
+	supprimer,
+	visibilite
+} from '../services/fiches.js';
 import { deposer, lister as listerInterets } from '../services/interets.js';
 import { nouvelleReference, Prefixe } from '../services/references.js';
 

@@ -3,7 +3,7 @@
  * legacy : membre, visitembr).
  */
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
-import { booleen, dateHeure, dateSeule, horodatage, texteVide } from '../db.js';
+import { booleen, dateHeure, dateSeule, horodatage, maintenant, texteVide } from '../db.js';
 import { CategorieMembre, Etat, Sexe, TypeMembre } from '../enums.js';
 import { domaineActivite, ville } from './core.js';
 
@@ -74,9 +74,7 @@ export const session = sqliteTable(
 			.notNull()
 			.references(() => membre.id, { onDelete: 'cascade' }),
 		jeton_hash: text('jeton_hash').notNull().unique(),
-		date_creation: dateHeure('date_creation')
-			.notNull()
-			.$defaultFn(() => new Date()),
+		date_creation: dateHeure('date_creation').notNull().$defaultFn(maintenant),
 		date_expiration: dateHeure('date_expiration').notNull(),
 		adresse_ip: texteVide('adresse_ip'),
 		agent: texteVide('agent')
@@ -91,9 +89,7 @@ export const tentativeConnexion = sqliteTable(
 		id: integer('id').primaryKey(),
 		/** « id:<identifiant> » ou « ip:<ip> ». */
 		cle: text('cle').notNull(),
-		date_heure: dateHeure('date_heure')
-			.notNull()
-			.$defaultFn(() => new Date())
+		date_heure: dateHeure('date_heure').notNull().$defaultFn(maintenant)
 	},
 	(t) => [
 		index('ix_tentative_connexion_cle').on(t.cle),
@@ -110,9 +106,7 @@ export const reinitialisationMotDePasse = sqliteTable('reinitialisation_mot_de_p
 	jeton_hash: text('jeton_hash').unique(),
 	/** « email » | « gestionnaire ». */
 	canal: text('canal').notNull(),
-	date_creation: dateHeure('date_creation')
-		.notNull()
-		.$defaultFn(() => new Date()),
+	date_creation: dateHeure('date_creation').notNull().$defaultFn(maintenant),
 	date_expiration: dateHeure('date_expiration'),
 	date_utilisation: dateHeure('date_utilisation'),
 	traitee_par_id: integer('traitee_par_id').references(() => membre.id)
@@ -126,9 +120,7 @@ export const visiteMembre = sqliteTable(
 		membre_id: integer('membre_id')
 			.notNull()
 			.references(() => membre.id, { onDelete: 'cascade' }),
-		date_connexion: dateHeure('date_connexion')
-			.notNull()
-			.$defaultFn(() => new Date()),
+		date_connexion: dateHeure('date_connexion').notNull().$defaultFn(maintenant),
 		adresse_ip: texteVide('adresse_ip')
 	},
 	(t) => [index('ix_visite_membre_membre_id').on(t.membre_id)]

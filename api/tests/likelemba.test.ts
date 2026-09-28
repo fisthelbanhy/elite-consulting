@@ -163,10 +163,7 @@ describe('adhésion', () => {
 		expect(r.body.reference).toBe(`1${code}`);
 		const adhesion = r.body.id;
 
-		const doublon = await client()
-			.post(`/api/likelemba/${gid}/adhesions`)
-			.set(ha)
-			.send(ADHESION);
+		const doublon = await client().post(`/api/likelemba/${gid}/adhesions`).set(ha).send(ADHESION);
 		expect(doublon.status).toBe(400);
 		expect(doublon.body.message).toBe('Ce membre est déjà enregistré dans ce likelemba.');
 
@@ -245,8 +242,8 @@ describe('cotisation (paiement type 5)', () => {
 		const gid = await creerGroupe(hg, chef);
 		const code = (await client().get(`/api/likelemba/${gid}`)).body.code;
 		const ha = await entetes('awa');
-		const adhesion = (await client().post(`/api/likelemba/${gid}/adhesions`).set(ha).send({}))
-			.body.id;
+		const adhesion = (await client().post(`/api/likelemba/${gid}/adhesions`).set(ha).send({})).body
+			.id;
 
 		const prep = (
 			await client().get(`/api/paiements/preparer?type_objet=5&objet_id=${adhesion}`).set(ha)
@@ -282,14 +279,15 @@ describe('cotisation (paiement type 5)', () => {
 
 		let fiche = (await client().get(`/api/likelemba/adhesions/${adhesion}`).set(ha)).body;
 		// Reçus uniques non tronqués (F-S4-43).
-		expect(
-			fiche.cotisations.map((c: { numero_recu: string }) => c.numero_recu).sort()
-		).toEqual([`${code}P1`, `${code}P2`]);
+		expect(fiche.cotisations.map((c: { numero_recu: string }) => c.numero_recu).sort()).toEqual([
+			`${code}P1`,
+			`${code}P2`
+		]);
 		expect(fiche.total_cotisations).toBe(20_000);
 		// F-S4-42 : cotisation rattachée à l'adhérent, caissier = payeur.
-		expect(
-			new Set(fiche.cotisations.map((c: { nom_caissier: string }) => c.nom_caissier))
-		).toEqual(new Set(['awa', 'admin']));
+		expect(new Set(fiche.cotisations.map((c: { nom_caissier: string }) => c.nom_caissier))).toEqual(
+			new Set(['awa', 'admin'])
+		);
 		expect(
 			fiche.cotisations.every(
 				(c: { montant: number; etat: number }) => c.montant === 10_000 && c.etat === 1
@@ -302,10 +300,7 @@ describe('cotisation (paiement type 5)', () => {
 		fiche = (await client().get(`/api/likelemba/adhesions/${adhesion}`).set(ha)).body;
 		expect(
 			Object.fromEntries(
-				fiche.cotisations.map((c: { numero_recu: string; etat: number }) => [
-					c.numero_recu,
-					c.etat
-				])
+				fiche.cotisations.map((c: { numero_recu: string; etat: number }) => [c.numero_recu, c.etat])
 			)
 		).toEqual({ [`${code}P1`]: 2, [`${code}P2`]: 3 });
 		expect(fiche.total_cotisations).toBe(10_000);
@@ -336,8 +331,8 @@ describe('cotisation (paiement type 5)', () => {
 		const hg = await admin();
 		const gid = await creerGroupe(hg, chef);
 		const ha = await entetes('awa');
-		const adhesion = (await client().post(`/api/likelemba/${gid}/adhesions`).set(ha).send({}))
-			.body.id;
+		const adhesion = (await client().post(`/api/likelemba/${gid}/adhesions`).set(ha).send({})).body
+			.id;
 
 		expect(
 			(await client().post(`/api/likelemba/adhesions/${adhesion}/etat`).set(ha).send({ etat: 1 }))

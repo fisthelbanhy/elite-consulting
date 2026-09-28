@@ -181,7 +181,9 @@ routeur.post('/initialiser', membreRequis, (req, res) => {
 		throw erreur("Le référentiel contient déjà des types d'opérations.");
 	}
 	const n = db.transaction(() => initialiser());
-	res.status(201).json(ok(`Référentiel initialisé : ${n.types} types et ${n.operations} opérations.`));
+	res
+		.status(201)
+		.json(ok(`Référentiel initialisé : ${n.types} types et ${n.operations} opérations.`));
 });
 
 // --- Niveau 1 : types d'opérations ---------------------------------------------------------------
@@ -254,10 +256,7 @@ routeur.delete('/types/:id', membreRequis, (req, res) => {
 
 // --- Niveau 2 : opérations -----------------------------------------------------------------------
 
-function validerOperation(
-	d: z.output<typeof operationEntreeSchema>,
-	exclureId?: number
-): string {
+function validerOperation(d: z.output<typeof operationEntreeSchema>, exclureId?: number): string {
 	const libelle = d.libelle.trim();
 	const champs: Record<string, string> = {};
 	const ty = d.type_id
@@ -323,10 +322,7 @@ routeur.delete('/operations/:id', membreRequis, (req, res) => {
 	const membre = exigerMembre(req);
 	exigerDroit(membre, 'activation');
 	const op = obtenirOperation(Number(req.params.id));
-	db.update(benchOperation)
-		.set({ etat: Etat.SUPPRIME })
-		.where(eq(benchOperation.id, op.id))
-		.run();
+	db.update(benchOperation).set({ etat: Etat.SUPPRIME }).where(eq(benchOperation.id, op.id)).run();
 	res.json(ok('Opération supprimée.', op.id));
 });
 

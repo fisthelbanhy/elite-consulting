@@ -8,16 +8,49 @@ import { Router } from 'express';
 import multer from 'multer';
 import { config } from '../config.js';
 import { db } from '../db.js';
-import { exigerMembre, membreRequis, pagination, peutModifier, verifierModification } from '../deps.js';
-import { Etat, OffreDemande, SituationBien, TypeBien, TypeInteret, TypeTransaction } from '../enums.js';
+import {
+	exigerMembre,
+	membreRequis,
+	pagination,
+	peutModifier,
+	verifierModification
+} from '../deps.js';
+import {
+	Etat,
+	OffreDemande,
+	SituationBien,
+	TypeBien,
+	TypeInteret,
+	TypeTransaction
+} from '../enums.js';
 import { erreur, interdit } from '../erreurs.js';
 import { immobilier } from '../schema/commerce.js';
 import { quartier, ville } from '../schema/core.js';
 import { membre as tableMembre, peutModerer, type Membre } from '../schema/membres.js';
-import { auteur, ok, valider, vueInterets, type Auteur, type InteretOut } from '../schemas/commun.js';
+import {
+	auteur,
+	ok,
+	valider,
+	vueInterets,
+	type Auteur,
+	type InteretOut
+} from '../schemas/commun.js';
 import { contactsDe } from '../services/contacts.js';
-import { changerEtat, compterVisite, exigerVisible, paginer, recherche, supprimer, visibilite } from '../services/fiches.js';
-import { enregistrer as enregistrerFichier, IMAGE, supprimer as supprimerFichier, url } from '../services/fichiers.js';
+import {
+	changerEtat,
+	compterVisite,
+	exigerVisible,
+	paginer,
+	recherche,
+	supprimer,
+	visibilite
+} from '../services/fiches.js';
+import {
+	enregistrer as enregistrerFichier,
+	IMAGE,
+	supprimer as supprimerFichier,
+	url
+} from '../services/fichiers.js';
 import { deposer, lister as listerInterets } from '../services/interets.js';
 import { nouvelleReference, Prefixe } from '../services/references.js';
 import {
@@ -295,7 +328,10 @@ routeur.get('/:id', (req, res) => {
 function validerBien(d: BienEntree, exclureId?: number): void {
 	const champs: Record<string, string> = {};
 
-	if (d.offre_ou_recherche !== OffreDemande.OFFRE && d.offre_ou_recherche !== OffreDemande.DEMANDE) {
+	if (
+		d.offre_ou_recherche !== OffreDemande.OFFRE &&
+		d.offre_ou_recherche !== OffreDemande.DEMANDE
+	) {
 		champs.offre_ou_recherche = "Veuillez indiquer s'il s'agit d'une offre ou d'une recherche.";
 	}
 	if (
@@ -308,7 +344,11 @@ function validerBien(d: BienEntree, exclureId?: number): void {
 		champs.type_bien = "Veuillez indiquer le type de l'immobilier.";
 	}
 	if (d.quartier_id) {
-		const connu = db.select({ id: quartier.id }).from(quartier).where(eq(quartier.id, d.quartier_id)).get();
+		const connu = db
+			.select({ id: quartier.id })
+			.from(quartier)
+			.where(eq(quartier.id, d.quartier_id))
+			.get();
 		if (!connu) champs.quartier_id = 'Veuillez choisir un quartier de la liste.';
 	}
 	if (d.surface_m2 < 1) {
@@ -325,7 +365,10 @@ function validerBien(d: BienEntree, exclureId?: number): void {
 	// Unicité legacy sur la description (fiches non supprimées).
 	const description = d.description.trim();
 	if (description) {
-		const conditions = [eq(immobilier.description, description), ne(immobilier.etat, Etat.SUPPRIME)];
+		const conditions = [
+			eq(immobilier.description, description),
+			ne(immobilier.etat, Etat.SUPPRIME)
+		];
 		if (exclureId) conditions.push(ne(immobilier.id, exclureId));
 		const doublon = db
 			.select({ id: immobilier.id })

@@ -66,7 +66,7 @@ describe('création', () => {
 		).toBe(2);
 	});
 
-	it('signale le doublon d’objet, que le legacy refusait sans message (F-S7-05)', async () => {
+	it("signale le doublon d'objet, que le legacy refusait sans message (F-S7-05)", async () => {
 		await creerMembre('awa');
 		await gestionnaire();
 		await client()
@@ -83,7 +83,7 @@ describe('création', () => {
 });
 
 describe('confidentialité', () => {
-	it("réserve un sujet privé à son auteur et aux gestionnaires (F-S7-07)", async () => {
+	it('réserve un sujet privé à son auteur et aux gestionnaires (F-S7-07)', async () => {
 		await creerMembre('awa');
 		await creerMembre('curieux');
 		await gestionnaire();
@@ -170,7 +170,9 @@ describe('modification et clôture', () => {
 		const id = (await client().post('/api/conseil-financier').set(h).send(SUJET)).body.id;
 		const modif = { objet: 'Ouvrir un compte épargne rémunéré', texte: 'Précision' };
 
-		expect((await client().put(`/api/conseil-financier/${id}`).set(h).send(modif)).status).toBe(200);
+		expect((await client().put(`/api/conseil-financier/${id}`).set(h).send(modif)).status).toBe(
+			200
+		);
 		expect(
 			(
 				await client()
@@ -227,14 +229,17 @@ describe('recherche et suppression', () => {
 				.send({ ...SUJET, rubrique: 2 })
 		).body.id;
 		const rep = (
-			await client().post(`/api/conseil-financier/${id}/reponses`).set(h).send({ texte: 'Mon avis' })
+			await client()
+				.post(`/api/conseil-financier/${id}/reponses`)
+				.set(h)
+				.send({ texte: 'Mon avis' })
 		).body.id;
 
 		expect((await client().get('/api/conseil-financier?q=épargner').set(h)).body.total).toBe(1);
 		expect((await client().get('/api/conseil-financier?q=introuvable').set(h)).body.total).toBe(0);
 		expect((await client().delete(`/api/conseil-financier/${rep}`).set(h)).status).toBe(200);
-		expect(
-			(await client().get(`/api/conseil-financier/${id}`).set(h)).body.nombre_reponses
-		).toBe(0);
+		expect((await client().get(`/api/conseil-financier/${id}`).set(h)).body.nombre_reponses).toBe(
+			0
+		);
 	});
 });

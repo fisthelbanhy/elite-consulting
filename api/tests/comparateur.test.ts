@@ -15,7 +15,7 @@ import {
 
 basePropre();
 
-const MESSAGE = "Il faut avoir un compte entreprise pour y avoir accès.";
+const MESSAGE = 'Il faut avoir un compte entreprise pour y avoir accès.';
 
 /** Membre personne morale + son entreprise dans l'annuaire. */
 async function societe(
@@ -25,14 +25,17 @@ async function societe(
 ): Promise<[Record<string, string>, number]> {
 	await creerMembre(identifiant, { categorie: CategorieMembre.MORALE, nom, ...options });
 	const h = await entetes(identifiant);
-	const r = await client().post('/api/entreprises').set(h).send({
-		domaine_id: 1,
-		nom,
-		forme_juridique: 2,
-		ville_id: 2,
-		telephone: '061112233',
-		email: `${identifiant}@exemple.cg`
-	});
+	const r = await client()
+		.post('/api/entreprises')
+		.set(h)
+		.send({
+			domaine_id: 1,
+			nom,
+			forme_juridique: 2,
+			ville_id: 2,
+			telephone: '061112233',
+			email: `${identifiant}@exemple.cg`
+		});
 	expect(r.status, r.text).toBe(201);
 	return [h, r.body.id];
 }
@@ -187,9 +190,18 @@ describe('comparaison', () => {
 		const [h3, e3] = await societe('societe3', 'Pointe Béton');
 		await creerMembre('admin', { type_compte: TypeMembre.GESTIONNAIRE, droit_activation: true });
 
-		await client().post('/api/comparateur/lignes').set(h1).send(ligne(e1, { prix: 5200 }));
-		await client().post('/api/comparateur/lignes').set(h2).send(ligne(e2, { prix: 4800 }));
-		await client().post('/api/comparateur/lignes').set(h3).send(ligne(e3, { prix: 4500 }));
+		await client()
+			.post('/api/comparateur/lignes')
+			.set(h1)
+			.send(ligne(e1, { prix: 5200 }));
+		await client()
+			.post('/api/comparateur/lignes')
+			.set(h2)
+			.send(ligne(e2, { prix: 4800 }));
+		await client()
+			.post('/api/comparateur/lignes')
+			.set(h3)
+			.send(ligne(e3, { prix: 4500 }));
 		await client()
 			.post('/api/comparateur/lignes')
 			.set(h2)
@@ -221,9 +233,7 @@ describe('comparaison', () => {
 		// Pour le bouton « Contacter ».
 		expect(premiere.entreprise.telephone).toBe('061112233');
 
-		const decroissant = await client()
-			.get('/api/comparateur/lignes?type=1&tri=prix_desc')
-			.set(h1);
+		const decroissant = await client().get('/api/comparateur/lignes?type=1&tri=prix_desc').set(h1);
 		expect(decroissant.body.items[0].prix).toBe(5200);
 
 		expect((await client().get('/api/comparateur/lignes?type=2').set(h1)).body.total).toBe(1);
@@ -252,7 +262,12 @@ describe('droits sur les lignes', () => {
 		// Un concurrent ne peut ni écrire sur la fiche d'un autre, ni modifier ou supprimer ses
 		// lignes (corrigé : le legacy le permettait).
 		expect(
-			(await client().post('/api/comparateur/lignes').set(h2).send(ligne(e1, { prix: 1 }))).status
+			(
+				await client()
+					.post('/api/comparateur/lignes')
+					.set(h2)
+					.send(ligne(e1, { prix: 1 }))
+			).status
 		).toBe(403);
 		expect(
 			(
@@ -263,7 +278,9 @@ describe('droits sur les lignes', () => {
 			).status
 		).toBe(403);
 		expect((await client().delete(`/api/comparateur/lignes/${id}`).set(h2)).status).toBe(403);
-		expect((await client().get(`/api/comparateur/ma-fiche?entreprise_id=${e1}`).set(h2)).status).toBe(403);
+		expect(
+			(await client().get(`/api/comparateur/ma-fiche?entreprise_id=${e1}`).set(h2)).status
+		).toBe(403);
 
 		// Sa propre fiche ne montre que ses lignes (corrigé : le legacy listait celles de tout le monde).
 		expect((await client().get('/api/comparateur/ma-fiche').set(h2)).body.offres).toEqual([]);
@@ -274,16 +291,22 @@ describe('droits sur les lignes', () => {
 			.send(ligne(e1, { prix: 5500, unite_vente: 'Sac' }));
 		expect(modif.status).toBe(200);
 		expect(modif.body.message).toBe('Modification effectuée.');
-		expect((await client().get('/api/comparateur/ma-fiche').set(h1)).body.offres[0].prix).toBe(5500);
+		expect((await client().get('/api/comparateur/ma-fiche').set(h1)).body.offres[0].prix).toBe(
+			5500
+		);
 
 		expect((await client().delete(`/api/comparateur/lignes/${id}`).set(h1)).status).toBe(200);
 		// Suppression physique, comme le legacy.
-		expect(db.select().from(ligneProspective).where(eq(ligneProspective.id, id)).get()).toBeUndefined();
+		expect(
+			db.select().from(ligneProspective).where(eq(ligneProspective.id, id)).get()
+		).toBeUndefined();
 
 		// Le gestionnaire habilité gère la fiche de n'importe quelle entreprise.
 		const id2 = (await client().post('/api/comparateur/lignes').set(h1).send(ligne(e1))).body.id;
 		const ha = await entetes('admin');
-		expect((await client().get(`/api/comparateur/ma-fiche?entreprise_id=${e1}`).set(ha)).status).toBe(200);
+		expect(
+			(await client().get(`/api/comparateur/ma-fiche?entreprise_id=${e1}`).set(ha)).status
+		).toBe(200);
 		expect((await client().delete(`/api/comparateur/lignes/${id2}`).set(ha)).status).toBe(200);
 	});
 });
@@ -295,7 +318,9 @@ describe('catalogue', () => {
 		await creerMembre('admin_sans_droit', { type_compte: TypeMembre.GESTIONNAIRE });
 		const ha = await entetes('admin');
 
-		expect((await client().post('/api/comparateur/produits').set(h).send({ nom: 'Sucre' })).status).toBe(403);
+		expect(
+			(await client().post('/api/comparateur/produits').set(h).send({ nom: 'Sucre' })).status
+		).toBe(403);
 		expect(
 			(
 				await client()
@@ -318,7 +343,9 @@ describe('catalogue', () => {
 			.send({ nom: 'Sucre en Poudre' });
 		expect(doublon.status).toBe(400);
 		expect(doublon.body.message).toBe('Ce produit est déjà enregistré.');
-		expect((await client().post('/api/comparateur/produits').set(ha).send({ nom: 'Su' })).status).toBe(400);
+		expect(
+			(await client().post('/api/comparateur/produits').set(ha).send({ nom: 'Su' })).status
+		).toBe(400);
 
 		await client()
 			.post('/api/comparateur/lignes')
@@ -334,7 +361,9 @@ describe('catalogue', () => {
 		expect(retrait.status).toBe(200);
 		expect((await client().get('/api/comparateur/lignes').set(h)).body.total).toBe(0);
 		expect((await client().get('/api/comparateur/produits').set(h)).body).toEqual([]);
-		expect((await client().get('/api/comparateur/produits?tous=true').set(ha)).body).toHaveLength(1);
+		expect((await client().get('/api/comparateur/produits?tous=true').set(ha)).body).toHaveLength(
+			1
+		);
 		expect(
 			(
 				await client()
@@ -346,8 +375,8 @@ describe('catalogue', () => {
 	});
 });
 
-describe('e-mail à l’entreprise', () => {
-	it('est réservé aux gestionnaires et vérifie l’adresse', async () => {
+describe("e-mail à l'entreprise", () => {
+	it("est réservé aux gestionnaires et vérifie l'adresse", async () => {
 		const [h, ent] = await societe('societe', 'Kongo Matériaux');
 		await creerMembre('admin', { type_compte: TypeMembre.GESTIONNAIRE });
 		const ha = await entetes('admin');

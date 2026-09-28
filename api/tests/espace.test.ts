@@ -37,30 +37,44 @@ describe('tableau de bord', () => {
 		const h = await entetes('awa2024');
 
 		await client().post('/api/emplois').set(h).send(OFFRE);
-		await client().post('/api/emplois').set(h).send({ ...OFFRE, poste_a_pourvoir: 'Comptable' });
+		await client()
+			.post('/api/emplois')
+			.set(h)
+			.send({ ...OFFRE, poste_a_pourvoir: 'Comptable' });
 
-		db.insert(immobilier).values([
-			{ auteur_id: moi, reference: 'IMB1', description: 'Studio à Bacongo', etat: Etat.NON_TRAITE },
-			{ auteur_id: moi, reference: 'IMB2', description: 'Supprimée', etat: Etat.SUPPRIME },
-			{ auteur_id: autre, reference: 'IMB3', description: 'Pas à moi', etat: Etat.AUTORISE }
-		]).run();
+		db.insert(immobilier)
+			.values([
+				{
+					auteur_id: moi,
+					reference: 'IMB1',
+					description: 'Studio à Bacongo',
+					etat: Etat.NON_TRAITE
+				},
+				{ auteur_id: moi, reference: 'IMB2', description: 'Supprimée', etat: Etat.SUPPRIME },
+				{ auteur_id: autre, reference: 'IMB3', description: 'Pas à moi', etat: Etat.AUTORISE }
+			])
+			.run();
 
 		const groupe = db
 			.insert(groupeLikelemba)
 			.values({ code: 'LKB0512025', responsable_id: autre })
 			.returning()
 			.get()!;
-		db.insert(membreLikelemba).values({
-			groupe_id: groupe.id,
-			membre_id: moi,
-			code: '1LKB0512025',
-			date_entree: new Date()
-		}).run();
+		db.insert(membreLikelemba)
+			.values({
+				groupe_id: groupe.id,
+				membre_id: moi,
+				code: '1LKB0512025',
+				date_entree: new Date()
+			})
+			.run();
 
-		db.insert(paiement).values([
-			{ membre_id: moi, type_objet: 4, mode: 3, montant: 5000, remarque: 'MP123456789', etat: 2 },
-			{ membre_id: autre, type_objet: 4, mode: 3, montant: 7000, etat: 2 }
-		]).run();
+		db.insert(paiement)
+			.values([
+				{ membre_id: moi, type_objet: 4, mode: 3, montant: 5000, remarque: 'MP123456789', etat: 2 },
+				{ membre_id: autre, type_objet: 4, mode: 3, montant: 7000, etat: 2 }
+			])
+			.run();
 		db.insert(message).values({ membre_id: moi, de_la_frangine: true, texte: 'Bienvenue' }).run();
 
 		const t = (await client().get('/api/espace/tableau').set(h)).body;
@@ -71,9 +85,7 @@ describe('tableau de bord', () => {
 		expect(t.profil.champs_manquants).toContain('Adresse');
 		expect(t.profil.champs_manquants).not.toContain('E-mail');
 
-		const modules = Object.fromEntries(
-			t.modules.map((m: { cle: string }) => [m.cle, m])
-		);
+		const modules = Object.fromEntries(t.modules.map((m: { cle: string }) => [m.cle, m]));
 		expect(modules.emplois.total).toBe(2);
 		expect(modules.emplois.fiches[0].lien).toMatch(/^\/emplois\//);
 		// La fiche supprimée et celle d'un autre membre sont exclues.
@@ -82,6 +94,14 @@ describe('tableau de bord', () => {
 		expect(modules.likelemba.fiches[0].lien).toBe(`/likelemba/${groupe.id}`);
 		// Seuls les modules réellement utilisés sont renvoyés.
 		expect(modules).not.toHaveProperty('annonces');
+
+		// Une source sans colonne de date déclarée est datée par `date_creation`, et la date sort
+		// toujours au format date-heure — même quand elle vient d'une colonne DATE.
+		expect(modules.emplois.fiches[0].date).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/);
+		expect(modules.likelemba.fiches[0].date).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/);
+
+		// Deux fiches créées coup sur coup gardent un ordre stable : leurs dates diffèrent.
+		expect(modules.emplois.fiches[0].date).not.toBe(modules.emplois.fiches[1].date);
 
 		expect(t.paiements).toHaveLength(1);
 		expect(t.paiements_en_attente).toBe(1);
@@ -94,7 +114,7 @@ describe('tableau de bord', () => {
 });
 
 describe('identifiant', () => {
-	it('contrôle le mot de passe, le format et l’unicité', async () => {
+	it("contrôle le mot de passe, le format et l'unicité", async () => {
 		await creerMembre('awa2024');
 		await creerMembre('pris');
 		const h = await entetes('awa2024');
@@ -148,8 +168,12 @@ describe('code de pointage', () => {
 
 		const h = await entetes('titulaire');
 		expect(
-			(await client().put('/api/espace/code-pointage').set(h).send({ ...corps, code: '12a4' }))
-				.status
+			(
+				await client()
+					.put('/api/espace/code-pointage')
+					.set(h)
+					.send({ ...corps, code: '12a4' })
+			).status
 		).toBe(422);
 		expect(
 			(

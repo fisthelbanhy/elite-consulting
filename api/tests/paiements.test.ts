@@ -51,6 +51,33 @@ describe('préparation', () => {
 		expect(miens.body.items[0].montant).toBe(5000);
 		expect(JOURNAL).toEqual([`enregistrer:${r.body.id}`]);
 	});
+
+	it('signale les paramètres de requête en faute sous leur nom', async () => {
+		await creerMembre('payeur');
+		const h = await entetes('payeur');
+
+		// `type_objet` est obligatoire : la clé absente et une valeur illisible ne donnent pas le
+		// même message, comme du temps de Pydantic.
+		const absent = await client().get('/api/paiements/preparer').set(h);
+		expect(absent.status).toBe(422);
+		expect(absent.body.champs).toEqual({ type_objet: 'Ce champ est obligatoire.' });
+
+		const illisible = await client().get('/api/paiements/preparer?type_objet=abc').set(h);
+		expect(illisible.status).toBe(422);
+		expect(illisible.body.champs).toEqual({ type_objet: 'Nombre entier attendu.' });
+
+		// `objet_id` est facultatif, mais `?objet_id=` reste une valeur — et elle est invalide.
+		const vide = await client()
+			.get(`/api/paiements/preparer?type_objet=${TYPE_TEST}&objet_id=`)
+			.set(h);
+		expect(vide.status).toBe(422);
+		expect(vide.body.champs).toEqual({ objet_id: 'Nombre entier attendu.' });
+
+		// Absent, en revanche, il vaut bien « aucun objet ».
+		const sansObjet = await client().get(`/api/paiements/preparer?type_objet=${TYPE_TEST}`).set(h);
+		expect(sansObjet.status).toBe(200);
+		expect(sansObjet.body.objet_id).toBeNull();
+	});
 });
 
 describe('montant libre', () => {

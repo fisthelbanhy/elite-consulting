@@ -14,7 +14,13 @@ import { and, asc, desc, eq, inArray, isNull, ne, or, sql, type SQL } from 'driz
 import { Router } from 'express';
 import { z } from 'zod';
 import { db } from '../db.js';
-import { exigerMembre, membreRequis, pagination, peutModifier, verifierModification } from '../deps.js';
+import {
+	exigerMembre,
+	membreRequis,
+	pagination,
+	peutModifier,
+	verifierModification
+} from '../deps.js';
 import { Confidentialite, Etat, TypeMembre } from '../enums.js';
 import { erreur, introuvable } from '../erreurs.js';
 import { conseil, message as tableMessage } from '../schema/contenu.js';
@@ -73,7 +79,8 @@ function reponseVisible(r: Conseil, membre: Membre | null): boolean {
 
 function lireSujet(id: number, membre: Membre | null): Conseil {
 	const sujet = db.select().from(conseil).where(eq(conseil.id, id)).get();
-	if (!sujet || sujet.sujet_id !== null || !estVisible(sujet, membre)) throw introuvable(INTROUVABLE);
+	if (!sujet || sujet.sujet_id !== null || !estVisible(sujet, membre))
+		throw introuvable(INTROUVABLE);
 	return sujet;
 }
 
@@ -252,9 +259,7 @@ routeur.get('/derniers', (req, res) => {
 	const lignes = db
 		.select()
 		.from(conseil)
-		.where(
-			and(isNull(conseil.sujet_id), eq(conseil.etat, Etat.AUTORISE), conditionVisible(membre))
-		)
+		.where(and(isNull(conseil.sujet_id), eq(conseil.etat, Etat.AUTORISE), conditionVisible(membre)))
 		.orderBy(desc(conseil.date_creation), desc(conseil.id))
 		.limit(n)
 		.all();
@@ -270,11 +275,7 @@ routeur.get('/compteurs', (req, res) => {
 			.select({ n: sql<number>`count(*)` })
 			.from(conseil)
 			.where(
-				and(
-					isNull(conseil.sujet_id),
-					eq(conseil.etat, Etat.AUTORISE),
-					conditionVisible(req.membre)
-				)
+				and(isNull(conseil.sujet_id), eq(conseil.etat, Etat.AUTORISE), conditionVisible(req.membre))
 			)
 			.get()?.n ?? 0;
 	res.json({ sujets: n });

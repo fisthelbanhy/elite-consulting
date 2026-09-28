@@ -3,7 +3,7 @@
  * legacy : conseil, soungangai, maladie, dialogue, message, contact, suggestion, publicite).
  */
 import { index, integer, sqliteTable, text, type AnySQLiteColumn } from 'drizzle-orm/sqlite-core';
-import { booleen, dateHeure, dateSeule, horodatage, json, texteVide } from '../db.js';
+import { booleen, dateHeure, dateSeule, horodatage, json, maintenant, texteVide } from '../db.js';
 import { Confidentialite, Etat, Module } from '../enums.js';
 import { produit } from './commerce.js';
 import { entreprise } from './entreprises.js';
@@ -24,7 +24,10 @@ export const conseil = sqliteTable(
 		nombre_reponses: integer('nombre_reponses').notNull().default(0),
 		etat: integer('etat').notNull().default(Etat.NON_TRAITE)
 	},
-	(t) => [index('ix_conseil_reference').on(t.reference), index('ix_conseil_sujet_id').on(t.sujet_id)]
+	(t) => [
+		index('ix_conseil_reference').on(t.reference),
+		index('ix_conseil_sujet_id').on(t.sujet_id)
+	]
 );
 
 /**
@@ -109,9 +112,7 @@ export const dialogue = sqliteTable(
 		destinataire_id: integer('destinataire_id').references(() => membre.id),
 		type_dialogue: integer('type_dialogue').notNull().default(0),
 		texte: text('texte').notNull(),
-		date_message: dateHeure('date_message')
-			.notNull()
-			.$defaultFn(() => new Date()),
+		date_message: dateHeure('date_message').notNull().$defaultFn(maintenant),
 		etat: integer('etat').notNull().default(Etat.AUTORISE)
 	},
 	(t) => [index('ix_dialogue_type_dialogue').on(t.type_dialogue)]
@@ -131,9 +132,7 @@ export const message = sqliteTable(
 		auteur_id: integer('auteur_id').references(() => membre.id),
 		de_la_frangine: booleen('de_la_frangine').notNull().default(false),
 		texte: text('texte').notNull(),
-		date_message: dateHeure('date_message')
-			.notNull()
-			.$defaultFn(() => new Date()),
+		date_message: dateHeure('date_message').notNull().$defaultFn(maintenant),
 		lu: booleen('lu').notNull().default(false)
 	},
 	(t) => [index('ix_message_membre_id').on(t.membre_id)]
@@ -148,9 +147,7 @@ export const contact = sqliteTable('contact', {
 	telephone: texteVide('telephone'),
 	objet: texteVide('objet'),
 	texte: texteVide('texte'),
-	date_envoi: dateHeure('date_envoi')
-		.notNull()
-		.$defaultFn(() => new Date()),
+	date_envoi: dateHeure('date_envoi').notNull().$defaultFn(maintenant),
 	reponse: texteVide('reponse'),
 	date_reponse: dateHeure('date_reponse'),
 	etat: integer('etat').notNull().default(Etat.AUTORISE)
@@ -159,9 +156,7 @@ export const contact = sqliteTable('contact', {
 /** Boîte à idées (anonyme, comme le legacy). */
 export const suggestion = sqliteTable('suggestion', {
 	id: integer('id').primaryKey(),
-	date: dateHeure('date')
-		.notNull()
-		.$defaultFn(() => new Date()),
+	date: dateHeure('date').notNull().$defaultFn(maintenant),
 	module: integer('module').notNull().default(Module.TOUS),
 	texte: text('texte').notNull(),
 	etat: integer('etat').notNull().default(Etat.AUTORISE)

@@ -90,8 +90,19 @@ export function traduire(issue: ZodIssue): string {
 			if (issue.format === 'email') return 'Adresse e-mail invalide.';
 			if (issue.format === 'url') return 'Adresse web invalide.';
 			return issue.message || 'Format invalide.';
-		case 'invalid_union':
-			return issue.message || 'Valeur invalide.';
+		case 'invalid_union': {
+			// Quand la clé est absente, *toutes* les branches échouent en réclamant une valeur :
+			// c'est un champ obligatoire, pas une valeur invalide. Zod ne le dit qu'à travers les
+			// anomalies des branches — l'anomalie d'union, elle, ne porte pas la valeur reçue.
+			const branches = (issue as { errors?: ZodIssue[][] }).errors ?? [];
+			const absente =
+				branches.length > 0 &&
+				branches.every((b) => b.every((s) => s.code === 'invalid_type' && s.input === undefined));
+			if (absente) return 'Ce champ est obligatoire.';
+			return issue.message && issue.message !== 'Invalid input'
+				? issue.message
+				: 'Valeur invalide.';
+		}
 		case 'custom':
 			// Message posé par une règle métier (`.refine(…)`), équivalent du `value_error` Pydantic.
 			return issue.message || 'Valeur invalide.';

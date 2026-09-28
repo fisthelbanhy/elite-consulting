@@ -10,7 +10,13 @@ import multer from 'multer';
 import { z } from 'zod';
 import { config } from '../config.js';
 import { db } from '../db.js';
-import { exigerMembre, membreRequis, pagination, peutModifier, verifierModification } from '../deps.js';
+import {
+	exigerMembre,
+	membreRequis,
+	pagination,
+	peutModifier,
+	verifierModification
+} from '../deps.js';
 import { CategorieMembre, Etat, FormeJuridique } from '../enums.js';
 import { erreur } from '../erreurs.js';
 import { domaineActivite, secteurActivite, ville } from '../schema/core.js';
@@ -22,8 +28,21 @@ import {
 } from '../schema/entreprises.js';
 import { membre as tableMembre, peutModerer, type Membre } from '../schema/membres.js';
 import { auteur, ok, telephoneFacultatif, valider } from '../schemas/commun.js';
-import { changerEtat, compterVisite, exigerVisible, paginer, recherche, supprimer, visibilite } from '../services/fiches.js';
-import { enregistrer as enregistrerFichier, IMAGE, supprimer as supprimerFichier, url } from '../services/fichiers.js';
+import {
+	changerEtat,
+	compterVisite,
+	exigerVisible,
+	paginer,
+	recherche,
+	supprimer,
+	visibilite
+} from '../services/fiches.js';
+import {
+	enregistrer as enregistrerFichier,
+	IMAGE,
+	supprimer as supprimerFichier,
+	url
+} from '../services/fichiers.js';
 import { nouvelleReference, Prefixe } from '../services/references.js';
 
 export const routeur = Router();
@@ -108,7 +127,11 @@ function referentiels() {
 			])
 	);
 	const villes = new Map(
-		db.select({ id: ville.id, nom: ville.nom }).from(ville).all().map((v) => [v.id, v])
+		db
+			.select({ id: ville.id, nom: ville.nom })
+			.from(ville)
+			.all()
+			.map((v) => [v.id, v])
 	);
 	return { domaines, villes };
 }
@@ -349,7 +372,11 @@ function validerEntreprise(d: EntrepriseEntree, exclureId?: number): void {
 		champs.nom = "Le nom de l'entreprise doit avoir au moins 4 caractères.";
 	}
 	const formesConnues: number[] = Object.values(FormeJuridique);
-	if (d.forme_juridique === null || d.forme_juridique === undefined || !formesConnues.includes(d.forme_juridique)) {
+	if (
+		d.forme_juridique === null ||
+		d.forme_juridique === undefined ||
+		!formesConnues.includes(d.forme_juridique)
+	) {
 		champs.forme_juridique = "Veuillez indiquer la forme juridique de l'entreprise.";
 	}
 	const villeConnue = d.ville_id

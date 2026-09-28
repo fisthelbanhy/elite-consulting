@@ -10,7 +10,7 @@
  * - attribuer ou retirer des droits, promouvoir ou rétrograder un gestionnaire, agir sur le compte
  *   d'un autre gestionnaire : droit Attribution.
  */
-import { and, asc, desc, eq, inArray, isNull, like, ne, or, sql, type SQL } from 'drizzle-orm';
+import { and, asc, desc, eq, inArray, like, ne, or, sql, type SQL } from 'drizzle-orm';
 import { Router } from 'express';
 import multer from 'multer';
 import { z } from 'zod';
@@ -31,12 +31,7 @@ import {
 import { erreur, interdit, introuvable } from '../erreurs.js';
 import { paiement } from '../schema/commerce.js';
 import { message as tableMessage } from '../schema/contenu.js';
-import {
-	banque,
-	domaineActivite,
-	parametre,
-	ville as tableVille
-} from '../schema/core.js';
+import { banque, domaineActivite, parametre, ville as tableVille } from '../schema/core.js';
 import {
 	membre as tableMembre,
 	reinitialisationMotDePasse,
@@ -122,7 +117,10 @@ const etatEntreeSchema = z.object({ etat: entier.min(1).max(3) });
 
 // --- Liste, export -------------------------------------------------------------------------------
 
-function conditionsMembres(moi: Membre, req: { query: Record<string, unknown> }): (SQL | undefined)[] {
+function conditionsMembres(
+	moi: Membre,
+	req: { query: Record<string, unknown> }
+): (SQL | undefined)[] {
 	const conditions: (SQL | undefined)[] = [];
 	// F-ADM-08 : le compte système reste masqué des listes.
 	if (moi.id !== svc.ID_COMPTE_SYSTEME) conditions.push(ne(tableMembre.id, svc.ID_COMPTE_SYSTEME));
@@ -230,7 +228,11 @@ routeur.get('/membres/options', (req, res) => {
 	const conditions: (SQL | undefined)[] = [ne(tableMembre.etat, Etat.SUPPRIME)];
 	if (moi.id !== svc.ID_COMPTE_SYSTEME) conditions.push(ne(tableMembre.id, svc.ID_COMPTE_SYSTEME));
 	const lignes = db
-		.select({ id: tableMembre.id, nom: tableMembre.nom, pseudonyme: tableMembre.pseudonyme })
+		.select({
+			id: tableMembre.id,
+			nom: tableMembre.nom,
+			pseudonyme: tableMembre.pseudonyme
+		})
 		.from(tableMembre)
 		.where(and(...conditions.filter(Boolean)))
 		.orderBy(asc(sql`lower(${tableMembre.nom})`))
@@ -320,7 +322,7 @@ routeur.get('/membres/export', (req, res) => {
 	res.setHeader('Content-Disposition', `attachment; filename="${nom}"`);
 	res.setHeader('Cache-Control', 'no-store');
 	// BOM UTF-8 : Excel ouvre le fichier avec le bon encodage.
-	res.send(Buffer.from(`﻿${lignes.join('\r\n')}\r\n`, 'utf8'));
+	res.send(Buffer.from(`\uFEFF${lignes.join('\r\n')}\r\n`, 'utf8'));
 });
 
 // --- Fiche ---------------------------------------------------------------------------------------
@@ -335,11 +337,7 @@ routeur.get('/membres/:id', (req, res) => {
 	const m = svc.chargerMembre(Number(req.params.id));
 	const compter = (requete: { get(): { n: number } | undefined }) => requete.get()?.n ?? 0;
 	const domaine = m.domaine_activite_id
-		? db
-				.select()
-				.from(domaineActivite)
-				.where(eq(domaineActivite.id, m.domaine_activite_id))
-				.get()
+		? db.select().from(domaineActivite).where(eq(domaineActivite.id, m.domaine_activite_id)).get()
 		: undefined;
 	const demandes = db
 		.select()
@@ -386,9 +384,7 @@ routeur.get('/membres/:id', (req, res) => {
 			db
 				.select({ n: sql<number>`count(*)` })
 				.from(paiement)
-				.where(
-					and(eq(paiement.membre_id, m.id), eq(paiement.etat, EtatPaiement.NON_CONFIRME))
-				)
+				.where(and(eq(paiement.membre_id, m.id), eq(paiement.etat, EtatPaiement.NON_CONFIRME)))
 		),
 		demandes_reinitialisation: demandes.map((r) => ({
 			id: r.id,
@@ -656,7 +652,11 @@ routeur.put('/membres/:id', (req, res) => {
 		if (m.type_compte !== 1) {
 			// Un compte qui n'est plus gestionnaire perd ses droits d'administration.
 			db.update(tableMembre)
-				.set({ droit_attribution: false, droit_caisse: false, droit_activation: false })
+				.set({
+					droit_attribution: false,
+					droit_caisse: false,
+					droit_activation: false
+				})
 				.where(eq(tableMembre.id, m.id))
 				.run();
 		}
@@ -697,12 +697,12 @@ routeur.put('/membres/:id/droits', (req, res) => {
 	const m = svc.chargerMembre(Number(req.params.id));
 	if (m.type_compte !== 1) {
 		throw erreur(
-			'Les droits ne concernent que les gestionnaires : changez d’abord le type de compte.'
+			"Les droits ne concernent que les gestionnaires : changez d'abord le type de compte."
 		);
 	}
 	const donnees = valider(droitsEntreeSchema, req.body);
 	if (m.id === moi.id && !donnees.droit_attribution) {
-		throw interdit('Vous ne pouvez pas retirer votre propre droit d’attribution.');
+		throw interdit("Vous ne pouvez pas retirer votre propre droit d'attribution.");
 	}
 	db.update(tableMembre)
 		.set({
@@ -726,8 +726,7 @@ routeur.post('/membres/:id/code-pointage', async (req, res) => {
 	if (m.etat === Etat.SUPPRIME) throw erreur('Ce compte est supprimé.');
 	const code = await svc.attribuerCodePointage(m.id);
 	res.json({
-		message:
-			'Nouveau code de pointage généré. Communiquez-le au membre : il ne sera plus affiché.',
+		message: 'Nouveau code de pointage généré. Communiquez-le au membre : il ne sera plus affiché.',
 		id: m.id,
 		code
 	});
@@ -740,9 +739,7 @@ function reinitialiser(moi: Membre, m: Membre) {
 	}
 	svc.exigerAttributionSiGestionnaire(moi, m);
 	if (m.etat === Etat.SUPPRIME) {
-		throw erreur(
-			'Ce compte est supprimé : réactivez-le avant de réinitialiser son mot de passe.'
-		);
+		throw erreur('Ce compte est supprimé : réactivez-le avant de réinitialiser son mot de passe.');
 	}
 	const { jeton, expire } = db.transaction(() => svc.creerLienReinitialisation(m, moi));
 	return vueLien(m, jeton, expire);
@@ -762,7 +759,10 @@ routeur.post('/membres/:id/photo', televersement.single('fichier'), async (req, 
 	exigerDroit(moi, 'activation');
 	const m = svc.chargerMembre(Number(req.params.id));
 	svc.exigerAttributionSiGestionnaire(moi, m);
-	if (!req.file) throw erreur('Aucun fichier reçu.', { photo: 'Veuillez choisir une image.' });
+	if (!req.file)
+		throw erreur('Aucun fichier reçu.', {
+			photo: 'Veuillez choisir une image.'
+		});
 	const ancien = m.photo;
 	const chemin = await enregistrerFichier(req.file.buffer, 'membres', new Set([IMAGE]), 'photo');
 	db.update(tableMembre).set({ photo: chemin }).where(eq(tableMembre.id, m.id)).run();
@@ -802,10 +802,7 @@ routeur.get('/reinitialisations', (req, res) => {
 		.select()
 		.from(reinitialisationMotDePasse)
 		.where(and(...conditions.filter(Boolean)))
-		.orderBy(
-			desc(reinitialisationMotDePasse.date_creation),
-			desc(reinitialisationMotDePasse.id)
-		)
+		.orderBy(desc(reinitialisationMotDePasse.date_creation), desc(reinitialisationMotDePasse.id))
 		.$dynamic();
 	const liste = paginer<Demande>(requete, page);
 

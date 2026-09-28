@@ -9,7 +9,13 @@ import multer from 'multer';
 import { z } from 'zod';
 import { config } from '../config.js';
 import { db } from '../db.js';
-import { exigerDroit, exigerMembre, gestionnaireRequis, membreRequis, pagination } from '../deps.js';
+import {
+	exigerDroit,
+	exigerMembre,
+	gestionnaireRequis,
+	membreRequis,
+	pagination
+} from '../deps.js';
 import { Etat, TypeFichierPub, libelle } from '../enums.js';
 import { ErreurMetier, erreur, introuvable } from '../erreurs.js';
 import { publicite } from '../schema/contenu.js';
@@ -17,8 +23,19 @@ import { entreprise } from '../schema/entreprises.js';
 import { membre as tableMembre, peutModerer } from '../schema/membres.js';
 import { ok, valider } from '../schemas/commun.js';
 import { changerEtat, paginer, recherche } from '../services/fiches.js';
-import { enregistrer as enregistrerFichier, supprimer as supprimerFichier, url } from '../services/fichiers.js';
-import { enDiffusion, estRobot, FORMATS, GENRE_ATTENDU, genreReel, texteBrut } from '../services/publicites.js';
+import {
+	enregistrer as enregistrerFichier,
+	supprimer as supprimerFichier,
+	url
+} from '../services/fichiers.js';
+import {
+	enDiffusion,
+	estRobot,
+	FORMATS,
+	GENRE_ATTENDU,
+	genreReel,
+	texteBrut
+} from '../services/publicites.js';
 import { nouvelleReference, Prefixe } from '../services/references.js';
 
 export const routeur = Router();
@@ -138,7 +155,9 @@ routeur.get('/diffusion', (req, res) => {
 
 	const entreprises = tableEntreprises(pubs.map((p) => p.entreprise_id));
 	res.json(
-		pubs.map((p) => vueDiffusee(p, p.entreprise_id !== null ? (entreprises.get(p.entreprise_id) ?? null) : null))
+		pubs.map((p) =>
+			vueDiffusee(p, p.entreprise_id !== null ? (entreprises.get(p.entreprise_id) ?? null) : null)
+		)
 	);
 });
 
@@ -273,7 +292,11 @@ routeur.get('/choix', gestionnaireRequis, (_req, res) => {
  */
 routeur.get('/:id', (req, res) => {
 	const membre = req.membre;
-	const pub = db.select().from(publicite).where(eq(publicite.id, Number(req.params.id))).get();
+	const pub = db
+		.select()
+		.from(publicite)
+		.where(eq(publicite.id, Number(req.params.id)))
+		.get();
 	if (!pub) throw introuvable("Cette publicité n'existe pas.");
 
 	const gestion = !!membre && membre.type_compte === 1;
@@ -290,7 +313,10 @@ routeur.get('/:id', (req, res) => {
 		pub.nombre_vues += 1;
 	}
 
-	const ent = pub.entreprise_id !== null ? (tableEntreprises([pub.entreprise_id]).get(pub.entreprise_id) ?? null) : null;
+	const ent =
+		pub.entreprise_id !== null
+			? (tableEntreprises([pub.entreprise_id]).get(pub.entreprise_id) ?? null)
+			: null;
 	const dem =
 		!tiers && pub.demandeur_id !== null
 			? (tableDemandeurs([pub.demandeur_id]).get(pub.demandeur_id) ?? null)
@@ -321,12 +347,20 @@ function validerPublicite(d: PubliciteEntree, exclureId?: number): void {
 	const champs: Record<string, string> = {};
 
 	const demandeur = d.demandeur_id
-		? db.select({ id: tableMembre.id }).from(tableMembre).where(eq(tableMembre.id, d.demandeur_id)).get()
+		? db
+				.select({ id: tableMembre.id })
+				.from(tableMembre)
+				.where(eq(tableMembre.id, d.demandeur_id))
+				.get()
 		: null;
 	if (!demandeur) champs.demandeur_id = 'Veuillez indiquer le demandeur (gestionnaire ou membre).';
 
 	const ent = d.entreprise_id
-		? db.select({ id: entreprise.id }).from(entreprise).where(eq(entreprise.id, d.entreprise_id)).get()
+		? db
+				.select({ id: entreprise.id })
+				.from(entreprise)
+				.where(eq(entreprise.id, d.entreprise_id))
+				.get()
 		: null;
 	if (!ent) champs.entreprise_id = "Veuillez indiquer l'entreprise.";
 
@@ -339,7 +373,11 @@ function validerPublicite(d: PubliciteEntree, exclureId?: number): void {
 	}
 
 	const typesConnus: number[] = Object.values(TypeFichierPub);
-	if (d.type_fichier === null || d.type_fichier === undefined || !typesConnus.includes(d.type_fichier)) {
+	if (
+		d.type_fichier === null ||
+		d.type_fichier === undefined ||
+		!typesConnus.includes(d.type_fichier)
+	) {
 		champs.type_fichier = 'Veuillez indiquer le format du fichier de la publicité.';
 	}
 
@@ -424,34 +462,44 @@ routeur.put('/:id', gestionnaireRequis, (req, res) => {
 });
 
 /** Le fichier doit correspondre au type déclaré (image, son MP3 ou vidéo MP4). */
-routeur.post('/:id/fichier', gestionnaireRequis, televersement.single('fichier'), async (req, res) => {
-	const pub = obtenirPublicite(Number(req.params.id));
-	const attendu = GENRE_ATTENDU[pub.type_fichier];
-	if (!attendu) {
-		throw erreur("Veuillez d'abord indiquer le format de la publicité.", {
-			fichier: 'Format de la publicité non indiqué.'
-		});
-	}
-	if (!req.file) throw erreur('Aucun fichier reçu.', { fichier: 'Veuillez choisir un fichier.' });
-
-	let chemin: string;
-	try {
-		chemin = await enregistrerFichier(req.file.buffer, 'publicites', new Set([attendu]), 'fichier');
-	} catch (e) {
-		if (e instanceof ErreurMetier && e.message === 'Type de fichier non accepté.') {
-			throw erreur(
-				`Le fichier ne correspond pas au format choisi (${libelle('TypeFichierPub', pub.type_fichier)}).`,
-				{ fichier: `Joignez ${FORMATS[attendu]}.` }
-			);
+routeur.post(
+	'/:id/fichier',
+	gestionnaireRequis,
+	televersement.single('fichier'),
+	async (req, res) => {
+		const pub = obtenirPublicite(Number(req.params.id));
+		const attendu = GENRE_ATTENDU[pub.type_fichier];
+		if (!attendu) {
+			throw erreur("Veuillez d'abord indiquer le format de la publicité.", {
+				fichier: 'Format de la publicité non indiqué.'
+			});
 		}
-		throw e;
-	}
+		if (!req.file) throw erreur('Aucun fichier reçu.', { fichier: 'Veuillez choisir un fichier.' });
 
-	const ancien = pub.fichier;
-	db.update(publicite).set({ fichier: chemin }).where(eq(publicite.id, pub.id)).run();
-	if (ancien !== chemin) supprimerFichier(ancien);
-	res.json(ok('Fichier enregistré.', pub.id));
-});
+		let chemin: string;
+		try {
+			chemin = await enregistrerFichier(
+				req.file.buffer,
+				'publicites',
+				new Set([attendu]),
+				'fichier'
+			);
+		} catch (e) {
+			if (e instanceof ErreurMetier && e.message === 'Type de fichier non accepté.') {
+				throw erreur(
+					`Le fichier ne correspond pas au format choisi (${libelle('TypeFichierPub', pub.type_fichier)}).`,
+					{ fichier: `Joignez ${FORMATS[attendu]}.` }
+				);
+			}
+			throw e;
+		}
+
+		const ancien = pub.fichier;
+		db.update(publicite).set({ fichier: chemin }).where(eq(publicite.id, pub.id)).run();
+		if (ancien !== chemin) supprimerFichier(ancien);
+		res.json(ok('Fichier enregistré.', pub.id));
+	}
+);
 
 routeur.post('/:id/etat', membreRequis, (req, res) => {
 	const membre = exigerMembre(req);

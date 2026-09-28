@@ -29,8 +29,21 @@ import {
 	type Domaine,
 	type InteretOut
 } from '../schemas/emplois.js';
-import { changerEtat, compterVisite, exigerVisible, paginer, recherche, supprimer, visibilite } from '../services/fiches.js';
-import { enregistrer as enregistrerFichier, IMAGE, PDF, supprimer as supprimerFichier } from '../services/fichiers.js';
+import {
+	changerEtat,
+	compterVisite,
+	exigerVisible,
+	paginer,
+	recherche,
+	supprimer,
+	visibilite
+} from '../services/fiches.js';
+import {
+	enregistrer as enregistrerFichier,
+	IMAGE,
+	PDF,
+	supprimer as supprimerFichier
+} from '../services/fichiers.js';
 import { deposer, lister as listerInterets } from '../services/interets.js';
 import { nouvelleReference, Prefixe } from '../services/references.js';
 
@@ -42,7 +55,10 @@ const televersement = multer({
 	limits: { fileSize: config.uploadMaxOctets }
 });
 
-const COLONNES_FICHE = { etat: annonceEmploi.etat, auteur: annonceEmploi.auteur_id };
+const COLONNES_FICHE = {
+	etat: annonceEmploi.etat,
+	auteur: annonceEmploi.auteur_id
+};
 
 /** Domaines d'activité, indexés par identifiant (petite table de référence, lue en une fois). */
 function tableDomaines(): Map<number, Domaine> {
@@ -62,7 +78,9 @@ function domaineDe(a: Annonce, domaines: Map<number, Domaine>): Domaine | null {
 /** Charge une annonce en respectant la visibilité (404 si non visible). */
 function obtenir(id: number, membre: Membre | null, message = 'Fiche introuvable.'): Annonce {
 	const fiche = db.select().from(annonceEmploi).where(eq(annonceEmploi.id, id)).get();
-	return exigerVisible(fiche as never, membre, { message }) as unknown as Annonce;
+	return exigerVisible(fiche as never, membre, {
+		message
+	}) as unknown as Annonce;
 }
 
 // --- Lecture --------------------------------------------------------------------------------------
@@ -137,7 +155,10 @@ routeur.get('/compteurs', (_req, res) => {
 			.from(annonceEmploi)
 			.where(and(eq(annonceEmploi.type_annonce, type), eq(annonceEmploi.etat, Etat.AUTORISE)))
 			.get()?.n ?? 0;
-	res.json({ demandes: n(TypeAnnonceRH.DEMANDE), offres: n(TypeAnnonceRH.OFFRE) });
+	res.json({
+		demandes: n(TypeAnnonceRH.DEMANDE),
+		offres: n(TypeAnnonceRH.OFFRE)
+	});
 });
 
 routeur.get('/:id', (req, res) => {
@@ -188,8 +209,7 @@ routeur.get('/:id', (req, res) => {
 			proprietaire,
 			peutModifier: !!membre && (membre.id === fiche.auteur_id || peutModerer(membre)),
 			peutModerer: peutModerer(membre),
-			monInteret:
-				!!membre && !proprietaire && contributions.some((i) => i.membre_id === membre.id),
+			monInteret: !!membre && !proprietaire && contributions.some((i) => i.membre_id === membre.id),
 			interets
 		})
 	);
@@ -213,7 +233,7 @@ function validerAnnonce(donnees: AnnonceEntree, membre: Membre, exclureId?: numb
 			champs.sexe = 'Veuillez indiquer le sexe.';
 		}
 		if (!donnees.telephone) {
-			champs.telephone = 'Le numéro de téléphone est obligatoire pour une demande d’emploi.';
+			champs.telephone = "Le numéro de téléphone est obligatoire pour une demande d'emploi.";
 		}
 	} else if (donnees.poste_a_pourvoir.trim().length < 3) {
 		champs.poste_a_pourvoir = 'Veuillez indiquer le poste à pourvoir.';
@@ -247,7 +267,9 @@ function champsAnnonce(d: AnnonceEntree, secteurId: number | null) {
 		domaine_id: d.domaine_id ?? null,
 		secteur_id: secteurId,
 		nom: d.nom.trim().toUpperCase(),
-		prenom: d.prenom.trim().replace(/\S+/gu, (mot) => mot[0]!.toUpperCase() + mot.slice(1).toLowerCase()),
+		prenom: d.prenom
+			.trim()
+			.replace(/\S+/gu, (mot) => mot[0]!.toUpperCase() + mot.slice(1).toLowerCase()),
 		sexe: d.sexe === Sexe.FEMININ || d.sexe === Sexe.MASCULIN ? d.sexe : Sexe.INDEFINI,
 		date_naissance: d.date_naissance,
 		adresse: d.adresse.trim(),
@@ -276,9 +298,7 @@ routeur.post('/', membreRequis, (req, res) => {
 
 	const cree = db.transaction(() => {
 		const reference = nouvelleReference(
-			donnees.type_annonce === TypeAnnonceRH.DEMANDE
-				? Prefixe.DEMANDE_EMPLOI
-				: Prefixe.OFFRE_EMPLOI
+			donnees.type_annonce === TypeAnnonceRH.DEMANDE ? Prefixe.DEMANDE_EMPLOI : Prefixe.OFFRE_EMPLOI
 		);
 		return db
 			.insert(annonceEmploi)
@@ -317,7 +337,10 @@ routeur.post('/:id/photo', membreRequis, televersement.single('fichier'), async 
 	const membre = exigerMembre(req);
 	const fiche = obtenir(Number(req.params.id), membre);
 	verifierModification(membre, fiche.auteur_id);
-	if (!req.file) throw erreur('Aucun fichier reçu.', { photo: 'Veuillez choisir une image.' });
+	if (!req.file)
+		throw erreur('Aucun fichier reçu.', {
+			photo: 'Veuillez choisir une image.'
+		});
 
 	const ancien = fiche.photo;
 	const chemin = await enregistrerFichier(req.file.buffer, 'emploi', new Set([IMAGE]), 'photo');
@@ -330,7 +353,10 @@ routeur.post('/:id/cv', membreRequis, televersement.single('fichier'), async (re
 	const membre = exigerMembre(req);
 	const fiche = obtenir(Number(req.params.id), membre);
 	verifierModification(membre, fiche.auteur_id);
-	if (!req.file) throw erreur('Aucun fichier reçu.', { cv: 'Veuillez choisir un fichier PDF.' });
+	if (!req.file)
+		throw erreur('Aucun fichier reçu.', {
+			cv: 'Veuillez choisir un fichier PDF.'
+		});
 
 	const ancien = fiche.cv;
 	const chemin = await enregistrerFichier(req.file.buffer, 'emploi', new Set([PDF]), 'cv');

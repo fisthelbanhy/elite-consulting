@@ -58,7 +58,9 @@ describe('don et placement', () => {
 
 		const sansType = await client().post('/api/epargne/fonds').set(h).send({ montant: 500 });
 		expect(sansType.status).toBe(400);
-		expect(sansType.body.message).toBe("Veuillez indiquer le type de l'épargne : don ou placement.");
+		expect(sansType.body.message).toBe(
+			"Veuillez indiquer le type de l'épargne : don ou placement."
+		);
 
 		const don = await client()
 			.post('/api/epargne/fonds')
@@ -120,15 +122,12 @@ describe('don et placement', () => {
 		expect(inconnu.status).toBe(400);
 		expect(inconnu.body.champs).toHaveProperty('souscripteur_membre');
 
-		const r = await client()
-			.post('/api/epargne/fonds')
-			.set(h)
-			.send({
-				type_fond: 2,
-				montant: 150_000,
-				duree_mois: 24,
-				souscripteur_membre: '06 123 45 67'
-			});
+		const r = await client().post('/api/epargne/fonds').set(h).send({
+			type_fond: 2,
+			montant: 150_000,
+			duree_mois: 24,
+			souscripteur_membre: '06 123 45 67'
+		});
 		expect(r.status).toBe(201);
 		const id = r.body.id;
 
@@ -153,7 +152,9 @@ describe('don et placement', () => {
 		const ha = await entetes('admin');
 		expect((await client().get('/api/epargne/fonds').set(ha)).body.total).toBe(1);
 		expect((await client().get('/api/epargne/fonds?type_fond=1').set(ha)).body.total).toBe(0);
-		expect((await client().get('/api/epargne/fonds?montant_min=200000').set(ha)).body.total).toBe(0);
+		expect((await client().get('/api/epargne/fonds?montant_min=200000').set(ha)).body.total).toBe(
+			0
+		);
 	});
 });
 
@@ -205,10 +206,7 @@ describe('paiement (type 7) et modification', () => {
 		expect(
 			(await client().put(`/api/epargne/fonds/${id}`).set(h).send({ montant: 3_000 })).status
 		).toBe(403);
-		const bloque = await client()
-			.put(`/api/epargne/fonds/${id}`)
-			.set(ha)
-			.send({ montant: 3_000 });
+		const bloque = await client().put(`/api/epargne/fonds/${id}`).set(ha).send({ montant: 3_000 });
 		expect(bloque.status).toBe(400);
 		expect(bloque.body.champs).toHaveProperty('montant');
 
@@ -289,7 +287,7 @@ describe('carte de pointage', () => {
 		expect(solde(cliente)).toBe(0);
 	});
 
-	it('applique la règle des 97 % et l’effet miroir (ADR-0004)', async () => {
+	it("applique la règle des 97 % et l'effet miroir (ADR-0004)", async () => {
 		const { agent, cliente } = await basePointage();
 		const h = await entetes('agent');
 		const versement = {
@@ -319,8 +317,12 @@ describe('carte de pointage', () => {
 			'Impossible de faire un retrait, Le solde est inférieur au montant demandé.'
 		);
 		expect(
-			(await client().post('/api/epargne/pointages').set(h).send({ ...retrait, montant: 9_699 }))
-				.status
+			(
+				await client()
+					.post('/api/epargne/pointages')
+					.set(h)
+					.send({ ...retrait, montant: 9_699 })
+			).status
 		).toBe(201);
 		expect(solde(cliente)).toBe(301);
 		expect(solde(agent)).toBe(301);

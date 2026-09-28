@@ -10,7 +10,13 @@ import multer from 'multer';
 import { z } from 'zod';
 import { config } from '../config.js';
 import { db } from '../db.js';
-import { exigerMembre, membreRequis, pagination, peutModifier, verifierModification } from '../deps.js';
+import {
+	exigerMembre,
+	membreRequis,
+	pagination,
+	peutModifier,
+	verifierModification
+} from '../deps.js';
 import { Etat, NeufOccasion, OffreDemande, TypeInteret, TypeObjetPaye } from '../enums.js';
 import { erreur, interdit, introuvable } from '../erreurs.js';
 import { article, lignePanier, paiement } from '../schema/commerce.js';
@@ -26,8 +32,21 @@ import {
 	total as totalPanier,
 	type LigneAvecArticle
 } from '../services/ecommerce.js';
-import { changerEtat, compterVisite, exigerVisible, paginer, recherche, supprimer, visibilite } from '../services/fiches.js';
-import { enregistrer as enregistrerFichier, IMAGE, supprimer as supprimerFichier, url } from '../services/fichiers.js';
+import {
+	changerEtat,
+	compterVisite,
+	exigerVisible,
+	paginer,
+	recherche,
+	supprimer,
+	visibilite
+} from '../services/fiches.js';
+import {
+	enregistrer as enregistrerFichier,
+	IMAGE,
+	supprimer as supprimerFichier,
+	url
+} from '../services/fichiers.js';
 import { deposer, lister as listerInterets } from '../services/interets.js';
 import { nouvelleReference, Prefixe } from '../services/references.js';
 
@@ -424,11 +443,18 @@ routeur.get('/:id', (req, res) => {
 function validerArticle(d: ArticleEntree, exclureId?: number): void {
 	const champs: Record<string, string> = {};
 
-	if (d.offre_ou_recherche !== OffreDemande.OFFRE && d.offre_ou_recherche !== OffreDemande.DEMANDE) {
+	if (
+		d.offre_ou_recherche !== OffreDemande.OFFRE &&
+		d.offre_ou_recherche !== OffreDemande.DEMANDE
+	) {
 		champs.offre_ou_recherche = "Veuillez indiquer s'il s'agit d'une offre ou d'une recherche.";
 	}
 	const famille = d.famille_id
-		? db.select({ id: familleArticle.id }).from(familleArticle).where(eq(familleArticle.id, d.famille_id)).get()
+		? db
+				.select({ id: familleArticle.id })
+				.from(familleArticle)
+				.where(eq(familleArticle.id, d.famille_id))
+				.get()
 		: null;
 	if (!famille) champs.famille_id = "Veuillez indiquer la famille de l'article.";
 

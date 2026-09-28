@@ -50,10 +50,18 @@ describe('visiteur', () => {
 
 	it('bloque les robots et limite le nombre de messages', async () => {
 		expect(
-			(await client().post('/api/contact').send({ ...VISITEUR, site_web: 'http://spam' })).status
+			(
+				await client()
+					.post('/api/contact')
+					.send({ ...VISITEUR, site_web: 'http://spam' })
+			).status
 		).toBe(400);
 		expect(
-			(await client().post('/api/contact').send({ ...VISITEUR, duree_saisie_ms: 800 })).status
+			(
+				await client()
+					.post('/api/contact')
+					.send({ ...VISITEUR, duree_saisie_ms: 800 })
+			).status
 		).toBe(400);
 
 		for (let i = 0; i < 5; i++) {
@@ -71,7 +79,7 @@ describe('visiteur', () => {
 });
 
 describe('membre', () => {
-	it('reprend le nom et l’e-mail du profil, non modifiables', async () => {
+	it("reprend le nom et l'e-mail du profil, non modifiables", async () => {
 		await creerMembre('awa', {
 			nom: 'Awa Nkounkou',
 			email: 'awa@example.com',
@@ -166,7 +174,7 @@ describe('visibilité', () => {
 });
 
 describe('réponse', () => {
-	it('est enregistrée avant d’être envoyée, et prévient le membre', async () => {
+	it("est enregistrée avant d'être envoyée, et prévient le membre", async () => {
 		boiteDeTest.length = 0;
 		await creerMembre('awa', { email: 'awa@example.com' });
 		await creerMembre('admin', { type_compte: TypeMembre.GESTIONNAIRE });
@@ -205,9 +213,9 @@ describe('réponse', () => {
 		expect((await client().get('/api/espace/compteurs').set(hAwa)).body.messages_non_lus).toBe(1);
 
 		// Changement d'état par un gestionnaire.
-		expect(
-			(await client().post(`/api/contact/${id}/etat`).set(ha).send({ etat: 3 })).status
-		).toBe(200);
+		expect((await client().post(`/api/contact/${id}/etat`).set(ha).send({ etat: 3 })).status).toBe(
+			200
+		);
 		expect((await client().get('/api/contact').set(ha)).body.total).toBe(0);
 		expect((await client().get('/api/contact?etat=3').set(ha)).body.total).toBe(1);
 	});

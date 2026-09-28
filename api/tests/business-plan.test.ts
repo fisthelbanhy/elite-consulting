@@ -127,7 +127,9 @@ describe('visibilité et droits', () => {
 					.send({ etat: 3 })
 			).status
 		).toBe(403);
-		expect((await client().post(`/api/business-plan/${id}/etat`).set(ha).send({ etat: 3 })).status).toBe(200);
+		expect(
+			(await client().post(`/api/business-plan/${id}/etat`).set(ha).send({ etat: 3 })).status
+		).toBe(200);
 
 		// Fiche supprimée : le porteur peut en recréer une, la référence est conservée.
 		const h = await entetes('awa');

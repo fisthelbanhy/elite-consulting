@@ -5,11 +5,7 @@
 import { z, type ZodType } from 'zod';
 import { ErreurMetier, traduire } from '../erreurs.js';
 import { url } from '../services/fichiers.js';
-import {
-	MESSAGE_TELEPHONE,
-	normaliserTelephone,
-	telephoneValide
-} from '../services/validation.js';
+import { MESSAGE_TELEPHONE, normaliserTelephone, telephoneValide } from '../services/validation.js';
 
 /**
  * Contrôles portant sur **plusieurs champs à la fois** (confirmation d'un mot de passe, cohérence
@@ -79,7 +75,15 @@ export interface Auteur {
 }
 
 export function auteur(
-	m: { id: number; pseudonyme: string; categorie: number; photo: string | null } | null | undefined
+	m:
+		| {
+				id: number;
+				pseudonyme: string;
+				categorie: number;
+				photo: string | null;
+		  }
+		| null
+		| undefined
 ): Auteur | null {
 	if (!m) return null;
 	return {
@@ -154,6 +158,46 @@ export const entierFacultatif = z
 	.union([z.literal(''), z.null(), z.coerce.number().int()])
 	.optional()
 	.transform((v) => (v === '' || v === null || v === undefined ? null : v));
+
+/**
+ * Entier **obligatoire** venant de la chaîne de requête (`?type=2`), avec bornes facultatives.
+ *
+ * Pourquoi ne pas écrire simplement `z.coerce.number().int()` : la coercition transforme aussi
+ * bien la clé absente que `"abc"` en `NaN`, si bien que les deux cas donneraient le même message.
+ * Pydantic les distinguait (« Ce champ est obligatoire. » contre « Nombre entier attendu. ») et le
+ * frontend affiche ce message sous le champ : la présence est donc contrôlée **avant** la
+ * conversion, et le format par une expression régulière.
+ */
+export function entierRequis(min?: number, max?: number) {
+	return z
+		.union([z.number(), z.string()])
+		.refine((v) => /^-?\d+$/.test(String(v).trim()), {
+			error: 'Nombre entier attendu.'
+		})
+		.transform((v) => Number(String(v).trim()))
+		.pipe(borne(min, max));
+}
+
+/**
+ * Entier **facultatif** venant de la chaîne de requête (`?objet_id=12`).
+ *
+ * À ne pas confondre avec `entierFacultatif`, qui sert aux formulaires : là, `""` signifie « champ
+ * vidé » et vaut `null`. Dans une chaîne de requête, `?objet_id=` était refusé par l'ancien
+ * backend (« Nombre entier attendu. ») ; seule la **clé absente** valait `None`.
+ */
+export function entierFacultatifRequete(min?: number, max?: number) {
+	return entierRequis(min, max)
+		.optional()
+		.transform((v) => v ?? null);
+}
+
+/** `z.number().int()` avec les bornes éventuelles, appliquées dans l'ordre min puis max. */
+function borne(min?: number, max?: number) {
+	let nombre = z.number().int();
+	if (min !== undefined) nombre = nombre.min(min);
+	if (max !== undefined) nombre = nombre.max(max);
+	return nombre;
+}
 
 /**
  * Champ téléphone facultatif : normalisé puis validé **par Zod** (et non par une erreur métier),

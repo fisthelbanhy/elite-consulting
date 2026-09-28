@@ -36,9 +36,7 @@ describe('inscription et connexion', () => {
 			.send({ identifiant: '061234567', mot_de_passe: 'unmotdepasse' });
 		expect(c.status).toBe(200);
 
-		const moi = await client()
-			.get('/api/auth/me')
-			.set('Authorization', `Bearer ${c.body.jeton}`);
+		const moi = await client().get('/api/auth/me').set('Authorization', `Bearer ${c.body.jeton}`);
 		expect(moi.body.pseudonyme).toBe('gracem');
 	});
 

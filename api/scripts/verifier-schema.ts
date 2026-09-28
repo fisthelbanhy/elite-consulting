@@ -36,7 +36,9 @@ for (const bloc of sql.split('--> statement-breakpoint')) {
 
 const obtenu: Record<string, Record<string, ColonneRef>> = {};
 const tables = db
-	.prepare("select name from sqlite_master where type='table' and name not like 'sqlite_%' order by name")
+	.prepare(
+		"select name from sqlite_master where type='table' and name not like 'sqlite_%' order by name"
+	)
 	.all() as { name: string }[];
 for (const { name } of tables) {
 	const colonnes = db.prepare(`pragma table_info("${name}")`).all() as {
@@ -47,7 +49,10 @@ for (const { name } of tables) {
 		pk: number;
 	}[];
 	obtenu[name] = Object.fromEntries(
-		colonnes.map((c) => [c.name, { type: c.type, notnull: c.notnull, defaut: c.dflt_value, pk: c.pk }])
+		colonnes.map((c) => [
+			c.name,
+			{ type: c.type, notnull: c.notnull, defaut: c.dflt_value, pk: c.pk }
+		])
 	);
 }
 
@@ -84,7 +89,8 @@ for (const [table, colonnes] of Object.entries(reference)) {
 			bloquants.push(`${table}.${nom} : type ${attendu.type} → ${eu.type}`);
 		if (attendu.notnull !== eu.notnull)
 			bloquants.push(`${table}.${nom} : NOT NULL ${attendu.notnull} → ${eu.notnull}`);
-		if (attendu.pk !== eu.pk) bloquants.push(`${table}.${nom} : clé primaire ${attendu.pk} → ${eu.pk}`);
+		if (attendu.pk !== eu.pk)
+			bloquants.push(`${table}.${nom} : clé primaire ${attendu.pk} → ${eu.pk}`);
 
 		// Écarts de valeur par défaut : informatifs (voir la note en fin de fichier).
 		if (attendu.defaut == null && eu.defaut != null) defautsAjoutes++;

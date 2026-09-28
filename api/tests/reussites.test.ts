@@ -27,7 +27,7 @@ async function publier(id: number) {
 }
 
 describe('création', () => {
-	it('applique les règles et n’autorise qu’une fiche par membre', async () => {
+	it("applique les règles et n'autorise qu'une fiche par membre", async () => {
 		await creerMembre('awa');
 		const h = await entetes('awa');
 
@@ -57,7 +57,7 @@ describe('création', () => {
 });
 
 describe('publication', () => {
-	it('exige une validation et respecte le contrat de l’accueil', async () => {
+	it("exige une validation et respecte le contrat de l'accueil", async () => {
 		await creerMembre('awa', { pseudonyme: 'awa_web' });
 		const h = await entetes('awa');
 		const id = (await client().post('/api/reussites').set(h).send(REUSSITE)).body.id;
@@ -68,7 +68,9 @@ describe('publication', () => {
 		expect((await client().get(`/api/reussites/${id}`).set(h)).status).toBe(200);
 
 		// L'auteur ne peut pas se publier lui-même.
-		expect((await client().post(`/api/reussites/${id}/etat`).set(h).send({ etat: 2 })).status).toBe(403);
+		expect((await client().post(`/api/reussites/${id}/etat`).set(h).send({ etat: 2 })).status).toBe(
+			403
+		);
 		await publier(id);
 
 		const liste = await client().get('/api/reussites?taille=3');
@@ -100,7 +102,7 @@ describe('publication', () => {
 });
 
 describe('modification', () => {
-	it('par l’auteur renvoie la fiche en relecture', async () => {
+	it("par l'auteur renvoie la fiche en relecture", async () => {
 		await creerMembre('awa');
 		await creerMembre('autre');
 		const h = await entetes('awa');
@@ -133,7 +135,7 @@ describe('modification', () => {
 });
 
 describe('photo et suppression', () => {
-	it('gère le portrait et la reprise d’une fiche supprimée', async () => {
+	it("gère le portrait et la reprise d'une fiche supprimée", async () => {
 		await creerMembre('awa');
 		const h = await entetes('awa');
 		const id = (await client().post('/api/reussites').set(h).send(REUSSITE)).body.id;

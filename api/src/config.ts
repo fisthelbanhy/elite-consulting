@@ -80,8 +80,14 @@ export const config = {
 	/** URL publique du site (liens dans les e-mails). */
 	siteUrl: texte('SITE_URL', 'http://localhost:5173'),
 
-	/** Port d'écoute du processus (site + API, ADR-0013). */
-	port: entier('PORT', Number(process.env.PORT) || 3000),
+	/**
+	 * Port d'écoute du processus (site + API, ADR-0013).
+	 *
+	 * Le défaut reste **8000**, le port de l'ancien backend : c'est celui que le BFF appelle quand
+	 * `BACKEND_URL` n'est pas posée (`frontend/src/lib/server/api.ts`), et celui que la
+	 * documentation existante indique. En production, l'hébergeur impose son port par `PORT`.
+	 */
+	port: entier('PORT', Number(process.env.PORT) || 8000),
 
 	get estSqlite(): boolean {
 		return databaseUrl.startsWith('sqlite');

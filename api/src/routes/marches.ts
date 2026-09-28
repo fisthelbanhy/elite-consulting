@@ -12,15 +12,33 @@ import multer from 'multer';
 import { z } from 'zod';
 import { config } from '../config.js';
 import { db } from '../db.js';
-import { exigerMembre, membreRequis, pagination, peutModifier, verifierModification } from '../deps.js';
+import {
+	exigerMembre,
+	membreRequis,
+	pagination,
+	peutModifier,
+	verifierModification
+} from '../deps.js';
 import { Confidentialite, Etat } from '../enums.js';
 import { erreur } from '../erreurs.js';
 import { marche, projet } from '../schema/entreprises.js';
 import { membre as tableMembre, peutModerer, type Membre } from '../schema/membres.js';
 import { auteur, ok, valider, type Auteur } from '../schemas/commun.js';
 import { auteursDe } from '../services/contacts.js';
-import { changerEtat, exigerVisible, paginer, recherche, supprimer, visibilite } from '../services/fiches.js';
-import { enregistrer as enregistrerFichier, PDF, supprimer as supprimerFichier, url } from '../services/fichiers.js';
+import {
+	changerEtat,
+	exigerVisible,
+	paginer,
+	recherche,
+	supprimer,
+	visibilite
+} from '../services/fiches.js';
+import {
+	enregistrer as enregistrerFichier,
+	PDF,
+	supprimer as supprimerFichier,
+	url
+} from '../services/fichiers.js';
 import { nouvelleReference, Prefixe } from '../services/references.js';
 
 export const routeur = Router();
@@ -154,7 +172,9 @@ function entierQuery(v: unknown): number | null {
 routeur.get('/', (req, res) => {
 	const membre = req.membre;
 	const page = pagination(req);
-	const conditions: (SQL | undefined)[] = [visibilite({ etat: marche.etat, auteur: marche.auteur_id }, membre)];
+	const conditions: (SQL | undefined)[] = [
+		visibilite({ etat: marche.etat, auteur: marche.auteur_id }, membre)
+	];
 
 	if (membre && membre.type_compte === 1) {
 		const etat = entierQuery(req.query.etat);
@@ -462,7 +482,12 @@ function validerProjet(d: ProjetEntree, exclureId?: number): void {
 	for (const [nom, message] of obligatoires) {
 		if (texte(d[nom] as string).length < 4) champs[nom] = message;
 	}
-	if (d.duree_mois === null || d.duree_mois === undefined || d.duree_mois < 0 || d.duree_mois > 120) {
+	if (
+		d.duree_mois === null ||
+		d.duree_mois === undefined ||
+		d.duree_mois < 0 ||
+		d.duree_mois > 120
+	) {
 		champs.duree_mois = 'Veuillez indiquer la durée du projet.';
 	}
 	if (Object.keys(champs).length) throw erreur('Veuillez corriger les champs signalés.', champs);

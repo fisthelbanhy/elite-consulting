@@ -161,10 +161,7 @@ declarer(TypeObjetPaye.ARTICLE, {
 			.from(lignePanier)
 			.leftJoin(article, eq(article.id, lignePanier.article_id))
 			.where(
-				and(
-					eq(lignePanier.paiement_id, p.id),
-					eq(lignePanier.type_objet, TypeObjetPaye.ARTICLE)
-				)
+				and(eq(lignePanier.paiement_id, p.id), eq(lignePanier.type_objet, TypeObjetPaye.ARTICLE))
 			)
 			.all();
 

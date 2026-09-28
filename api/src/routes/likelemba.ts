@@ -32,7 +32,14 @@ import {
 	valider,
 	type Auteur
 } from '../schemas/commun.js';
-import { changerEtat, exigerVisible, paginer, recherche, supprimer, visibilite } from '../services/fiches.js';
+import {
+	changerEtat,
+	exigerVisible,
+	paginer,
+	recherche,
+	supprimer,
+	visibilite
+} from '../services/fiches.js';
 import { montantLisible } from '../services/fonds.js';
 import {
 	codeAdhesionLikelemba,
@@ -40,11 +47,7 @@ import {
 	numeroRecuLikelemba,
 	Prefixe
 } from '../services/references.js';
-import {
-	MESSAGE_TELEPHONE,
-	normaliserTelephone,
-	telephoneValide
-} from '../services/validation.js';
+import { MESSAGE_TELEPHONE, normaliserTelephone, telephoneValide } from '../services/validation.js';
 
 export const routeur = Router();
 export const prefixe = '/likelemba';
@@ -177,8 +180,7 @@ function vueCotisation(c: Cotisation, g: Groupe, membre: Membre | null) {
 		code_adherent: a ? a.code : '',
 		nom_caissier: caissier ? caissier.pseudonyme : '',
 		// La remarque de paiement peut contenir un numéro de transaction.
-		observation:
-			gerer || concerne || (membre && membre.type_compte === 1) ? c.observation : null,
+		observation: gerer || concerne || (membre && membre.type_compte === 1) ? c.observation : null,
 		recu_valide: valide,
 		peut_valider: gerer && c.etat !== Etat.SUPPRIME && (!valide || c.etat === Etat.NON_TRAITE)
 	};
@@ -196,9 +198,7 @@ function cotisationsDe(g: Groupe, adhesionId?: number): Cotisation[] {
 }
 
 function totalCotisations(cotisations: Cotisation[]): number {
-	return cotisations
-		.filter((c) => c.etat !== Etat.SUPPRIME)
-		.reduce((n, c) => n + c.montant, 0);
+	return cotisations.filter((c) => c.etat !== Etat.SUPPRIME).reduce((n, c) => n + c.montant, 0);
 }
 
 // --- Liste ---------------------------------------------------------------------------------------
@@ -222,13 +222,16 @@ routeur.get('/', (req, res) => {
 			etat ? eq(groupeLikelemba.etat, etat) : ne(groupeLikelemba.etat, Etat.SUPPRIME)
 		);
 	}
-	if (membre && req.query.miens !== undefined && req.query.miens !== 'false' && req.query.miens !== '0') {
+	if (
+		membre &&
+		req.query.miens !== undefined &&
+		req.query.miens !== 'false' &&
+		req.query.miens !== '0'
+	) {
 		const adherent = db
 			.select({ id: membreLikelemba.groupe_id })
 			.from(membreLikelemba)
-			.where(
-				and(eq(membreLikelemba.membre_id, membre.id), ne(membreLikelemba.etat, Etat.SUPPRIME))
-			)
+			.where(and(eq(membreLikelemba.membre_id, membre.id), ne(membreLikelemba.etat, Etat.SUPPRIME)))
 			.all()
 			.map((a) => a.id);
 		conditions.push(
@@ -268,10 +271,7 @@ routeur.get('/', (req, res) => {
 					.select({ groupe_id: membreLikelemba.groupe_id, n: sql<number>`count(*)` })
 					.from(membreLikelemba)
 					.where(
-						and(
-							inArray(membreLikelemba.groupe_id, ids),
-							eq(membreLikelemba.etat, Etat.AUTORISE)
-						)
+						and(inArray(membreLikelemba.groupe_id, ids), eq(membreLikelemba.etat, Etat.AUTORISE))
 					)
 					.groupBy(membreLikelemba.groupe_id)
 					.all()
@@ -338,12 +338,7 @@ routeur.get('/compteurs', (_req, res) => {
 			.select({ n: sql<number>`count(${membreLikelemba.id})` })
 			.from(membreLikelemba)
 			.innerJoin(groupeLikelemba, eq(membreLikelemba.groupe_id, groupeLikelemba.id))
-			.where(
-				and(
-					eq(groupeLikelemba.etat, Etat.AUTORISE),
-					eq(membreLikelemba.etat, Etat.AUTORISE)
-				)
-			)
+			.where(and(eq(groupeLikelemba.etat, Etat.AUTORISE), eq(membreLikelemba.etat, Etat.AUTORISE)))
 			.get()?.n ?? 0;
 	res.json({ groupes, adherents });
 });
@@ -398,9 +393,7 @@ routeur.get('/mes-adhesions', membreRequis, (req, res) => {
 	const adhesions = db
 		.select()
 		.from(membreLikelemba)
-		.where(
-			and(eq(membreLikelemba.membre_id, membre.id), ne(membreLikelemba.etat, Etat.SUPPRIME))
-		)
+		.where(and(eq(membreLikelemba.membre_id, membre.id), ne(membreLikelemba.etat, Etat.SUPPRIME)))
 		.orderBy(desc(membreLikelemba.id))
 		.all();
 	res.json(
@@ -798,7 +791,9 @@ routeur.post('/:id/adhesions', membreRequis, (req, res) => {
 	const cibleId = donnees.membre_id || membre.id;
 
 	if (cibleId !== membre.id && !gerer) {
-		throw interdit('Seuls le responsable du groupe et la frangine peuvent inscrire un autre membre.');
+		throw interdit(
+			'Seuls le responsable du groupe et la frangine peuvent inscrire un autre membre.'
+		);
 	}
 	if (g.etat !== Etat.AUTORISE && !peutModerer(membre)) {
 		throw erreur("Ce likelemba n'accepte pas de nouveaux membres pour le moment.");
@@ -871,7 +866,5 @@ routeur.post('/:id/adhesions', membreRequis, (req, res) => {
 		return cree;
 	});
 
-	res
-		.status(201)
-		.json(ok('Enregistrement effectué. Bienvenue dans le likelemba !', a.id, a.code));
+	res.status(201).json(ok('Enregistrement effectué. Bienvenue dans le likelemba !', a.id, a.code));
 });

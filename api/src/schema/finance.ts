@@ -11,7 +11,7 @@ import {
 	text,
 	type AnySQLiteColumn
 } from 'drizzle-orm/sqlite-core';
-import { dateHeure, dateSeule, horodatage, json, texteVide } from '../db.js';
+import { dateHeure, dateSeule, horodatage, json, maintenant, texteVide } from '../db.js';
 import { Confidentialite, Etat } from '../enums.js';
 import { banque } from './core.js';
 import { membre } from './membres.js';
@@ -50,9 +50,7 @@ export const placement = sqliteTable(
 		membre_id: integer('membre_id').references(() => membre.id),
 		/** `TypePlacement`. */
 		type_placement: integer('type_placement').notNull().default(1),
-		date_placement: dateHeure('date_placement')
-			.notNull()
-			.$defaultFn(() => new Date()),
+		date_placement: dateHeure('date_placement').notNull().$defaultFn(maintenant),
 		montant: integer('montant').notNull().default(0),
 		duree_mois: integer('duree_mois').notNull().default(0),
 		taux: real('taux').notNull().default(0),
@@ -71,9 +69,7 @@ export const operationBanque = sqliteTable(
 		id: integer('id').primaryKey(),
 		reference: texteVide('reference'),
 		membre_id: integer('membre_id').references(() => membre.id),
-		date_saisie: dateHeure('date_saisie')
-			.notNull()
-			.$defaultFn(() => new Date()),
+		date_saisie: dateHeure('date_saisie').notNull().$defaultFn(maintenant),
 		date_operation: dateSeule('date_operation'),
 		montant: integer('montant').notNull().default(0),
 		/** `Devise`. */
@@ -98,9 +94,7 @@ export const demandeCredit = sqliteTable(
 		id: integer('id').primaryKey(),
 		reference: texteVide('reference'),
 		membre_id: integer('membre_id').references(() => membre.id),
-		date_demande: dateSeule('date_demande')
-			.notNull()
-			.$defaultFn(() => new Date()),
+		date_demande: dateSeule('date_demande').notNull().$defaultFn(maintenant),
 		montant: integer('montant').notNull().default(0),
 		objet: texteVide('objet'),
 		duree_mois: integer('duree_mois').notNull().default(0),
@@ -126,9 +120,7 @@ export const contentieuxCredit = sqliteTable(
 		id: integer('id').primaryKey(),
 		reference: texteVide('reference'),
 		membre_id: integer('membre_id').references(() => membre.id),
-		date_dossier: dateHeure('date_dossier')
-			.notNull()
-			.$defaultFn(() => new Date()),
+		date_dossier: dateHeure('date_dossier').notNull().$defaultFn(maintenant),
 		dette_compromise: integer('dette_compromise').notNull().default(0), // zone04
 		dette_compromise_detail: texteVide('dette_compromise_detail'),
 		revenus_journaliers: integer('revenus_journaliers').notNull().default(0), // zone05
@@ -170,9 +162,7 @@ export const dossierAccompagnement = sqliteTable(
 		type_dossier: integer('type_dossier').notNull(),
 		reference: texteVide('reference'),
 		membre_id: integer('membre_id').references(() => membre.id),
-		date_creation: dateHeure('date_creation')
-			.notNull()
-			.$defaultFn(() => new Date()),
+		date_creation: dateHeure('date_creation').notNull().$defaultFn(maintenant),
 		/** zone03. */
 		objet: texteVide('objet'),
 		/** `{"4": "…", "5": "…"}`. */

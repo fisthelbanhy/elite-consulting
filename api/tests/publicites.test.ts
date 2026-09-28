@@ -53,7 +53,7 @@ function inserer(n: number, ent: number, extra: Record<string, unknown> = {}) {
 }
 
 describe('création', () => {
-	it('applique les règles, la référence et l’état initial', async () => {
+	it("applique les règles, la référence et l'état initial", async () => {
 		const ent = creerEntreprise();
 		const admin = await creerMembre('admin', { type_compte: TypeMembre.GESTIONNAIRE });
 		await creerMembre('chef', { type_compte: TypeMembre.GESTIONNAIRE, droit_activation: true });
@@ -76,7 +76,13 @@ describe('création', () => {
 			.send(pub(null, null, { texte: 'Court', date_debut: null, type_fichier: null }));
 		expect(incomplet.status).toBe(400);
 		expect(Object.keys(incomplet.body.champs)).toEqual(
-			expect.arrayContaining(['demandeur_id', 'entreprise_id', 'texte', 'date_debut', 'type_fichier'])
+			expect.arrayContaining([
+				'demandeur_id',
+				'entreprise_id',
+				'texte',
+				'date_debut',
+				'type_fichier'
+			])
 		);
 
 		// Correctif F-ADM-36 : la fin ne peut pas précéder le début.
@@ -122,7 +128,9 @@ describe('création', () => {
 			.set(ha)
 			.send(pub(admin, ent, { texte: 'Texte corrigé de la publicité' }));
 		expect(modif.status).toBe(200);
-		expect((await client().post(`/api/publicites/${id}/etat`).set(ha).send({ etat: 2 })).status).toBe(403);
+		expect(
+			(await client().post(`/api/publicites/${id}/etat`).set(ha).send({ etat: 2 })).status
+		).toBe(403);
 		expect(
 			(
 				await client()
@@ -139,31 +147,31 @@ describe('diffusion publique', () => {
 	it('limite à 10, masque les statistiques et exclut les publicités hors période', async () => {
 		const ent = creerEntreprise();
 		inserer(12, ent);
-		db.insert(publicite).values([
-			{
-				reference: 'PUBX',
-				entreprise_id: ent,
-				texte: 'Expirée',
-				etat: 2,
-				date_debut: jour(-10),
-				date_fin: jour(-1)
-			},
-			{
-				reference: 'PUBY',
-				entreprise_id: ent,
-				texte: 'Non validée',
-				etat: 1,
-				date_debut: AUJOURDHUI,
-				date_fin: AUJOURDHUI
-			}
-		]).run();
+		db.insert(publicite)
+			.values([
+				{
+					reference: 'PUBX',
+					entreprise_id: ent,
+					texte: 'Expirée',
+					etat: 2,
+					date_debut: jour(-10),
+					date_fin: jour(-1)
+				},
+				{
+					reference: 'PUBY',
+					entreprise_id: ent,
+					texte: 'Non validée',
+					etat: 1,
+					date_debut: AUJOURDHUI,
+					date_fin: AUJOURDHUI
+				}
+			])
+			.run();
 
 		const encart = await client().get('/api/publicites/diffusion');
 		// Au plus 10 (F-TRV-04).
 		expect(encart.body).toHaveLength(10);
-		expect(
-			encart.body.every((p: { texte: string }) => p.texte.startsWith('Publicité'))
-		).toBe(true);
+		expect(encart.body.every((p: { texte: string }) => p.texte.startsWith('Publicité'))).toBe(true);
 		// Le nom de l'annonceur est débarrassé du HTML stocké par le legacy.
 		expect(encart.body[0].annonceur).toBe('CECILIA & SARICKA');
 		expect(encart.body[0]).not.toHaveProperty('nombre_vues');
@@ -244,12 +252,8 @@ describe('fichier', () => {
 			Buffer.alloc(64)
 		]);
 		expect(
-			(
-				await client()
-					.post(`/api/publicites/${id}/fichier`)
-					.set(ha)
-					.attach('fichier', mp4, 'v.mp4')
-			).status
+			(await client().post(`/api/publicites/${id}/fichier`).set(ha).attach('fichier', mp4, 'v.mp4'))
+				.status
 		).toBe(200);
 		expect((await client().get(`/api/publicites/${id}`).set(ha)).body.genre).toBe('video');
 	});

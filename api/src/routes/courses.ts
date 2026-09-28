@@ -21,14 +21,7 @@ import {
 	peutModifier,
 	verifierModification
 } from '../deps.js';
-import {
-	BanqueBoutique,
-	CategorieMembre,
-	Etat,
-	EtatCourse,
-	libelle,
-	OuiNon
-} from '../enums.js';
+import { BanqueBoutique, CategorieMembre, Etat, EtatCourse, libelle, OuiNon } from '../enums.js';
 import { erreur, interdit, introuvable } from '../erreurs.js';
 import { articleCourse, course, ligneCourse } from '../schema/commerce.js';
 import { parametre } from '../schema/core.js';
@@ -81,7 +74,10 @@ export function estBoutique(m: Membre | null | undefined): boolean {
 	);
 }
 
-function parametres(): { montant_minimum_course: number; commission_course: number } {
+function parametres(): {
+	montant_minimum_course: number;
+	commission_course: number;
+} {
 	const p = db.select().from(parametre).where(eq(parametre.id, 1)).get();
 	return {
 		montant_minimum_course: p?.montant_minimum_course ?? 0,
@@ -115,14 +111,12 @@ routeur.get('/boutiques', (_req, res) => {
 		.all();
 	const comptes = new Map(
 		db
-			.select({ boutique_id: articleCourse.boutique_id, n: sql<number>`count(*)` })
+			.select({
+				boutique_id: articleCourse.boutique_id,
+				n: sql<number>`count(*)`
+			})
 			.from(articleCourse)
-			.where(
-				and(
-					eq(articleCourse.etat, Etat.AUTORISE),
-					eq(articleCourse.disponible, OuiNon.OUI)
-				)
-			)
+			.where(and(eq(articleCourse.etat, Etat.AUTORISE), eq(articleCourse.disponible, OuiNon.OUI)))
 			.groupBy(articleCourse.boutique_id)
 			.all()
 			.map((l) => [l.boutique_id, l.n])
@@ -202,11 +196,14 @@ routeur.get('/catalogue', (req, res) => {
 	if (membre && membre.type_compte === 1) {
 		const brutEtat = Number(req.query.etat);
 		const etat = Number.isFinite(brutEtat) && brutEtat > 0 ? Math.trunc(brutEtat) : null;
-		conditions.push(
-			etat ? eq(articleCourse.etat, etat) : ne(articleCourse.etat, Etat.SUPPRIME)
-		);
+		conditions.push(etat ? eq(articleCourse.etat, etat) : ne(articleCourse.etat, Etat.SUPPRIME));
 	}
-	if (membre && req.query.miens !== undefined && req.query.miens !== 'false' && req.query.miens !== '0') {
+	if (
+		membre &&
+		req.query.miens !== undefined &&
+		req.query.miens !== 'false' &&
+		req.query.miens !== '0'
+	) {
 		conditions.push(eq(articleCourse.boutique_id, membre.id));
 	}
 	const nombre = (cle: string) => {
@@ -270,11 +267,7 @@ routeur.get('/catalogue/:id', (req, res) => {
 });
 
 /** Règles legacy (particlecourse.php), messages harmonisés (F-S3-72/73). */
-function validerArticle(
-	d: ArticleEntree,
-	boutiqueId: number | null,
-	exclureId?: number
-): void {
+function validerArticle(d: ArticleEntree, boutiqueId: number | null, exclureId?: number): void {
 	const champs: Record<string, string> = {};
 	if (!boutiqueId || !estBoutique(lireMembre(boutiqueId))) {
 		champs.boutique_id = 'Veuillez indiquer la boutique.';
@@ -331,7 +324,11 @@ routeur.post('/catalogue', membreRequis, (req, res) => {
 	validerArticle(donnees, boutiqueId);
 	const a = db
 		.insert(articleCourse)
-		.values({ boutique_id: boutiqueId, etat: Etat.AUTORISE, ...champsArticle(donnees) })
+		.values({
+			boutique_id: boutiqueId,
+			etat: Etat.AUTORISE,
+			...champsArticle(donnees)
+		})
 		.returning()
 		.get()!;
 	res.status(201).json(ok('Enregistrement effectué.', a.id));
@@ -343,10 +340,7 @@ routeur.put('/catalogue/:id', membreRequis, (req, res) => {
 	verifierModification(membre, a.boutique_id);
 	const donnees = valider(articleEntreeSchema, req.body);
 	validerArticle(donnees, a.boutique_id, a.id);
-	db.update(articleCourse)
-		.set(champsArticle(donnees))
-		.where(eq(articleCourse.id, a.id))
-		.run();
+	db.update(articleCourse).set(champsArticle(donnees)).where(eq(articleCourse.id, a.id)).run();
 	res.json(ok('Modification effectuée.', a.id));
 });
 
@@ -358,7 +352,10 @@ routeur.post(
 		const membre = exigerMembre(req);
 		const a = obtenirArticle(Number(req.params.id), membre);
 		verifierModification(membre, a.boutique_id);
-		if (!req.file) throw erreur('Aucun fichier reçu.', { photo: 'Veuillez choisir une image.' });
+		if (!req.file)
+			throw erreur('Aucun fichier reçu.', {
+				photo: 'Veuillez choisir une image.'
+			});
 
 		const ancien = a.photo;
 		const photo = await enregistrerFichier(req.file.buffer, 'courses', new Set([IMAGE]), 'photo');
@@ -381,10 +378,7 @@ routeur.delete('/catalogue/:id', membreRequis, (req, res) => {
 	const membre = exigerMembre(req);
 	const a = obtenirArticle(Number(req.params.id), membre);
 	verifierModification(membre, a.boutique_id);
-	db.update(articleCourse)
-		.set({ etat: Etat.SUPPRIME })
-		.where(eq(articleCourse.id, a.id))
-		.run();
+	db.update(articleCourse).set({ etat: Etat.SUPPRIME }).where(eq(articleCourse.id, a.id)).run();
 	res.json(ok('Article retiré du catalogue.', a.id));
 });
 
@@ -475,7 +469,7 @@ function preparer(d: CourseEntree): Preparation {
 		champs.date_achat = 'La date des courses ne peut être antérieure à la date du jour.';
 	}
 	if (!d.date_livraison) {
-		champs.date_livraison = 'Veuillez indiquer la date de livraison ainsi que l’heure.';
+		champs.date_livraison = "Veuillez indiquer la date de livraison ainsi que l'heure.";
 	} else {
 		const livraison = creneau(d.date_livraison);
 		if (jour(livraison) < aujourdHui) {
@@ -483,8 +477,7 @@ function preparer(d: CourseEntree): Preparation {
 		} else if (livraison.getHours() < HEURE_MIN || livraison.getHours() > HEURE_MAX) {
 			champs.date_livraison = 'Les livraisons se font entre 10 h 00 et 18 h 59.';
 		} else if (d.date_achat && jour(livraison) < jour(d.date_achat)) {
-			champs.date_livraison =
-				'La date de livraison ne peut être antérieure à la date des courses.';
+			champs.date_livraison = 'La date de livraison ne peut être antérieure à la date des courses.';
 		} else if (livraison.getTime() < Date.now()) {
 			champs.date_livraison =
 				'Cette heure de livraison est déjà passée : choisissez un créneau à venir.';
@@ -573,7 +566,13 @@ function appliquer(courseId: number, d: CourseEntree, p: Preparation): void {
 	db.delete(ligneCourse).where(eq(ligneCourse.course_id, courseId)).run();
 	if (p.lignes.length) {
 		db.insert(ligneCourse)
-			.values(p.lignes.map((l) => ({ course_id: courseId, etat: Etat.AUTORISE, ...l })))
+			.values(
+				p.lignes.map((l) => ({
+					course_id: courseId,
+					etat: Etat.AUTORISE,
+					...l
+				}))
+			)
 			.run();
 	}
 }
@@ -631,9 +630,7 @@ function vueResume(c: Course, lignes: LigneCourse[], acteurs: Map<number, Auteur
 
 function acteursDe(courses: Course[]): Map<number, Auteur | null> {
 	const ids = [
-		...new Set(
-			courses.flatMap((c) => [c.client_id, c.boutique_id]).filter((i): i is number => !!i)
-		)
+		...new Set(courses.flatMap((c) => [c.client_id, c.boutique_id]).filter((i): i is number => !!i))
 	];
 	if (ids.length === 0) return new Map();
 	return new Map(
@@ -752,9 +749,7 @@ routeur.get('/', membreRequis, (req, res) => {
 	if (debutJournee) conditions.push(gte(course.date_creation, debutJournee));
 	const finJournee = borneJour('commande_max');
 	if (finJournee) {
-		conditions.push(
-			lte(course.date_creation, new Date(finJournee.getTime() + 86_400_000 - 1))
-		);
+		conditions.push(lte(course.date_creation, new Date(finJournee.getTime() + 86_400_000 - 1)));
 	}
 	const achatMin = borneJour('achat_min');
 	if (achatMin) conditions.push(gte(course.date_achat, achatMin));

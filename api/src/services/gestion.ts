@@ -450,8 +450,5 @@ export function verifierUnicite(
 }
 
 export function estEnLigne(membre: { derniere_activite: Date | null }): boolean {
-	return (
-		!!membre.derniere_activite &&
-		membre.derniere_activite.getTime() >= Date.now() - PRESENCE
-	);
+	return !!membre.derniere_activite && membre.derniere_activite.getTime() >= Date.now() - PRESENCE;
 }

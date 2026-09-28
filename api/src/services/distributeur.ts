@@ -61,11 +61,7 @@ export type Souscription = typeof tableSouscription.$inferSelect;
 export type Produit = typeof tableProduit.$inferSelect;
 
 export function souscriptionDe(membreId: number): Souscription | undefined {
-	return db
-		.select()
-		.from(tableSouscription)
-		.where(eq(tableSouscription.membre_id, membreId))
-		.get();
+	return db.select().from(tableSouscription).where(eq(tableSouscription.membre_id, membreId)).get();
 }
 
 export function prospectsDe(souscriptionId: number) {
@@ -265,10 +261,7 @@ export function enregistrerEtape(
 		valeurs.etape_courante = Math.max(s.etape_courante || 1, d.etape + 1);
 	}
 	if (Object.keys(valeurs).length) {
-		db.update(tableSouscription)
-			.set(valeurs)
-			.where(eq(tableSouscription.id, s.id))
-			.run();
+		db.update(tableSouscription).set(valeurs).where(eq(tableSouscription.id, s.id)).run();
 	}
 	// L'étape 9 écrit elle-même (mode, montant, kit, étape) : elle est traitée après la sauvegarde
 	// des autres champs pour que `etape_courante` reflète bien l'envoi.
@@ -354,7 +347,7 @@ function commande(s: Souscription, d: EtapeEntree): string {
 		}
 		return 'Votre demande de souscription à crédit est transmise à votre frangine : elle vous recontacte très vite.';
 	}
-	return 'Souscription enregistrée : il ne reste plus qu’à régler votre kit.';
+	return "Souscription enregistrée : il ne reste plus qu'à régler votre kit.";
 }
 
 // --- Paiement de la souscription (type 6) --------------------------------------------------------
@@ -379,11 +372,11 @@ declarer(TypeObjetPaye.SOUSCRIPTION, {
 		const s = souscriptionPayee(membre, objetId);
 		if (ETATS_DISTRIBUTEUR.includes(s.etat)) throw erreur('Cette souscription est déjà payée.');
 		if ((s.etape_courante || 0) < ETAPE_ENVOYEE) {
-			throw erreur('Envoyez d’abord votre souscription à l’étape « Commande des produits ».');
+			throw erreur("Envoyez d'abord votre souscription à l'étape « Commande des produits ».");
 		}
 		if (s.mode_souscription !== ModeSouscription.FOND_PROPRE) {
 			throw erreur(
-				'Une souscription à crédit n’est pas payée en ligne : votre frangine vous recontacte.'
+				"Une souscription à crédit n'est pas payée en ligne : votre frangine vous recontacte."
 			);
 		}
 		if (montant < SEUIL_MINIMUM) {

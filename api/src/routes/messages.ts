@@ -24,8 +24,6 @@ import { enLigne, frangineEnLigne, marquerLus } from '../services/messages.js';
 export const routeur = Router();
 export const prefixe = '/messages';
 
-type Message = typeof tableMessage.$inferSelect;
-
 const LIMITE_FIL = 200;
 const MESSAGE_VIDE = "Votre message est vide. Écrivez quelques mots avant d'envoyer.";
 

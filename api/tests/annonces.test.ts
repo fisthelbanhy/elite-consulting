@@ -11,10 +11,12 @@ import { familleArticle } from '../src/schema/core.js';
 basePropre();
 
 beforeEach(() => {
-	db.insert(familleArticle).values([
-		{ id: 1, libelle: 'Chaussure' },
-		{ id: 2, libelle: 'Sac à main' }
-	]).run();
+	db.insert(familleArticle)
+		.values([
+			{ id: 1, libelle: 'Chaussure' },
+			{ id: 2, libelle: 'Sac à main' }
+		])
+		.run();
 });
 
 const OFFRE = {
@@ -37,7 +39,7 @@ const RECHERCHE = {
 };
 
 describe('création', () => {
-	it('applique les règles, la référence et l’unicité', async () => {
+	it("applique les règles, la référence et l'unicité", async () => {
 		await creerMembre('vendeur');
 		const h = await entetes('vendeur');
 
@@ -102,8 +104,20 @@ describe('liste', () => {
 
 		// Un article supprimé n'est plus consultable par un tiers (F-S3-33).
 		expect((await client().delete(`/api/annonces/${id}`).set(h)).status).toBe(200);
-		expect((await client().get(`/api/annonces/${id}`).set(await entetes('curieux'))).status).toBe(404);
-		expect((await client().get(`/api/annonces/${id}`).set(await entetes('admin'))).status).toBe(200);
+		expect(
+			(
+				await client()
+					.get(`/api/annonces/${id}`)
+					.set(await entetes('curieux'))
+			).status
+		).toBe(404);
+		expect(
+			(
+				await client()
+					.get(`/api/annonces/${id}`)
+					.set(await entetes('admin'))
+			).status
+		).toBe(200);
 	});
 });
 

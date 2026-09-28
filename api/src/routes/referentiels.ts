@@ -40,9 +40,7 @@ routeur.get('/villes', (_req, res) => {
 		villes.map((v) => ({
 			id: v.id,
 			nom: v.nom,
-			quartiers: quartiers
-				.filter((q) => q.ville_id === v.id)
-				.map((q) => ({ id: q.id, nom: q.nom }))
+			quartiers: quartiers.filter((q) => q.ville_id === v.id).map((q) => ({ id: q.id, nom: q.nom }))
 		}))
 	);
 });
@@ -244,7 +242,11 @@ routeur.get('/a-la-une', (req, res) => {
 	}
 
 	const domaines = new Map(
-		db.select({ id: domaineActivite.id, libelle: domaineActivite.libelle }).from(domaineActivite).all().map((d) => [d.id, d.libelle])
+		db
+			.select({ id: domaineActivite.id, libelle: domaineActivite.libelle })
+			.from(domaineActivite)
+			.all()
+			.map((d) => [d.id, d.libelle])
 	);
 	for (const a of db
 		.select()

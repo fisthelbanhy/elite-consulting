@@ -42,10 +42,7 @@ function compteurs() {
 				.select({ n: sql<number>`count(*)` })
 				.from(tableMembre)
 				.where(
-					and(
-						eq(tableMembre.etat, Etat.NON_TRAITE),
-						ne(tableMembre.id, svc.ID_COMPTE_SYSTEME)
-					)
+					and(eq(tableMembre.etat, Etat.NON_TRAITE), ne(tableMembre.id, svc.ID_COMPTE_SYSTEME))
 				)
 		),
 		paiements_en_attente: n(
@@ -150,9 +147,7 @@ routeur.get('/tableau-de-bord', (req, res) => {
 	const inscrits = db
 		.select()
 		.from(tableMembre)
-		.where(
-			and(ne(tableMembre.id, svc.ID_COMPTE_SYSTEME), ne(tableMembre.etat, Etat.SUPPRIME))
-		)
+		.where(and(ne(tableMembre.id, svc.ID_COMPTE_SYSTEME), ne(tableMembre.etat, Etat.SUPPRIME)))
 		.orderBy(desc(tableMembre.date_creation), desc(tableMembre.id))
 		.limit(8)
 		.all();
@@ -163,9 +158,7 @@ routeur.get('/tableau-de-bord', (req, res) => {
 			db
 				.select({ n: sql<number>`count(*)` })
 				.from(tableMembre)
-				.where(
-					and(ne(tableMembre.etat, Etat.SUPPRIME), ne(tableMembre.id, svc.ID_COMPTE_SYSTEME))
-				)
+				.where(and(ne(tableMembre.etat, Etat.SUPPRIME), ne(tableMembre.id, svc.ID_COMPTE_SYSTEME)))
 		),
 		membres_en_ligne: n(
 			db
@@ -194,9 +187,7 @@ routeur.get('/tableau-de-bord', (req, res) => {
 			db
 				.select({ n: sql<number>`count(*)` })
 				.from(course)
-				.where(
-					and(eq(course.etat_course, EtatCourse.EN_ATTENTE), ne(course.etat, Etat.SUPPRIME))
-				)
+				.where(and(eq(course.etat_course, EtatCourse.EN_ATTENTE), ne(course.etat, Etat.SUPPRIME)))
 		),
 		modules_en_attente: svc.MODULES_MODERES.map((m) => ({
 			cle: m.cle,
@@ -266,9 +257,7 @@ routeur.get('/moderation', (req, res) => {
 		elements = tous.slice(page.offset, page.offset + page.taille);
 	}
 
-	const noms = svc.pseudonymes(
-		elements.map((e) => e.auteur_id).filter((i): i is number => !!i)
-	);
+	const noms = svc.pseudonymes(elements.map((e) => e.auteur_id).filter((i): i is number => !!i));
 	res.json({
 		items: elements.map((e) => ({
 			...e,

@@ -47,10 +47,12 @@ describe('villes et secteurs', () => {
 
 describe('banques', () => {
 	it('ne liste que les banques autorisées, sans données internes', async () => {
-		db.insert(banque).values([
-			{ nom: 'BGFI', sigle: 'BGFI', etat: Etat.AUTORISE },
-			{ nom: 'Banque fermée', sigle: 'BF', etat: Etat.SUPPRIME }
-		]).run();
+		db.insert(banque)
+			.values([
+				{ nom: 'BGFI', sigle: 'BGFI', etat: Etat.AUTORISE },
+				{ nom: 'Banque fermée', sigle: 'BF', etat: Etat.SUPPRIME }
+			])
+			.run();
 		const r = await client().get('/api/referentiels/banques');
 		expect(r.body).toHaveLength(1);
 		expect(r.body[0].nom).toBe('BGFI');
@@ -72,13 +74,15 @@ describe('paramètres', () => {
 });
 
 describe('statistiques', () => {
-	it("compte les fiches publiées de chaque section", async () => {
+	it('compte les fiches publiées de chaque section', async () => {
 		await creerMembre('statisticien');
-		db.insert(annonceEmploi).values([
-			{ type_annonce: 2, etat: Etat.AUTORISE },
-			{ type_annonce: 2, etat: Etat.NON_TRAITE }, // non publiée : exclue
-			{ type_annonce: 1, etat: Etat.AUTORISE }
-		]).run();
+		db.insert(annonceEmploi)
+			.values([
+				{ type_annonce: 2, etat: Etat.AUTORISE },
+				{ type_annonce: 2, etat: Etat.NON_TRAITE }, // non publiée : exclue
+				{ type_annonce: 1, etat: Etat.AUTORISE }
+			])
+			.run();
 		db.insert(article).values({ libelle: 'Chaise', etat: Etat.AUTORISE }).run();
 
 		const r = await client().get('/api/referentiels/stats');
@@ -93,13 +97,19 @@ describe('statistiques', () => {
 
 describe('à la une', () => {
 	it('mélange les sections et respecte la limite', async () => {
-		db.insert(article).values([
-			{ libelle: 'Annonce A', description: 'Une description', etat: Etat.AUTORISE },
-			{ libelle: 'Annonce B', etat: Etat.AUTORISE }
-		]).run();
-		db.insert(annonceEmploi).values({
-			type_annonce: 2, poste_a_pourvoir: 'Comptable', etat: Etat.AUTORISE
-		}).run();
+		db.insert(article)
+			.values([
+				{ libelle: 'Annonce A', description: 'Une description', etat: Etat.AUTORISE },
+				{ libelle: 'Annonce B', etat: Etat.AUTORISE }
+			])
+			.run();
+		db.insert(annonceEmploi)
+			.values({
+				type_annonce: 2,
+				poste_a_pourvoir: 'Comptable',
+				etat: Etat.AUTORISE
+			})
+			.run();
 
 		const r = await client().get('/api/referentiels/a-la-une?limite=2');
 		expect(r.status).toBe(200);
@@ -128,9 +138,13 @@ describe('journal des visites', () => {
 });
 
 describe('listes simples', () => {
-	it('trie les diplômes et les familles d\'articles par libellé', async () => {
-		db.insert(diplome).values([{ libelle: 'Licence' }, { libelle: 'BAC' }]).run();
-		db.insert(familleArticle).values([{ libelle: 'Mobilier' }, { libelle: 'Électronique' }]).run();
+	it("trie les diplômes et les familles d'articles par libellé", async () => {
+		db.insert(diplome)
+			.values([{ libelle: 'Licence' }, { libelle: 'BAC' }])
+			.run();
+		db.insert(familleArticle)
+			.values([{ libelle: 'Mobilier' }, { libelle: 'Électronique' }])
+			.run();
 
 		const d = await client().get('/api/referentiels/diplomes');
 		expect(d.body.map((x: { libelle: string }) => x.libelle)).toEqual(['BAC', 'Licence']);

@@ -64,7 +64,11 @@ const QUESTIONS: [string, string, string | null, Choix[]][] = [
 		'Choisissez ce qui vous ressemble le plus.',
 		[
 			['salarie', 'Je suis salarié·e', 'Dans une entreprise, une administration, une ONG…'],
-			['independant', "J'ai déjà une petite activité", 'Commerce, service, artisanat, même informel'],
+			[
+				'independant',
+				"J'ai déjà une petite activité",
+				'Commerce, service, artisanat, même informel'
+			],
 			['etudiant', 'Je suis étudiant·e ou en formation', null],
 			['recherche', 'Je cherche du travail', null],
 			['autre', 'Autre situation', 'Au foyer, à la retraite…']
@@ -99,7 +103,7 @@ const QUESTIONS: [string, string, string | null, Choix[]][] = [
 	],
 	[
 		'besoin',
-		'De quoi avez-vous le plus besoin aujourd’hui ?',
+		"De quoi avez-vous le plus besoin aujourd'hui ?",
 		'Une seule réponse : la plus urgente.',
 		[
 			['financement', "Trouver de l'argent", 'Pour démarrer, acheter du stock ou du matériel'],
@@ -135,7 +139,7 @@ const QUESTIONS: [string, string, string | null, Choix[]][] = [
 		'Famille, conjoint, amis.',
 		[
 			['oui', "Oui, ils m'encouragent", null],
-			['partiel', 'Certains oui, d’autres non', null],
+			['partiel', "Certains oui, d'autres non", null],
 			['non', 'Pas vraiment', null]
 		]
 	],
@@ -151,17 +155,17 @@ const PROFILS: Record<string, [string, string]> = {
 	cherche: [
 		'Explorateur·rice',
 		"Vous avez envie d'entreprendre mais l'idée n'est pas encore claire. C'est le bon moment pour " +
-			'faire le point sur vos talents : beaucoup de réussites partent d’un savoir-faire qu’on a déjà.'
+			"faire le point sur vos talents : beaucoup de réussites partent d'un savoir-faire qu'on a déjà."
 	],
 	idee: [
-		'Porteur·se d’idée',
-		'Vous avez une idée : avant d’engager de l’argent, il faut la tester auprès de quelques clients ' +
+		"Porteur·se d'idée",
+		"Vous avez une idée : avant d'engager de l'argent, il faut la tester auprès de quelques clients " +
 			'et la chiffrer. Votre frangine vous aide à le faire pas à pas.'
 	],
 	debut: [
 		'Entrepreneur·e qui démarre',
-		'Vous vendez déjà : bravo, c’est le plus difficile. L’enjeu est maintenant de sécuriser vos ' +
-			'revenus, de séparer l’argent de l’activité de celui de la maison et de fidéliser vos clients.'
+		"Vous vendez déjà : bravo, c'est le plus difficile. L'enjeu est maintenant de sécuriser vos " +
+			"revenus, de séparer l'argent de l'activité de celui de la maison et de fidéliser vos clients."
 	],
 	croissance: [
 		'Entrepreneur·e en croissance',
@@ -196,20 +200,24 @@ const ETAPES: Record<string, [string, string, string]> = {
 		'Votre conseillère prépare avec vous un dossier bancable.',
 		'/accompagnement'
 	],
-	marches: ['Répondre à des marchés', 'Appels d’offres publics et privés, près de chez vous.', '/marches'],
+	marches: [
+		'Répondre à des marchés',
+		"Appels d'offres publics et privés, près de chez vous.",
+		'/marches'
+	],
 	entreprises: [
 		'Faire connaître votre activité',
-		'Inscrivez-vous dans l’annuaire : clients et partenaires vous trouvent.',
+		"Inscrivez-vous dans l'annuaire : clients et partenaires vous trouvent.",
 		'/entreprises'
 	],
 	partenariats: [
 		'Trouver des partenaires',
-		'« J’ai… je cherche… » : échangez services, matériel et contacts.',
+		"« J'ai… je cherche… » : échangez services, matériel et contacts.",
 		'/partenariats'
 	],
 	emplois: [
 		'Assurer un revenu en attendant',
-		'Des offres d’emploi relues par nos équipes, sans arnaque.',
+		"Des offres d'emploi relues par nos équipes, sans arnaque.",
 		'/emplois'
 	],
 	questions: [
@@ -223,7 +231,7 @@ const ETAPES: Record<string, [string, string, string]> = {
 		'/reussites'
 	],
 	conseil_financier: [
-		'Demander conseil sur l’argent',
+		"Demander conseil sur l'argent",
 		'Crédit, banque, trésorerie : un conseiller vous répond.',
 		'/conseil-financier'
 	]
@@ -251,17 +259,18 @@ export function villes(): OptionDiagnostic[] {
 	const lignes = db.select().from(ville).orderBy(asc(ville.nom)).all();
 	// Les deux grandes villes d'abord, « Autre ville » en dernier.
 	const ordre: Record<string, number> = { brazzaville: 0, 'pointe-noire': 1 };
-	const rang = (v: { id: number; nom: string }) => [
-		v.id === AUTRE_VILLE ? 1 : 0,
-		ordre[v.nom.toLowerCase()] ?? 2,
-		v.nom
-	] as const;
+	const rang = (v: { id: number; nom: string }) =>
+		[v.id === AUTRE_VILLE ? 1 : 0, ordre[v.nom.toLowerCase()] ?? 2, v.nom] as const;
 	lignes.sort((a, b) => {
 		const [a1, a2, a3] = rang(a);
 		const [b1, b2, b3] = rang(b);
 		return a1 - b1 || a2 - b2 || a3.localeCompare(b3, 'fr');
 	});
-	return lignes.map((v) => ({ code: String(v.id), libelle: capitaliser(v.nom), description: null }));
+	return lignes.map((v) => ({
+		code: String(v.id),
+		libelle: capitaliser(v.nom),
+		description: null
+	}));
 }
 
 export function questions(): QuestionDiagnostic[] {
@@ -272,7 +281,11 @@ export function questions(): QuestionDiagnostic[] {
 		options:
 			cle === 'ville'
 				? villes()
-				: options.map(([code, libelle, description]) => ({ code, libelle, description }))
+				: options.map(([code, libelle, description]) => ({
+						code,
+						libelle,
+						description
+					}))
 	}));
 }
 
@@ -323,12 +336,12 @@ export function restitution(codes: CodesDiagnostic): Restitution {
 	}
 	if (codes.disponibilite === 'plein') forces.push('Du temps à consacrer à votre projet.');
 	if (codes.moyens === 'epargne_plus' || codes.moyens === 'materiel') {
-		forces.push('Des moyens pour démarrer sans dépendre d’un crédit.');
+		forces.push("Des moyens pour démarrer sans dépendre d'un crédit.");
 	}
 
 	if (codes.moyens === 'rien') {
 		attentions.push(
-			'Pas encore d’épargne : commencez petit et épargnez régulièrement, par exemple en Likelemba.'
+			"Pas encore d'épargne : commencez petit et épargnez régulièrement, par exemple en Likelemba."
 		);
 	}
 	if (codes.disponibilite === 'moins5') {
@@ -338,17 +351,17 @@ export function restitution(codes: CodesDiagnostic): Restitution {
 	}
 	if (codes.soutien === 'non') {
 		attentions.push(
-			'Vous vous sentez seul·e : c’est justement le rôle de votre frangine de vous épauler.'
+			"Vous vous sentez seul·e : c'est justement le rôle de votre frangine de vous épauler."
 		);
 	}
 	if (codes.stade === 'cherche') {
 		attentions.push(
-			'L’idée reste à trouver : partez de ce que vous savez déjà faire et de ce que les gens autour de vous achètent.'
+			"L'idée reste à trouver : partez de ce que vous savez déjà faire et de ce que les gens autour de vous achètent."
 		);
 	}
 	if (codes.stade === 'idee' && codes.besoin === 'financement') {
 		attentions.push(
-			'Avant de chercher de l’argent, chiffrez votre idée : c’est la première chose qu’on vous demandera.'
+			"Avant de chercher de l'argent, chiffrez votre idée : c'est la première chose qu'on vous demandera."
 		);
 	}
 
@@ -361,7 +374,8 @@ export function restitution(codes: CodesDiagnostic): Restitution {
 		candidats.push('emplois');
 	}
 	if (codes.stade === 'idee' && codes.besoin === 'financement') candidats.push('business_plan');
-	if (codes.stade === 'croissance' && codes.besoin === 'financement') candidats.push('accompagnement');
+	if (codes.stade === 'croissance' && codes.besoin === 'financement')
+		candidats.push('accompagnement');
 	candidats.push(...(ETAPES_PAR_BESOIN[codes.besoin!] ?? []));
 	if (codes.moyens === 'rien') candidats.push('likelemba');
 	candidats.push('decouverte', 'questions', 'reussites');
@@ -373,7 +387,10 @@ export function restitution(codes: CodesDiagnostic): Restitution {
 		return { titre: t, texte: tx, href };
 	});
 
-	const reponses = qs.map((q) => ({ question: q.question, reponse: lib[q.cle] ?? '' }));
+	const reponses = qs.map((q) => ({
+		question: q.question,
+		reponse: lib[q.cle] ?? ''
+	}));
 	const resume =
 		`Profil : ${titre}. Activité actuelle : ${lib.activite!.toLowerCase()}. ` +
 		`Savoir-faire : ${lib.savoir_faire!.toLowerCase()}. Projet : ${lib.stade!.toLowerCase()}. ` +
@@ -424,6 +441,6 @@ export function messageConseillere(r: Restitution): string {
 		`Profil : ${r.profil.titre}`,
 		...lignes,
 		'Prochaines étapes proposées : ' + r.etapes.map((e) => e.titre).join(' ; ') + '.',
-		'Merci de me rappeler pour construire mon plan d’action.'
+		"Merci de me rappeler pour construire mon plan d'action."
 	].join('\n');
 }

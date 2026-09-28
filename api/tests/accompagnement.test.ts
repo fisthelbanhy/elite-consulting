@@ -16,12 +16,7 @@ interface OptionsDossier {
 }
 
 function nouveau(h: Record<string, string>, o: OptionsDossier = {}) {
-	const {
-		type = 3,
-		objet = 'Renégocier le prêt du camion',
-		envoyer = false,
-		reponses = {}
-	} = o;
+	const { type = 3, objet = 'Renégocier le prêt du camion', envoyer = false, reponses = {} } = o;
 	return client()
 		.post('/api/accompagnement')
 		.set(h)
@@ -42,12 +37,7 @@ describe('questionnaires', () => {
 				(k) => parSlug.get(k)!.nombre_questions
 			)
 		).toEqual([55, 77, 45, 35]);
-		expect(r.body.map((x: { prefixe: string }) => x.prefixe)).toEqual([
-			'ABP',
-			'APA',
-			'ARC',
-			'ACI'
-		]);
+		expect(r.body.map((x: { prefixe: string }) => x.prefixe)).toEqual(['ABP', 'APA', 'ARC', 'ACI']);
 
 		const bp = parSlug.get('business-plan')!.sections as unknown as {
 			titre: string;
@@ -166,14 +156,16 @@ describe('listes, droits et validation par le conseiller', () => {
 
 		expect((await client().get('/api/accompagnement?type=4').set(h)).body.total).toBe(1);
 		expect((await client().get('/api/accompagnement?type=4').set(hg)).body.total).toBe(2);
-		expect((await client().get('/api/accompagnement?type=4&q=Moungali').set(hg)).body.total).toBe(1);
+		expect((await client().get('/api/accompagnement?type=4&q=Moungali').set(hg)).body.total).toBe(
+			1
+		);
 
 		// Pas de consultation du dossier d'un autre membre (correctif S7-3).
 		expect((await client().get(`/api/accompagnement/${id}`).set(ha)).status).toBe(404);
 		expect((await client().get(`/api/accompagnement/${id}`).set(h)).body.contact).toBeNull();
-		expect(
-			(await client().get(`/api/accompagnement/${id}`).set(hg)).body.contact.pseudonyme
-		).toBe('awa');
+		expect((await client().get(`/api/accompagnement/${id}`).set(hg)).body.contact.pseudonyme).toBe(
+			'awa'
+		);
 
 		// Validation par le conseiller : le membre est prévenu et ne modifie plus un dossier traité.
 		expect(

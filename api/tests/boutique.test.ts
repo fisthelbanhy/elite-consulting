@@ -90,7 +90,11 @@ describe('catalogue', () => {
 		// Produits vendables d'abord (prix connu).
 		expect(public_.items.at(-1).id).toBe(4);
 
-		const distri = (await client().get('/api/boutique/produits').set(await entetes('distri'))).body;
+		const distri = (
+			await client()
+				.get('/api/boutique/produits')
+				.set(await entetes('distri'))
+		).body;
 		expect(distri.distributeur).toBe(true);
 		expect(distri.items.find((p: { id: number }) => p.id === 1).prix).toBe(10_000);
 
@@ -140,7 +144,11 @@ describe('panier', () => {
 		const h = await entetes('awa');
 
 		expect(
-			(await client().post('/api/panier').send({ lignes: [{ produit_id: 1, quantite: 2 }] })).status
+			(
+				await client()
+					.post('/api/panier')
+					.send({ lignes: [{ produit_id: 1, quantite: 2 }] })
+			).status
 		).toBe(401);
 		const r = await client()
 			.post('/api/panier')
@@ -311,7 +319,7 @@ describe('suivi des paniers', () => {
 });
 
 describe('fiches bien-être', () => {
-	it('ne montre que les fiches publiées et obéit à l’interrupteur (ADR-0009)', async () => {
+	it("ne montre que les fiches publiées et obéit à l'interrupteur (ADR-0009)", async () => {
 		catalogue();
 		db.insert(maladie)
 			.values([

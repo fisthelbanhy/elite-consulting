@@ -190,9 +190,9 @@ describe('demande de crédit', () => {
 		expect(d.apport_propre).toBe('1 000 000');
 		expect(d.devis_global).toBe('6 000 000');
 
-		expect(
-			(await client().post('/api/tresorerie/credits').set(h).send(CREDIT)).body.message
-		).toBe('Cette demande de crédit est déjà effectuée.');
+		expect((await client().post('/api/tresorerie/credits').set(h).send(CREDIT)).body.message).toBe(
+			'Cette demande de crédit est déjà effectuée.'
+		);
 		expect(
 			(
 				await client()
@@ -318,7 +318,12 @@ describe('opérations bancaires', () => {
 		const h = await entetes('awa');
 
 		expect(
-			(await client().post('/api/tresorerie/operations').set(h).send({ lignes: [{}] })).status
+			(
+				await client()
+					.post('/api/tresorerie/operations')
+					.set(h)
+					.send({ lignes: [{}] })
+			).status
 		).toBe(400);
 
 		const r = await client()

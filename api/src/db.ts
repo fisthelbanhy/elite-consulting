@@ -42,7 +42,9 @@ export function formaterDate(d: Date): string {
  * toutes les dates existantes.
  */
 export function analyserDateHeure(valeur: string): Date {
-	const m = /^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2})(?::(\d{2})(?:\.(\d+))?)?)?/.exec(valeur);
+	const m = /^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2})(?::(\d{2})(?:\.(\d+))?)?)?/.exec(
+		valeur
+	);
 	if (!m) return new Date(valeur);
 	const [, a, mo, j, h, mi, s, frac] = m;
 	return new Date(
@@ -54,6 +56,25 @@ export function analyserDateHeure(valeur: string): Date {
 		Number(s ?? 0),
 		frac ? Number(frac.slice(0, 3).padEnd(3, '0')) : 0
 	);
+}
+
+let derniereHorodate = 0;
+
+/**
+ * Horodatage de création, **strictement croissant** au sein du processus.
+ *
+ * Toutes les listes de fiches sont triées par `date_creation desc` et rien d'autre. L'ancien
+ * backend stockait des microsecondes : deux fiches créées coup sur coup avaient toujours des dates
+ * différentes, donc un ordre stable. Une `Date` JavaScript s'arrête à la milliseconde, si bien que
+ * deux écritures rapprochées (un script de reprise, un envoi groupé) porteraient la même date et
+ * ressortiraient dans un ordre arbitraire, variable d'une requête à l'autre.
+ *
+ * On avance donc d'une milliseconde à chaque appel plutôt que de rendre deux fois la même. Le
+ * décalage ne peut apparaître qu'au-delà de mille créations par seconde et se résorbe seul.
+ */
+export function maintenant(): Date {
+	derniereHorodate = Math.max(Date.now(), derniereHorodate + 1);
+	return new Date(derniereHorodate);
 }
 
 /** Colonne `DATETIME` stockée en texte, comme SQLAlchemy. */
@@ -116,9 +137,7 @@ export function booleen(nom?: string) {
 
 /** Date de création renseignée automatiquement (mixin `Horodatage`). */
 export const horodatage = {
-	date_creation: dateHeure('date_creation')
-		.notNull()
-		.$defaultFn(() => new Date())
+	date_creation: dateHeure('date_creation').notNull().$defaultFn(maintenant)
 };
 
 /** Compteur de consultations (motif `nbvisiteX`/`datevisiteX` répété dans tout le legacy). */

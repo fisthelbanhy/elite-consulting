@@ -25,7 +25,13 @@ import {
 	operationBanque,
 	placement
 } from '../schema/finance.js';
-import { appelFond, collecteFond, fondDeSoutien, groupeLikelemba, membreLikelemba } from '../schema/fonds.js';
+import {
+	appelFond,
+	collecteFond,
+	fondDeSoutien,
+	groupeLikelemba,
+	membreLikelemba
+} from '../schema/fonds.js';
 import { membre as tableMembre, type Membre } from '../schema/membres.js';
 import { annonceEmploi } from '../schema/rh.js';
 import { ok, valider, type VerificationsCroisees } from '../schemas/commun.js';
@@ -60,7 +66,11 @@ routeur.get('/compteurs', membreRequis, (req, res) => {
 					eq(message.lu, false)
 				);
 	const nonLus =
-		db.select({ n: sql<number>`count(*)` }).from(message).where(conditionNonLus).get()?.n ?? 0;
+		db
+			.select({ n: sql<number>`count(*)` })
+			.from(message)
+			.where(conditionNonLus)
+			.get()?.n ?? 0;
 
 	const enLigne =
 		db
@@ -109,9 +119,21 @@ interface Source {
 	condition: (membreId: number) => SQL;
 	titre: (f: Record<string, never>) => string;
 	lien: (f: Record<string, never>) => string;
-	/** Nom de la colonne de date servant au tri ; `null` si la table n'en a pas. */
+	/**
+	 * Colonne de date servant au tri. **Absente vaut `date_creation`** — c'était la valeur par
+	 * défaut du champ Python ; `null` explicite désigne une table qui n'a pas de date.
+	 */
 	date?: string | null;
 	statut?: (f: Record<string, never>) => string;
+}
+
+/**
+ * Le champ `date` de la fiche courte était déclaré `datetime | date | None` : Pydantic promouvait
+ * une date seule en date-heure, si bien qu'une date de début de likelemba sortait en
+ * `2026-08-29T00:00:00`. On rend donc une `Date` ordinaire, jamais un `JourSeul`.
+ */
+function dateHeureFiche(valeur: Date | null): Date | null {
+	return valeur ? new Date(valeur.getTime()) : null;
 }
 
 interface ModuleMembre {
@@ -142,7 +164,8 @@ const MODULES: ModuleMembre[] = [
 			{
 				table: annonceEmploi,
 				condition: appartient(annonceEmploi.auteur_id),
-				titre: (f) => texte(f, 'poste_a_pourvoir') || court(texte(f, 'competences')) || texte(f, 'reference'),
+				titre: (f) =>
+					texte(f, 'poste_a_pourvoir') || court(texte(f, 'competences')) || texte(f, 'reference'),
 				lien: (f) => `/emplois/${nombre(f, 'id')}`
 			}
 		]
@@ -185,7 +208,9 @@ const MODULES: ModuleMembre[] = [
 				table: course,
 				condition: appartient(course.client_id),
 				titre: (f) =>
-					texte(f, 'reference') ? `Course ${texte(f, 'reference')}` : `Course n° ${nombre(f, 'id')}`,
+					texte(f, 'reference')
+						? `Course ${texte(f, 'reference')}`
+						: `Course n° ${nombre(f, 'id')}`,
 				lien: (f) => `/courses/${nombre(f, 'id')}`,
 				statut: (f) => libelle('EtatCourse', nombre(f, 'etat_course'))
 			}
@@ -295,7 +320,8 @@ const MODULES: ModuleMembre[] = [
 			{
 				table: marche,
 				condition: appartient(marche.auteur_id),
-				titre: (f) => court(texte(f, 'libelle')) || texte(f, 'numero_appel_offre') || texte(f, 'reference'),
+				titre: (f) =>
+					court(texte(f, 'libelle')) || texte(f, 'numero_appel_offre') || texte(f, 'reference'),
 				lien: (f) => `/marches/${nombre(f, 'id')}`
 			}
 		]
@@ -309,7 +335,8 @@ const MODULES: ModuleMembre[] = [
 			{
 				table: partenariat,
 				condition: appartient(partenariat.auteur_id),
-				titre: (f) => court(texte(f, 'actif')) || court(texte(f, 'recherche')) || texte(f, 'reference'),
+				titre: (f) =>
+					court(texte(f, 'actif')) || court(texte(f, 'recherche')) || texte(f, 'reference'),
 				lien: (f) => `/partenariats/${nombre(f, 'id')}`
 			}
 		]
@@ -458,9 +485,16 @@ function construireModule(m: ModuleMembre, membreId: number, n = 3) {
 	for (const src of m.sources) {
 		const condition = and(src.condition(membreId), ne(src.table.etat, Etat.SUPPRIME));
 		total +=
-			db.select({ n: sql<number>`count(*)` }).from(src.table).where(condition).get()?.n ?? 0;
+			db
+				.select({ n: sql<number>`count(*)` })
+				.from(src.table)
+				.where(condition)
+				.get()?.n ?? 0;
 
-		const colonneDate = src.date ? (src.table as unknown as Record<string, SQLiteColumn>)[src.date] : null;
+		const nomDate = src.date === undefined ? 'date_creation' : src.date;
+		const colonneDate = nomDate
+			? (src.table as unknown as Record<string, SQLiteColumn>)[nomDate]
+			: null;
 		let requete = db.select().from(src.table).where(condition).$dynamic();
 		requete = colonneDate
 			? requete.orderBy(desc(colonneDate), desc(src.table.id))
@@ -473,7 +507,7 @@ function construireModule(m: ModuleMembre, membreId: number, n = 3) {
 				reference: texte(f, 'reference'),
 				etat: nombre(f, 'etat'),
 				statut: src.statut ? src.statut(f) : (LIBELLES_ETAT[nombre(f, 'etat')] ?? ''),
-				date: src.date ? ((champ(f, src.date) as Date | null) ?? null) : null,
+				date: nomDate ? dateHeureFiche(champ(f, nomDate) as Date | null) : null,
 				lien: src.lien(f)
 			});
 		}

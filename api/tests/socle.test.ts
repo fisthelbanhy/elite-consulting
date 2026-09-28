@@ -13,12 +13,17 @@ import { Etat } from '../src/enums.js';
 beforeAll(() => {
 	appliquerMigrations();
 	db.insert(parametre).values({ id: 1 }).run();
-	db.insert(membre).values({ id: 1, nom: 'Auteur', identifiant: 'auteur', mot_de_passe_hash: 'x' }).run();
+	db.insert(membre)
+		.values({ id: 1, nom: 'Auteur', identifiant: 'auteur', mot_de_passe_hash: 'x' })
+		.run();
 	for (let i = 1; i <= 25; i++) {
-		db.insert(article).values({
-			libelle: `Chaise numéro ${i}`, auteur_id: 1,
-			etat: i <= 20 ? Etat.AUTORISE : Etat.NON_TRAITE
-		}).run();
+		db.insert(article)
+			.values({
+				libelle: `Chaise numéro ${i}`,
+				auteur_id: 1,
+				etat: i <= 20 ? Etat.AUTORISE : Etat.NON_TRAITE
+			})
+			.run();
 	}
 	db.insert(article).values({ libelle: 'Table basse', auteur_id: 1, etat: Etat.AUTORISE }).run();
 });
@@ -52,11 +57,17 @@ describe('visibilité', () => {
 	const gestionnaire = { id: 9, type_compte: 1 } as never;
 	const visiteur = null;
 	it('le gestionnaire voit tout', () => {
-		expect(visibilite({ etat: article.etat, auteur: article.auteur_id }, gestionnaire)).toBeUndefined();
+		expect(
+			visibilite({ etat: article.etat, auteur: article.auteur_id }, gestionnaire)
+		).toBeUndefined();
 	});
 	it('le visiteur ne voit que les fiches publiées', () => {
 		const r = paginer<unknown>(
-			db.select().from(article).where(visibilite({ etat: article.etat, auteur: article.auteur_id }, visiteur)).$dynamic(),
+			db
+				.select()
+				.from(article)
+				.where(visibilite({ etat: article.etat, auteur: article.auteur_id }, visiteur))
+				.$dynamic(),
 			{ page: 1, taille: 100, offset: 0 }
 		);
 		expect(r.total).toBe(21);
@@ -64,7 +75,11 @@ describe('visibilité', () => {
 	it("l'auteur voit aussi ses fiches non publiées", () => {
 		const auteur = { id: 1, type_compte: 3 } as never;
 		const r = paginer<unknown>(
-			db.select().from(article).where(visibilite({ etat: article.etat, auteur: article.auteur_id }, auteur)).$dynamic(),
+			db
+				.select()
+				.from(article)
+				.where(visibilite({ etat: article.etat, auteur: article.auteur_id }, auteur))
+				.$dynamic(),
 			{ page: 1, taille: 100, offset: 0 }
 		);
 		expect(r.total).toBe(26);
@@ -103,7 +118,10 @@ describe('dates en JSON', () => {
 		// Et c'est bien ce que renvoie une colonne `DATE` relue en base.
 		db.insert(membre)
 			.values({
-				id: 2, nom: 'Jour', identifiant: 'jour', mot_de_passe_hash: 'x',
+				id: 2,
+				nom: 'Jour',
+				identifiant: 'jour',
+				mot_de_passe_hash: 'x',
 				date_limite_master: new Date(2026, 9, 15)
 			})
 			.run();

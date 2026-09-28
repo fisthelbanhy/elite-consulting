@@ -17,7 +17,7 @@ import { Etat, RubriqueTresorerie, TypeMembre, libelle } from '../enums.js';
 import { erreur } from '../erreurs.js';
 import { dialogue } from '../schema/contenu.js';
 import { membre as tableMembre, type Membre } from '../schema/membres.js';
-import { ok, valider, type Auteur } from '../schemas/commun.js';
+import { entierRequis, ok, valider, type Auteur } from '../schemas/commun.js';
 import { auteursDe } from '../services/contacts.js';
 import { paginer, recherche } from '../services/fiches.js';
 import { notifier } from '../services/messages.js';
@@ -46,13 +46,17 @@ function nomRubrique(typeDialogue: number): string {
 	return libelle('RubriqueTresorerie', typeDialogue) || 'Accueil';
 }
 
-/** Type de fil demandé, borné comme la version Python (0 à 4). */
-function typeDemande(valeur: unknown): number {
-	const n = Number(valeur);
-	if (!Number.isFinite(n)) throw erreur('Rubrique inconnue.', { type: 'Rubrique inconnue.' });
-	const t = Math.trunc(n);
-	if (t < 0 || t > 4) throw erreur('Rubrique inconnue.', { type: 'Rubrique inconnue.' });
-	return t;
+/**
+ * Type de fil demandé (`?type=2`), obligatoire et borné de 0 à 4 comme l'ancien backend.
+ *
+ * Il passe par `valider()` et non par une erreur métier : le paramètre était déclaré
+ * `Annotated[int, Query(ge=0, le=4)]`, donc une valeur absente ou hors bornes répondait 422 avec
+ * le message sous le champ `type`, et c'est ce que le frontend attend.
+ */
+const typeSchema = z.object({ type: entierRequis(0, 4) });
+
+function typeDemande(query: unknown): number {
+	return valider(typeSchema, query).type;
 }
 
 function vueDialogue(
@@ -94,7 +98,7 @@ function gestionnairesParmi(ids: number[]): Set<number> {
 routeur.get('/', membreRequis, (req, res) => {
 	const membre = exigerMembre(req);
 	const page = pagination(req);
-	const type = typeDemande(req.query.type);
+	const type = typeDemande(req.query);
 
 	const conditions: (SQL | undefined)[] = [
 		eq(dialogue.type_dialogue, type),
@@ -108,9 +112,7 @@ routeur.get('/', membreRequis, (req, res) => {
 			conditions.push(or(eq(dialogue.auteur_id, id), eq(dialogue.destinataire_id, id)));
 		}
 	} else {
-		conditions.push(
-			or(eq(dialogue.auteur_id, membre.id), eq(dialogue.destinataire_id, membre.id))
-		);
+		conditions.push(or(eq(dialogue.auteur_id, membre.id), eq(dialogue.destinataire_id, membre.id)));
 	}
 	conditions.push(recherche(typeof req.query.q === 'string' ? req.query.q : null, dialogue.texte));
 
@@ -141,7 +143,7 @@ routeur.get('/', membreRequis, (req, res) => {
  * quand le dernier message vient du membre.
  */
 routeur.get('/conversations', gestionnaireRequis, (req, res) => {
-	const type = typeDemande(req.query.type);
+	const type = typeDemande(req.query);
 	const messages = db
 		.select()
 		.from(dialogue)
@@ -161,7 +163,11 @@ routeur.get('/conversations', gestionnaireRequis, (req, res) => {
 		// Un message d'un gestionnaire adressé à la frangine n'ouvre pas de fil.
 		if (d.destinataire_id === null && gestionnaires.has(interlocuteurId)) continue;
 
-		const fil = fils.get(interlocuteurId) ?? { membre: interlocuteur, nombre: 0, dernier: d };
+		const fil = fils.get(interlocuteurId) ?? {
+			membre: interlocuteur,
+			nombre: 0,
+			dernier: d
+		};
 		fil.nombre += 1;
 		fil.dernier = d;
 		fils.set(interlocuteurId, fil);
@@ -220,7 +226,10 @@ routeur.post('/', membreRequis, (req, res) => {
 		)
 		.limit(1)
 		.get();
-	if (recent) throw erreur('Ce message est déjà envoyé.', { texte: 'Ce message est déjà envoyé.' });
+	if (recent)
+		throw erreur('Ce message est déjà envoyé.', {
+			texte: 'Ce message est déjà envoyé.'
+		});
 
 	const cree = db.transaction(() => {
 		const d = db

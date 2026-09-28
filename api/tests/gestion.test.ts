@@ -3,7 +3,7 @@
  * de modération (portage de `tests/test_gestion.py` ; F-ADM-05 à F-ADM-15, F-ADM-39, F-ADM-40,
  * F-TRV-06, F-TRV-70).
  */
-import { eq } from 'drizzle-orm';
+import {} from 'drizzle-orm';
 import { describe, expect, it } from 'vitest';
 import { basePropre, client, creerMembre, entetes, lireMembre } from './aides.js';
 import { db } from '../src/db.js';
@@ -77,15 +77,13 @@ describe('liste des membres', () => {
 			'Zola Kiminou'
 		);
 		// Téléphone, observation, personnalité, type.
-		expect(
-			(await client().get('/api/gestion/membres?q=06 111 22').set(h)).body.total
-		).toBe(1);
+		expect((await client().get('/api/gestion/membres?q=06 111 22').set(h)).body.total).toBe(1);
 		expect((await client().get('/api/gestion/membres?q=fidèle').set(h)).body.total).toBe(1);
 		expect((await client().get('/api/gestion/membres?categorie=2').set(h)).body.total).toBe(1);
 		expect((await client().get('/api/gestion/membres?type_compte=1').set(h)).body.total).toBe(1);
-		expect(
-			(await client().get('/api/gestion/membres?tri=recents').set(h)).body.items[0].nom
-		).toBe('AGRI CONGO');
+		expect((await client().get('/api/gestion/membres?tri=recents').set(h)).body.items[0].nom).toBe(
+			'AGRI CONGO'
+		);
 
 		// Masqué des listes, mais sa fiche reste consultable.
 		expect((await client().get('/api/gestion/membres/1').set(h)).status).toBe(200);
@@ -160,9 +158,9 @@ describe('création', () => {
 
 		// F-TRV-23 : une personne morale « Banque » alimente le référentiel des banques.
 		const banques = (await client().get('/api/gestion/referentiels/banques').set(h)).body;
-		expect(banques.items.filter((b: { membre_id: number }) => b.membre_id === morale.body.id)).toHaveLength(
-			1
-		);
+		expect(
+			banques.items.filter((b: { membre_id: number }) => b.membre_id === morale.body.id)
+		).toHaveLength(1);
 	});
 
 	it("exige le droit d'attribution pour créer un gestionnaire", async () => {
@@ -264,8 +262,7 @@ describe('validation et suppression', () => {
 		const hm = await entetes('nouveau');
 
 		expect(
-			(await client().post(`/api/gestion/membres/${id}/etat`).set(h).send({ etat: 2 })).body
-				.message
+			(await client().post(`/api/gestion/membres/${id}/etat`).set(h).send({ etat: 2 })).body.message
 		).toBe('Membre validé.');
 		expect((await client().get('/api/espace/compteurs').set(hm)).body.messages_non_lus).toBe(1);
 		expect((await client().delete(`/api/gestion/membres/${id}`).set(h)).status).toBe(200);
@@ -277,7 +274,7 @@ describe('validation et suppression', () => {
 });
 
 describe('code de pointage', () => {
-	it('fait 4 chiffres et n’est stocké que haché (F-ADM-13)', async () => {
+	it("fait 4 chiffres et n'est stocké que haché (F-ADM-13)", async () => {
 		const h = await preparer();
 		const id = await creerMembre('epargnant', { point_caisse_actif: true });
 		const r = await client().post(`/api/gestion/membres/${id}/code-pointage`).set(h);
@@ -368,9 +365,8 @@ describe('réinitialisations', () => {
 			).status
 		).toBe(200);
 
-		const historique = (
-			await client().get('/api/gestion/reinitialisations?statut=toutes').set(h)
-		).body.items;
+		const historique = (await client().get('/api/gestion/reinitialisations?statut=toutes').set(h))
+			.body.items;
 		for (const attendu of ['utilise', 'expire', 'prise_en_charge', 'ignoree']) {
 			expect(historique.map((x: { statut: string }) => x.statut)).toContain(attendu);
 		}

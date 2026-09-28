@@ -122,7 +122,10 @@ export function ajouter(membre: Membre, lignes: LigneAjout[]): number {
 	}
 	const distributeur = estDistributeur(membre);
 	const existantes = new Map<string, Ligne>(
-		lignesNonPayees(membre.id).map(({ ligne }) => [`${ligne.produit_id}:${ligne.prix_unitaire}`, ligne])
+		lignesNonPayees(membre.id).map(({ ligne }) => [
+			`${ligne.produit_id}:${ligne.prix_unitaire}`,
+			ligne
+		])
 	);
 	let ajoutes = 0;
 

@@ -11,7 +11,14 @@ import { and, asc, desc, eq, inArray, ne, sql, type SQL } from 'drizzle-orm';
 import { Router } from 'express';
 import { z } from 'zod';
 import { db } from '../db.js';
-import { exigerDroit, exigerMembre, gestionnaireRequis, membreRequis, pagination, peutModifier } from '../deps.js';
+import {
+	exigerDroit,
+	exigerMembre,
+	gestionnaireRequis,
+	membreRequis,
+	pagination,
+	peutModifier
+} from '../deps.js';
 import { CategorieMembre, Etat, OffreDemande } from '../enums.js';
 import { erreur, interdit, introuvable } from '../erreurs.js';
 import { parametre, ville } from '../schema/core.js';
@@ -294,7 +301,11 @@ routeur.get('/lignes', (req, res) => {
 			.map((p) => [p.id, p])
 	);
 	const villes = new Map(
-		db.select({ id: ville.id, nom: ville.nom }).from(ville).all().map((v) => [v.id, v])
+		db
+			.select({ id: ville.id, nom: ville.nom })
+			.from(ville)
+			.all()
+			.map((v) => [v.id, v])
 	);
 	const idsEntreprises = [...new Set(liste.items.map((l) => l.entreprise_id))];
 	const entreprises = new Map(
@@ -405,8 +416,11 @@ routeur.get('/ma-fiche', membreRequis, (req, res) => {
 			: null;
 	const villeEntreprise =
 		e.ville_id !== null
-			? (db.select({ id: ville.id, nom: ville.nom }).from(ville).where(eq(ville.id, e.ville_id)).get() ??
-				null)
+			? (db
+					.select({ id: ville.id, nom: ville.nom })
+					.from(ville)
+					.where(eq(ville.id, e.ville_id))
+					.get() ?? null)
 			: null;
 
 	res.json({
@@ -433,13 +447,10 @@ routeur.get('/ma-fiche', membreRequis, (req, res) => {
 });
 
 /** Règles legacy (messages exacts) + anti-doublon produit/unité sur la même fiche. */
-function validerLigne(
-	d: LigneEntree,
-	fiche: { id: number } | null,
-	exclureId?: number
-) {
+function validerLigne(d: LigneEntree, fiche: { id: number } | null, exclureId?: number) {
 	const champs: Record<string, string> = {};
-	if (!d.produit_id && !d.nouveau_produit.trim()) champs.produit_id = 'Veuillez indiquer le produit.';
+	if (!d.produit_id && !d.nouveau_produit.trim())
+		champs.produit_id = 'Veuillez indiquer le produit.';
 	if (!d.unite_vente.trim()) champs.unite_vente = "Veuillez indiquer l'unité de vente.";
 	if (d.prix <= 0) champs.prix = 'Veuillez indiquer le prix.';
 	if (Object.keys(champs).length) throw erreur('Veuillez corriger les champs signalés.', champs);

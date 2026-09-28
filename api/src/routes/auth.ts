@@ -35,7 +35,11 @@ import {
 import { ok, valider, type Ok } from '../schemas/commun.js';
 import { hacherMotDePasse, hashJeton, nouveauJeton, verifierMotDePasse } from '../securite.js';
 import { envoyerEnArrierePlan } from '../services/emails.js';
-import { enregistrer as enregistrerFichier, IMAGE, supprimer as supprimerFichier } from '../services/fichiers.js';
+import {
+	enregistrer as enregistrerFichier,
+	IMAGE,
+	supprimer as supprimerFichier
+} from '../services/fichiers.js';
 import { nouveauCodeMembre } from '../services/references.js';
 import { normaliserTelephone } from '../services/validation.js';
 
@@ -164,7 +168,11 @@ routeur.get('/me', membreRequis, (req, res) => {
 // --- Profil ---------------------------------------------------------------------------------------
 
 /** Refuse la création d'un doublon, avec un message par champ concerné (comme le legacy). */
-function verifierUnicite(donnees: ChampsProfil, identifiant: string | null, exclureId?: number): void {
+function verifierUnicite(
+	donnees: ChampsProfil,
+	identifiant: string | null,
+	exclureId?: number
+): void {
 	const existe = (condition: ReturnType<typeof eq>): boolean => {
 		const conditions = [condition, ne(tableMembre.etat, Etat.SUPPRIME)];
 		if (exclureId) conditions.push(ne(tableMembre.id, exclureId));
@@ -177,7 +185,10 @@ function verifierUnicite(donnees: ChampsProfil, identifiant: string | null, excl
 	};
 
 	const champs: Record<string, string> = {};
-	if (identifiant && existe(sql`lower(${tableMembre.identifiant}) = ${identifiant.toLowerCase()}`)) {
+	if (
+		identifiant &&
+		existe(sql`lower(${tableMembre.identifiant}) = ${identifiant.toLowerCase()}`)
+	) {
 		champs.identifiant = 'Cet identifiant est déjà utilisé.';
 	}
 	if (existe(sql`lower(${tableMembre.pseudonyme}) = ${donnees.pseudonyme.trim().toLowerCase()}`)) {
@@ -197,7 +208,10 @@ function verifierUnicite(donnees: ChampsProfil, identifiant: string | null, excl
  * personne, sigle pour une entreprise ; unicité assurée par un suffixe numérique.
  */
 function genererPseudonyme(nom: string, categorie: number): string {
-	const mots = nom.trim().split(/[\s\-]+/).filter(Boolean);
+	const mots = nom
+		.trim()
+		.split(/[\s-]+/)
+		.filter(Boolean);
 	let base: string;
 	if (categorie === CategorieMembre.MORALE) {
 		base = mots
@@ -244,7 +258,9 @@ function champsAEcrire(donnees: ChampsProfil, categorie: number, pseudonyme: str
 	};
 	if (categorie === CategorieMembre.PHYSIQUE) {
 		const sexe =
-			donnees.sexe === Sexe.FEMININ || donnees.sexe === Sexe.MASCULIN ? donnees.sexe : Sexe.INDEFINI;
+			donnees.sexe === Sexe.FEMININ || donnees.sexe === Sexe.MASCULIN
+				? donnees.sexe
+				: Sexe.INDEFINI;
 		return {
 			...communs,
 			sexe,
@@ -269,7 +285,11 @@ function champsAEcrire(donnees: ChampsProfil, categorie: number, pseudonyme: str
 
 /** Contrôles communs à l'inscription et à la mise à jour : ville connue, pseudonyme assez long. */
 function preparerProfil(donnees: ChampsProfil, categorie: number, pseudonymeActuel = ''): string {
-	const villeConnue = db.select({ id: ville.id }).from(ville).where(eq(ville.id, donnees.ville_id)).get();
+	const villeConnue = db
+		.select({ id: ville.id })
+		.from(ville)
+		.where(eq(ville.id, donnees.ville_id))
+		.get();
 	if (!villeConnue) throw erreur('Ville inconnue.', { ville_id: 'Veuillez choisir une ville.' });
 
 	let pseudonyme = donnees.pseudonyme.trim();
@@ -365,7 +385,10 @@ routeur.post('/mot-de-passe', membreRequis, async (req, res) => {
 		});
 	}
 	const hash = await hacherMotDePasse(donnees.nouveau);
-	db.update(tableMembre).set({ mot_de_passe_hash: hash }).where(eq(tableMembre.id, membre.id)).run();
+	db.update(tableMembre)
+		.set({ mot_de_passe_hash: hash })
+		.where(eq(tableMembre.id, membre.id))
+		.run();
 	res.json(ok('Votre mot de passe a été modifié.'));
 });
 
@@ -413,8 +436,8 @@ routeur.post('/mot-de-passe-oublie', (req, res) => {
 			.run();
 		const lien = `${config.siteUrl}/reinitialiser/${jeton}`;
 		const nomSite =
-			db.select({ nom: parametre.nom_site }).from(parametre).where(eq(parametre.id, 1)).get()?.nom ??
-			'La Frangine';
+			db.select({ nom: parametre.nom_site }).from(parametre).where(eq(parametre.id, 1)).get()
+				?.nom ?? 'La Frangine';
 		envoyerEnArrierePlan(
 			membre.email,
 			`${nomSite} — réinitialisation de votre mot de passe`,

@@ -16,7 +16,13 @@ import multer from 'multer';
 import { z } from 'zod';
 import { config } from '../config.js';
 import { db } from '../db.js';
-import { exigerMembre, membreRequis, pagination, peutModifier, verifierModification } from '../deps.js';
+import {
+	exigerMembre,
+	membreRequis,
+	pagination,
+	peutModifier,
+	verifierModification
+} from '../deps.js';
 import { Etat } from '../enums.js';
 import { erreur } from '../erreurs.js';
 import { message as tableMessage } from '../schema/contenu.js';
@@ -25,7 +31,12 @@ import { reussite } from '../schema/entreprises.js';
 import { membre as tableMembre, peutModerer, type Membre } from '../schema/membres.js';
 import { ok, valider } from '../schemas/commun.js';
 import { changerEtat, exigerVisible, paginer, recherche, supprimer } from '../services/fiches.js';
-import { enregistrer as enregistrerFichier, IMAGE, supprimer as supprimerFichier, url } from '../services/fichiers.js';
+import {
+	enregistrer as enregistrerFichier,
+	IMAGE,
+	supprimer as supprimerFichier,
+	url
+} from '../services/fichiers.js';
 import { nouvelleReference, Prefixe } from '../services/references.js';
 
 export const routeur = Router();
@@ -76,7 +87,9 @@ function contextesDe(fiches: Reussite[]): Map<number, Contexte> {
 			.all()
 			.map((m) => [m.id, m])
 	);
-	const secteurIds = [...new Set(fiches.map((r) => r.secteur_id).filter((id): id is number => !!id))];
+	const secteurIds = [
+		...new Set(fiches.map((r) => r.secteur_id).filter((id): id is number => !!id))
+	];
 	const secteurs = new Map(
 		secteurIds.length
 			? db
@@ -163,7 +176,8 @@ routeur.get('/', (req, res) => {
 	const conditions: (SQL | undefined)[] = [];
 
 	const brutEtat = Number(req.query.etat);
-	const etat = Number.isFinite(brutEtat) && brutEtat >= 1 && brutEtat <= 4 ? Math.trunc(brutEtat) : null;
+	const etat =
+		Number.isFinite(brutEtat) && brutEtat >= 1 && brutEtat <= 4 ? Math.trunc(brutEtat) : null;
 
 	if (membre && membre.type_compte === 1 && etat) {
 		conditions.push(eq(reussite.etat, etat));
@@ -204,8 +218,11 @@ routeur.get('/', (req, res) => {
 
 routeur.get('/compteurs', (req, res) => {
 	const n = (etat: number) =>
-		db.select({ n: sql<number>`count(*)` }).from(reussite).where(eq(reussite.etat, etat)).get()?.n ??
-		0;
+		db
+			.select({ n: sql<number>`count(*)` })
+			.from(reussite)
+			.where(eq(reussite.etat, etat))
+			.get()?.n ?? 0;
 	const gestion = !!req.membre && req.membre.type_compte === 1;
 	res.json({ publiees: n(Etat.AUTORISE), a_valider: gestion ? n(Etat.NON_TRAITE) : 0 });
 });
@@ -232,7 +249,11 @@ routeur.get('/:id', (req, res) => {
 function validerReussite(d: ReussiteEntree): void {
 	const champs: Record<string, string> = {};
 	const secteur = d.secteur_id
-		? db.select({ id: secteurActivite.id }).from(secteurActivite).where(eq(secteurActivite.id, d.secteur_id)).get()
+		? db
+				.select({ id: secteurActivite.id })
+				.from(secteurActivite)
+				.where(eq(secteurActivite.id, d.secteur_id))
+				.get()
 		: null;
 	if (!secteur) champs.secteur_id = "Veuillez indiquer le secteur d'activité.";
 	if (d.projet.trim().length < 10) {
@@ -297,13 +318,15 @@ routeur.post('/', membreRequis, (req, res) => {
 		return r;
 	});
 
-	res.status(201).json(
-		ok(
-			'Merci ! Votre témoignage est enregistré : il sera publié après relecture par la frangine.',
-			fiche.id,
-			fiche.reference
-		)
-	);
+	res
+		.status(201)
+		.json(
+			ok(
+				'Merci ! Votre témoignage est enregistré : il sera publié après relecture par la frangine.',
+				fiche.id,
+				fiche.reference
+			)
+		);
 });
 
 routeur.put('/:id', membreRequis, (req, res) => {

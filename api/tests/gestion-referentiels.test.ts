@@ -24,15 +24,15 @@ async function admin(droits: Record<string, unknown> = {}) {
 }
 
 describe('villes et quartiers', () => {
-	it('refuse les doublons et la suppression d’une ville utilisée (F-ADM-16/17)', async () => {
+	it("refuse les doublons et la suppression d'une ville utilisée (F-ADM-16/17)", async () => {
 		const h = await admin();
 
 		const court = await client().post(`${R}/villes`).set(h).send({ nom: 'Oyo' });
 		expect(court.status).toBe(400);
 		expect(court.body.champs.nom).toContain('4 caractères');
-		expect((await client().post(`${R}/villes`).set(h).send({ nom: 'brazzaville' })).body.message).toBe(
-			'Cette ville est déjà enregistrée.'
-		);
+		expect(
+			(await client().post(`${R}/villes`).set(h).send({ nom: 'brazzaville' })).body.message
+		).toBe('Cette ville est déjà enregistrée.');
 
 		const id = (await client().post(`${R}/villes`).set(h).send({ nom: 'Dolisie' })).body.id;
 		expect(
@@ -82,12 +82,8 @@ describe('secteurs, domaines, diplômes et familles', () => {
 			await client().post(`${R}/domaines`).set(h).send({ secteur_id: sid, libelle: 'Maraîchage' })
 		).body.id;
 		expect(
-			(
-				await client()
-					.post(`${R}/domaines`)
-					.set(h)
-					.send({ secteur_id: sid, libelle: 'maraîchage' })
-			).status
+			(await client().post(`${R}/domaines`).set(h).send({ secteur_id: sid, libelle: 'maraîchage' }))
+				.status
 		).toBe(400);
 
 		// Suppression logique : disparaît des listes publiques.
@@ -123,11 +119,21 @@ describe('produits et fiches bien-être', () => {
 		const ids: number[] = [];
 		for (let i = 0; i < 6; i++) {
 			ids.push(
-				(await client().post(`${R}/produits`).set(h).send({ ...p, nom: `Produit ${i}` })).body.id
+				(
+					await client()
+						.post(`${R}/produits`)
+						.set(h)
+						.send({ ...p, nom: `Produit ${i}` })
+				).body.id
 			);
 		}
 		expect(
-			(await client().post(`${R}/produits`).set(h).send({ ...p, nom: 'Produit 1' })).body.message
+			(
+				await client()
+					.post(`${R}/produits`)
+					.set(h)
+					.send({ ...p, nom: 'Produit 1' })
+			).body.message
 		).toBe('Ce produit est déjà enregistré.');
 		expect(
 			(
@@ -137,9 +143,14 @@ describe('produits et fiches bien-être', () => {
 					.send({ ...p, nom: 'Produit 1', groupe: 2 })
 			).status
 		).toBe(201);
-		expect((await client().post(`${R}/produits`).set(h).send({ ...p, groupe: 100 })).status).toBe(
-			400
-		);
+		expect(
+			(
+				await client()
+					.post(`${R}/produits`)
+					.set(h)
+					.send({ ...p, groupe: 100 })
+			).status
+		).toBe(400);
 		expect((await client().get(`${R}/produits?prix_public_max=19999`).set(h)).body.total).toBe(0);
 		expect((await client().get(`${R}/produits?groupe=2&q=produit`).set(h)).body.total).toBe(1);
 
@@ -181,9 +192,9 @@ describe('produits et fiches bien-être', () => {
 describe('comparateur, banques et sommaire', () => {
 	it('supprime logiquement une banque et recompte le sommaire (F-ADM-28/29)', async () => {
 		const h = await admin();
-		expect((await client().post(`${R}/produits-comparateur`).set(h).send({ nom: 'Riz' })).status).toBe(
-			400
-		);
+		expect(
+			(await client().post(`${R}/produits-comparateur`).set(h).send({ nom: 'Riz' })).status
+		).toBe(400);
 		expect(
 			(await client().post(`${R}/produits-comparateur`).set(h).send({ nom: 'Ciment 50 kg' })).status
 		).toBe(201);
@@ -194,12 +205,8 @@ describe('comparateur, banques et sommaire', () => {
 			.send({ sigle: 'bgfi', nom: 'BGFI Bank Congo' });
 		expect(b.status).toBe(201);
 		expect(
-			(
-				await client()
-					.post(`${R}/banques`)
-					.set(h)
-					.send({ sigle: 'BGFI', nom: 'bgfi bank congo' })
-			).status
+			(await client().post(`${R}/banques`).set(h).send({ sigle: 'BGFI', nom: 'bgfi bank congo' }))
+				.status
 		).toBe(400);
 		expect((await client().get(`${R}/banques/${b.body.id}`).set(h)).body.sigle).toBe('BGFI');
 
@@ -267,13 +274,7 @@ describe('journaux', () => {
 			maintenant.getDate() - 1
 		);
 		const a = (heures: number, minutes = 0, joursAvant = 0) =>
-			new Date(
-				hier.getFullYear(),
-				hier.getMonth(),
-				hier.getDate() - joursAvant,
-				heures,
-				minutes
-			);
+			new Date(hier.getFullYear(), hier.getMonth(), hier.getDate() - joursAvant, heures, minutes);
 
 		db.insert(visite)
 			.values([
@@ -293,22 +294,21 @@ describe('journaux', () => {
 		const j = `${hier.getFullYear()}-${deux(hier.getMonth() + 1)}-${deux(hier.getDate())}`;
 		// Correctif F-ADM-32 : le filtre par période fonctionne.
 		expect((await client().get(`${V}?du=${j}&au=${j}`).set(h)).body.total).toBe(2);
-		expect(
-			(await client().get(`${V}?heure_debut=08:00&heure_fin=09:00`).set(h)).body.total
-		).toBe(1);
+		expect((await client().get(`${V}?heure_debut=08:00&heure_fin=09:00`).set(h)).body.total).toBe(
+			1
+		);
 		// Plage qui passe minuit.
-		expect(
-			(await client().get(`${V}?heure_debut=22:00&heure_fin=06:00`).set(h)).body.total
-		).toBe(1);
+		expect((await client().get(`${V}?heure_debut=22:00&heure_fin=06:00`).set(h)).body.total).toBe(
+			1
+		);
 		expect((await client().get(`${V}?ip=192.168`).set(h)).body.items[0].membre.pseudonyme).toBe(
 			'visiteur'
 		);
 		expect((await client().get(`${V}?heure_debut=25:00`).set(h)).status).toBe(400);
 		expect((await client().get(`${V}?du=${j}&au=2000-01-01`).set(h)).status).toBe(400);
 
-		const c = (
-			await client().get(`/api/gestion/journaux/connexions?membre_id=${membre}`).set(h)
-		).body;
+		const c = (await client().get(`/api/gestion/journaux/connexions?membre_id=${membre}`).set(h))
+			.body;
 		expect(c.total).toBe(1);
 		expect(c.items[0].membre.pseudonyme).toBe('visiteur');
 
@@ -330,15 +330,15 @@ describe('journaux', () => {
 				.message
 		).toBe('2 lignes supprimées.');
 
-		const avant = new Date(maintenant.getFullYear(), maintenant.getMonth(), maintenant.getDate() - 30);
+		const avant = new Date(
+			maintenant.getFullYear(),
+			maintenant.getMonth(),
+			maintenant.getDate() - 30
+		);
 		const avantIso = `${avant.getFullYear()}-${deux(avant.getMonth() + 1)}-${deux(avant.getDate())}`;
 		expect(
-			(
-				await client()
-					.post('/api/gestion/journaux/visites/purger')
-					.set(h)
-					.send({ avant: avantIso })
-			).body.message
+			(await client().post('/api/gestion/journaux/visites/purger').set(h).send({ avant: avantIso }))
+				.body.message
 		).toBe('1 ligne supprimée.');
 		expect(
 			(await client().post('/api/gestion/journaux/visites/purger').set(h).send({})).status

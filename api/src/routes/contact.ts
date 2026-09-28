@@ -57,7 +57,10 @@ const reponseEntreeSchema = z.object({ reponse: z.string().max(5000).default('')
 /** 1 = à traiter, 2 = traité, 3 = supprimé. */
 const etatContactSchema = z.object({ etat: z.coerce.number().int().min(1).max(3) });
 
-function vueContact(c: Contact, expediteur?: { id: number; pseudonyme: string; type_compte: number } | null) {
+function vueContact(
+	c: Contact,
+	expediteur?: { id: number; pseudonyme: string; type_compte: number } | null
+) {
 	return {
 		id: c.id,
 		membre_id: c.membre_id,
@@ -77,7 +80,8 @@ function vueContact(c: Contact, expediteur?: { id: number; pseudonyme: string; t
 
 function expediteursDe(contacts: Contact[]) {
 	const ids = [...new Set(contacts.map((c) => c.membre_id).filter((id): id is number => !!id))];
-	if (ids.length === 0) return new Map<number, { id: number; pseudonyme: string; type_compte: number }>();
+	if (ids.length === 0)
+		return new Map<number, { id: number; pseudonyme: string; type_compte: number }>();
 	return new Map(
 		db
 			.select({
@@ -100,8 +104,13 @@ routeur.post('/', (req, res) => {
 	const donnees = valider(contactEntreeSchema, req.body);
 	const membre = req.membre;
 
-	if (donnees.site_web || (donnees.duree_saisie_ms > 0 && donnees.duree_saisie_ms < DUREE_MINIMALE_MS)) {
-		throw erreur('Message refusé. Si vous êtes un humain, patientez quelques secondes et réessayez.');
+	if (
+		donnees.site_web ||
+		(donnees.duree_saisie_ms > 0 && donnees.duree_saisie_ms < DUREE_MINIMALE_MS)
+	) {
+		throw erreur(
+			'Message refusé. Si vous êtes un humain, patientez quelques secondes et réessayez.'
+		);
 	}
 
 	const objet = donnees.objet.split(/\s+/).filter(Boolean).join(' ');
@@ -355,7 +364,8 @@ routeur.post('/:id/reponse', gestionnaireRequis, (req, res) => {
 		);
 		message = `Réponse enregistrée et envoyée par e-mail à ${c.email}.`;
 	} else if (expediteur) {
-		message = "Réponse enregistrée. Pas d'adresse e-mail : le membre la retrouvera dans son espace.";
+		message =
+			"Réponse enregistrée. Pas d'adresse e-mail : le membre la retrouvera dans son espace.";
 	} else {
 		message = "Réponse enregistrée. Aucune adresse e-mail : contactez l'expéditeur par téléphone.";
 	}

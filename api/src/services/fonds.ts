@@ -9,14 +9,7 @@
  */
 import { and, eq, max as maxSql, sql } from 'drizzle-orm';
 import { db } from '../db.js';
-import {
-	DonPlacement,
-	Etat,
-	EtatPaiement,
-	ModePaiement,
-	OuiNon,
-	TypeObjetPaye
-} from '../enums.js';
+import { DonPlacement, Etat, EtatPaiement, ModePaiement, OuiNon, TypeObjetPaye } from '../enums.js';
 import { ErreurMetier, erreur, interdit, introuvable } from '../erreurs.js';
 import { paiement as tablePaiement } from '../schema/commerce.js';
 import { parametre } from '../schema/core.js';
@@ -62,7 +55,10 @@ export function recalculerAppel(appelId: number): void {
 		.where(eq(collecteFond.appel_fond_id, appelId))
 		.get();
 	db.update(appelFond)
-		.set({ montant_promis: ligne?.promis ?? 0, montant_collecte: ligne?.collecte ?? 0 })
+		.set({
+			montant_promis: ligne?.promis ?? 0,
+			montant_collecte: ligne?.collecte ?? 0
+		})
 		.where(eq(appelFond.id, appelId))
 		.run();
 }
@@ -118,9 +114,7 @@ export function ajouterVersement(c: CollecteFond, montant: number, jour?: Date):
 			dernier: maxSql(versementCollecte.date_versement)
 		})
 		.from(versementCollecte)
-		.where(
-			and(eq(versementCollecte.collecte_id, c.id), eq(versementCollecte.etat, Etat.AUTORISE))
-		)
+		.where(and(eq(versementCollecte.collecte_id, c.id), eq(versementCollecte.etat, Etat.AUTORISE)))
 		.get();
 	db.update(collecteFond)
 		.set({
@@ -167,19 +161,13 @@ function adhesionPayable(membre: Membre, objetId: number | null): Adhesion {
 	if (!a || a.etat === Etat.SUPPRIME) {
 		throw introuvable("Choisissez l'adhésion Likelemba pour laquelle vous cotisez.");
 	}
-	const groupe = db
-		.select()
-		.from(groupeLikelemba)
-		.where(eq(groupeLikelemba.id, a.groupe_id))
-		.get();
+	const groupe = db.select().from(groupeLikelemba).where(eq(groupeLikelemba.id, a.groupe_id)).get();
 	// L'adhérent, le responsable du groupe (qui collecte) ou un gestionnaire (F-S4-42).
 	const autorise =
-		membre.id === a.membre_id ||
-		membre.id === groupe?.responsable_id ||
-		membre.type_compte === 1;
+		membre.id === a.membre_id || membre.id === groupe?.responsable_id || membre.type_compte === 1;
 	if (!autorise) {
 		throw interdit(
-			'Seul l’adhérent, le responsable du groupe ou un gestionnaire peut payer cette cotisation.'
+			"Seul l'adhérent, le responsable du groupe ou un gestionnaire peut payer cette cotisation."
 		);
 	}
 	return a;
@@ -221,7 +209,7 @@ declarer(TypeObjetPaye.LIKELEMBA, {
 		}
 		if (a.etat !== Etat.AUTORISE) {
 			throw erreur(
-				'Cette adhésion est en attente de confirmation : la cotisation n’est pas encore possible.'
+				"Cette adhésion est en attente de confirmation : la cotisation n'est pas encore possible."
 			);
 		}
 	},
@@ -293,8 +281,7 @@ function fondPayable(membre: Membre, objetId: number | null): FondDeSoutien {
 declarer(TypeObjetPaye.FOND_SOUTIEN, {
 	libelle: (membre, objetId) => {
 		const f = fondPayable(membre, objetId);
-		const quoi =
-			f.type_fond === DonPlacement.DON ? 'Don' : `Placement sur ${f.duree_mois} mois`;
+		const quoi = f.type_fond === DonPlacement.DON ? 'Don' : `Placement sur ${f.duree_mois} mois`;
 		return `${quoi} ${f.reference} — au nom de ${f.souscripteur_nom || 'vous-même'}`;
 	},
 	montant: (membre, objetId) => fondPayable(membre, objetId).montant,
@@ -369,7 +356,7 @@ declarer(TypeObjetPaye.APPORT_FOND, {
 		if (!c || c.etat === ANNULE) throw erreur('Cet apport est annulé : rejetez ce paiement.');
 		if (p.montant > resteAVerser(c)) {
 			throw erreur(
-				'Ce versement dépasse le reste à verser de l’apport : rejetez-le ou corrigez-le.'
+				"Ce versement dépasse le reste à verser de l'apport : rejetez-le ou corrigez-le."
 			);
 		}
 		ajouterVersement(c, p.montant);

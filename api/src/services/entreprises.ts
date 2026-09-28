@@ -11,7 +11,7 @@ import { ErreurMetier, erreur, interdit } from '../erreurs.js';
 import { entreprise, produitProspective } from '../schema/entreprises.js';
 import type { Membre } from '../schema/membres.js';
 
-export const MESSAGE_COMPTE_ENTREPRISE = "Il faut avoir un compte entreprise pour y avoir accès.";
+export const MESSAGE_COMPTE_ENTREPRISE = 'Il faut avoir un compte entreprise pour y avoir accès.';
 export const LONGUEUR_MIN_PRODUIT = 3;
 
 /** Entreprises créées par le membre (hors fiches supprimées), par nom. */
@@ -113,9 +113,5 @@ export function resoudreProduit(produitId: number | null | undefined, nouveau: s
 		}
 		return existant;
 	}
-	return db
-		.insert(produitProspective)
-		.values({ nom, etat: Etat.AUTORISE })
-		.returning()
-		.get()!;
+	return db.insert(produitProspective).values({ nom, etat: Etat.AUTORISE }).returning().get()!;
 }

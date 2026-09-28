@@ -16,6 +16,25 @@ describe('accès', () => {
 	});
 });
 
+describe('rubrique demandée', () => {
+	it('borne `?type=` et nomme le champ en faute', async () => {
+		await creerMembre('awa');
+		const h = await entetes('awa');
+
+		const cas: [string, string][] = [
+			['', 'Ce champ est obligatoire.'],
+			['?type=abc', 'Nombre entier attendu.'],
+			['?type=-1', 'Doit être supérieur ou égal à 0.'],
+			['?type=9', 'Doit être inférieur ou égal à 4.']
+		];
+		for (const [requete, message] of cas) {
+			const r = await client().get(`/api/dialogues${requete}`).set(h);
+			expect(r.status, requete).toBe(422);
+			expect(r.body.champs, requete).toEqual({ type: message });
+		}
+	});
+});
+
 describe('membre', () => {
 	it('écrit dans les 4 rubriques (correctif F-S7-38)', async () => {
 		await creerMembre('awa');
@@ -76,10 +95,7 @@ describe('réponse du conseiller', () => {
 			.post('/api/dialogues')
 			.set(ha)
 			.send({ type_dialogue: 3, texte: 'Où en est mon crédit ?' });
-		await client()
-			.post('/api/dialogues')
-			.set(hb)
-			.send({ type_dialogue: 3, texte: 'Et le mien ?' });
+		await client().post('/api/dialogues').set(hb).send({ type_dialogue: 3, texte: 'Et le mien ?' });
 
 		// Le gestionnaire voit les messages adressés à la frangine, avec leur auteur.
 		const tout = await client().get('/api/dialogues?type=3').set(hg);
@@ -137,7 +153,9 @@ describe('réponse du conseiller', () => {
 		expect((await client().get('/api/dialogues/conversations?type=3').set(ha)).status).toBe(403);
 
 		// Fil d'un membre précis et recherche plein texte.
-		expect((await client().get(`/api/dialogues?type=3&membre_id=${awa}`).set(hg)).body.total).toBe(2);
+		expect((await client().get(`/api/dialogues?type=3&membre_id=${awa}`).set(hg)).body.total).toBe(
+			2
+		);
 		expect((await client().get('/api/dialogues?type=3&q=mien').set(hg)).body.total).toBe(1);
 	});
 });

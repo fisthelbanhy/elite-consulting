@@ -3,7 +3,7 @@
  * legacy : humaine, besoin).
  */
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
-import { consultable, dateHeure, dateSeule, horodatage, texteVide } from '../db.js';
+import { consultable, dateHeure, dateSeule, horodatage, maintenant, texteVide } from '../db.js';
 import { Etat, Sexe, TypeInteret } from '../enums.js';
 import { domaineActivite, secteurActivite } from './core.js';
 import { article, immobilier } from './commerce.js';
@@ -63,9 +63,7 @@ export const interet = sqliteTable(
 		article_id: integer('article_id').references(() => article.id),
 		partenariat_id: integer('partenariat_id').references(() => partenariat.id),
 		message: texteVide('message'),
-		date_creation: dateHeure('date_creation')
-			.notNull()
-			.$defaultFn(() => new Date()),
+		date_creation: dateHeure('date_creation').notNull().$defaultFn(maintenant),
 		etat: integer('etat').notNull().default(Etat.AUTORISE)
 	},
 	(t) => [

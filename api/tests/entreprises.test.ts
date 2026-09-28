@@ -66,7 +66,9 @@ describe('création', () => {
 		// Site normalisé en https, téléphone normalisé.
 		expect(fiche.body.site_web).toBe('https://www.bomoye.cg');
 		expect(fiche.body.telephone).toBe('061234567');
-		expect(db.select().from(entreprise).where(eq(entreprise.id, r.body.id)).get()!.secteur_id).toBe(1);
+		expect(db.select().from(entreprise).where(eq(entreprise.id, r.body.id)).get()!.secteur_id).toBe(
+			1
+		);
 
 		// Unicité nom + domaine, insensible à la casse.
 		const doublon = await client()
@@ -100,7 +102,7 @@ describe('création', () => {
 });
 
 describe('pré-remplissage', () => {
-	it('reprend le profil d’une personne morale (F-S6-06)', async () => {
+	it("reprend le profil d'une personne morale (F-S6-06)", async () => {
 		await creerMembre('societe', {
 			categorie: CategorieMembre.MORALE,
 			nom: 'Société Kongo Bois',
@@ -190,7 +192,7 @@ describe('liste', () => {
 });
 
 describe('fiche publique', () => {
-	it('expose les coordonnées de l’entreprise et compte les visites de tiers', async () => {
+	it("expose les coordonnées de l'entreprise et compte les visites de tiers", async () => {
 		await creerMembre('patron');
 		await creerMembre('curieux');
 		const h = await entetes('patron');
@@ -229,7 +231,9 @@ describe('droits', () => {
 		const id = (await client().post('/api/entreprises').set(h).send(ENTREPRISE)).body.id;
 		const hAutre = await entetes('autre');
 
-		expect((await client().put(`/api/entreprises/${id}`).set(hAutre).send(ENTREPRISE)).status).toBe(403);
+		expect((await client().put(`/api/entreprises/${id}`).set(hAutre).send(ENTREPRISE)).status).toBe(
+			403
+		);
 		expect((await client().delete(`/api/entreprises/${id}`).set(hAutre)).status).toBe(403);
 		expect(
 			(

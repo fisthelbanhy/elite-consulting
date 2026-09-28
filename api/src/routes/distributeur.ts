@@ -243,7 +243,11 @@ routeur.get('/souscriptions', gestionnaireRequis, (req, res) => {
 	if (Number.isFinite(brutMode) && brutMode >= 1 && brutMode <= 2) {
 		conditions.push(eq(tableSouscription.mode_souscription, Math.trunc(brutMode)));
 	}
-	if (req.query.envoyees !== undefined && req.query.envoyees !== 'false' && req.query.envoyees !== '0') {
+	if (
+		req.query.envoyees !== undefined &&
+		req.query.envoyees !== 'false' &&
+		req.query.envoyees !== '0'
+	) {
 		conditions.push(gte(tableSouscription.etape_courante, svc.ETAPE_ENVOYEE));
 	}
 	conditions.push(

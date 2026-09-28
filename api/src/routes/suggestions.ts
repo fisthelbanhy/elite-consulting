@@ -38,7 +38,11 @@ routeur.post('/', membreRequis, (req, res) => {
 	const champs: Record<string, string> = {};
 
 	// Correctif F-TRV-60 : « Accueil » (0) est un module valide.
-	if (donnees.module === null || donnees.module === undefined || !MODULES_CONNUS.includes(donnees.module)) {
+	if (
+		donnees.module === null ||
+		donnees.module === undefined ||
+		!MODULES_CONNUS.includes(donnees.module)
+	) {
 		champs.module = 'Veuillez indiquer le module concerné.';
 	}
 	const texte = donnees.texte.trim();
@@ -80,7 +84,9 @@ routeur.get('/', gestionnaireRequis, (req, res) => {
 			? eq(suggestion.etat, Math.trunc(etat))
 			: ne(suggestion.etat, Etat.SUPPRIME)
 	);
-	conditions.push(recherche(typeof req.query.q === 'string' ? req.query.q : null, suggestion.texte));
+	conditions.push(
+		recherche(typeof req.query.q === 'string' ? req.query.q : null, suggestion.texte)
+	);
 
 	const requete = db
 		.select()
@@ -94,7 +100,11 @@ routeur.get('/', gestionnaireRequis, (req, res) => {
 
 routeur.get('/compteurs', gestionnaireRequis, (_req, res) => {
 	const n = (condition: SQL) =>
-		db.select({ n: sql<number>`count(*)` }).from(suggestion).where(condition).get()?.n ?? 0;
+		db
+			.select({ n: sql<number>`count(*)` })
+			.from(suggestion)
+			.where(condition)
+			.get()?.n ?? 0;
 	res.json({
 		a_lire: n(eq(suggestion.etat, Etat.NON_TRAITE)),
 		total: n(ne(suggestion.etat, Etat.SUPPRIME))
@@ -103,7 +113,11 @@ routeur.get('/compteurs', gestionnaireRequis, (_req, res) => {
 
 routeur.post('/:id/etat', gestionnaireRequis, (req, res) => {
 	const id = Number(req.params.id);
-	const existe = db.select({ id: suggestion.id }).from(suggestion).where(eq(suggestion.id, id)).get();
+	const existe = db
+		.select({ id: suggestion.id })
+		.from(suggestion)
+		.where(eq(suggestion.id, id))
+		.get();
 	if (!existe) throw introuvable("Cette suggestion n'existe pas.");
 
 	const donnees = valider(etatSuggestionSchema, req.body);

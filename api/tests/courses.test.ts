@@ -59,7 +59,7 @@ describe('validation', () => {
 		expect(vide.body.champs).toEqual({
 			lieu_achat: 'Veuillez indiquer le lieu des achats avec 10 caractères minimum.',
 			date_achat: 'Veuillez indiquer la date des achats.',
-			date_livraison: 'Veuillez indiquer la date de livraison ainsi que l’heure.',
+			date_livraison: "Veuillez indiquer la date de livraison ainsi que l'heure.",
 			lieu_livraison: 'Veuillez indiquer le numéro de téléphone et le lieu de livraison.',
 			lignes: 'Veuillez indiquer le montant des achats.'
 		});
@@ -75,11 +75,8 @@ describe('validation', () => {
 				.date_livraison
 		).toBe('Les livraisons se font entre 10 h 00 et 18 h 59.');
 		expect(
-			(
-				await verifier(
-					course({ date_achat: APRES_DEMAIN, date_livraison: `${DEMAIN}T12:00` })
-				)
-			).body.champs.date_livraison
+			(await verifier(course({ date_achat: APRES_DEMAIN, date_livraison: `${DEMAIN}T12:00` }))).body
+				.champs.date_livraison
 		).toBe('La date de livraison ne peut être antérieure à la date des courses.');
 
 		// Ligne incomplète signalée (et bloquante).
@@ -136,9 +133,9 @@ describe('vérification puis enregistrement', () => {
 
 		// Modification : les lignes sont réellement remplacées (F-S3-63).
 		const lignes = [{ nom_article: 'Sac de riz 50 kg', prix_plafond: 30000, quantite: 1 }];
-		expect(
-			(await client().put(`/api/courses/${id}`).set(h).send(course({ lignes }))).status
-		).toBe(200);
+		expect((await client().put(`/api/courses/${id}`).set(h).send(course({ lignes }))).status).toBe(
+			200
+		);
 		d = (await client().get(`/api/courses/${id}`).set(h)).body;
 		expect(d.lignes.map((li: { nom_article: string }) => li.nom_article)).toEqual([
 			'Sac de riz 50 kg'
@@ -179,7 +176,9 @@ describe('visibilité et filtres', () => {
 					.set(h)
 			).body.total
 		).toBe(2);
-		expect((await client().get(`/api/courses?achat_min=${APRES_DEMAIN}`).set(h)).body.total).toBe(0);
+		expect((await client().get(`/api/courses?achat_min=${APRES_DEMAIN}`).set(h)).body.total).toBe(
+			0
+		);
 		expect(
 			(await client().get(`/api/courses?livraison_max=${APRES_DEMAIN}`).set(h)).body.total
 		).toBe(2);
@@ -199,8 +198,12 @@ describe('états de course', () => {
 		await boutique();
 		const hc = await entetes('client');
 		const hb = await entetes('boutique');
-		const id = (await client().post('/api/courses').set(hc).send(course({ boutique_id: null })))
-			.body.id;
+		const id = (
+			await client()
+				.post('/api/courses')
+				.set(hc)
+				.send(course({ boutique_id: null }))
+		).body.id;
 
 		// Le client ne peut qu'annuler.
 		expect(
@@ -264,9 +267,9 @@ describe('catalogue et commande à une boutique', () => {
 		});
 
 		const riz = (await client().post('/api/courses/catalogue').set(hb).send(article)).body.id;
-		expect(
-			(await client().post('/api/courses/catalogue').set(hb).send(article)).body.message
-		).toBe('Cet article est déjà enregistré.');
+		expect((await client().post('/api/courses/catalogue').set(hb).send(article)).body.message).toBe(
+			'Cet article est déjà enregistré.'
+		);
 
 		const ha = await entetes('admin');
 		expect(

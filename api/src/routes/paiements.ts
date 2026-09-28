@@ -11,7 +11,7 @@ import { exigerDroit, exigerMembre, membreRequis, pagination } from '../deps.js'
 import { introuvable } from '../erreurs.js';
 import { paiement } from '../schema/commerce.js';
 import { parametre } from '../schema/core.js';
-import { ok, valider } from '../schemas/commun.js';
+import { entierFacultatifRequete, entierRequis, ok, valider } from '../schemas/commun.js';
 import { contactsDe } from '../services/contacts.js';
 import { paginer, recherche } from '../services/fiches.js';
 import { confirmer, CONSIGNES, enregistrer, rejeter, traitement } from '../services/paiements.js';
@@ -30,7 +30,10 @@ const declarationSchema = z.object({
 });
 
 /** Vue d'un paiement, avec l'identité du payeur (réservée à la caisse et au payeur lui-même). */
-function vuePaiement(p: Paiement, payeurs: Map<number, { id: number; pseudonyme: string; nom: string }>) {
+function vuePaiement(
+	p: Paiement,
+	payeurs: Map<number, { id: number; pseudonyme: string; nom: string }>
+) {
 	return {
 		id: p.id,
 		type_objet: p.type_objet,
@@ -52,10 +55,15 @@ function payeursDe(paiements: Paiement[]) {
 	);
 }
 
+/** `type_objet` est obligatoire, `objet_id` facultatif — comme la signature Python d'origine. */
+const preparerSchema = z.object({
+	type_objet: entierRequis(),
+	objet_id: entierFacultatifRequete()
+});
+
 routeur.get('/preparer', membreRequis, (req, res) => {
 	const membre = exigerMembre(req);
-	const typeObjet = Number(req.query.type_objet);
-	const objetId = req.query.objet_id !== undefined ? Number(req.query.objet_id) : null;
+	const { type_objet: typeObjet, objet_id: objetId } = valider(preparerSchema, req.query);
 	const t = traitement(typeObjet);
 	const p = db.select().from(parametre).where(eq(parametre.id, 1)).get();
 
@@ -149,7 +157,9 @@ routeur.get('/', membreRequis, (req, res) => {
 	const au = bornerJour(req.query.au, true);
 	if (au) conditions.push(lte(paiement.date_paiement, au));
 
-	conditions.push(recherche(typeof req.query.q === 'string' ? req.query.q : null, paiement.remarque));
+	conditions.push(
+		recherche(typeof req.query.q === 'string' ? req.query.q : null, paiement.remarque)
+	);
 
 	const filtre = and(...conditions.filter(Boolean));
 	const somme =

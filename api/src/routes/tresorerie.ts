@@ -9,7 +9,7 @@
  * contentieux (correctif F-S7-24) ; changement d'état par un gestionnaire habilité
  * (correctif F-S7-28).
  */
-import { and, desc, eq, gte, inArray, lte, ne, or, sql, type SQL } from 'drizzle-orm';
+import { and, desc, eq, gte, lte, ne, or, sql, type SQL } from 'drizzle-orm';
 import type { SQLiteColumn, SQLiteTable } from 'drizzle-orm/sqlite-core';
 import { Router } from 'express';
 import { z } from 'zod';
@@ -19,12 +19,7 @@ import { Devise, Etat, TypeOperationBanque, TypePlacement } from '../enums.js';
 import { erreur, interdit, introuvable } from '../erreurs.js';
 import { message as tableMessage } from '../schema/contenu.js';
 import { banque as tableBanque, parametre } from '../schema/core.js';
-import {
-	contentieuxCredit,
-	demandeCredit,
-	operationBanque,
-	placement
-} from '../schema/finance.js';
+import { contentieuxCredit, demandeCredit, operationBanque, placement } from '../schema/finance.js';
 import { membre as tableMembre, peutModerer, type Membre } from '../schema/membres.js';
 import {
 	auteur,
@@ -118,11 +113,8 @@ function conditionsVisibles(
 }
 
 function obtenir<T extends Fiche>(r: Rubrique, id: number, membre: Membre): T {
-	const fiche = db
-		.select()
-		.from(r.table)
-		.where(eq(r.table.id, id))
-		.get() as unknown as T | undefined;
+	const fiche = db.select().from(r.table).where(eq(r.table.id, id)).get() as unknown as
+		T | undefined;
 	if (
 		fiche &&
 		(membre.type_compte === 1 || (fiche.membre_id === membre.id && fiche.etat !== Etat.SUPPRIME))
@@ -155,8 +147,7 @@ function contexte(fiche: Fiche, membre: Membre) {
 		peut_modifier: peutModifierFiche(fiche, membre),
 		peut_moderer: peutModerer(membre),
 		peut_annuler:
-			fiche.etat !== Etat.SUPPRIME &&
-			(fiche.membre_id === membre.id || peutModerer(membre))
+			fiche.etat !== Etat.SUPPRIME && (fiche.membre_id === membre.id || peutModerer(membre))
 	};
 }
 
@@ -457,10 +448,7 @@ function vueOperation(f: Operation) {
 		sens: t.sens(f.type_operation),
 		// Noms résolus (saisie libre « banque non listée » ou référentiel).
 		nom_banque_emettrice: t.nomBanque(lire(f.banque_emettrice_id), f.banque_emettrice_nom),
-		nom_banque_beneficiaire: t.nomBanque(
-			lire(f.banque_beneficiaire_id),
-			f.banque_beneficiaire_nom
-		)
+		nom_banque_beneficiaire: t.nomBanque(lire(f.banque_beneficiaire_id), f.banque_beneficiaire_nom)
 	};
 }
 
@@ -560,9 +548,7 @@ routeur.get('/operations/synthese', membreRequis, (req, res) => {
 		totaux.set(cle, acc);
 	}
 	res.json(
-		[...totaux.values()].sort(
-			(a, b) => a.sens.localeCompare(b.sens) || a.devise - b.devise
-		)
+		[...totaux.values()].sort((a, b) => a.sens.localeCompare(b.sens) || a.devise - b.devise)
 	);
 });
 
@@ -695,11 +681,7 @@ function cleDoublon(v: ValeursOperation): string {
 }
 
 /** Anti-doublon legacy : membre + date d'opération + montant + banque émettrice + bénéficiaire. */
-function existeOperation(
-	membreId: number,
-	v: ValeursOperation,
-	exclureId?: number
-): boolean {
+function existeOperation(membreId: number, v: ValeursOperation, exclureId?: number): boolean {
 	const conditions: (SQL | undefined)[] = [
 		eq(operationBanque.membre_id, membreId),
 		v.date_operation
@@ -826,11 +808,13 @@ routeur.post('/operations/:id/mail', membreRequis, (req, res) => {
 	if (f.etat === Etat.SUPPRIME) throw erreur('Cette opération est annulée.');
 	if (t.destinataires(f).length === 0) {
 		throw erreur("Aucune adresse e-mail n'est renseignée pour la banque émettrice.", {
-			banque_emettrice_email:
-				"Indiquez l'adresse e-mail de la banque émettrice puis enregistrez."
+			banque_emettrice_email: "Indiquez l'adresse e-mail de la banque émettrice puis enregistrez."
 		});
 	}
-	programmerEmails([f], f.membre_id ? db.select().from(tableMembre).where(eq(tableMembre.id, f.membre_id)).get() : null);
+	programmerEmails(
+		[f],
+		f.membre_id ? db.select().from(tableMembre).where(eq(tableMembre.id, f.membre_id)).get() : null
+	);
 	res.json(ok('Mail envoyé.', f.id, f.reference));
 });
 
@@ -965,11 +949,7 @@ routeur.post('/credits', membreRequis, (req, res) => {
 		.values({
 			membre_id: membre.id,
 			etat: Etat.AUTORISE,
-			date_demande: new Date(
-				maintenant.getFullYear(),
-				maintenant.getMonth(),
-				maintenant.getDate()
-			),
+			date_demande: new Date(maintenant.getFullYear(), maintenant.getMonth(), maintenant.getDate()),
 			reference: nouvelleReference(Prefixe.DEMANDE_CREDIT),
 			...champsCredit(donnees)
 		})
@@ -1086,11 +1066,7 @@ routeur.get('/contentieux/:id', membreRequis, (req, res) => {
 	res.json({ ...detail, ...contexte(f, membre) });
 });
 
-function validerContentieux(
-	d: ContentieuxEntree,
-	membreId: number,
-	exclureId?: number
-): void {
+function validerContentieux(d: ContentieuxEntree, membreId: number, exclureId?: number): void {
 	const champs: Record<string, string> = {};
 	if (d.dette_compromise <= 0) {
 		champs.dette_compromise = 'Veuillez indiquer le montant de la dette compromise.';

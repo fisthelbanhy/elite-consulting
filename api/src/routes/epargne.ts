@@ -258,9 +258,7 @@ function prevenirSouscripteur(f: Fond, rapporteur: Membre, souscripteur: Membre)
 		`de ${montantLisible(f.montant)} francs CFA${duree}. ` +
 		`Veuillez vous connecter pour le paiement : ${lien}`;
 
-	db.insert(tableMessage)
-		.values({ membre_id: souscripteur.id, de_la_frangine: true, texte })
-		.run();
+	db.insert(tableMessage).values({ membre_id: souscripteur.id, de_la_frangine: true, texte }).run();
 	if (souscripteur.email) {
 		const sujet = placement ? 'Souscription placement' : 'Souscription don';
 		const corps =
@@ -522,7 +520,9 @@ routeur.get('/pointages', membreRequis, (req, res) => {
 	const liste = paginer<Pointage>(requete, page);
 
 	const ids = [
-		...new Set(liste.items.flatMap((p) => [p.operateur_id, p.membre_id]).filter((i): i is number => !!i))
+		...new Set(
+			liste.items.flatMap((p) => [p.operateur_id, p.membre_id]).filter((i): i is number => !!i)
+		)
 	];
 	const acteurs = new Map(
 		ids.length
@@ -570,9 +570,7 @@ routeur.get('/pointages', membreRequis, (req, res) => {
 				db
 					.select({ s: sql<number>`coalesce(sum(${tableMembre.solde_point_caisse}), 0)` })
 					.from(tableMembre)
-					.where(
-						and(eq(tableMembre.point_caisse_actif, true), ne(tableMembre.etat, Etat.SUPPRIME))
-					)
+					.where(and(eq(tableMembre.point_caisse_actif, true), ne(tableMembre.etat, Etat.SUPPRIME)))
 					.get()?.s ?? 0;
 			libelleEncaisse = 'Encaisse totale des agents';
 		}
@@ -745,11 +743,7 @@ routeur.post('/pointages', membreRequis, async (req, res) => {
 	await verifierPin(t, donnees.code_pin);
 
 	const maintenant = new Date();
-	const debutJour = new Date(
-		maintenant.getFullYear(),
-		maintenant.getMonth(),
-		maintenant.getDate()
-	);
+	const debutJour = new Date(maintenant.getFullYear(), maintenant.getMonth(), maintenant.getDate());
 	const doublon = db
 		.select({ id: pointCaisse.id })
 		.from(pointCaisse)

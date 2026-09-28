@@ -33,7 +33,12 @@ const DIAGNOSTIC = {
 };
 
 function messages(membreId: number) {
-	return db.select().from(message).where(eq(message.membre_id, membreId)).orderBy(asc(message.id)).all();
+	return db
+		.select()
+		.from(message)
+		.where(eq(message.membre_id, membreId))
+		.orderBy(asc(message.id))
+		.all();
 }
 
 describe('fiche du membre', () => {
@@ -159,13 +164,13 @@ describe('clôture et réouverture', () => {
 		expect((await client().put(`/api/decouverte/${id}`).set(h).send(FICHE)).status).toBe(200);
 
 		// État de suivi : gestionnaire habilité seulement.
-		expect((await client().post(`/api/decouverte/${id}/etat`).set(h).send({ etat: 1 })).status).toBe(
-			403
-		);
+		expect(
+			(await client().post(`/api/decouverte/${id}/etat`).set(h).send({ etat: 1 })).status
+		).toBe(403);
 		const ha = await entetes('admin');
-		expect((await client().post(`/api/decouverte/${id}/etat`).set(ha).send({ etat: 1 })).status).toBe(
-			200
-		);
+		expect(
+			(await client().post(`/api/decouverte/${id}/etat`).set(ha).send({ etat: 1 })).status
+		).toBe(200);
 		expect((await client().get(`/api/decouverte/${id}`).set(ha)).body.etat_fiche).toBe(1);
 	});
 });
@@ -180,7 +185,11 @@ describe('suppression', () => {
 
 		expect((await client().delete(`/api/decouverte/${id}`).set(h)).status).toBe(403);
 		expect(
-			(await client().delete(`/api/decouverte/${id}`).set(await entetes('admin_sans_droit'))).status
+			(
+				await client()
+					.delete(`/api/decouverte/${id}`)
+					.set(await entetes('admin_sans_droit'))
+			).status
 		).toBe(403);
 		const ha = await entetes('admin');
 		expect((await client().delete(`/api/decouverte/${id}`).set(ha)).status).toBe(200);
@@ -222,7 +231,8 @@ describe('diagnostic gratuit', () => {
 		expect(codeInconnu.status).toBe(400);
 		expect(codeInconnu.body.champs).toHaveProperty('besoin');
 
-		const res = (await client().post('/api/decouverte/diagnostic/restitution').send(DIAGNOSTIC)).body;
+		const res = (await client().post('/api/decouverte/diagnostic/restitution').send(DIAGNOSTIC))
+			.body;
 		expect(res.profil.titre).toBe('Entrepreneur·e qui démarre');
 		expect(res.etapes).toHaveLength(3);
 		expect(res.etapes[0].href).toBe('/likelemba');

@@ -171,7 +171,11 @@ function vueDetail(sujet: Fiche, membre: Membre) {
 
 	const estAuteur = sujet.auteur_id === membre.id;
 	return {
-		...vueResume(sujet, membres, vues.some((v) => v.de_la_frangine)),
+		...vueResume(
+			sujet,
+			membres,
+			vues.some((v) => v.de_la_frangine)
+		),
 		reponses: vues,
 		est_auteur: estAuteur,
 		peut_modifier: estAuteur || peutModerer(membre),

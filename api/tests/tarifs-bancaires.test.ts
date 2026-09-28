@@ -29,7 +29,11 @@ describe('consultation', () => {
 	it('est réservée aux membres connectés et masque la banque « Autres »', async () => {
 		expect((await client().get('/api/tarifs-bancaires')).status).toBe(401);
 		await creerMembre('awa');
-		const c = (await client().get('/api/tarifs-bancaires').set(await entetes('awa'))).body;
+		const c = (
+			await client()
+				.get('/api/tarifs-bancaires')
+				.set(await entetes('awa'))
+		).body;
 		expect(c.referentiel_vide).toBe(true);
 		expect(c.peut_gerer_referentiel).toBe(false);
 		expect(c.banques_gerees).toEqual([]);
@@ -197,12 +201,8 @@ describe('grille par banque', () => {
 
 		// Le membre banque ne gère pas le référentiel.
 		expect(
-			(
-				await client()
-					.post('/api/tarifs-bancaires/types')
-					.set(hb)
-					.send({ libelle: 'Nouveau type' })
-			).status
+			(await client().post('/api/tarifs-bancaires/types').set(hb).send({ libelle: 'Nouveau type' }))
+				.status
 		).toBe(403);
 	});
 });

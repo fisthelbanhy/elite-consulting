@@ -48,7 +48,7 @@ function etape(h: Record<string, string>, donnees: Record<string, unknown>) {
 }
 
 describe('assistant', () => {
-	it('sauvegarde chaque étape et reprend où le membre s’était arrêté', async () => {
+	it("sauvegarde chaque étape et reprend où le membre s'était arrêté", async () => {
 		await creerMembre('awa');
 		const h = await entetes('awa');
 		expect((await client().get('/api/distributeur/souscription').set(h)).body).toBeNull();
@@ -112,7 +112,7 @@ describe('assistant', () => {
 });
 
 describe('commande du kit', () => {
-	it('cumule les contrôles à l’envoi et sauvegarde sans contrôle', async () => {
+	it("cumule les contrôles à l'envoi et sauvegarde sans contrôle", async () => {
 		produits();
 		await creerMembre('awa');
 		const h = await entetes('awa');
@@ -166,12 +166,8 @@ describe('fonds propres', () => {
 		await etape(h, { etape: 9, mode_souscription: 1, produits: [{ produit_id: 30, quantite: 2 }] });
 		const sid = (await client().get('/api/distributeur/souscription').set(h)).body.id;
 		expect(
-			(
-				await client()
-					.post('/api/paiements')
-					.set(h)
-					.send({ type_objet: 6, objet_id: sid, mode: 1 })
-			).status
+			(await client().post('/api/paiements').set(h).send({ type_objet: 6, objet_id: sid, mode: 1 }))
+				.status
 		).toBe(400);
 
 		const envoi = await etape(h, {
@@ -184,9 +180,8 @@ describe('fonds propres', () => {
 		expect(envoi.body.a_payer).toBe(true);
 		expect(envoi.body.etape_courante).toBe(10);
 
-		const prep = (
-			await client().get(`/api/paiements/preparer?type_objet=6&objet_id=${sid}`).set(h)
-		).body;
+		const prep = (await client().get(`/api/paiements/preparer?type_objet=6&objet_id=${sid}`).set(h))
+			.body;
 		expect(prep.montant).toBe(56_000);
 		expect(prep.retour).toBe('/devenir-distributeur/adhesion');
 
@@ -217,12 +212,8 @@ describe('fonds propres', () => {
 			).status
 		).toBe(400);
 		expect(
-			(
-				await client()
-					.post('/api/paiements')
-					.set(h)
-					.send({ type_objet: 6, objet_id: sid, mode: 1 })
-			).status
+			(await client().post('/api/paiements').set(h).send({ type_objet: 6, objet_id: sid, mode: 1 }))
+				.status
 		).toBe(400);
 
 		// Rejet par la caisse : la souscription redevient « Non traitée ».
@@ -258,12 +249,8 @@ describe('crédit', () => {
 
 		// Pas de paiement en ligne pour un crédit.
 		expect(
-			(
-				await client()
-					.post('/api/paiements')
-					.set(h)
-					.send({ type_objet: 6, objet_id: sid, mode: 1 })
-			).status
+			(await client().post('/api/paiements').set(h).send({ type_objet: 6, objet_id: sid, mode: 1 }))
+				.status
 		).toBe(400);
 
 		// La frangine est prévenue dans la messagerie du membre.
@@ -299,7 +286,7 @@ describe('crédit', () => {
 });
 
 describe('accès', () => {
-	it('réserve l’adhésion aux membres', async () => {
+	it("réserve l'adhésion aux membres", async () => {
 		await creerMembre('admin', { type_compte: TypeMembre.GESTIONNAIRE, droit_activation: true });
 		await creerMembre('awa');
 		await creerMembre('curieux');

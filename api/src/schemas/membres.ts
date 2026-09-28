@@ -163,7 +163,11 @@ export interface MembreMoi {
 function profilComplet(m: Membre): number {
 	const champs: unknown[] = [m.nom, m.pseudonyme, m.telephone, m.ville_id, m.email, m.adresse];
 	if (m.categorie === CategorieMembre.PHYSIQUE) {
-		champs.push(m.sexe === Sexe.FEMININ || m.sexe === Sexe.MASCULIN, m.situation_matrimoniale, m.photo);
+		champs.push(
+			m.sexe === Sexe.FEMININ || m.sexe === Sexe.MASCULIN,
+			m.situation_matrimoniale,
+			m.photo
+		);
 	} else {
 		champs.push(m.domaine_activite_id, m.photo);
 	}

@@ -14,9 +14,7 @@ import { config } from './config.js';
  * production, allégés uniquement pour les tests automatisés — sinon la suite passerait
  * l'essentiel de son temps à hacher des mots de passe.
  */
-const OPTIONS_ARGON2 = config.estTest
-	? { memoryCost: 8, timeCost: 1, parallelism: 1 }
-	: undefined;
+const OPTIONS_ARGON2 = config.estTest ? { memoryCost: 8, timeCost: 1, parallelism: 1 } : undefined;
 
 export function hacherMotDePasse(motDePasse: string): Promise<string> {
 	return argon2Hash(motDePasse, OPTIONS_ARGON2);

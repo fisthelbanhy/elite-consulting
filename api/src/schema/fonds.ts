@@ -4,7 +4,15 @@
  * fonddesoutien, pointcaisse).
  */
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
-import { consultable, dateHeure, dateSeule, horodatage, json, texteVide } from '../db.js';
+import {
+	consultable,
+	dateHeure,
+	dateSeule,
+	horodatage,
+	json,
+	maintenant,
+	texteVide
+} from '../db.js';
 import { Etat, OuiNon } from '../enums.js';
 import { paiement } from './commerce.js';
 import { secteurActivite, ville } from './core.js';
@@ -89,9 +97,7 @@ export const versementCollecte = sqliteTable(
 		collecte_id: integer('collecte_id')
 			.notNull()
 			.references(() => collecteFond.id),
-		date_versement: dateSeule('date_versement')
-			.notNull()
-			.$defaultFn(() => new Date()),
+		date_versement: dateSeule('date_versement').notNull().$defaultFn(maintenant),
 		montant: integer('montant').notNull(),
 		etat: integer('etat').notNull().default(Etat.AUTORISE)
 	},
@@ -217,9 +223,7 @@ export const pointCaisse = sqliteTable(
 	{
 		id: integer('id').primaryKey(),
 		reference: texteVide('reference'),
-		date_heure: dateHeure('date_heure')
-			.notNull()
-			.$defaultFn(() => new Date()),
+		date_heure: dateHeure('date_heure').notNull().$defaultFn(maintenant),
 		operateur_id: integer('operateur_id').references(() => membre.id),
 		membre_id: integer('membre_id')
 			.notNull()

@@ -70,17 +70,23 @@ describe('confidentialité des coordonnées', () => {
 		expect(publique.body.telephone).toBeNull();
 		expect(publique.body.nom).toBeNull();
 
-		const autre = await client().get(`/api/emplois/${id}`).set(await entetes('curieux'));
+		const autre = await client()
+			.get(`/api/emplois/${id}`)
+			.set(await entetes('curieux'));
 		expect(autre.body.telephone).toBeNull();
 		expect(autre.body.peut_modifier).toBe(false);
 
-		const moi = await client().get(`/api/emplois/${id}`).set(await entetes('candidat'));
+		const moi = await client()
+			.get(`/api/emplois/${id}`)
+			.set(await entetes('candidat'));
 		expect(moi.body.telephone).toBe('061234567');
 		// Normalisations legacy : nom en majuscules, prénom capitalisé (F-S2-18).
 		expect(moi.body.nom).toBe('MABIALA');
 		expect(moi.body.prenom).toBe('Grace');
 
-		const admin = await client().get(`/api/emplois/${id}`).set(await entetes('admin'));
+		const admin = await client()
+			.get(`/api/emplois/${id}`)
+			.set(await entetes('admin'));
 		expect(admin.body.peut_moderer).toBe(true);
 		expect(admin.body.telephone).toBe('061234567');
 	});
@@ -128,8 +134,8 @@ describe('droits', () => {
 	});
 });
 
-describe('expressions d’intérêt', () => {
-	it('sont uniques, notifient l’auteur, et interdites sur sa propre fiche', async () => {
+describe("expressions d'intérêt", () => {
+	it("sont uniques, notifient l'auteur, et interdites sur sa propre fiche", async () => {
 		await creerMembre('recruteur');
 		await creerMembre('candidat');
 		const hr = await entetes('recruteur');

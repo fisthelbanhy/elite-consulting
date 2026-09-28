@@ -8,7 +8,7 @@ import { TypeMembre } from '../src/enums.js';
 basePropre();
 
 describe('fil du membre', () => {
-	it('refuse un message vide et marque les réponses lues à l’ouverture', async () => {
+	it("refuse un message vide et marque les réponses lues à l'ouverture", async () => {
 		await creerMembre('awa');
 		await creerMembre('admin', { type_compte: TypeMembre.GESTIONNAIRE });
 		const h = await entetes('awa');
@@ -56,7 +56,7 @@ describe('fil du membre', () => {
 });
 
 describe('liste des fils', () => {
-	it('classe, recherche et marque lu à l’ouverture', async () => {
+	it("classe, recherche et marque lu à l'ouverture", async () => {
 		await creerMembre('awa', { nom: 'Awa Nkounkou' });
 		await creerMembre('bob', { nom: 'Bob Mabiala' });
 		await creerMembre('carine', { nom: 'Carine Sans Fil' });

@@ -56,7 +56,10 @@ interface RequetePaginable {
  * comme dans l'ancien backend, l'insensibilité à la casse ne vaut que pour l'ASCII (SQLite ne
  * connaît pas la casse des caractères accentués).
  */
-export function recherche(q: string | null | undefined, ...colonnes: SQLiteColumn[]): SQL | undefined {
+export function recherche(
+	q: string | null | undefined,
+	...colonnes: SQLiteColumn[]
+): SQL | undefined {
 	const terme = (q ?? '').trim();
 	if (!terme || colonnes.length === 0) return undefined;
 	const motif = `%${terme}%`;
@@ -78,7 +81,10 @@ export function visibilite(colonnes: ColonnesFiche, membre: Membre | null): SQL 
 	if (membre && membre.type_compte === 1) return undefined;
 	const publie = eq(colonnes.etat, Etat.AUTORISE);
 	if (!membre || !colonnes.auteur) return publie;
-	return or(publie, sql`${colonnes.auteur} = ${membre.id} and ${colonnes.etat} <> ${Etat.SUPPRIME}`);
+	return or(
+		publie,
+		sql`${colonnes.auteur} = ${membre.id} and ${colonnes.etat} <> ${Etat.SUPPRIME}`
+	);
 }
 
 /** Une fiche telle que manipulée par les helpers génériques. */
@@ -119,7 +125,11 @@ export function exigerVisible<T extends FicheChargee>(
  * Écrit directement en base et met la fiche chargée à jour, pour que la réponse soit cohérente.
  */
 export function compterVisite(
-	table: { nombre_visites: SQLiteColumn; date_derniere_visite: SQLiteColumn; id: SQLiteColumn },
+	table: {
+		nombre_visites: SQLiteColumn;
+		date_derniere_visite: SQLiteColumn;
+		id: SQLiteColumn;
+	},
 	fiche: FicheChargee & { nombre_visites?: number | null },
 	membre: Membre | null,
 	colonneAuteur = 'auteur_id'
@@ -163,7 +173,7 @@ export function supprimer(
 ): void {
 	const auteur = fiche[colonneAuteur] as number | null | undefined;
 	if (!(membre && (auteur === membre.id || peutModerer(membre)))) {
-		throw interdit('Seul l’auteur de la fiche ou un gestionnaire habilité peut la supprimer.');
+		throw interdit("Seul l'auteur de la fiche ou un gestionnaire habilité peut la supprimer.");
 	}
 	db.update(table as never)
 		.set({ etat: Etat.SUPPRIME })

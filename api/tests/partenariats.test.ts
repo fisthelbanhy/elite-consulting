@@ -38,7 +38,9 @@ describe('création', () => {
 			.set(h)
 			.send({ ...FICHE, actif: '120 HECTARES de manioc ' });
 		expect(doublon.status).toBe(400);
-		expect(doublon.body.message).toBe('Cette recherche de partenariat & troc est déjà enregistrée.');
+		expect(doublon.body.message).toBe(
+			'Cette recherche de partenariat & troc est déjà enregistrée.'
+		);
 
 		// Réservé aux membres : ni gestionnaire, ni visiteur.
 		expect(
@@ -117,7 +119,7 @@ describe('modification', () => {
 });
 
 describe('intéressement', () => {
-	it('est unique, notifie l’auteur et reste confidentiel', async () => {
+	it("est unique, notifie l'auteur et reste confidentiel", async () => {
 		await creerMembre('awa');
 		await creerMembre('bob', { nom: 'Bob Nkouka', telephone: '055123456' });
 		await creerMembre('admin', { type_compte: TypeMembre.GESTIONNAIRE });
@@ -151,12 +153,8 @@ describe('intéressement', () => {
 
 		// Ni sur sa propre fiche, ni par un gestionnaire.
 		expect(
-			(
-				await client()
-					.post(`/api/partenariats/${id}/interet`)
-					.set(ha)
-					.send({ message: 'Moi-même' })
-			).status
+			(await client().post(`/api/partenariats/${id}/interet`).set(ha).send({ message: 'Moi-même' }))
+				.status
 		).toBe(400);
 		expect(
 			(

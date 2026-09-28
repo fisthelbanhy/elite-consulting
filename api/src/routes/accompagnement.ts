@@ -290,9 +290,9 @@ routeur.post('/', membreRequis, (req, res) => {
 		.returning()
 		.get()!;
 
-	res.status(201).json(
-		ok(donnees.envoyer ? q.message_envoi : q.message_sauvegarde, fiche.id, fiche.reference)
-	);
+	res
+		.status(201)
+		.json(ok(donnees.envoyer ? q.message_envoi : q.message_sauvegarde, fiche.id, fiche.reference));
 });
 
 routeur.put('/:id', membreRequis, (req, res) => {
@@ -313,10 +313,7 @@ routeur.put('/:id', membreRequis, (req, res) => {
 		reponses: qa.nettoyerReponses(q, donnees.reponses)
 	};
 	if (donnees.envoyer && fiche.etat === Etat.NON_TRAITE) valeurs.etat = Etat.AUTORISE;
-	db.update(dossierAccompagnement)
-		.set(valeurs)
-		.where(eq(dossierAccompagnement.id, fiche.id))
-		.run();
+	db.update(dossierAccompagnement).set(valeurs).where(eq(dossierAccompagnement.id, fiche.id)).run();
 
 	res.json(
 		ok(donnees.envoyer ? q.message_envoi : 'Modification effectuée.', fiche.id, fiche.reference)

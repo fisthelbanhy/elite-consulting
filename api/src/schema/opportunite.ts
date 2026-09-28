@@ -3,7 +3,7 @@
  * (portage de `app/models/opportunite.py` ; legacy : souscriptoportuniteaffaire,
  * membreoportuniteaffaire, produitoportuniteaffaire, businessplan, partenariat).
  */
-import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { index, integer, sqliteTable } from 'drizzle-orm/sqlite-core';
 import { dateSeule, horodatage, json, texteVide } from '../db.js';
 import { Etat } from '../enums.js';
 import { produit } from './commerce.js';

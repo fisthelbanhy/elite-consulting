@@ -47,7 +47,7 @@ const PROJET = {
 };
 
 describe('marchés — création', () => {
-	it('valide, référence et impose l’unicité du numéro', async () => {
+	it("valide, référence et impose l'unicité du numéro", async () => {
 		await creerMembre('acheteur');
 		const h = await entetes('acheteur');
 
@@ -150,7 +150,10 @@ describe('marchés — liste', () => {
 		).body.id;
 
 		// Date limite dépassée (reprise legacy).
-		db.update(marche).set({ date_limite: jour(-3) }).where(eq(marche.id, idClos)).run();
+		db.update(marche)
+			.set({ date_limite: jour(-3) })
+			.where(eq(marche.id, idClos))
+			.run();
 
 		expect((await client().get('/api/marches')).body.total).toBe(3);
 
@@ -203,10 +206,14 @@ describe('marchés — droits', () => {
 			).status
 		).toBe(403);
 		// Même l'auteur ne peut pas clôturer : c'est un acte de modération.
-		expect((await client().post(`/api/marches/${id}/etat`).set(h).send({ etat: 4 })).status).toBe(403);
+		expect((await client().post(`/api/marches/${id}/etat`).set(h).send({ etat: 4 })).status).toBe(
+			403
+		);
 
 		const ha = await entetes('admin');
-		expect((await client().post(`/api/marches/${id}/etat`).set(ha).send({ etat: 4 })).status).toBe(200);
+		expect((await client().post(`/api/marches/${id}/etat`).set(ha).send({ etat: 4 })).status).toBe(
+			200
+		);
 
 		const fiche = await client().get(`/api/marches/${id}`).set(h);
 		expect(fiche.body.ouvert).toBe(false);
@@ -215,7 +222,9 @@ describe('marchés — droits', () => {
 		// État 4 ≠ publié : sort de la liste des autres membres.
 		expect((await client().get('/api/marches').set(hAutre)).body.total).toBe(0);
 
-		expect((await client().post(`/api/marches/${id}/etat`).set(ha).send({ etat: 2 })).status).toBe(200);
+		expect((await client().post(`/api/marches/${id}/etat`).set(ha).send({ etat: 2 })).status).toBe(
+			200
+		);
 		expect((await client().delete(`/api/marches/${id}`).set(hAutre)).status).toBe(403);
 		expect((await client().delete(`/api/marches/${id}`).set(h)).status).toBe(200);
 		expect((await client().get(`/api/marches/${id}`)).status).toBe(404);
@@ -249,7 +258,7 @@ describe('marchés — document', () => {
 });
 
 describe('projets', () => {
-	it('valide et impose l’unicité responsable + objet', async () => {
+	it("valide et impose l'unicité responsable + objet", async () => {
 		await creerMembre('porteur');
 		const h = await entetes('porteur');
 
@@ -303,7 +312,12 @@ describe('projets', () => {
 		await client()
 			.post('/api/marches/projets')
 			.set(h)
-			.send({ ...PROJET, objet: 'Pistes rurales', libelle: 'Routes', description: 'Désenclavement' });
+			.send({
+				...PROJET,
+				objet: 'Pistes rurales',
+				libelle: 'Routes',
+				description: 'Désenclavement'
+			});
 
 		expect((await client().get('/api/marches/projets')).body.total).toBe(2);
 		expect((await client().get('/api/marches/projets?q=coopératives')).body.total).toBe(1);

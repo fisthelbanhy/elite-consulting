@@ -145,8 +145,7 @@ function vueDetail(f: Fiche, membre: Membre) {
 	const proprietaire = f.membre_id === membre.id;
 	detail.est_proprietaire = proprietaire;
 	detail.peut_modifier =
-		peutModerer(membre) ||
-		(proprietaire && f.cloturee !== OuiNon.OUI && f.etat !== Etat.SUPPRIME);
+		peutModerer(membre) || (proprietaire && f.cloturee !== OuiNon.OUI && f.etat !== Etat.SUPPRIME);
 	detail.peut_moderer = peutModerer(membre);
 	// « Correspondance la frangine » : réservée aux gestionnaires.
 	detail.peut_repondre = membre.type_compte === 1;
@@ -270,13 +269,15 @@ routeur.post('/diagnostic', membreRequis, (req, res) => {
 		return f;
 	});
 
-	res.status(201).json(
-		ok(
-			'Votre diagnostic est enregistré : votre conseillère vous rappelle très vite.',
-			fiche.id,
-			fiche.reference
-		)
-	);
+	res
+		.status(201)
+		.json(
+			ok(
+				'Votre diagnostic est enregistré : votre conseillère vous rappelle très vite.',
+				fiche.id,
+				fiche.reference
+			)
+		);
 });
 
 // --- Fiche du membre -----------------------------------------------------------------------------
@@ -430,10 +431,7 @@ routeur.post('/:id/etat', membreRequis, (req, res) => {
 	const fiche = obtenir(Number(req.params.id), membre);
 	exigerDroit(membre, 'activation');
 	const donnees = valider(etatEntreeSchema, req.body);
-	db.update(soungangai)
-		.set({ etat_fiche: donnees.etat })
-		.where(eq(soungangai.id, fiche.id))
-		.run();
+	db.update(soungangai).set({ etat_fiche: donnees.etat }).where(eq(soungangai.id, fiche.id)).run();
 	res.json(ok('Modification effectuée.', fiche.id));
 });
 

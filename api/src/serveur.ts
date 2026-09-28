@@ -29,11 +29,22 @@ const BUILD_SITE = join(RACINE, 'frontend', 'build');
 /**
  * Charge le handler produit par `@sveltejs/adapter-node`, s'il existe.
  * L'import est dynamique : le fichier n'existe qu'après `npm run build`.
+ *
+ * Deux variables sont posées **avant** l'import, car le handler les lit à son chargement :
+ * - `ORIGIN` : l'adresse publique du site, dont SvelteKit se sert pour sa protection CSRF ;
+ * - `BACKEND_URL` : l'adresse que le BFF appelle pour joindre l'API. Elle pointe sur ce même
+ *   processus : le aller-retour reste local (boucle locale, jamais le réseau) et la frontière BFF
+ *   de l'ADR-0002 est conservée telle quelle — le navigateur ne parle toujours qu'au site, et le
+ *   jeton de session ne quitte pas le serveur.
  */
 async function chargerSite(): Promise<RequestHandler | null> {
 	const entree = join(BUILD_SITE, 'handler.js');
 	if (!existsSync(entree)) return null;
-	const module = (await import(pathToFileURL(entree).href)) as { handler: RequestHandler };
+	process.env.ORIGIN ??= config.siteUrl;
+	process.env.BACKEND_URL ??= `http://127.0.0.1:${config.port}`;
+	const module = (await import(pathToFileURL(entree).href)) as {
+		handler: RequestHandler;
+	};
 	return module.handler;
 }
 

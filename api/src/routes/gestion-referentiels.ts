@@ -138,7 +138,10 @@ function longueurMin(valeur: string, n: number): boolean {
 	return valeur.trim().length >= n;
 }
 
-function filtreEtat(colonne: SQLiteColumn, req: { query: Record<string, unknown> }): SQL | undefined {
+function filtreEtat(
+	colonne: SQLiteColumn,
+	req: { query: Record<string, unknown> }
+): SQL | undefined {
 	const v = Number(req.query.etat);
 	return Number.isFinite(v) && v > 0 ? eq(colonne, Math.trunc(v)) : undefined;
 }
@@ -296,7 +299,13 @@ routeur.get('/referentiels/quartiers', (req, res) => {
 		.orderBy(asc(ville.nom), asc(quartier.nom))
 		.$dynamic();
 	const liste = paginer<{ quartier: Quartier }>(requete, page);
-	res.json(enveloppe(liste.items.map((l) => vueQuartier(l.quartier)), liste.total, page));
+	res.json(
+		enveloppe(
+			liste.items.map((l) => vueQuartier(l.quartier)),
+			liste.total,
+			page
+		)
+	);
 });
 
 routeur.get('/referentiels/quartiers/:id', (req, res) => {
@@ -305,14 +314,9 @@ routeur.get('/referentiels/quartiers/:id', (req, res) => {
 	);
 });
 
-function validerQuartier(
-	d: z.output<typeof quartierEntreeSchema>,
-	exclureId?: number
-): void {
+function validerQuartier(d: z.output<typeof quartierEntreeSchema>, exclureId?: number): void {
 	const champs: Record<string, string> = {};
-	const v = d.ville_id
-		? db.select().from(ville).where(eq(ville.id, d.ville_id)).get()
-		: undefined;
+	const v = d.ville_id ? db.select().from(ville).where(eq(ville.id, d.ville_id)).get() : undefined;
 	if (!d.ville_id || !v) champs.ville_id = 'Chaque quartier doit être lié à une ville.';
 	if (!longueurMin(d.nom, 4)) champs.nom = 'Le nom doit avoir 4 caractères minimum.';
 	if (Object.keys(champs).length) throw erreur('Veuillez corriger les champs signalés.', champs);
@@ -358,9 +362,7 @@ routeur.delete('/referentiels/quartiers/:id', (req, res) => {
 			quartier,
 			x.id,
 			'ce quartier',
-			usages([
-				['annonce(s) immobilière(s)', immobilier, eq(immobilier.quartier_id, x.id)]
-			])
+			usages([['annonce(s) immobilière(s)', immobilier, eq(immobilier.quartier_id, x.id)]])
 		)
 	);
 });
@@ -448,10 +450,7 @@ function vueSecteur(x: Secteur) {
 		etat: x.etat,
 		nombre_domaines: compter(
 			domaineActivite,
-			and(
-				eq(domaineActivite.secteur_id, x.id),
-				ne(domaineActivite.etat, Etat.SUPPRIME)
-			)
+			and(eq(domaineActivite.secteur_id, x.id), ne(domaineActivite.etat, Etat.SUPPRIME))
 		)
 	};
 }
@@ -462,10 +461,7 @@ routeur.get('/referentiels/secteurs', (req, res) => {
 		.select()
 		.from(secteurActivite)
 		.where(
-			and(
-				filtreEtat(secteurActivite.etat, req),
-				recherche(motQuery(req), secteurActivite.libelle)
-			)
+			and(filtreEtat(secteurActivite.etat, req), recherche(motQuery(req), secteurActivite.libelle))
 		)
 		.orderBy(asc(secteurActivite.libelle))
 		.$dynamic();
@@ -562,7 +558,13 @@ routeur.get('/referentiels/domaines', (req, res) => {
 		.orderBy(asc(secteurActivite.libelle), asc(domaineActivite.libelle))
 		.$dynamic();
 	const liste = paginer<{ domaine: Domaine }>(requete, page);
-	res.json(enveloppe(liste.items.map((l) => vueDomaine(l.domaine)), liste.total, page));
+	res.json(
+		enveloppe(
+			liste.items.map((l) => vueDomaine(l.domaine)),
+			liste.total,
+			page
+		)
+	);
 });
 
 routeur.get('/referentiels/domaines/:id', (req, res) => {
@@ -672,11 +674,7 @@ function validerFamille(libelle: string, exclureId?: number): void {
 routeur.post('/referentiels/familles', (req, res) => {
 	const d = valider(familleEntreeSchema, req.body);
 	validerFamille(d.libelle);
-	const x = db
-		.insert(familleArticle)
-		.values({ libelle: d.libelle.trim() })
-		.returning()
-		.get()!;
+	const x = db.insert(familleArticle).values({ libelle: d.libelle.trim() }).returning().get()!;
 	res.status(201).json(ok('Enregistrement effectué.', x.id));
 });
 
@@ -752,9 +750,7 @@ routeur.get('/referentiels/produits', (req, res) => {
 	if (prixPublicMax !== null) conditions.push(lte(produit.prix_public, prixPublicMax));
 	const quantiteMax = nombreQuery(req, 'quantite_max');
 	if (quantiteMax !== null) conditions.push(lte(produit.quantite_stock, quantiteMax));
-	conditions.push(
-		recherche(motQuery(req), produit.nom, produit.description, produit.reference)
-	);
+	conditions.push(recherche(motQuery(req), produit.nom, produit.description, produit.reference));
 
 	const requete = db
 		.select()
@@ -821,15 +817,19 @@ routeur.put('/referentiels/produits/:id', (req, res) => {
 	res.json(ok('Modification effectuée.', x.id));
 });
 
-routeur.post('/referentiels/produits/:id/photo', televersement.single('fichier'), async (req, res) => {
-	const x = charger<Produit>(produit, Number(req.params.id), 'Produit introuvable.');
-	if (!req.file) throw erreur('Aucun fichier reçu.', { photo: 'Veuillez choisir une image.' });
-	const ancien = x.photo;
-	const chemin = await enregistrerFichier(req.file.buffer, 'produits', new Set([IMAGE]), 'photo');
-	db.update(produit).set({ photo: chemin }).where(eq(produit.id, x.id)).run();
-	supprimerFichier(ancien);
-	res.json(ok('Photo enregistrée.', x.id));
-});
+routeur.post(
+	'/referentiels/produits/:id/photo',
+	televersement.single('fichier'),
+	async (req, res) => {
+		const x = charger<Produit>(produit, Number(req.params.id), 'Produit introuvable.');
+		if (!req.file) throw erreur('Aucun fichier reçu.', { photo: 'Veuillez choisir une image.' });
+		const ancien = x.photo;
+		const chemin = await enregistrerFichier(req.file.buffer, 'produits', new Set([IMAGE]), 'photo');
+		db.update(produit).set({ photo: chemin }).where(eq(produit.id, x.id)).run();
+		supprimerFichier(ancien);
+		res.json(ok('Photo enregistrée.', x.id));
+	}
+);
 
 routeur.delete('/referentiels/produits/:id', (req, res) => {
 	const x = charger<Produit>(produit, Number(req.params.id), 'Produit introuvable.');
@@ -1097,13 +1097,7 @@ routeur.get('/referentiels/banques', (req, res) => {
 		.where(
 			and(
 				filtreEtat(banque.etat, req),
-				recherche(
-					motQuery(req),
-					banque.nom,
-					banque.sigle,
-					banque.nom_contact,
-					banque.observation
-				)
+				recherche(motQuery(req), banque.nom, banque.sigle, banque.nom_contact, banque.observation)
 			)
 		)
 		.orderBy(asc(banque.nom))
@@ -1254,6 +1248,9 @@ routeur.put('/parametres', (req, res) => {
 	}
 	const existe = db.select().from(parametre).where(eq(parametre.id, 1)).get();
 	if (existe) db.update(parametre).set(valeurs).where(eq(parametre.id, 1)).run();
-	else db.insert(parametre).values({ id: 1, ...valeurs }).run();
+	else
+		db.insert(parametre)
+			.values({ id: 1, ...valeurs })
+			.run();
 	res.json(ok('Modification effectuée.'));
 });

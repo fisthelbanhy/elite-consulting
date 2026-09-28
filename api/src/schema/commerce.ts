@@ -3,7 +3,15 @@
  * legacy : produit, panier, payement, immobilier, article, articlecourse, course1, course2).
  */
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
-import { booleen, consultable, dateHeure, dateSeule, horodatage, texteVide } from '../db.js';
+import {
+	booleen,
+	consultable,
+	dateHeure,
+	dateSeule,
+	horodatage,
+	maintenant,
+	texteVide
+} from '../db.js';
 import { Etat, EtatCourse, EtatPaiement, OffreDemande, OuiNon } from '../enums.js';
 import { familleArticle, quartier } from './core.js';
 import { membre } from './membres.js';
@@ -38,9 +46,7 @@ export const paiement = sqliteTable(
 		type_objet: integer('type_objet').notNull(),
 		/** Id de l'objet payé (course, souscription…). */
 		objet_id: integer('objet_id'),
-		date_paiement: dateHeure('date_paiement')
-			.notNull()
-			.$defaultFn(() => new Date()),
+		date_paiement: dateHeure('date_paiement').notNull().$defaultFn(maintenant),
 		/** `ModePaiement`. */
 		mode: integer('mode').notNull(),
 		montant: integer('montant').notNull(),
@@ -92,9 +98,7 @@ export const lignePanier = sqliteTable(
 		article_id: integer('article_id').references(() => article.id),
 		quantite: integer('quantite').notNull().default(1),
 		prix_unitaire: integer('prix_unitaire').notNull().default(0),
-		date_ajout: dateHeure('date_ajout')
-			.notNull()
-			.$defaultFn(() => new Date()),
+		date_ajout: dateHeure('date_ajout').notNull().$defaultFn(maintenant),
 		paye: booleen('paye').notNull().default(false),
 		date_paiement: dateSeule('date_paiement'),
 		paiement_id: integer('paiement_id').references(() => paiement.id),
@@ -170,7 +174,10 @@ export const course = sqliteTable(
 		etat_course: integer('etat_course').notNull().default(EtatCourse.EN_ATTENTE),
 		etat: integer('etat').notNull().default(Etat.AUTORISE)
 	},
-	(t) => [index('ix_course_reference').on(t.reference), index('ix_course_client_id').on(t.client_id)]
+	(t) => [
+		index('ix_course_reference').on(t.reference),
+		index('ix_course_client_id').on(t.client_id)
+	]
 );
 
 /** Article à acheter : `prix_plafond` = prix maximum à ne pas dépasser. */

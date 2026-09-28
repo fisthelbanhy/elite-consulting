@@ -34,7 +34,9 @@ function detecter(entete: Buffer): GenreFichier | null {
 	if (SIGNATURES_AUDIO.some((s) => entete.subarray(0, s.length).equals(s))) return AUDIO;
 
 	const jpeg = entete.subarray(0, 3).equals(Buffer.from([0xff, 0xd8, 0xff]));
-	const png = entete.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
+	const png = entete
+		.subarray(0, 8)
+		.equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
 	const webp = entete.subarray(8, 12).toString('latin1') === 'WEBP';
 	const gif = ['GIF87a', 'GIF89a'].includes(entete.subarray(0, 6).toString('latin1'));
 	if (jpeg || png || webp || gif) return IMAGE;

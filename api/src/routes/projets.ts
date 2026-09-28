@@ -5,7 +5,7 @@
  * calculés, annulation tardive), ADR-0007 S4a, ADR-0009 (avertissement : engagements entre
  * membres, sans garantie de La Frangine).
  */
-import { and, asc, desc, eq, gte, inArray, ne, sql, type SQL } from 'drizzle-orm';
+import { and, asc, desc, eq, gte, ne, sql, type SQL } from 'drizzle-orm';
 import { Router } from 'express';
 import multer from 'multer';
 import { z } from 'zod';
@@ -149,11 +149,7 @@ function contextesDe(projets: AppelFond[]) {
 	return { secteurs, villes, projets };
 }
 
-function vueResume(
-	p: AppelFond,
-	membre: Membre | null,
-	ctx: ReturnType<typeof contextesDe>
-) {
+function vueResume(p: AppelFond, membre: Membre | null, ctx: ReturnType<typeof contextesDe>) {
 	return {
 		id: p.id,
 		reference: p.reference,
@@ -265,7 +261,12 @@ routeur.get('/', (req, res) => {
 		const etat = nombre('etat');
 		conditions.push(etat ? eq(appelFond.etat, etat) : ne(appelFond.etat, Etat.SUPPRIME));
 	}
-	if (membre && req.query.miens !== undefined && req.query.miens !== 'false' && req.query.miens !== '0') {
+	if (
+		membre &&
+		req.query.miens !== undefined &&
+		req.query.miens !== 'false' &&
+		req.query.miens !== '0'
+	) {
 		conditions.push(eq(appelFond.auteur_id, membre.id));
 	}
 	const secteurId = nombre('secteur_id');
@@ -451,10 +452,7 @@ routeur.post('/apports/:id/valider', membreRequis, (req, res) => {
 	const c = obtenirCollecte(Number(req.params.id));
 	if (c.etat !== Etat.NON_TRAITE) throw erreur('Seule une promesse en attente peut être validée.');
 	db.transaction(() => {
-		db.update(collecteFond)
-			.set({ etat: Etat.AUTORISE })
-			.where(eq(collecteFond.id, c.id))
-			.run();
+		db.update(collecteFond).set({ etat: Etat.AUTORISE }).where(eq(collecteFond.id, c.id)).run();
 		recalculerAppel(c.appel_fond_id);
 	});
 	res.json(ok("Promesse d'apport validée.", c.id, c.reference));
@@ -690,8 +688,7 @@ function validerProjet(d: ProjetEntree, auteurId: number, exclureId?: number): s
 	}
 	const tel = normaliserTelephone(d.telephone_promoteur);
 	if (!telephoneValide(tel)) {
-		champs.telephone_promoteur =
-			'Veuillez vérifier le numéro de téléphone du promoteur du projet.';
+		champs.telephone_promoteur = 'Veuillez vérifier le numéro de téléphone du promoteur du projet.';
 	}
 	const v = d.ville_id
 		? db.select().from(tableVille).where(eq(tableVille.id, d.ville_id)).get()
@@ -821,7 +818,12 @@ routeur.post('/:id/photo', membreRequis, televersement.single('fichier'), async 
 	verifierModification(membre, p.auteur_id);
 	if (!req.file) throw erreur('Aucun fichier reçu.', { photo: 'Veuillez choisir une image.' });
 	const ancien = p.photo;
-	const chemin = await enregistrerFichier(req.file.buffer, 'financement', new Set([IMAGE]), 'photo');
+	const chemin = await enregistrerFichier(
+		req.file.buffer,
+		'financement',
+		new Set([IMAGE]),
+		'photo'
+	);
 	db.update(appelFond).set({ photo: chemin }).where(eq(appelFond.id, p.id)).run();
 	supprimerFichier(ancien);
 	res.json(ok('Photo enregistrée.', p.id));
@@ -927,5 +929,7 @@ routeur.post('/:id/apports', membreRequis, (req, res) => {
 
 	res
 		.status(201)
-		.json(ok("Votre promesse d'apport est enregistrée. Merci pour votre soutien !", c.id, c.reference));
+		.json(
+			ok("Votre promesse d'apport est enregistrée. Merci pour votre soutien !", c.id, c.reference)
+		);
 });

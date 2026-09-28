@@ -92,7 +92,7 @@ describe('sujet privé', () => {
 });
 
 describe('identité', () => {
-	it('réserve le nom réel au gestionnaire, à l’auteur et au Master', async () => {
+	it("réserve le nom réel au gestionnaire, à l'auteur et au Master", async () => {
 		await creerMembre('awa', { pseudonyme: 'awa_b' });
 		await creerMembre('master', { type_compte: TypeMembre.MASTER });
 		const id = (
@@ -158,7 +158,8 @@ describe('réponses', () => {
 			(await client().put(`/api/questions/reponses/${rid}`).set(hb).send({ texte: 'OK' })).status
 		).toBe(200);
 		expect(
-			(await client().put(`/api/questions/reponses/${rid}`).set(ha).send({ texte: 'Pirate' })).status
+			(await client().put(`/api/questions/reponses/${rid}`).set(ha).send({ texte: 'Pirate' }))
+				.status
 		).toBe(403);
 
 		// Suppression logique : le compteur est recalculé (le legacy ne décomptait jamais).
@@ -170,7 +171,7 @@ describe('réponses', () => {
 });
 
 describe('confidentialité', () => {
-	it('est héritée par les réponses lors d’une modification (F-S1-15)', async () => {
+	it("est héritée par les réponses lors d'une modification (F-S1-15)", async () => {
 		await creerMembre('awa');
 		await creerMembre('bob');
 		await creerMembre('admin', { type_compte: TypeMembre.GESTIONNAIRE, droit_activation: true });
@@ -227,7 +228,9 @@ describe('modération', () => {
 
 		const hadm = await entetes('admin');
 		// Clôturé : toujours lisible, plus de réponse possible.
-		expect((await client().post(`/api/questions/${id}/etat`).set(hadm).send({ etat: 4 })).status).toBe(200);
+		expect(
+			(await client().post(`/api/questions/${id}/etat`).set(hadm).send({ etat: 4 })).status
+		).toBe(200);
 		expect((await client().get(`/api/questions/${id}`)).status).toBe(200);
 		const cloture = await client()
 			.post(`/api/questions/${id}/reponses`)
