@@ -8,6 +8,7 @@
  *
  * **À compléter à chaque nouveau type d'objet payé.**
  */
+import './distributeur.js';
 import './ecommerce.js';
 
 /** Appelé une fois au démarrage, pour rendre l'intention explicite à la lecture. */

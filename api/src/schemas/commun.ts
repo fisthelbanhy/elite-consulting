@@ -143,9 +143,16 @@ export function vueInterets(
  */
 export const entier = z.coerce.number().int();
 
-/** Entier facultatif : `""`, `null` et `undefined` donnent `null`. */
+/**
+ * Entier facultatif : `""`, `null` et la clé absente donnent `null`.
+ *
+ * `.optional()` est indispensable : une union contenant `z.undefined()` ne rend pas la clé
+ * facultative dans un objet Zod — la clé absente serait refusée, là où Pydantic acceptait
+ * `int | None = None`.
+ */
 export const entierFacultatif = z
-	.union([z.literal(''), z.null(), z.undefined(), z.coerce.number().int()])
+	.union([z.literal(''), z.null(), z.coerce.number().int()])
+	.optional()
 	.transform((v) => (v === '' || v === null || v === undefined ? null : v));
 
 /**
@@ -161,9 +168,10 @@ export const telephoneFacultatif = z
 /** Chaîne nettoyée de ses espaces de bord, vide par défaut. */
 export const texte = z.string().trim();
 
-/** Date ISO (`2026-09-28`) ou `null`. */
+/** Date ISO (`2026-09-28`) ou `null` ; la clé peut être absente (voir `entierFacultatif`). */
 export const dateFacultative = z
-	.union([z.literal(''), z.null(), z.undefined(), z.iso.date()])
+	.union([z.literal(''), z.null(), z.iso.date()])
+	.optional()
 	.transform((v) => (v === '' || v === null || v === undefined ? null : new Date(`${v}T00:00:00`)));
 
 /** Booléen tolérant aux formes des formulaires HTML (`"on"`, `"true"`, `1`). */

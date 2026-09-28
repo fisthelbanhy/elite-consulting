@@ -14,6 +14,7 @@ import * as conseilFinancier from './conseil-financier.js';
 import * as contact from './contact.js';
 import * as decouverte from './decouverte.js';
 import * as dialogues from './dialogues.js';
+import * as distributeur from './distributeur.js';
 import * as emplois from './emplois.js';
 import * as entreprises from './entreprises.js';
 import * as espace from './espace.js';
@@ -43,6 +44,7 @@ export const ROUTEURS: ModuleRoute[] = [
 	contact,
 	decouverte,
 	dialogues,
+	distributeur,
 	emplois,
 	entreprises,
 	espace,

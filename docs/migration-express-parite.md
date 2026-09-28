@@ -127,13 +127,13 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Devenir distributeur (7)
 
-- [ ] `GET /api/distributeur/kit` — Kit
-- [ ] `GET /api/distributeur/souscription` — Ma Souscription
-- [ ] `PUT /api/distributeur/souscription` — Enregistrer Etape
-- [ ] `GET /api/distributeur/souscriptions` — Lister
-- [ ] `GET /api/distributeur/souscriptions/{id_}` — Detail
-- [ ] `POST /api/distributeur/souscriptions/{id_}/etat` — Changer
-- [ ] `GET /api/distributeur/statut` — Statut
+- [x] `GET /api/distributeur/kit` — Kit
+- [x] `GET /api/distributeur/souscription` — Ma Souscription
+- [x] `PUT /api/distributeur/souscription` — Enregistrer Etape
+- [x] `GET /api/distributeur/souscriptions` — Lister
+- [x] `GET /api/distributeur/souscriptions/{id_}` — Detail
+- [x] `POST /api/distributeur/souscriptions/{id_}/etat` — Changer
+- [x] `GET /api/distributeur/statut` — Statut
 
 ## Dialogue (3)
 

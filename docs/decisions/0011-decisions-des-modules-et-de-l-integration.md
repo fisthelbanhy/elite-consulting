@@ -21,6 +21,7 @@ isolées dans le code).
 | I7 | Encart publicitaire sur l'accueil, les emplois, l'annuaire des entreprises et les appels de fonds ; masqué pour les gestionnaires | Emplacements legacy (F-TRV-43, F-S2-10, F-S4-03, F-S6-33) |
 | I8 | La reprise des données marque la base comme à jour pour Alembic (`stamp head`) | Les migrations futures s'appliquent directement à une base rechargée |
 | I9 | `npm run dev` à la racine lance l'API et le site : petit script Node sans dépendance (`scripts/dev.mjs`) plutôt que `concurrently` | Une seule commande et un seul terminal, sans `npm install` à la racine ; le script vérifie l'environnement Python, les dépendances du frontend et les ports avant de démarrer, et arrête l'arbre de processus d'uvicorn (rechargement) avec le reste |
+| I10 | Les dates sortent en JSON au format **naïf** de Pydantic (`2026-09-28T14:30:05`, `2026-10-15` pour une date seule), grâce à un « json replacer » Express et au type `JourSeul` | `JSON.stringify` d'une `Date` écrit l'heure en UTC (`…T13:30:05.000Z`) : le site, qui relit ces chaînes avec `new Date(…)`, afficherait une heure — voire un jour — décalée, et un `<input type="date">` resterait vide |
 
 ## 2. Se lancer (forum, découverte de soi, diagnostic, réussites)
 

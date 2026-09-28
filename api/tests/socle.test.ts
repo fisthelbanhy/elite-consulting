@@ -1,7 +1,7 @@
 /** Vérifications du socle : schéma applicable, pagination, recherche, visibilité, références. */
 import { beforeAll, describe, expect, it } from 'vitest';
 import { eq } from 'drizzle-orm';
-import { db, sqlite } from '../src/db.js';
+import { db, JourSeul, serialiserDate, sqlite } from '../src/db.js';
 import { appliquerMigrations } from '../src/scripts/migrer.js';
 import { paginer, recherche, visibilite } from '../src/services/fiches.js';
 import { nouvelleReference, Prefixe } from '../src/services/references.js';
@@ -89,5 +89,25 @@ describe('base', () => {
 			)
 			.get() as { n: number };
 		expect(n.n).toBe(62);
+	});
+});
+
+describe('dates en JSON', () => {
+	it("reprend le format naïf de l'ancien backend (jamais d'UTC)", () => {
+		// Une date-heure sort naïve, sans « Z » : le site la relit avec `new Date(…)` et doit
+		// afficher l'heure telle qu'elle est enregistrée.
+		expect(serialiserDate(new Date(2026, 8, 28, 14, 30, 5))).toBe('2026-09-28T14:30:05');
+		expect(serialiserDate(new Date(2026, 8, 28, 14, 30, 5, 123))).toBe('2026-09-28T14:30:05.123');
+		// Une date seule sort sans heure : sinon un `<input type="date">` resterait vide.
+		expect(serialiserDate(new JourSeul(2026, 9, 15))).toBe('2026-10-15');
+		// Et c'est bien ce que renvoie une colonne `DATE` relue en base.
+		db.insert(membre)
+			.values({
+				id: 2, nom: 'Jour', identifiant: 'jour', mot_de_passe_hash: 'x',
+				date_limite_master: new Date(2026, 9, 15)
+			})
+			.run();
+		const lu = db.select().from(membre).where(eq(membre.id, 2)).get()!;
+		expect(serialiserDate(lu.date_limite_master!)).toBe('2026-10-15');
 	});
 });

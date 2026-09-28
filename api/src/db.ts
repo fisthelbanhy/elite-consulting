@@ -63,11 +63,35 @@ export const dateHeure = customType<{ data: Date; driverData: string }>({
 	fromDriver: (valeur) => analyserDateHeure(valeur)
 });
 
+/**
+ * Date **sans heure**, distinguée d'une date-heure par son type pour que la réponse JSON porte
+ * `2026-10-15` et non `2026-10-15T00:00:00` (voir `serialiserDate`). C'est une vraie `Date` : les
+ * comparaisons, les tris et l'écriture en base fonctionnent comme avant.
+ */
+export class JourSeul extends Date {}
+
+/**
+ * Format JSON d'une date, identique à celui de Pydantic : heure **locale et naïve**, sans « Z ».
+ *
+ * `JSON.stringify` écrirait `2026-09-28T13:30:00.000Z` là où l'ancien backend écrivait
+ * `2026-09-28T14:30:00` : le site, qui relit ces chaînes avec `new Date(…)`, afficherait une heure
+ * — voire un jour — décalée, et un `<input type="date">` resterait vide.
+ */
+export function serialiserDate(d: Date): string {
+	if (d instanceof JourSeul) return formaterDate(d);
+	const base = formaterDateHeure(d).replace(' ', 'T');
+	// Millisecondes seulement si elles sont significatives (comme `datetime.isoformat()`).
+	return d.getMilliseconds() === 0 ? base.slice(0, 19) : base.slice(0, 23);
+}
+
 /** Colonne `DATE` (sans heure) stockée en texte, comme SQLAlchemy. */
 export const dateSeule = customType<{ data: Date; driverData: string }>({
 	dataType: () => 'DATE',
 	toDriver: (valeur) => formaterDate(valeur),
-	fromDriver: (valeur) => analyserDateHeure(valeur)
+	fromDriver: (valeur) => {
+		const d = analyserDateHeure(valeur);
+		return new JourSeul(d.getTime());
+	}
 });
 
 /**
