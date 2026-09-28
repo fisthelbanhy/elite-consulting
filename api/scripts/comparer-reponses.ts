@@ -12,8 +12,11 @@
  *   3. `npx tsx scripts/comparer-reponses.ts`
  *
  * Il n'interroge que les routes de lecture (`GET`) : aucune écriture, donc les deux bases restent
- * comparables d'un bout à l'autre. Comme les autres vérificateurs, il disparaîtra avec l'ancien
- * backend.
+ * comparables d'un bout à l'autre.
+ *
+ * Il a besoin de l'ancien backend Python, supprimé le 28/09/2026 : pour le rejouer, restaurer
+ * `backend/` depuis l'historique (`git checkout 51ecdba -- backend`) et le lancer sur le
+ * port 8001.
  */
 import { readFileSync } from 'node:fs';
 

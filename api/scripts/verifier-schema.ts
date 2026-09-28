@@ -5,7 +5,8 @@
  * relevé du schéma que produisait SQLAlchemy (`schema-sqlalchemy.json`, extrait de l'ancien
  * backend Python avant la migration) : type, NOT NULL, clé primaire, valeur par défaut.
  *
- * Outil **temporaire de migration** : à supprimer avec `backend/`, une fois la recette terminée.
+ * Il reste utilisable après la suppression de `backend/` : il ne dépend que de fichiers
+ * versionnés ici.
  * Usage : `npm run verifier:schema`
  */
 import { readFileSync } from 'node:fs';

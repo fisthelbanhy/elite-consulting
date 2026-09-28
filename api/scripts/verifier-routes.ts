@@ -6,7 +6,8 @@
  * opérations que l'ancien ? ». À lancer avec `npx tsx scripts/verifier-routes.ts` ; il sort en
  * erreur dès qu'une route manque ou qu'une route inattendue apparaît.
  *
- * Comme `scripts/verifier-schema.ts`, il n'a plus d'utilité une fois la migration terminée.
+ * Il reste utilisable après la suppression de `backend/` : il ne dépend que de fichiers
+ * versionnés ici.
  */
 import { readFileSync } from 'node:fs';
 import { ROUTEURS } from '../src/routes/index.js';

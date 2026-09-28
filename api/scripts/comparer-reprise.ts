@@ -14,7 +14,8 @@
  *      npx tsx src/scripts/reprise-legacy.ts /tmp/legacy.sql --rapport /tmp/ts-rapport.md
  *   npx tsx scripts/comparer-reprise.ts /tmp/ts.sqlite3 /tmp/py.sqlite3
  *
- * Comme les autres vérificateurs, il disparaîtra avec `backend/`.
+ * Il compare deux bases déjà constituées : produire celle de Python demande de restaurer
+ * `backend/` depuis l'historique (`git checkout 51ecdba -- backend`).
  */
 import Database from 'better-sqlite3';
 

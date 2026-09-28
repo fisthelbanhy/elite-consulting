@@ -23,7 +23,9 @@
  * appartient réellement.
  *
  * Usage : `npx tsx scripts/dump-synthetique.ts <fichier.sql>`
- * Comme les autres vérificateurs, il disparaîtra avec `backend/`.
+ *
+ * Il reste utilisable après la suppression de `backend/` : il ne dépend que de fichiers
+ * versionnés ici.
  */
 import { writeFileSync } from 'node:fs';
 

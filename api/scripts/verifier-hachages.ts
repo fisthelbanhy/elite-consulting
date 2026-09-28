@@ -18,7 +18,8 @@
  * issues du dump de synthèse (`dump-synthetique.ts`), où le mot de passe du membre n° i est
  * `motdepassei` et le code de pointage du membre n° 1 est `1234`.
  *
- * Comme les autres vérificateurs, il disparaîtra avec `backend/`.
+ * Il reste utilisable après la suppression de `backend/` : il ne dépend que de fichiers
+ * versionnés ici.
  */
 import Database from 'better-sqlite3';
 import { verifierMotDePasse } from '../src/securite.js';
