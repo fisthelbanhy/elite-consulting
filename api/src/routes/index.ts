@@ -8,6 +8,7 @@ import type { Router } from 'express';
 import * as accompagnement from './accompagnement.js';
 import * as annonces from './annonces.js';
 import * as auth from './auth.js';
+import * as boutique from './boutique.js';
 import * as businessPlan from './business-plan.js';
 import * as comparateur from './comparateur.js';
 import * as conseilFinancier from './conseil-financier.js';
@@ -38,6 +39,9 @@ export const ROUTEURS: ModuleRoute[] = [
 	accompagnement,
 	annonces,
 	auth,
+	boutique,
+	{ prefixe: boutique.prefixePanier, routeur: boutique.routeurPanier },
+	{ prefixe: boutique.prefixeBienEtre, routeur: boutique.routeurBienEtre },
 	businessPlan,
 	comparateur,
 	conseilFinancier,

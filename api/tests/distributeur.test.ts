@@ -202,6 +202,10 @@ describe('fonds propres', () => {
 		expect(s.kit[0].montant).toBe(56_000);
 		expect((await client().get('/api/distributeur/statut').set(h)).body.distributeur).toBe(true);
 
+		// Le prix distributeur s'applique désormais dans la boutique.
+		const catalogue = (await client().get('/api/boutique/produits').set(h)).body;
+		expect(catalogue.items.find((p: { id: number }) => p.id === 31).prix).toBe(10_000);
+
 		// Kit verrouillé, second paiement refusé.
 		expect(
 			(

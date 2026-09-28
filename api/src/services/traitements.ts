@@ -8,6 +8,7 @@
  *
  * **À compléter à chaque nouveau type d'objet payé.**
  */
+import './boutique.js';
 import './distributeur.js';
 import './ecommerce.js';
 

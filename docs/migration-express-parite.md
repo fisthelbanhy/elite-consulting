@@ -50,17 +50,17 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Boutique (11)
 
-- [ ] `GET /api/bien-etre` — Fiches
-- [ ] `GET /api/bien-etre/{id_}` — Fiche
-- [ ] `GET /api/boutique/groupes` — Groupes
-- [ ] `GET /api/boutique/produits` — Catalogue
-- [ ] `GET /api/boutique/produits/populaires` — Populaires
-- [ ] `GET /api/boutique/produits/{id_}` — Fiche Produit
-- [ ] `GET /api/panier` — Voir Panier
-- [ ] `POST /api/panier` — Ajouter
-- [ ] `GET /api/panier/suivi` — Suivi
-- [ ] `DELETE /api/panier/{id_}` — Retirer
-- [ ] `PUT /api/panier/{id_}` — Changer Quantite
+- [x] `GET /api/bien-etre` — Fiches
+- [x] `GET /api/bien-etre/{id_}` — Fiche
+- [x] `GET /api/boutique/groupes` — Groupes
+- [x] `GET /api/boutique/produits` — Catalogue
+- [x] `GET /api/boutique/produits/populaires` — Populaires
+- [x] `GET /api/boutique/produits/{id_}` — Fiche Produit
+- [x] `GET /api/panier` — Voir Panier
+- [x] `POST /api/panier` — Ajouter
+- [x] `GET /api/panier/suivi` — Suivi
+- [x] `DELETE /api/panier/{id_}` — Retirer
+- [x] `PUT /api/panier/{id_}` — Changer Quantite
 
 ## Business plan (6)
 
