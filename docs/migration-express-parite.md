@@ -64,25 +64,25 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Business plan (6)
 
-- [ ] `GET /api/business-plan` — Lister
-- [ ] `POST /api/business-plan` — Creer
-- [ ] `GET /api/business-plan/mien` — Le Mien
-- [ ] `GET /api/business-plan/{id_}` — Detail
-- [ ] `PUT /api/business-plan/{id_}` — Modifier
-- [ ] `POST /api/business-plan/{id_}/etat` — Etat
+- [x] `GET /api/business-plan` — Lister
+- [x] `POST /api/business-plan` — Creer
+- [x] `GET /api/business-plan/mien` — Le Mien
+- [x] `GET /api/business-plan/{id_}` — Detail
+- [x] `PUT /api/business-plan/{id_}` — Modifier
+- [x] `POST /api/business-plan/{id_}/etat` — Etat
 
 ## Comparateur de prix (10)
 
-- [ ] `GET /api/comparateur/acces` — Acces
-- [ ] `POST /api/comparateur/entreprises/{entreprise_id}/email` — Envoyer Email
-- [ ] `GET /api/comparateur/lignes` — Lignes
-- [ ] `POST /api/comparateur/lignes` — Ajouter Ligne
-- [ ] `DELETE /api/comparateur/lignes/{id_}` — Supprimer Ligne
-- [ ] `PUT /api/comparateur/lignes/{id_}` — Modifier Ligne
-- [ ] `GET /api/comparateur/ma-fiche` — Ma Fiche
-- [ ] `GET /api/comparateur/produits` — Produits
-- [ ] `POST /api/comparateur/produits` — Creer Produit
-- [ ] `PUT /api/comparateur/produits/{id_}` — Modifier Produit
+- [x] `GET /api/comparateur/acces` — Acces
+- [x] `POST /api/comparateur/entreprises/{entreprise_id}/email` — Envoyer Email
+- [x] `GET /api/comparateur/lignes` — Lignes
+- [x] `POST /api/comparateur/lignes` — Ajouter Ligne
+- [x] `DELETE /api/comparateur/lignes/{id_}` — Supprimer Ligne
+- [x] `PUT /api/comparateur/lignes/{id_}` — Modifier Ligne
+- [x] `GET /api/comparateur/ma-fiche` — Ma Fiche
+- [x] `GET /api/comparateur/produits` — Produits
+- [x] `POST /api/comparateur/produits` — Creer Produit
+- [x] `PUT /api/comparateur/produits/{id_}` — Modifier Produit
 
 ## Conseil financier (9)
 

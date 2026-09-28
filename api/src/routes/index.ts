@@ -7,6 +7,8 @@
 import type { Router } from 'express';
 import * as annonces from './annonces.js';
 import * as auth from './auth.js';
+import * as businessPlan from './business-plan.js';
+import * as comparateur from './comparateur.js';
 import * as contact from './contact.js';
 import * as dialogues from './dialogues.js';
 import * as emplois from './emplois.js';
@@ -31,6 +33,8 @@ export interface ModuleRoute {
 export const ROUTEURS: ModuleRoute[] = [
 	annonces,
 	auth,
+	businessPlan,
+	comparateur,
 	contact,
 	dialogues,
 	emplois,
