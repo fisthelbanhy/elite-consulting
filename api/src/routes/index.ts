@@ -15,8 +15,11 @@ import * as immobilier from './immobilier.js';
 import * as messages from './messages.js';
 import * as paiements from './paiements.js';
 import * as partenariats from './partenariats.js';
+import * as publicites from './publicites.js';
+import * as questions from './questions.js';
 import * as suggestions from './suggestions.js';
 import * as referentiels from './referentiels.js';
+import * as reussites from './reussites.js';
 
 export interface ModuleRoute {
 	prefixe: string;
@@ -34,7 +37,10 @@ export const ROUTEURS: ModuleRoute[] = [
 	messages,
 	paiements,
 	partenariats,
+	publicites,
+	questions,
 	referentiels,
+	reussites,
 	suggestions,
 	{ prefixe: referentiels.prefixeVisites, routeur: referentiels.routeurVisites }
 ];

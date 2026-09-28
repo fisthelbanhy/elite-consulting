@@ -370,30 +370,30 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Publicités (9)
 
-- [ ] `GET /api/publicites` — Lister
-- [ ] `POST /api/publicites` — Creer
-- [ ] `GET /api/publicites/choix` — Choix
-- [ ] `GET /api/publicites/diffusion` — Diffusion
-- [ ] `DELETE /api/publicites/{id_}` — Effacer
-- [ ] `GET /api/publicites/{id_}` — Detail
-- [ ] `PUT /api/publicites/{id_}` — Modifier
-- [ ] `POST /api/publicites/{id_}/etat` — Etat
-- [ ] `POST /api/publicites/{id_}/fichier` — Fichier
+- [x] `GET /api/publicites` — Lister
+- [x] `POST /api/publicites` — Creer
+- [x] `GET /api/publicites/choix` — Choix
+- [x] `GET /api/publicites/diffusion` — Diffusion
+- [x] `DELETE /api/publicites/{id_}` — Effacer
+- [x] `GET /api/publicites/{id_}` — Detail
+- [x] `PUT /api/publicites/{id_}` — Modifier
+- [x] `POST /api/publicites/{id_}/etat` — Etat
+- [x] `POST /api/publicites/{id_}/fichier` — Fichier
 
 ## Questions & conseils (12)
 
-- [ ] `GET /api/questions` — Lister
-- [ ] `POST /api/questions` — Creer
-- [ ] `GET /api/questions/compteurs` — Compteurs
-- [ ] `GET /api/questions/derniers` — Derniers
-- [ ] `DELETE /api/questions/reponses/{rid}` — Effacer Reponse
-- [ ] `PUT /api/questions/reponses/{rid}` — Modifier Reponse
-- [ ] `POST /api/questions/reponses/{rid}/etat` — Etat Reponse
-- [ ] `DELETE /api/questions/{id_}` — Effacer
-- [ ] `GET /api/questions/{id_}` — Detail
-- [ ] `PUT /api/questions/{id_}` — Modifier
-- [ ] `POST /api/questions/{id_}/etat` — Etat
-- [ ] `POST /api/questions/{id_}/reponses` — Repondre
+- [x] `GET /api/questions` — Lister
+- [x] `POST /api/questions` — Creer
+- [x] `GET /api/questions/compteurs` — Compteurs
+- [x] `GET /api/questions/derniers` — Derniers
+- [x] `DELETE /api/questions/reponses/{rid}` — Effacer Reponse
+- [x] `PUT /api/questions/reponses/{rid}` — Modifier Reponse
+- [x] `POST /api/questions/reponses/{rid}/etat` — Etat Reponse
+- [x] `DELETE /api/questions/{id_}` — Effacer
+- [x] `GET /api/questions/{id_}` — Detail
+- [x] `PUT /api/questions/{id_}` — Modifier
+- [x] `POST /api/questions/{id_}/etat` — Etat
+- [x] `POST /api/questions/{id_}/reponses` — Repondre
 
 ## Référentiels (10)
 
@@ -410,15 +410,15 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Réussites (9)
 
-- [ ] `GET /api/reussites` — Lister
-- [ ] `POST /api/reussites` — Creer
-- [ ] `GET /api/reussites/compteurs` — Compteurs
-- [ ] `GET /api/reussites/moi` — Ma Fiche
-- [ ] `DELETE /api/reussites/{id_}` — Effacer
-- [ ] `GET /api/reussites/{id_}` — Detail
-- [ ] `PUT /api/reussites/{id_}` — Modifier
-- [ ] `POST /api/reussites/{id_}/etat` — Etat
-- [ ] `POST /api/reussites/{id_}/photo` — Photo
+- [x] `GET /api/reussites` — Lister
+- [x] `POST /api/reussites` — Creer
+- [x] `GET /api/reussites/compteurs` — Compteurs
+- [x] `GET /api/reussites/moi` — Ma Fiche
+- [x] `DELETE /api/reussites/{id_}` — Effacer
+- [x] `GET /api/reussites/{id_}` — Detail
+- [x] `PUT /api/reussites/{id_}` — Modifier
+- [x] `POST /api/reussites/{id_}/etat` — Etat
+- [x] `POST /api/reussites/{id_}/photo` — Photo
 
 ## Suggestions (4)
 
