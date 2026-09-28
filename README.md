@@ -96,5 +96,5 @@ Le processus applique les migrations en attente au démarrage, purge les session
 ## Documentation
 
 Tout est dans [`docs/`](docs/README.md) : inventaire fonctionnel (483 points de recette), étude de
-marché, décisions d'architecture (13 ADR), conventions de développement, documentation des
+marché, décisions d'architecture (12 ADR), conventions de développement, documentation des
 modules, état d'avancement.

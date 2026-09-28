@@ -8,10 +8,8 @@ La refonte est **fonctionnellement complète** : les 7 sections du site legacy, 
 d'administration et les services transverses sont réécrits en SvelteKit 2 / Svelte 5 + Express 5,
 réorganisés en 3 piliers + boutique, et alimentés par les vraies données de production.
 
-Le backend a été réécrit en Express/TypeScript le 28/09/2026 (ADR-0013) : un seul
-langage sur tout le projet, et surtout **un seul processus Node** en production, donc un seul
-service à héberger. La bascule s'est faite à parité vérifiée, pas à l'estime — cinq outils de
-comparaison le prouvent, détaillés dans l'ADR-0013.
+Le site et l'API sont tous deux en TypeScript et tiennent dans **un seul processus Node** en
+production (ADR-0013), donc un seul service à héberger — c'est le levier de coût du projet.
 
 | Indicateur | Valeur |
 |---|---|
@@ -31,7 +29,7 @@ comparaison le prouvent, détaillés dans l'ADR-0013.
 | Visite du site en production | 7 sections × 3 onglets relevés en visiteur |
 | Inventaire fonctionnel exhaustif | [inventaire/](inventaire/) : **483 points de recette** |
 | Étude de marché et concurrence | [analyse-marche-concurrence.md](analyse-marche-concurrence.md) |
-| Décisions | **13 ADR** dans [decisions/](decisions/README.md) |
+| Décisions | **12 ADR** dans [decisions/](decisions/README.md) |
 
 ## 2. Réalisation
 
@@ -58,31 +56,26 @@ comparaison le prouvent, détaillés dans l'ADR-0013.
 
 Les écarts volontaires au legacy sont tous consignés dans les ADR 0004, 0007, 0008 et 0011.
 
-### Migration du backend vers Express (28/09/2026)
+### Garanties automatisées sur l'existant
 
-Le contrat des 381 opérations a été gelé **avant** toute modification
-([migration-express-parite.md](migration-express-parite.md)), puis chaque module porté et comparé
-à l'original. Cinq outils, dans `api/scripts/`, transforment la promesse de parité en
-vérification mécanique — ils disparaîtront avec l'ancien backend :
+Quatre outils, dans `api/scripts/`, vérifient en une commande le contrat avec les données et le
+site existants (détail en ADR-0013 §4) :
 
 | Vérification | Résultat |
 |---|---|
-| Tables et colonnes | 62 tables, 718 colonnes identiques |
+| Schéma de la base | 62 tables, 718 colonnes conformes au relevé de référence |
 | Opérations exposées | 381 montées / 381 attendues |
-| Réponses JSON, sur la même donnée | 162 routes de lecture identiques, champ par champ |
-| Reprise des données legacy | 62 tables, 110 lignes identiques, même rapport |
-| Mots de passe repris de l'ancien backend | acceptés ; les mauvais restent refusés |
+| Reprise des données legacy | 13 corrections exercées sur un dump de synthèse |
+| Mots de passe repris | acceptés ; les mauvais restent refusés |
 
 La dernière ligne est la plus importante : les 68 membres gardent leur mot de passe, sans aucune
-réinitialisation. La comparaison des réponses a révélé cinq régressions du portage (format des
-dates, validation des paramètres de requête, dates du tableau de bord, apostrophes, ordre des
-listes), toutes corrigées et consignées en I10 à I14 de l'ADR-0011.
+réinitialisation.
 
 ## 3. Recette réalisée
 
-- **Tests unitaires et d'API** : 211 tests (règles legacy, droits, machines à états, paiements,
-  formats de références, sécurité). Chacun des 31 fichiers de tests de l'ancien backend a son
-  équivalent, et trois s'y ajoutent (socle, référentiels, reprise legacy).
+- **Tests unitaires et d'API** : 211 tests répartis en 34 fichiers, un par module plus le socle,
+  les référentiels et la reprise legacy (règles legacy, droits, machines à états, paiements,
+  formats de références, sécurité).
 - **Parcours automatique en lecture** : robot suivant tous les liens avec 3 profils (visiteur,
   membre, gestionnaire) — ≈ 1 500 pages chargées, **aucune erreur serveur**, aucune page > 400 Ko.
 - **Vérification des liens** : tous les liens internes (frontend et liens construits par l'API)
@@ -106,7 +99,7 @@ listes), toutes corrigées et consignées en I10 à I14 de l'ADR-0011.
 | Recette métier par la frangine sur la checklist (483 points) avant mise en ligne | Porteur | `docs/inventaire/` |
 | Déploiement : reverse proxy HTTPS + gzip, `LF_SITE_URL`, `LF_COOKIE_SECRET`, SMTP, sauvegardes du fichier SQLite | Exploitation | README |
 | Tests de bout en bout navigateur automatisés (Playwright) — seuls des robots HTTP existent | Développement | — |
-| Rejouer la reprise legacy sur le **vrai dump**, avec le script TypeScript, et relire le rapport | Porteur (poste local) | README § « vraies données » |
+| Rejouer la reprise legacy sur le **vrai dump** et relire le rapport | Porteur (poste local) | README § « vraies données » |
 
 ## 5. Commandes utiles
 

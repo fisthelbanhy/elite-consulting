@@ -1,6 +1,6 @@
 # ADR-0002 — Architecture BFF et authentification par session
 
-- **Statut** : Accepté — 2026-09-22 ; **transport révisé par [ADR-0013](0013-backend-express-et-processus-unique.md)**
+- **Statut** : Accepté — 2026-09-22 ; **transport révisé par [ADR-0013](0013-pile-technique-et-processus-unique.md)**
   (2026-09-28 : le site et l'API sont fusionnés dans un seul processus Node, l'appel interne ne
   traverse plus le réseau). Le mécanisme d'authentification décrit ci-dessous — cookie `httpOnly`,
   jeton opaque haché en SHA-256, autorisations calculées côté API — est conservé tel quel.
