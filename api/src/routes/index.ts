@@ -22,6 +22,7 @@ import * as entreprises from './entreprises.js';
 import * as epargne from './epargne.js';
 import * as espace from './espace.js';
 import * as immobilier from './immobilier.js';
+import * as likelemba from './likelemba.js';
 import * as marches from './marches.js';
 import * as messages from './messages.js';
 import * as paiements from './paiements.js';
@@ -59,6 +60,7 @@ export const ROUTEURS: ModuleRoute[] = [
 	epargne,
 	espace,
 	immobilier,
+	likelemba,
 	{ prefixe: marches.prefixeProjets, routeur: marches.routeurProjets },
 	marches,
 	messages,

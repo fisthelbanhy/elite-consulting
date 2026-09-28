@@ -197,7 +197,22 @@ export const dateHeureFacultative = z
 		return new Date(Number(a), Number(mo) - 1, Number(j), Number(h), Number(mi), Number(s ?? 0));
 	});
 
-/** Booléen tolérant aux formes des formulaires HTML (`"on"`, `"true"`, `1`). */
+/**
+ * Booléen tolérant aux formes des formulaires HTML (`"on"`, `"true"`, `1`) ; la clé peut être
+ * absente (voir `entierFacultatif`), auquel cas le champ vaut `false`.
+ */
 export const booleen = z
-	.union([z.boolean(), z.literal('on'), z.literal('true'), z.literal('false'), z.literal(1), z.literal(0), z.literal('1'), z.literal('0'), z.literal(''), z.null(), z.undefined()])
+	.union([
+		z.boolean(),
+		z.literal('on'),
+		z.literal('true'),
+		z.literal('false'),
+		z.literal(1),
+		z.literal(0),
+		z.literal('1'),
+		z.literal('0'),
+		z.literal(''),
+		z.null()
+	])
+	.optional()
 	.transform((v) => v === true || v === 'on' || v === 'true' || v === 1 || v === '1');

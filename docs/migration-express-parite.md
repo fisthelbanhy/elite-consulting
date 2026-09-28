@@ -290,20 +290,20 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Likelemba (14)
 
-- [ ] `GET /api/likelemba` — Lister
-- [ ] `POST /api/likelemba` — Creer
-- [ ] `GET /api/likelemba/adhesions/{id_}` — Detail Adhesion
-- [ ] `PUT /api/likelemba/adhesions/{id_}` — Modifier Adhesion
-- [ ] `POST /api/likelemba/adhesions/{id_}/etat` — Etat Adhesion
-- [ ] `GET /api/likelemba/compteurs` — Compteurs
-- [ ] `POST /api/likelemba/cotisations/{id_}/valider` — Valider Cotisation
-- [ ] `GET /api/likelemba/membres` — Membres
-- [ ] `GET /api/likelemba/mes-adhesions` — Mes Adhesions
-- [ ] `DELETE /api/likelemba/{id_}` — Effacer
-- [ ] `GET /api/likelemba/{id_}` — Detail
-- [ ] `PUT /api/likelemba/{id_}` — Modifier
-- [ ] `POST /api/likelemba/{id_}/adhesions` — Adherer
-- [ ] `POST /api/likelemba/{id_}/etat` — Etat
+- [x] `GET /api/likelemba` — Lister
+- [x] `POST /api/likelemba` — Creer
+- [x] `GET /api/likelemba/adhesions/{id_}` — Detail Adhesion
+- [x] `PUT /api/likelemba/adhesions/{id_}` — Modifier Adhesion
+- [x] `POST /api/likelemba/adhesions/{id_}/etat` — Etat Adhesion
+- [x] `GET /api/likelemba/compteurs` — Compteurs
+- [x] `POST /api/likelemba/cotisations/{id_}/valider` — Valider Cotisation
+- [x] `GET /api/likelemba/membres` — Membres
+- [x] `GET /api/likelemba/mes-adhesions` — Mes Adhesions
+- [x] `DELETE /api/likelemba/{id_}` — Effacer
+- [x] `GET /api/likelemba/{id_}` — Detail
+- [x] `PUT /api/likelemba/{id_}` — Modifier
+- [x] `POST /api/likelemba/{id_}/adhesions` — Adherer
+- [x] `POST /api/likelemba/{id_}/etat` — Etat
 
 ## Marchés (15)
 
