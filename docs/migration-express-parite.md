@@ -86,15 +86,15 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Conseil financier (9)
 
-- [ ] `GET /api/conseil-financier` — Lister
-- [ ] `POST /api/conseil-financier` — Creer
-- [ ] `GET /api/conseil-financier/compteurs` — Compteurs
-- [ ] `DELETE /api/conseil-financier/{id_}` — Effacer
-- [ ] `GET /api/conseil-financier/{id_}` — Detail
-- [ ] `PUT /api/conseil-financier/{id_}` — Modifier
-- [ ] `POST /api/conseil-financier/{id_}/cloture` — Cloturer
-- [ ] `POST /api/conseil-financier/{id_}/etat` — Etat
-- [ ] `POST /api/conseil-financier/{id_}/reponses` — Repondre
+- [x] `GET /api/conseil-financier` — Lister
+- [x] `POST /api/conseil-financier` — Creer
+- [x] `GET /api/conseil-financier/compteurs` — Compteurs
+- [x] `DELETE /api/conseil-financier/{id_}` — Effacer
+- [x] `GET /api/conseil-financier/{id_}` — Detail
+- [x] `PUT /api/conseil-financier/{id_}` — Modifier
+- [x] `POST /api/conseil-financier/{id_}/cloture` — Cloturer
+- [x] `POST /api/conseil-financier/{id_}/etat` — Etat
+- [x] `POST /api/conseil-financier/{id_}/reponses` — Repondre
 
 ## Contact (7)
 
