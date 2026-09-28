@@ -28,6 +28,7 @@ import * as partenariats from './partenariats.js';
 import * as publicites from './publicites.js';
 import * as questions from './questions.js';
 import * as suggestions from './suggestions.js';
+import * as tarifsBancaires from './tarifs-bancaires.js';
 import * as referentiels from './referentiels.js';
 import * as reussites from './reussites.js';
 
@@ -65,5 +66,6 @@ export const ROUTEURS: ModuleRoute[] = [
 	referentiels,
 	reussites,
 	suggestions,
+	tarifsBancaires,
 	{ prefixe: referentiels.prefixeVisites, routeur: referentiels.routeurVisites }
 ];

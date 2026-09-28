@@ -433,18 +433,18 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Tarifs bancaires (12)
 
-- [ ] `GET /api/tarifs-bancaires` — Comparatif
-- [ ] `PUT /api/tarifs-bancaires/banques/{banque_id}` — Enregistrer Grille
-- [ ] `POST /api/tarifs-bancaires/initialiser` — Initialiser
-- [ ] `POST /api/tarifs-bancaires/operations` — Creer Operation
-- [ ] `DELETE /api/tarifs-bancaires/operations/{id_}` — Supprimer Operation
-- [ ] `PUT /api/tarifs-bancaires/operations/{id_}` — Modifier Operation
-- [ ] `POST /api/tarifs-bancaires/tarifs` — Creer Tarif
-- [ ] `DELETE /api/tarifs-bancaires/tarifs/{id_}` — Supprimer Tarif
-- [ ] `PUT /api/tarifs-bancaires/tarifs/{id_}` — Modifier Tarif
-- [ ] `POST /api/tarifs-bancaires/types` — Creer Type
-- [ ] `DELETE /api/tarifs-bancaires/types/{id_}` — Supprimer Type
-- [ ] `PUT /api/tarifs-bancaires/types/{id_}` — Modifier Type
+- [x] `GET /api/tarifs-bancaires` — Comparatif
+- [x] `PUT /api/tarifs-bancaires/banques/{banque_id}` — Enregistrer Grille
+- [x] `POST /api/tarifs-bancaires/initialiser` — Initialiser
+- [x] `POST /api/tarifs-bancaires/operations` — Creer Operation
+- [x] `DELETE /api/tarifs-bancaires/operations/{id_}` — Supprimer Operation
+- [x] `PUT /api/tarifs-bancaires/operations/{id_}` — Modifier Operation
+- [x] `POST /api/tarifs-bancaires/tarifs` — Creer Tarif
+- [x] `DELETE /api/tarifs-bancaires/tarifs/{id_}` — Supprimer Tarif
+- [x] `PUT /api/tarifs-bancaires/tarifs/{id_}` — Modifier Tarif
+- [x] `POST /api/tarifs-bancaires/types` — Creer Type
+- [x] `DELETE /api/tarifs-bancaires/types/{id_}` — Supprimer Type
+- [x] `PUT /api/tarifs-bancaires/types/{id_}` — Modifier Type
 
 ## Trésorerie (27)
 
