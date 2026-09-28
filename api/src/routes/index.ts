@@ -26,6 +26,7 @@ import * as marches from './marches.js';
 import * as messages from './messages.js';
 import * as paiements from './paiements.js';
 import * as partenariats from './partenariats.js';
+import * as projets from './projets.js';
 import * as publicites from './publicites.js';
 import * as questions from './questions.js';
 import * as suggestions from './suggestions.js';
@@ -63,6 +64,7 @@ export const ROUTEURS: ModuleRoute[] = [
 	messages,
 	paiements,
 	partenariats,
+	projets,
 	publicites,
 	questions,
 	referentiels,

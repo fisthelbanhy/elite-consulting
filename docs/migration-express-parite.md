@@ -17,24 +17,24 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Appels de fonds (18)
 
-- [ ] `GET /api/projets` — Lister
-- [ ] `POST /api/projets` — Creer
-- [ ] `GET /api/projets/apports` — Lister Apports
-- [ ] `GET /api/projets/apports/{id_}` — Detail Apport
-- [ ] `POST /api/projets/apports/{id_}/annuler` — Annuler Apport
-- [ ] `POST /api/projets/apports/{id_}/valider` — Valider Apport
-- [ ] `POST /api/projets/apports/{id_}/versements` — Enregistrer Versement
-- [ ] `GET /api/projets/compteurs` — Compteurs
-- [ ] `GET /api/projets/mes-entreprises` — Mes Entreprises
-- [ ] `DELETE /api/projets/{id_}` — Effacer
-- [ ] `GET /api/projets/{id_}` — Detail
-- [ ] `PUT /api/projets/{id_}` — Modifier
-- [ ] `GET /api/projets/{id_}/apports` — Apports Du Projet
-- [ ] `POST /api/projets/{id_}/apports` — Apporter
-- [ ] `POST /api/projets/{id_}/etat` — Etat
-- [ ] `POST /api/projets/{id_}/evaluation` — Evaluer
-- [ ] `POST /api/projets/{id_}/photo` — Photo
-- [ ] `POST /api/projets/{id_}/presentation` — Presentation
+- [x] `GET /api/projets` — Lister
+- [x] `POST /api/projets` — Creer
+- [x] `GET /api/projets/apports` — Lister Apports
+- [x] `GET /api/projets/apports/{id_}` — Detail Apport
+- [x] `POST /api/projets/apports/{id_}/annuler` — Annuler Apport
+- [x] `POST /api/projets/apports/{id_}/valider` — Valider Apport
+- [x] `POST /api/projets/apports/{id_}/versements` — Enregistrer Versement
+- [x] `GET /api/projets/compteurs` — Compteurs
+- [x] `GET /api/projets/mes-entreprises` — Mes Entreprises
+- [x] `DELETE /api/projets/{id_}` — Effacer
+- [x] `GET /api/projets/{id_}` — Detail
+- [x] `PUT /api/projets/{id_}` — Modifier
+- [x] `GET /api/projets/{id_}/apports` — Apports Du Projet
+- [x] `POST /api/projets/{id_}/apports` — Apporter
+- [x] `POST /api/projets/{id_}/etat` — Etat
+- [x] `POST /api/projets/{id_}/evaluation` — Evaluer
+- [x] `POST /api/projets/{id_}/photo` — Photo
+- [x] `POST /api/projets/{id_}/presentation` — Presentation
 
 ## Authentification (9)
 
