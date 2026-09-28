@@ -6,7 +6,7 @@
  * Le site legacy ne vérifiait rien — n'importe qui pouvait s'attribuer les droits de gestionnaire
  * en modifiant un champ caché.
  */
-import { and, eq, lt } from 'drizzle-orm';
+import { eq, lt } from 'drizzle-orm';
 import type { NextFunction, Request, Response } from 'express';
 import { db } from './db.js';
 import { Etat } from './enums.js';
@@ -40,19 +40,17 @@ const UNE_MINUTE = 60 * 1000;
  * Résout le membre porté par l'en-tête `Authorization: Bearer …`.
  * Retourne `null` si le jeton est absent, inconnu, expiré, ou si le compte est supprimé.
  */
-async function membreDepuisJeton(authorization: string | undefined): Promise<Membre | null> {
+function membreDepuisJeton(authorization: string | undefined): Membre | null {
 	if (!authorization || !authorization.toLowerCase().startsWith('bearer ')) return null;
 	const jeton = authorization.slice(7).trim();
 	if (!jeton) return null;
 
-	const lignes = await db
+	const ligne = db
 		.select({ session: tableSession, membre: tableMembre })
 		.from(tableSession)
 		.innerJoin(tableMembre, eq(tableMembre.id, tableSession.membre_id))
 		.where(eq(tableSession.jeton_hash, hashJeton(jeton)))
-		.limit(1);
-
-	const ligne = lignes[0];
+		.get();
 	if (!ligne) return null;
 	if (ligne.session.date_expiration.getTime() < Date.now()) return null;
 	if (ligne.membre.etat === Etat.SUPPRIME) return null;
@@ -61,18 +59,18 @@ async function membreDepuisJeton(authorization: string | undefined): Promise<Mem
 	const maintenant = new Date();
 	const derniere = ligne.membre.derniere_activite;
 	if (!derniere || derniere.getTime() < maintenant.getTime() - UNE_MINUTE) {
-		await db
-			.update(tableMembre)
+		db.update(tableMembre)
 			.set({ derniere_activite: maintenant })
-			.where(eq(tableMembre.id, ligne.membre.id));
+			.where(eq(tableMembre.id, ligne.membre.id))
+			.run();
 		ligne.membre.derniere_activite = maintenant;
 	}
 	return ligne.membre;
 }
 
 /** Pose `req.membre` (éventuellement `null`). Monté en amont de toutes les routes. */
-export async function membreOptionnel(req: Request, _res: Response, next: NextFunction) {
-	req.membre = await membreDepuisJeton(req.headers.authorization);
+export function membreOptionnel(req: Request, _res: Response, next: NextFunction) {
+	req.membre = membreDepuisJeton(req.headers.authorization);
 	next();
 }
 
@@ -140,12 +138,6 @@ export function pagination(req: Request, defautTaille = 20): Pagination {
 }
 
 /** Purge les sessions expirées (appelée au démarrage ; le legacy ne nettoyait jamais). */
-export async function purgerSessionsExpirees(): Promise<number> {
-	const resultat = await db.delete(tableSession).where(lt(tableSession.date_expiration, new Date()));
-	return resultat.changes ?? 0;
-}
-
-/** Retrouve une session valide (utilisé par la déconnexion). */
-export function conditionSessionValide(jeton: string) {
-	return and(eq(tableSession.jeton_hash, hashJeton(jeton)));
+export function purgerSessionsExpirees(): number {
+	return db.delete(tableSession).where(lt(tableSession.date_expiration, new Date())).run().changes;
 }

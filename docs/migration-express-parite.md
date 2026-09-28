@@ -38,15 +38,15 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Authentification (9)
 
-- [ ] `POST /api/auth/inscription` — Inscription
-- [ ] `POST /api/auth/login` — Connexion
-- [ ] `POST /api/auth/logout` — Deconnexion
-- [ ] `GET /api/auth/me` — Moi
-- [ ] `POST /api/auth/mot-de-passe` — Changer Mot De Passe
-- [ ] `POST /api/auth/mot-de-passe-oublie` — Mot De Passe Oublie
-- [ ] `PUT /api/auth/profil` — Maj Profil
-- [ ] `POST /api/auth/profil/photo` — Maj Photo
-- [ ] `POST /api/auth/reinitialiser` — Reinitialiser
+- [x] `POST /api/auth/inscription` — Inscription
+- [x] `POST /api/auth/login` — Connexion
+- [x] `POST /api/auth/logout` — Deconnexion
+- [x] `GET /api/auth/me` — Moi
+- [x] `POST /api/auth/mot-de-passe` — Changer Mot De Passe
+- [x] `POST /api/auth/mot-de-passe-oublie` — Mot De Passe Oublie
+- [x] `PUT /api/auth/profil` — Maj Profil
+- [x] `POST /api/auth/profil/photo` — Maj Photo
+- [x] `POST /api/auth/reinitialiser` — Reinitialiser
 
 ## Boutique (11)
 
@@ -429,7 +429,7 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Système (1)
 
-- [ ] `GET /api/sante` — Sante
+- [x] `GET /api/sante` — Sante
 
 ## Tarifs bancaires (12)
 

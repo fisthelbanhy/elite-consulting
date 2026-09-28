@@ -49,7 +49,7 @@ export function nonAuthentifie(
  * Traduit une anomalie Zod en message français, en reprenant mot pour mot les messages que
  * `app/erreurs.py` produisait à partir des codes Pydantic.
  */
-function traduire(issue: ZodIssue): string {
+export function traduire(issue: ZodIssue): string {
 	switch (issue.code) {
 		case 'invalid_type': {
 			// Zod signale un champ absent comme un type invalide reçu `undefined`.

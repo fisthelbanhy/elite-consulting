@@ -62,6 +62,14 @@ un jour : la frontière logique est maintenue, seul le déploiement est fusionn�
 | Tests | pytest + httpx | **Vitest + supertest** | Les 185 tests sont portés, pas abandonnés |
 | Qualité | ruff | **ESLint + Prettier** | Déjà en place pour le frontend |
 
+**Accès aux données synchrone.** Le pilote `better-sqlite3` est synchrone, et ses transactions
+n'acceptent pas de rappel asynchrone. Les appels à la base sont donc écrits en synchrone
+(`.get()`, `.all()`, `.run()`), ce qui rend les transactions naturelles et supprime toute une
+classe de bugs ; `async` est réservé à ce qui l'est réellement — hachage Argon2, traitement des
+images, envoi d'e-mails. À l'échelle du site (une requête SQLite se compte en microsecondes),
+bloquer la boucle d'événements le temps d'une lecture n'a pas d'effet mesurable ; c'est d'ailleurs
+l'usage recommandé par `better-sqlite3`.
+
 **Compatibilité des mots de passe, vérifiée avant de s'engager** (2026-09-28) : un hash produit par
 `pwdlib` (`m=65536,t=3,p=4`) est accepté par `@node-rs/argon2`, et un hash produit par Node
 (`m=19456,t=2,p=1`, paramètres OWASP) est accepté par `pwdlib`. Les paramètres de coût sont portés
