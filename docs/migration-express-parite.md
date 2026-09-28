@@ -143,18 +143,18 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Découverte de soi (12)
 
-- [ ] `GET /api/decouverte` — Lister
-- [ ] `POST /api/decouverte` — Creer
-- [ ] `POST /api/decouverte/diagnostic` — Diagnostic Enregistrer
-- [ ] `GET /api/decouverte/diagnostic/questions` — Diagnostic Questions
-- [ ] `POST /api/decouverte/diagnostic/restitution` — Diagnostic Restitution
-- [ ] `GET /api/decouverte/moi` — Ma Fiche
-- [ ] `DELETE /api/decouverte/{id_}` — Effacer
-- [ ] `GET /api/decouverte/{id_}` — Detail
-- [ ] `PUT /api/decouverte/{id_}` — Modifier
-- [ ] `POST /api/decouverte/{id_}/cloture` — Cloture
-- [ ] `PUT /api/decouverte/{id_}/correspondance` — Correspondance
-- [ ] `POST /api/decouverte/{id_}/etat` — Etat
+- [x] `GET /api/decouverte` — Lister
+- [x] `POST /api/decouverte` — Creer
+- [x] `POST /api/decouverte/diagnostic` — Diagnostic Enregistrer
+- [x] `GET /api/decouverte/diagnostic/questions` — Diagnostic Questions
+- [x] `POST /api/decouverte/diagnostic/restitution` — Diagnostic Restitution
+- [x] `GET /api/decouverte/moi` — Ma Fiche
+- [x] `DELETE /api/decouverte/{id_}` — Effacer
+- [x] `GET /api/decouverte/{id_}` — Detail
+- [x] `PUT /api/decouverte/{id_}` — Modifier
+- [x] `POST /api/decouverte/{id_}/cloture` — Cloture
+- [x] `PUT /api/decouverte/{id_}/correspondance` — Correspondance
+- [x] `POST /api/decouverte/{id_}/etat` — Etat
 
 ## Emplois (10)
 

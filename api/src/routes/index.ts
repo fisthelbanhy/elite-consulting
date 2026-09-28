@@ -10,6 +10,7 @@ import * as auth from './auth.js';
 import * as businessPlan from './business-plan.js';
 import * as comparateur from './comparateur.js';
 import * as contact from './contact.js';
+import * as decouverte from './decouverte.js';
 import * as dialogues from './dialogues.js';
 import * as emplois from './emplois.js';
 import * as entreprises from './entreprises.js';
@@ -36,6 +37,7 @@ export const ROUTEURS: ModuleRoute[] = [
 	businessPlan,
 	comparateur,
 	contact,
+	decouverte,
 	dialogues,
 	emplois,
 	entreprises,
