@@ -14,6 +14,31 @@ const backend = join(racine, 'backend');
 const win = process.platform === 'win32';
 const pythonVenv = join(backend, '.venv', win ? 'Scripts' : 'bin', win ? 'python.exe' : 'python');
 
+/**
+ * Cherche un interpréteur ≥ 3.12 (exigence de `backend/pyproject.toml`). Sur certaines machines
+ * — dont les conteneurs cloud — `python3` est une version plus ancienne alors qu'une version
+ * récente est installée à côté : on essaie donc les noms versionnés avant le nom générique.
+ */
+function trouverPython() {
+	const noms = win
+		? ['py -3.13', 'py -3.12', 'python3.13', 'python3.12', 'python']
+		: ['python3.13', 'python3.12', 'python3', 'python'];
+	for (const nom of noms) {
+		const [cmd, ...args] = nom.split(' ');
+		const r = spawnSync(cmd, [...args, '-c', 'import sys; print("%d.%d" % sys.version_info[:2])'], {
+			encoding: 'utf8',
+			shell: win
+		});
+		if (r.status !== 0 || !r.stdout) continue;
+		const [majeure, mineure] = r.stdout.trim().split('.').map(Number);
+		if (majeure === 3 && mineure >= 12) return { cmd, args };
+	}
+	console.error(
+		'✗ Aucun Python ≥ 3.12 trouvé (exigé par backend/pyproject.toml). Installez Python 3.12 ou 3.13.'
+	);
+	process.exit(1);
+}
+
 function lancer(cmd, args, options = {}) {
 	console.log(`\n▸ ${cmd} ${args.join(' ')}`);
 	const r = spawnSync(cmd, args, { stdio: 'inherit', shell: win, ...options });
@@ -25,8 +50,8 @@ function lancer(cmd, args, options = {}) {
 
 // 1. Environnement Python
 if (!existsSync(pythonVenv)) {
-	const systeme = win ? 'python' : 'python3';
-	lancer(systeme, ['-m', 'venv', '.venv'], { cwd: backend });
+	const systeme = trouverPython();
+	lancer(systeme.cmd, [...systeme.args, '-m', 'venv', '.venv'], { cwd: backend });
 }
 lancer(pythonVenv, ['-m', 'pip', 'install', '--quiet', '--upgrade', 'pip'], { cwd: backend });
 lancer(pythonVenv, ['-m', 'pip', 'install', '--quiet', '-e', '.[dev]'], { cwd: backend });

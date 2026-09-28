@@ -19,3 +19,4 @@ remplace et on marque l'ancien « Remplacé par ADR-XXXX ».
 | [0010](0010-connexion-par-code-et-agregateur-paiement.md) | Connexion par code (OTP) et agrégateur de paiement : préparés, activés plus tard | Accepté | 2026-09-22 |
 | [0011](0011-decisions-des-modules-et-de-l-integration.md) | Décisions prises pendant la construction des modules et l'intégration | Accepté | 2026-09-22 |
 | [0012](0012-depot-github-et-environnement-cloud.md) | Dépôt GitHub privé, données de démonstration, environnement cloud | Accepté | 2026-09-26 |
+| [0013](0013-backend-express-et-processus-unique.md) | Backend Express.js / TypeScript, déployé en un seul processus Node | Accepté | 2026-09-28 |

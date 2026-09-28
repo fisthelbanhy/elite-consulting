@@ -1,6 +1,9 @@
 # ADR-0001 — Stack technique : SvelteKit 2 / Svelte 5 + FastAPI
 
-- **Statut** : Accepté — 2026-09-22
+- **Statut** : Accepté — 2026-09-22 ; **couche backend remplacée par [ADR-0013](0013-backend-express-et-processus-unique.md)**
+  (2026-09-28 : FastAPI/SQLAlchemy/Alembic/Pydantic/Pillow → Express/Drizzle/Zod/sharp). Les choix
+  frontend (SvelteKit, Tailwind, form actions) et le principe SQLite en dev / PostgreSQL en
+  production restent en vigueur.
 - **Remplace** : la tentative de migration Django + DRF décrite dans l'ancien `MIGRATION_STATUS.md`
   (dont le code `backend/`/`frontend/` n'existe plus ; seuls les dictionnaires de données ont été conservés).
 
