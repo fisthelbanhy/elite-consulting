@@ -108,22 +108,22 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Courses & livraison (16)
 
-- [ ] `GET /api/courses` — Lister
-- [ ] `POST /api/courses` — Creer
-- [ ] `GET /api/courses/boutiques` — Boutiques
-- [ ] `GET /api/courses/catalogue` — Catalogue
-- [ ] `POST /api/courses/catalogue` — Creer Article
-- [ ] `DELETE /api/courses/catalogue/{id_}` — Supprimer Article
-- [ ] `GET /api/courses/catalogue/{id_}` — Article Catalogue
-- [ ] `PUT /api/courses/catalogue/{id_}` — Modifier Article
-- [ ] `POST /api/courses/catalogue/{id_}/etat` — Etat Article
-- [ ] `POST /api/courses/catalogue/{id_}/photo` — Photo Article
-- [ ] `POST /api/courses/verifier` — Verifier
-- [ ] `DELETE /api/courses/{id_}` — Effacer
-- [ ] `GET /api/courses/{id_}` — Detail
-- [ ] `PUT /api/courses/{id_}` — Modifier
-- [ ] `POST /api/courses/{id_}/etat` — Etat
-- [ ] `POST /api/courses/{id_}/etat-course` — Etat Course
+- [x] `GET /api/courses` — Lister
+- [x] `POST /api/courses` — Creer
+- [x] `GET /api/courses/boutiques` — Boutiques
+- [x] `GET /api/courses/catalogue` — Catalogue
+- [x] `POST /api/courses/catalogue` — Creer Article
+- [x] `DELETE /api/courses/catalogue/{id_}` — Supprimer Article
+- [x] `GET /api/courses/catalogue/{id_}` — Article Catalogue
+- [x] `PUT /api/courses/catalogue/{id_}` — Modifier Article
+- [x] `POST /api/courses/catalogue/{id_}/etat` — Etat Article
+- [x] `POST /api/courses/catalogue/{id_}/photo` — Photo Article
+- [x] `POST /api/courses/verifier` — Verifier
+- [x] `DELETE /api/courses/{id_}` — Effacer
+- [x] `GET /api/courses/{id_}` — Detail
+- [x] `PUT /api/courses/{id_}` — Modifier
+- [x] `POST /api/courses/{id_}/etat` — Etat
+- [x] `POST /api/courses/{id_}/etat-course` — Etat Course
 
 ## Devenir distributeur (7)
 

@@ -13,6 +13,7 @@ import * as businessPlan from './business-plan.js';
 import * as comparateur from './comparateur.js';
 import * as conseilFinancier from './conseil-financier.js';
 import * as contact from './contact.js';
+import * as courses from './courses.js';
 import * as decouverte from './decouverte.js';
 import * as dialogues from './dialogues.js';
 import * as distributeur from './distributeur.js';
@@ -46,6 +47,7 @@ export const ROUTEURS: ModuleRoute[] = [
 	comparateur,
 	conseilFinancier,
 	contact,
+	courses,
 	decouverte,
 	dialogues,
 	distributeur,

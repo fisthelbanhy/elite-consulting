@@ -174,6 +174,29 @@ export const dateFacultative = z
 	.optional()
 	.transform((v) => (v === '' || v === null || v === undefined ? null : new Date(`${v}T00:00:00`)));
 
+/**
+ * Date-heure ISO **naïve** (`2026-09-30T11:05`, secondes facultatives), ou `null`.
+ *
+ * Un décalage horaire est accepté puis ignoré, comme le faisait le `.replace(tzinfo=None)` de
+ * l'ancien backend : l'heure écrite est l'heure locale de Brazzaville, jamais convertie.
+ */
+const ISO_DATE_HEURE =
+	/^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})(?::(\d{2})(?:\.\d+)?)?\s*(?:Z|[+-]\d{2}:?\d{2})?$/;
+
+export const dateHeureFacultative = z
+	.union([
+		z.literal(''),
+		z.null(),
+		z.string().regex(ISO_DATE_HEURE, { error: 'Date et heure invalides.' })
+	])
+	.optional()
+	.transform((v) => {
+		if (v === '' || v === null || v === undefined) return null;
+		const m = ISO_DATE_HEURE.exec(v)!;
+		const [, a, mo, j, h, mi, s] = m;
+		return new Date(Number(a), Number(mo) - 1, Number(j), Number(h), Number(mi), Number(s ?? 0));
+	});
+
 /** Booléen tolérant aux formes des formulaires HTML (`"on"`, `"true"`, `1`). */
 export const booleen = z
 	.union([z.boolean(), z.literal('on'), z.literal('true'), z.literal('false'), z.literal(1), z.literal(0), z.literal('1'), z.literal('0'), z.literal(''), z.null(), z.undefined()])
