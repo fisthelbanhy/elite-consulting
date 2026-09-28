@@ -158,16 +158,16 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Emplois (10)
 
-- [ ] `GET /api/emplois` — Lister
-- [ ] `POST /api/emplois` — Creer
-- [ ] `GET /api/emplois/compteurs` — Compteurs
-- [ ] `DELETE /api/emplois/{id_}` — Effacer
-- [ ] `GET /api/emplois/{id_}` — Detail
-- [ ] `PUT /api/emplois/{id_}` — Modifier
-- [ ] `POST /api/emplois/{id_}/cv` — Cv
-- [ ] `POST /api/emplois/{id_}/etat` — Etat
-- [ ] `POST /api/emplois/{id_}/interet` — Manifester
-- [ ] `POST /api/emplois/{id_}/photo` — Photo
+- [x] `GET /api/emplois` — Lister
+- [x] `POST /api/emplois` — Creer
+- [x] `GET /api/emplois/compteurs` — Compteurs
+- [x] `DELETE /api/emplois/{id_}` — Effacer
+- [x] `GET /api/emplois/{id_}` — Detail
+- [x] `PUT /api/emplois/{id_}` — Modifier
+- [x] `POST /api/emplois/{id_}/cv` — Cv
+- [x] `POST /api/emplois/{id_}/etat` — Etat
+- [x] `POST /api/emplois/{id_}/interet` — Manifester
+- [x] `POST /api/emplois/{id_}/photo` — Photo
 
 ## Entreprises (9)
 
@@ -183,10 +183,10 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Espace membre (4)
 
-- [ ] `PUT /api/espace/code-pointage` — Changer Code Pointage
-- [ ] `GET /api/espace/compteurs` — Compteurs
-- [ ] `PUT /api/espace/identifiant` — Changer Identifiant
-- [ ] `GET /api/espace/tableau` — Tableau
+- [x] `PUT /api/espace/code-pointage` — Changer Code Pointage
+- [x] `GET /api/espace/compteurs` — Compteurs
+- [x] `PUT /api/espace/identifiant` — Changer Identifiant
+- [x] `GET /api/espace/tableau` — Tableau
 
 ## Gestion (3)
 
@@ -397,16 +397,16 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Référentiels (10)
 
-- [ ] `GET /api/referentiels/a-la-une` — A La Une
-- [ ] `GET /api/referentiels/banques` — Banques
-- [ ] `GET /api/referentiels/diplomes` — Diplomes
-- [ ] `GET /api/referentiels/enums` — Enumerations
-- [ ] `GET /api/referentiels/familles-articles` — Familles Articles
-- [ ] `GET /api/referentiels/parametres` — Parametres
-- [ ] `GET /api/referentiels/secteurs` — Secteurs
-- [ ] `GET /api/referentiels/stats` — Stats
-- [ ] `GET /api/referentiels/villes` — Villes
-- [ ] `POST /api/visites` — Journaliser Visite
+- [x] `GET /api/referentiels/a-la-une` — A La Une
+- [x] `GET /api/referentiels/banques` — Banques
+- [x] `GET /api/referentiels/diplomes` — Diplomes
+- [x] `GET /api/referentiels/enums` — Enumerations
+- [x] `GET /api/referentiels/familles-articles` — Familles Articles
+- [x] `GET /api/referentiels/parametres` — Parametres
+- [x] `GET /api/referentiels/secteurs` — Secteurs
+- [x] `GET /api/referentiels/stats` — Stats
+- [x] `GET /api/referentiels/villes` — Villes
+- [x] `POST /api/visites` — Journaliser Visite
 
 ## Réussites (9)
 

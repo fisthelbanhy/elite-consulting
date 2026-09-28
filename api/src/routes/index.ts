@@ -6,10 +6,19 @@
  */
 import type { Router } from 'express';
 import * as auth from './auth.js';
+import * as emplois from './emplois.js';
+import * as espace from './espace.js';
+import * as referentiels from './referentiels.js';
 
 export interface ModuleRoute {
 	prefixe: string;
 	routeur: Router;
 }
 
-export const ROUTEURS: ModuleRoute[] = [auth];
+export const ROUTEURS: ModuleRoute[] = [
+	auth,
+	emplois,
+	espace,
+	referentiels,
+	{ prefixe: referentiels.prefixeVisites, routeur: referentiels.routeurVisites }
+];
