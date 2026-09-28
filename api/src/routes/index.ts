@@ -5,6 +5,7 @@
  * `/api`. Un module = un fichier, comme côté Python (voir docs/CONVENTIONS.md).
  */
 import type { Router } from 'express';
+import * as accompagnement from './accompagnement.js';
 import * as annonces from './annonces.js';
 import * as auth from './auth.js';
 import * as businessPlan from './business-plan.js';
@@ -32,6 +33,7 @@ export interface ModuleRoute {
 }
 
 export const ROUTEURS: ModuleRoute[] = [
+	accompagnement,
 	annonces,
 	auth,
 	businessPlan,

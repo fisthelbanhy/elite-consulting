@@ -5,15 +5,15 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Accompagnement (9)
 
-- [ ] `GET /api/accompagnement` — Lister
-- [ ] `POST /api/accompagnement` — Creer
-- [ ] `GET /api/accompagnement/compteurs` — Compteurs
-- [ ] `GET /api/accompagnement/questionnaires` — Questionnaires
-- [ ] `GET /api/accompagnement/questionnaires/{slug}` — Questionnaire
-- [ ] `DELETE /api/accompagnement/{id_}` — Effacer
-- [ ] `GET /api/accompagnement/{id_}` — Detail
-- [ ] `PUT /api/accompagnement/{id_}` — Modifier
-- [ ] `POST /api/accompagnement/{id_}/etat` — Etat
+- [x] `GET /api/accompagnement` — Lister
+- [x] `POST /api/accompagnement` — Creer
+- [x] `GET /api/accompagnement/compteurs` — Compteurs
+- [x] `GET /api/accompagnement/questionnaires` — Questionnaires
+- [x] `GET /api/accompagnement/questionnaires/{slug}` — Questionnaire
+- [x] `DELETE /api/accompagnement/{id_}` — Effacer
+- [x] `GET /api/accompagnement/{id_}` — Detail
+- [x] `PUT /api/accompagnement/{id_}` — Modifier
+- [x] `POST /api/accompagnement/{id_}/etat` — Etat
 
 ## Appels de fonds (18)
 
