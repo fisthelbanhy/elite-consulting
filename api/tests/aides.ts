@@ -123,3 +123,18 @@ export async function entetes(
 export function lireMembre(id: number) {
 	return db.select().from(tableMembre).where(eq(tableMembre.id, id)).get();
 }
+
+/** Petite image PNG valide, pour les tests de téléversement. */
+export async function imagePng(largeur = 40, hauteur = 30): Promise<Buffer> {
+	const sharp = (await import('sharp')).default;
+	return sharp({
+		create: {
+			width: largeur,
+			height: hauteur,
+			channels: 3,
+			background: { r: 255, g: 140, b: 0 }
+		}
+	})
+		.png()
+		.toBuffer();
+}

@@ -277,16 +277,16 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Immobilier (10)
 
-- [ ] `GET /api/immobilier` — Lister
-- [ ] `POST /api/immobilier` — Creer
-- [ ] `GET /api/immobilier/compteurs` — Compteurs
-- [ ] `GET /api/immobilier/encarts` — Encarts
-- [ ] `DELETE /api/immobilier/{id_}` — Effacer
-- [ ] `GET /api/immobilier/{id_}` — Detail
-- [ ] `PUT /api/immobilier/{id_}` — Modifier
-- [ ] `POST /api/immobilier/{id_}/etat` — Etat
-- [ ] `POST /api/immobilier/{id_}/interet` — Manifester
-- [ ] `POST /api/immobilier/{id_}/photo` — Photo
+- [x] `GET /api/immobilier` — Lister
+- [x] `POST /api/immobilier` — Creer
+- [x] `GET /api/immobilier/compteurs` — Compteurs
+- [x] `GET /api/immobilier/encarts` — Encarts
+- [x] `DELETE /api/immobilier/{id_}` — Effacer
+- [x] `GET /api/immobilier/{id_}` — Detail
+- [x] `PUT /api/immobilier/{id_}` — Modifier
+- [x] `POST /api/immobilier/{id_}/etat` — Etat
+- [x] `POST /api/immobilier/{id_}/interet` — Manifester
+- [x] `POST /api/immobilier/{id_}/photo` — Photo
 
 ## Likelemba (14)
 
@@ -333,40 +333,40 @@ Releve automatique de l OpenAPI du backend FastAPI avant migration vers Express.
 
 ## Paiements (6)
 
-- [ ] `GET /api/paiements` — Lister
-- [ ] `POST /api/paiements` — Declarer
-- [ ] `GET /api/paiements/miens` — Mes Paiements
-- [ ] `GET /api/paiements/preparer` — Preparer
-- [ ] `POST /api/paiements/{id_}/confirmer` — Confirmer
-- [ ] `POST /api/paiements/{id_}/rejeter` — Rejeter
+- [x] `GET /api/paiements` — Lister
+- [x] `POST /api/paiements` — Declarer
+- [x] `GET /api/paiements/miens` — Mes Paiements
+- [x] `GET /api/paiements/preparer` — Preparer
+- [x] `POST /api/paiements/{id_}/confirmer` — Confirmer
+- [x] `POST /api/paiements/{id_}/rejeter` — Rejeter
 
 ## Partenariat & troc (8)
 
-- [ ] `GET /api/partenariats` — Lister
-- [ ] `POST /api/partenariats` — Creer
-- [ ] `GET /api/partenariats/compteur` — Compteur
-- [ ] `DELETE /api/partenariats/{id_}` — Effacer
-- [ ] `GET /api/partenariats/{id_}` — Detail
-- [ ] `PUT /api/partenariats/{id_}` — Modifier
-- [ ] `POST /api/partenariats/{id_}/etat` — Etat
-- [ ] `POST /api/partenariats/{id_}/interet` — Manifester
+- [x] `GET /api/partenariats` — Lister
+- [x] `POST /api/partenariats` — Creer
+- [x] `GET /api/partenariats/compteur` — Compteur
+- [x] `DELETE /api/partenariats/{id_}` — Effacer
+- [x] `GET /api/partenariats/{id_}` — Detail
+- [x] `PUT /api/partenariats/{id_}` — Modifier
+- [x] `POST /api/partenariats/{id_}/etat` — Etat
+- [x] `POST /api/partenariats/{id_}/interet` — Manifester
 
 ## Petites annonces (14)
 
-- [ ] `GET /api/annonces` — Lister
-- [ ] `POST /api/annonces` — Creer
-- [ ] `GET /api/annonces/compteurs` — Compteurs
-- [ ] `GET /api/annonces/encarts` — Encarts
-- [ ] `GET /api/annonces/panier` — Panier
-- [ ] `DELETE /api/annonces/panier/{ligne_id}` — Retirer
-- [ ] `PUT /api/annonces/panier/{ligne_id}` — Changer Quantite
-- [ ] `DELETE /api/annonces/{id_}` — Effacer
-- [ ] `GET /api/annonces/{id_}` — Detail
-- [ ] `PUT /api/annonces/{id_}` — Modifier
-- [ ] `POST /api/annonces/{id_}/etat` — Etat
-- [ ] `POST /api/annonces/{id_}/interet` — Manifester
-- [ ] `POST /api/annonces/{id_}/panier` — Ajouter Au Panier
-- [ ] `POST /api/annonces/{id_}/photo` — Photo
+- [x] `GET /api/annonces` — Lister
+- [x] `POST /api/annonces` — Creer
+- [x] `GET /api/annonces/compteurs` — Compteurs
+- [x] `GET /api/annonces/encarts` — Encarts
+- [x] `GET /api/annonces/panier` — Panier
+- [x] `DELETE /api/annonces/panier/{ligne_id}` — Retirer
+- [x] `PUT /api/annonces/panier/{ligne_id}` — Changer Quantite
+- [x] `DELETE /api/annonces/{id_}` — Effacer
+- [x] `GET /api/annonces/{id_}` — Detail
+- [x] `PUT /api/annonces/{id_}` — Modifier
+- [x] `POST /api/annonces/{id_}/etat` — Etat
+- [x] `POST /api/annonces/{id_}/interet` — Manifester
+- [x] `POST /api/annonces/{id_}/panier` — Ajouter Au Panier
+- [x] `POST /api/annonces/{id_}/photo` — Photo
 
 ## Publicités (9)
 

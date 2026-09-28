@@ -86,6 +86,50 @@ export function auteur(
 	};
 }
 
+/** Coordonnées d'un membre, visibles seulement de l'auteur de la fiche et des gestionnaires. */
+export interface ContactMembre {
+	id: number;
+	pseudonyme: string;
+	nom: string;
+	telephone: string;
+	email: string | null;
+}
+
+/** Une expression de besoin ou d'intérêt, telle que la voit l'auteur de la fiche. */
+export interface InteretOut {
+	id: number;
+	sous_type: number;
+	message: string;
+	date_creation: Date;
+	membre: ContactMembre | null;
+}
+
+interface InteretBrut {
+	id: number;
+	sous_type: number;
+	message: string;
+	date_creation: Date;
+	membre_id: number | null;
+}
+
+/**
+ * Vue des contributions reçues sous une fiche, avec les coordonnées de leurs auteurs.
+ * Motif commun aux emplois, à l'immobilier, aux petites annonces et aux partenariats
+ * (ADR-0007 S2d) : à n'appeler que pour l'auteur de la fiche ou un gestionnaire.
+ */
+export function vueInterets(
+	contributions: InteretBrut[],
+	contacts: Map<number, ContactMembre>
+): InteretOut[] {
+	return contributions.map((i) => ({
+		id: i.id,
+		sous_type: i.sous_type,
+		message: i.message,
+		date_creation: i.date_creation,
+		membre: i.membre_id !== null ? (contacts.get(i.membre_id) ?? null) : null
+	}));
+}
+
 // --- Briques Zod réutilisées ---------------------------------------------------------------------
 
 /**

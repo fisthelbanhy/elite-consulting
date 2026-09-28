@@ -9,8 +9,11 @@ import { config } from './config.js';
 import { membreOptionnel } from './deps.js';
 import { gestionnaireDErreurs, routeInconnue } from './erreurs.js';
 import { ROUTEURS } from './routes/index.js';
+import { chargerTraitements } from './services/traitements.js';
 
 export function creerApp(): Express {
+	chargerTraitements();
+
 	const app = express();
 
 	// Derrière un reverse proxy : nécessaire pour que `req.ip` soit l'adresse du visiteur.
