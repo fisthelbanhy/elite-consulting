@@ -100,11 +100,28 @@ n'ont plus d'objet une fois `backend/` supprimé et disparaîtront avec lui.
 | `verifier-schema.ts` | Les tables et colonnes sont-elles les mêmes ? | 62 tables, 718 colonnes identiques |
 | `verifier-routes.ts` | Les opérations exposées sont-elles les mêmes ? | 381 montées / 381 attendues |
 | `comparer-reponses.ts` | Les **réponses** sont-elles les mêmes ? | 162 routes de lecture identiques |
+| `comparer-reprise.ts` | La **reprise des données legacy** donne-t-elle la même base ? | 62 tables, 110 lignes identiques |
+| `verifier-hachages.ts` | Les mots de passe repris restent-ils valides ? | 5 comptes, mot de passe et code de pointage acceptés |
 
-Le troisième est le seul qui couvre le calcul, l'ordre de tri et le format des dates : il interroge
-les deux backends sur le même jeu de démonstration et compare champ par champ, en neutralisant les
-seules valeurs qui ne peuvent pas coïncider (jetons, horodatages de création). C'est lui qui a
-révélé les écarts consignés en I10 à I14 de l'ADR-0011.
+`comparer-reponses.ts` est le seul qui couvre le calcul, l'ordre de tri et le format des dates : il
+interroge les deux backends sur le même jeu de démonstration et compare champ par champ, en
+neutralisant les seules valeurs qui ne peuvent pas coïncider (jetons, horodatages de création).
+C'est lui qui a révélé les écarts consignés en I10 à I14 de l'ADR-0011.
+
+Les deux derniers portent sur la reprise du dump de production. Ce dump n'est pas versionné
+(ADR-0012) : il n'est donc pas disponible pour servir de banc d'essai, et il serait imprudent de
+s'en servir comme tel. La parité se prouve à la place sur un **dump de synthèse**
+(`dump-synthetique.ts`) qui a la forme du vrai — mêmes tables, mêmes noms de colonnes — et qui
+exerce délibérément les treize corrections que la reprise applique : dates impossibles, textes
+doublement encodés, identifiants en double, e-mail et adresse du promoteur inversés, fiche RH sans
+auteur, réponse de dialogue adressée au membre n° 1… Les deux reprises en tirent la même base et
+le même rapport, au caractère près.
+
+Les hachages, eux, ne peuvent pas être comparés : Argon2 tire un sel au hasard, donc deux hachages
+du même mot de passe diffèrent — c'est le propre d'un bon hachage. `verifier-hachages.ts` vérifie
+donc la seule chose qui compte : un hachage **produit par Python** est accepté par le backend
+Express, et un mauvais mot de passe est refusé. C'est la propriété dont dépend l'accès des
+68 membres à leur compte.
 
 ### 5. Deux modes d'exécution
 

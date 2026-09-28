@@ -17,6 +17,6 @@
 		"migration": "npm --prefix api run migration",
 		"migrer": "npm --prefix api run migrer",
 		"donnees:demo": "npm --prefix api run donnees:demo",
-		"donnees:legacy": "node scripts/py.mjs scripts/reprise_legacy.py ../cp1019011_lafrangine.sql --images ../lafrangine/V04/image/ig"
+		"donnees:legacy": "npm --prefix api run donnees:legacy --"
 	}
 }

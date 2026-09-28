@@ -19,7 +19,10 @@
 		"verifier:schema": "tsx scripts/verifier-schema.ts",
 		"verifier:routes": "tsx scripts/verifier-routes.ts",
 		"verifier:reponses": "tsx scripts/comparer-reponses.ts",
-		"build": "tsc -p tsconfig.build.json"
+		"build": "tsc -p tsconfig.build.json",
+		"donnees:legacy": "tsx src/scripts/reprise-legacy.ts",
+		"verifier:reprise": "tsx scripts/comparer-reprise.ts",
+		"verifier:hachages": "tsx scripts/verifier-hachages.ts"
 	},
 	"dependencies": {
 		"@node-rs/argon2": "^2.2.1",
