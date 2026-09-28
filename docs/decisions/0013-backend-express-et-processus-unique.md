@@ -92,6 +92,36 @@ Le contrat des 381 endpoints a été relevé depuis l'OpenAPI de FastAPI **avant
 et versionné comme liste à cocher : [`docs/migration-express-parite.md`](../migration-express-parite.md).
 Le backend Python n'est supprimé qu'une fois les 381 lignes cochées et les tests portés au vert.
 
+Trois outils, dans `api/scripts/`, transforment cette promesse en vérification mécanique. Ils
+n'ont plus d'objet une fois `backend/` supprimé et disparaîtront avec lui.
+
+| Outil | Question à laquelle il répond | Résultat |
+|---|---|---|
+| `verifier-schema.ts` | Les tables et colonnes sont-elles les mêmes ? | 62 tables, 718 colonnes identiques |
+| `verifier-routes.ts` | Les opérations exposées sont-elles les mêmes ? | 381 montées / 381 attendues |
+| `comparer-reponses.ts` | Les **réponses** sont-elles les mêmes ? | 162 routes de lecture identiques |
+
+Le troisième est le seul qui couvre le calcul, l'ordre de tri et le format des dates : il interroge
+les deux backends sur le même jeu de démonstration et compare champ par champ, en neutralisant les
+seules valeurs qui ne peuvent pas coïncider (jetons, horodatages de création). C'est lui qui a
+révélé les écarts consignés en I10 à I14 de l'ADR-0011.
+
+### 5. Deux modes d'exécution
+
+| | Développement (`npm run dev`) | Production (`npm start`) |
+|---|---|---|
+| Site | Vite, port 5173, rechargement à chaud | handler `adapter-node`, monté dans Express |
+| API | Express, port 8000 (`LF_SERVIR_SITE=0`) | Express, même processus, même port |
+| Processus | deux | **un seul** |
+
+`LF_SERVIR_SITE=0` est posé par `scripts/dev.mjs` : sans lui, un `frontend/build` laissé par une
+construction précédente servirait sur le port de l'API une version figée du site.
+
+`LF_SITE_URL` doit porter l'**adresse publique** du site : SvelteKit s'en sert pour sa protection
+CSRF et rejette en 403 tout envoi de formulaire venu d'une autre origine — connexion comprise.
+Restée à sa valeur de développement, le serveur refuse de démarrer en production plutôt que de
+laisser chercher d'où viennent les 403.
+
 ## Conséquences
 
 **Favorables**

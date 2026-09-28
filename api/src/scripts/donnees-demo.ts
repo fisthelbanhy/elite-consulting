@@ -2,7 +2,7 @@
  * Crée une base de développement utilisable **sans le dump de production** (ADR-0012).
  * Portage de `backend/scripts/donnees_demo.py`.
  *
- * Charge les référentiels versionnés (`fixtures/referentiels.json`), puis crée des comptes et
+ * Charge les référentiels versionnés (`api/fixtures/referentiels.json`), puis crée des comptes et
  * quelques fiches de démonstration dans chaque module. Destiné aux sessions cloud et aux nouveaux
  * postes ; pour travailler sur les vraies données, utiliser le script de reprise du legacy.
  *
@@ -65,8 +65,9 @@ import { nouvelleReference, Prefixe } from '../services/references.js';
 import { appliquerMigrations } from './migrer.js';
 
 const MOT_DE_PASSE = 'demo1234';
-const RACINE = join(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
-const FIXTURES = join(RACINE, 'backend', 'fixtures', 'referentiels.json');
+/** Racine du paquet `api/` — les référentiels y sont versionnés, à côté du code qui les charge. */
+const RACINE = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
+const FIXTURES = join(RACINE, 'fixtures', 'referentiels.json');
 
 const maintenant = new Date();
 const AUJ = new Date(maintenant.getFullYear(), maintenant.getMonth(), maintenant.getDate());

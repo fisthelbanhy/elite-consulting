@@ -2,18 +2,21 @@
 	"name": "lafrangine",
 	"private": true,
 	"type": "module",
-	"description": "La Frangine — plateforme d'accompagnement des entrepreneurs congolais (SvelteKit + FastAPI)",
+	"description": "La Frangine — plateforme d'accompagnement des entrepreneurs congolais (SvelteKit + Express)",
 	"scripts": {
 		"setup": "node scripts/setup.mjs",
 		"dev": "node scripts/dev.mjs",
-		"dev:api": "node scripts/py.mjs -m uvicorn app.main:app --port 8000 --reload --reload-dir app",
-		"dev:site": "npm --prefix frontend run dev",
-		"donnees:demo": "node scripts/py.mjs scripts/donnees_demo.py",
-		"donnees:legacy": "node scripts/py.mjs scripts/reprise_legacy.py ../cp1019011_lafrangine.sql --images ../lafrangine/V04/image/ig",
-		"test": "node scripts/py.mjs -m pytest -q",
-		"lint": "node scripts/py.mjs -m ruff check app scripts tests migrations",
-		"check": "npm --prefix frontend run check",
-		"build": "npm --prefix frontend run build",
-		"migration": "node scripts/py.mjs -m alembic revision --autogenerate -m"
+		"dev:api": "node scripts/dev.mjs api",
+		"dev:site": "node scripts/dev.mjs site",
+		"build": "npm --prefix api run build && npm --prefix frontend run build",
+		"start": "npm --prefix api start",
+		"test": "npm --prefix api test",
+		"lint": "npm --prefix api run lint && npm --prefix frontend run lint",
+		"check": "npm --prefix api run check && npm --prefix frontend run check",
+		"format": "npm --prefix api run format && npm --prefix frontend run format",
+		"migration": "npm --prefix api run migration",
+		"migrer": "npm --prefix api run migrer",
+		"donnees:demo": "npm --prefix api run donnees:demo",
+		"donnees:legacy": "node scripts/py.mjs scripts/reprise_legacy.py ../cp1019011_lafrangine.sql --images ../lafrangine/V04/image/ig"
 	}
 }

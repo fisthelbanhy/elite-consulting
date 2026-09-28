@@ -12,11 +12,14 @@ venv/
 node_modules/
 .svelte-kit/
 build/
+api/dist/
 .env
 .env.*
 !.env.example
 
 # Données locales / uploads / bases
+api/data/
+api/media/
 backend/data/
 backend/media/
 *.sqlite3

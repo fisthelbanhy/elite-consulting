@@ -55,7 +55,12 @@ export function creerApp(): Express {
 			immutable: true,
 			index: false,
 			dotfiles: 'deny'
-		})
+		}),
+		// Un média absent s'arrête **ici** et ne continue pas vers le handler SvelteKit monté
+		// ensuite : celui-ci sert `/media/*` en relayant la demande à l'API, c'est-à-dire à ce
+		// même processus (ADR-0013), et la demande tournerait en rond jusqu'à épuiser les
+		// connexions. Un 404 franc, comme le rendait l'ancien backend.
+		routeInconnue
 	);
 
 	app.use(gestionnaireDErreurs);

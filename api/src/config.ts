@@ -46,6 +46,13 @@ function entier(cle: string, defaut: number): number {
 	return Math.trunc(n);
 }
 
+/** Drapeau `LF_…` : `0`, `false` et `non` valent faux, tout le reste vaut la valeur par défaut. */
+function drapeau(cle: string, defaut: boolean): boolean {
+	const v = process.env[`LF_${cle}`];
+	if (v === undefined || v.trim() === '') return defaut;
+	return !['0', 'false', 'non'].includes(v.trim().toLowerCase());
+}
+
 const databaseUrl = texte(
 	'DATABASE_URL',
 	`sqlite:///${join(BASE_DIR, 'data', 'lafrangine.sqlite3').replaceAll('\\', '/')}`
@@ -88,6 +95,16 @@ export const config = {
 	 * documentation existante indique. En production, l'hébergeur impose son port par `PORT`.
 	 */
 	port: entier('PORT', Number(process.env.PORT) || 8000),
+
+	/**
+	 * Servir aussi le site construit (`frontend/build`) depuis ce processus.
+	 *
+	 * Vrai par défaut : c'est le mode de production (ADR-0013). En développement, `npm run dev`
+	 * pose `LF_SERVIR_SITE=0`, car c'est Vite qui sert le site, avec le rechargement à chaud ; sans
+	 * cela, un `frontend/build` laissé par une construction précédente servirait sur le port de
+	 * l'API une version figée du site, sans qu'on comprenne d'où elle sort.
+	 */
+	servirSite: drapeau('SERVIR_SITE', true),
 
 	get estSqlite(): boolean {
 		return databaseUrl.startsWith('sqlite');

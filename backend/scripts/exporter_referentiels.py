@@ -34,7 +34,7 @@ from app.models import (  # noqa: E402
     Ville,
 )
 
-CIBLE = Path(__file__).resolve().parent.parent / "fixtures" / "referentiels.json"
+CIBLE = Path(__file__).resolve().parent.parent.parent / "api" / "fixtures" / "referentiels.json"
 
 # Colonnes exclues : contacts nominatifs des banques, compteurs de séquences et d'audience
 EXCLUS = {

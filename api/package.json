@@ -6,7 +6,7 @@
 	"description": "API Express/TypeScript de La Frangine — plateforme d'accompagnement des entrepreneurs congolais (ADR-0013)",
 	"scripts": {
 		"dev": "tsx watch src/serveur.ts",
-		"start": "node --experimental-strip-types src/serveur.ts",
+		"start": "node dist/serveur.js",
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"check": "tsc --noEmit",
@@ -18,7 +18,8 @@
 		"donnees:demo": "tsx src/scripts/donnees-demo.ts",
 		"verifier:schema": "tsx scripts/verifier-schema.ts",
 		"verifier:routes": "tsx scripts/verifier-routes.ts",
-		"verifier:reponses": "tsx scripts/comparer-reponses.ts"
+		"verifier:reponses": "tsx scripts/comparer-reponses.ts",
+		"build": "tsc -p tsconfig.build.json"
 	},
 	"dependencies": {
 		"@node-rs/argon2": "^2.2.1",

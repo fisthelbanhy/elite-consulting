@@ -39,7 +39,7 @@ from app.security import hacher_mot_de_passe  # noqa: E402
 from app.services.references import Prefixe, nouvelle_reference  # noqa: E402
 
 MOT_DE_PASSE = "demo1234"
-FIXTURES = Path(__file__).resolve().parent.parent / "fixtures" / "referentiels.json"
+FIXTURES = Path(__file__).resolve().parent.parent.parent / "api" / "fixtures" / "referentiels.json"
 AUJ = date.today()
 
 TABLES = [

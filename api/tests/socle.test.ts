@@ -1,5 +1,6 @@
 /** Vérifications du socle : schéma applicable, pagination, recherche, visibilité, références. */
 import { beforeAll, describe, expect, it } from 'vitest';
+import { client } from './aides.js';
 import { eq } from 'drizzle-orm';
 import { db, JourSeul, serialiserDate, sqlite } from '../src/db.js';
 import { appliquerMigrations } from '../src/scripts/migrer.js';
@@ -127,5 +128,16 @@ describe('dates en JSON', () => {
 			.run();
 		const lu = db.select().from(membre).where(eq(membre.id, 2)).get()!;
 		expect(serialiserDate(lu.date_limite_master!)).toBe('2026-10-15');
+	});
+});
+
+describe('fichiers téléversés', () => {
+	it('répond 404 sur un média absent plutôt que de laisser passer la demande', async () => {
+		// En un seul processus (ADR-0013), le handler SvelteKit est monté après `/media` et sert
+		// lui aussi `/media/*` en relayant la demande à l'API : sans ce 404 franc, une image
+		// manquante repartirait vers ce même processus et tournerait en rond.
+		const r = await client().get('/media/aucune-image.jpg');
+		expect(r.status).toBe(404);
+		expect(r.body).toEqual({ message: 'Élément introuvable.', champs: {} });
 	});
 });
