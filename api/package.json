@@ -22,7 +22,9 @@
 		"build": "tsc -p tsconfig.build.json",
 		"donnees:legacy": "tsx src/scripts/reprise-legacy.ts",
 		"verifier:reprise": "tsx scripts/comparer-reprise.ts",
-		"verifier:hachages": "tsx scripts/verifier-hachages.ts"
+		"verifier:hachages": "tsx scripts/verifier-hachages.ts",
+		"comptes:demo": "tsx src/scripts/comptes-demo.ts",
+		"referentiels:exporter": "tsx src/scripts/exporter-referentiels.ts"
 	},
 	"dependencies": {
 		"@node-rs/argon2": "^2.2.1",
