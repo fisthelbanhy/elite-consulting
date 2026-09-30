@@ -69,9 +69,27 @@ Ils ne se voyaient pas dans l'archive, faute d'avoir été exercés sous Windows
 | `npm run donnees:legacy -- … --images <dossier>` : npm retire les arguments en `--xxx` avant de les remettre au script (et le faisait deux fois, la commande racine relançant un `npm run` imbriqué) | **Silencieux et grave** : la reprise se terminait « avec succès » en ayant ignoré toutes les images. 11 499 lignes au lieu de 11 548, aucun avertissement | Nouveau relais `scripts/donnees-legacy.mjs` : le dossier d'images devient un argument **positionnel**, hors de portée de npm ; chemins résolus depuis la racine du dépôt |
 | `api/scripts/verifier-routes.ts` lisait le contrat via `new URL(…).pathname`, qui rend `/D:/…` sous Windows | La vérification de parité des routes s'arrêtait sur `ENOENT` (`D:\D:\…`) | `fileURLToPath()` |
 
-La première mérite d'être retenue au-delà de ce projet : une option de chargement de données qui
-peut être perdue en route **sans erreur** est un piège. D'où le choix du positionnel, qu'aucun
-intermédiaire ne peut avaler.
+### 4. Dérive des outils de style, traitée au cas par cas
+
+L'installation depuis les verrous a amené des versions plus récentes que celles ayant servi à
+écrire le code : Prettier 3.9 (qui coupe les ternaires autrement — 456 fichiers du site remis en
+forme, sans changement de comportement) et `eslint-plugin-svelte` avec de nouvelles règles.
+Celles-ci ont été tranchées une par une plutôt que désactivées en bloc :
+
+| Règle | Décision | Raison |
+|---|---|---|
+| `svelte/no-navigation-without-resolve` (261 cas) | Désactivée dans `eslint.config.js` | Elle protège les liens écrits en dur quand le site est servi sous un sous-chemin. Il est servi à la racine du domaine et n'importe nulle part `$app/paths`. À réactiver si un `base` apparaît |
+| `svelte/no-at-html-tags` (20 cas) | **Maintenue**, dérogation commentée à chaque emploi | Les deux seules sources de HTML sont auditées : `jsonLd()` (échappement strict) et `texteAideHtml()` (liste blanche de balises sans attribut). La règle continue de protéger le code futur |
+| `svelte/prefer-writable-derived` (2 cas) | Dérogation commentée | Le drapeau « le composant tourne côté navigateur » ne peut pas être un `$derived` : celui-ci s'évaluerait aussi au rendu serveur et casserait l'amélioration progressive |
+| `svelte/prefer-svelte-reactivity` (3 cas) | Dérogation commentée | `URLSearchParams` et `Date` locaux à une fonction pure, jetés aussitôt : rien n'est observé |
+| `no-irregular-whitespace` | `skipTemplates: true` | L'espace fine insécable de « 5 000 FCFA » est de la typographie française, écrite dans les gabarits de `format.ts` |
+
+La règle sur `{@html}` est celle qui méritait le plus d'être gardée : c'est la seule qui aurait
+signalé une faille réelle si un jour un texte non assaini y passait.
+
+La perte silencieuse de `--images` mérite d'être retenue au-delà de ce projet : une option de
+chargement de données qui peut être perdue en route **sans erreur** est un piège. D'où le choix
+du positionnel, qu'aucun intermédiaire ne peut avaler.
 
 ## Conséquences
 
