@@ -105,6 +105,14 @@ du positionnel, qu'aucun intermédiaire ne peut avaler.
   écritures — panne silencieuse, découverte en production. Il faut arrêter le serveur, ce qui
   replie le journal.
 
+- **L'archive produite est relue et validée** avant d'être annoncée : présence des fichiers dont
+  l'installation dépend, absence de ce qui ne doit pas sortir du poste. Cette vérification n'est
+  pas de la prudence gratuite — le premier déploiement a échoué chez l'hébergeur parce que
+  `frontend/package-lock.json` manquait, l'exclusion des verrous ayant été écrite par **nom de
+  fichier** au lieu de **chemin** : elle emportait aussi celui du site, dont le `postinstall` a
+  besoin pour son `npm ci`. Une omission dans une archive ne se voit pas à la fabrication ; elle
+  se voit au déploiement, dix minutes plus tard, dans un journal de compilation.
+
 L'archive exclut `node_modules` (binaires natifs de Windows), le dump legacy, `site.txt`, le code
 PHP de l'ancien site et les `.env` réels ; elle conserve `api/.env.example`, qui est la liste des
 variables à saisir chez l'hébergeur. Elle **contient des données personnelles** : elle ne doit être

@@ -40,30 +40,35 @@ const DOSSIERS_EXCLUS = new Set([
 	'media' // api/media : idem
 ]);
 
-/** Fichiers jamais embarqués. */
-function fichierExclu(nom) {
+/**
+ * Fichiers jamais embarqués. `chemin` est relatif à la racine du dépôt, en `/` : l'exclusion des
+ * verrous **dépend de l'emplacement** — seul celui de `api/` est écarté (l'API s'installe avec
+ * `--no-package-lock` pour que les binaires natifs se résolvent chez l'hébergeur), tandis que
+ * ceux de la racine et de `frontend/` sont indispensables : le `postinstall` fait un `npm ci`
+ * sur le site, qui échoue sans son verrou.
+ */
+function fichierExclu(chemin) {
+	const nom = chemin.slice(chemin.lastIndexOf('/') + 1);
 	return (
 		nom.endsWith('.zip') ||
 		nom === 'site.txt' ||
 		nom === 'cp1019011_lafrangine.sql' ||
 		// `.env.example` reste : c'est la liste des variables à saisir chez l'hébergeur.
 		(nom.startsWith('.env') && nom !== '.env.example') ||
-		// L'API s'installe sans verrou pour que les binaires natifs se résolvent chez l'hébergeur.
-		nom === 'package-lock.json'
+		chemin === 'api/package-lock.json'
 	);
 }
 
-function copier(source, cible, estRacine = false) {
+function copier(source, cible, prefixe = '') {
 	mkdirSync(cible, { recursive: true });
 	for (const nom of readdirSync(source)) {
 		const de = join(source, nom);
+		const chemin = prefixe ? `${prefixe}/${nom}` : nom;
 		if (statSync(de).isDirectory()) {
 			if (DOSSIERS_EXCLUS.has(nom)) continue;
-			copier(de, join(cible, nom));
+			copier(de, join(cible, nom), chemin);
 		} else {
-			// `package-lock.json` est légitime à la racine (le site s'installe depuis son verrou)
-			// et indésirable dans `api/`.
-			if (fichierExclu(nom) && !(estRacine && nom === 'package-lock.json')) continue;
+			if (fichierExclu(chemin)) continue;
 			cpSync(de, join(cible, nom));
 		}
 	}
@@ -80,7 +85,7 @@ exiger('api/dist/serveur.js', 'Lancez `npm run build` avant de fabriquer le paqu
 exiger('frontend/build/index.js', 'Lancez `npm run build` avant de fabriquer le paquet.');
 
 if (existsSync(chantier)) rmSync(chantier, { recursive: true, force: true });
-copier(racine, chantier, true);
+copier(racine, chantier);
 
 if (avecDonnees) {
 	const base = join(racine, 'api', 'data', 'lafrangine.sqlite3');
@@ -136,6 +141,59 @@ rmSync(chantier, { recursive: true, force: true });
 if (!fait) {
 	console.error('✗ Aucun outil d’archivage disponible (ni `tar -a`, ni `zip`).');
 	process.exit(1);
+}
+
+verifier();
+
+/**
+ * Relit l'archive produite. Un fichier manquant ne se voit pas à la fabrication : il se voit chez
+ * l'hébergeur, quand l'installation échoue. La liste ci-dessous est celle des fichiers dont le
+ * déploiement dépend réellement — c'est l'absence de `frontend/package-lock.json`, indispensable
+ * au `npm ci` du `postinstall`, qui a fait échouer le premier déploiement.
+ */
+function verifier() {
+	const r = spawnSync('tar', ['-tf', archive], { encoding: 'utf8', shell: process.platform === 'win32' });
+	if (r.status !== 0) {
+		console.error('✗ Archive illisible : ' + (r.stderr ?? '').trim());
+		process.exit(1);
+	}
+	const entrees = new Set(r.stdout.split('\n').map((l) => l.trim().replace(/^\.\//, '')));
+
+	const exiges = [
+		'package.json',
+		'package-lock.json', // le site s'installe depuis son verrou
+		'frontend/package-lock.json', // idem, via le postinstall (`npm ci`)
+		'frontend/package.json',
+		'api/package.json',
+		'api/.env.example',
+		'server.mjs',
+		'api/dist/serveur.js',
+		'frontend/build/index.js',
+		'api/migrations/0000_schema_initial.sql',
+		...(avecDonnees ? ['donnees-production/lafrangine.sqlite3', 'donnees-production/LISEZ-MOI.md'] : [])
+	];
+	const manquants = exiges.filter((f) => !entrees.has(f));
+
+	// Ce qui ne doit jamais sortir du poste, ni alourdir l'archive.
+	const interdits = [...entrees].filter(
+		(f) =>
+			f.includes('node_modules/') ||
+			f.startsWith('lafrangine/') ||
+			f.startsWith('.ancien-fastapi/') ||
+			f === 'api/package-lock.json' ||
+			f === 'site.txt' ||
+			f === 'cp1019011_lafrangine.sql' ||
+			f.endsWith('.zip') ||
+			/(^|\/)\.env$/.test(f)
+	);
+
+	if (manquants.length || interdits.length) {
+		for (const f of manquants) console.error(`✗ manquant dans l'archive : ${f}`);
+		for (const f of interdits) console.error(`✗ ne doit pas y être : ${f}`);
+		console.error("\nArchive inutilisable, elle n'a pas été validée.");
+		process.exit(1);
+	}
+	console.log(`  ${entrees.size - 1} entrées vérifiées.`);
 }
 
 const mo = (statSync(archive).size / 1024 / 1024).toFixed(1);
