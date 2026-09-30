@@ -17,7 +17,9 @@
 	const ville = $derived(data.villes.find((v) => String(v.id) === f.ville_id)?.nom);
 	const secteur = $derived(data.secteurs.find((s) => String(s.id) === f.secteur_id)?.libelle);
 	const lieu = $derived(ville ? `à ${ville}` : 'à Brazzaville et Pointe-Noire');
-	const titre = $derived(secteur ? `Entreprises : ${secteur} ${lieu}` : `Annuaire des entreprises ${lieu}`);
+	const titre = $derived(
+		secteur ? `Entreprises : ${secteur} ${lieu}` : `Annuaire des entreprises ${lieu}`
+	);
 	const filtre = $derived(!!(f.q || f.secteur_id || f.domaine_id || f.ville_id));
 </script>
 
@@ -33,9 +35,14 @@
 	{titre}
 	sousTitre="Trouvez un fournisseur, un prestataire ou un partenaire près de chez vous. Inscription gratuite."
 	surtitre="Opportunités"
-	fil={[{ href: '/opportunites', label: 'Opportunités' }, { href: '/entreprises', label: 'Annuaire' }]}
+	fil={[
+		{ href: '/opportunites', label: 'Opportunités' },
+		{ href: '/entreprises', label: 'Annuaire' }
+	]}
 >
-	<Bouton href="/entreprises/nouvelle"><Plus class="size-5" aria-hidden="true" />Inscrire mon entreprise</Bouton>
+	<Bouton href="/entreprises/nouvelle"
+		><Plus class="size-5" aria-hidden="true" />Inscrire mon entreprise</Bouton
+	>
 	{#snippet bas()}<OngletsSection projets={data.projets} />{/snippet}
 </EnTetePage>
 
@@ -47,7 +54,9 @@
 	<div class="mt-8">
 		{#if data.liste.items.length}
 			<p class="mb-4 text-ardoise" aria-live="polite">
-				{data.liste.total} entreprise{data.liste.total > 1 ? 's' : ''}{filtre ? ' correspondant à votre recherche' : ''}
+				{data.liste.total} entreprise{data.liste.total > 1 ? 's' : ''}{filtre
+					? ' correspondant à votre recherche'
+					: ''}
 			</p>
 			<ul class="grid gap-4 md:grid-cols-2">
 				{#each data.liste.items as e (e.id)}
@@ -58,7 +67,9 @@
 		{:else}
 			<EtatVide
 				icone={Building2}
-				titre={filtre ? 'Aucune entreprise ne correspond à votre recherche' : "L'annuaire attend sa première entreprise"}
+				titre={filtre
+					? 'Aucune entreprise ne correspond à votre recherche'
+					: "L'annuaire attend sa première entreprise"}
 				texte="Dites-nous ce que vous cherchez : votre frangine connaît du monde et vous met en relation."
 				messageWhatsApp="Bonjour la Frangine, je cherche une entreprise (fournisseur ou prestataire) : pouvez-vous m'aider ?"
 			>
@@ -72,13 +83,18 @@
 		<div class="mt-10"><EncartPublicites publicites={data.publicites} variante="bande" /></div>
 	{/if}
 
-	<section class="carte mt-10 flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+	<section
+		class="carte mt-10 flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between"
+	>
 		<div class="flex gap-4">
-			<span class="grid size-12 shrink-0 place-items-center rounded-xl bg-foret-50 text-foret-700"><BadgeCheck class="size-6" aria-hidden="true" /></span>
+			<span class="grid size-12 shrink-0 place-items-center rounded-xl bg-foret-50 text-foret-700"
+				><BadgeCheck class="size-6" aria-hidden="true" /></span
+			>
 			<div>
 				<h2 class="text-lg font-bold">Votre entreprise mérite d'être trouvée</h2>
 				<p class="text-[15px] text-ardoise">
-					Fiche gratuite avec logo et coordonnées, accès au comparateur de prix entre entreprises et aux marchés.
+					Fiche gratuite avec logo et coordonnées, accès au comparateur de prix entre entreprises et
+					aux marchés.
 				</p>
 			</div>
 		</div>

@@ -8,7 +8,10 @@
 	let { fiche: p }: { fiche: PartenariatResume } = $props();
 </script>
 
-<a href="/partenariats/{p.id}" class="carte flex h-full flex-col gap-3 p-5 transition-shadow hover:shadow-levee">
+<a
+	href="/partenariats/{p.id}"
+	class="carte flex h-full flex-col gap-3 p-5 transition-shadow hover:shadow-levee"
+>
 	<div class="flex flex-wrap items-center gap-2 text-xs text-ardoise">
 		<Handshake class="size-4 text-foret-600" aria-hidden="true" />
 		<span>{p.reference}</span>

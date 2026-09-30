@@ -36,7 +36,11 @@
 		{/if}
 		<div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 			<div class="max-w-3xl">
-				{#if surtitre}<p class="mb-1 text-sm font-semibold tracking-wide text-laterite-600 uppercase">{surtitre}</p>{/if}
+				{#if surtitre}<p
+						class="mb-1 text-sm font-semibold tracking-wide text-laterite-600 uppercase"
+					>
+						{surtitre}
+					</p>{/if}
 				<h1 class="text-[clamp(1.75rem,6vw,2.5rem)] leading-tight font-bold">{titre}</h1>
 				{#if sousTitre}<p class="mt-2 text-lg text-ardoise">{sousTitre}</p>{/if}
 			</div>

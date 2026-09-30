@@ -1,7 +1,7 @@
 # Dictionnaire de données — Membres, Connexion, RH, Likelemba
 
-> Reconstitué par analyse du code PHP legacy (V04). Sert de base à la génération
-> des modèles Django (`membres` app) et des vues SvelteKit correspondantes.
+> Reconstitué par analyse du code PHP legacy (V04). Sert de référence au schéma
+> (`api/src/schema/membres.ts`) et aux vues SvelteKit correspondantes.
 
 Périmètre analysé en intégralité : `incl-membre.php`, `incl-formulairemembre.php`, `incl-adhesion.php`, `incl-connexion.php`, `incl-connex.php`, `incl-contconnex.php`, `pmotpasoublie.php`, `pmembre.php`, `incl-humaine.php`, `incl-membrelikelemba.php`, `incl-payelikelemba.php`, `incl-likelemba.php`, `pdiplome.php`, `pfamilart.php`, `pmaladie.php`, `incl-variable.php`, `opportunite.php`.
 
@@ -18,9 +18,9 @@ Périmètre analysé en intégralité : `incl-membre.php`, `incl-formulairemembr
 
 ---
 
-## 1. Table `membre` — Compte utilisateur / adhérent (= `AUTH_USER_MODEL` Django)
+## 1. Table `membre` — Compte utilisateur / adhérent
 
-| Colonne SQL | Nom métier Django | Preuve / règle |
+| Colonne SQL | Nom métier | Preuve / règle |
 |---|---|---|
 | `indexmbr` | `id` (PK) | |
 | `typembr` | `type_compte` (IntegerChoices `TypeMembre`) | 1=Gestionnaire, 2=Master, 3=Membre. Pilote `$gtre` = niveau d'habilitation partout dans l'appli |
@@ -31,10 +31,10 @@ Périmètre analysé en intégralité : `incl-membre.php`, `incl-formulairemembr
 | `mailmbr` | `email` | |
 | `indexvil` | `ville` (FK → Ville) | Obligatoire |
 | `identifmbr` | `identifiant_connexion` (login, unique) | |
-| `motpasmbr` | mot de passe | **Stocké en clair dans le legacy** → à migrer vers `set_password()` Django (hash) |
+| `motpasmbr` | mot de passe | **Stocké en clair dans le legacy** → haché à la reprise (Argon2, ADR-0005) |
 | `observmbr` | `observation` | |
 | `etatmbr` | `statut_fiche` (`Etat`) | Seul `etatmbr==3` (Supprimé) bloque la connexion — 1 (Non traité) n'empêche PAS de se connecter |
-| `droitmbr` | 3 booléens explicites: `droit_gestion_membres`, `droit_confirmation_paiement`, `droit_gestion_fiches` | Chaîne positionnelle 3-5 caractères '0'/'1' en legacy — à exploser en champs Django |
+| `droitmbr` | 3 booléens explicites : `droit_attribution`, `droit_caisse`, `droit_activation` | Chaîne positionnelle 3-5 caractères '0'/'1' en legacy — éclatée en trois colonnes |
 | `adressembr` | `adresse` | |
 | `cnimbr` | `numero_piece_identite` | |
 | `employeurmbr` | `employeur` | Personne physique seulement |
@@ -78,22 +78,22 @@ Périmètre analysé en intégralité : `incl-membre.php`, `incl-formulairemembr
 | `indexmbr` | `membre` (FK) | |
 | `datevst` | `date_connexion` | |
 | `adresipvst` | `adresse_ip` | |
-| `datenumvst` | horodatage string YmdHis (doublon technique, ignorable côté Django — utiliser `datevst` seul) | |
+| `datenumvst` | horodatage string YmdHis (doublon technique, ignorable — utiliser `datevst` seul) | |
 
 Créée uniquement lors d'une connexion via formulaire (pas lors de la reconstruction de session par cookie).
 
 ---
 
-## 3. Authentification — flux à reproduire (côté Django: sessions DRF + `AbstractBaseUser`)
+## 3. Authentification — flux à reproduire
 
 - Login: `identifmbr` + `motpasmbr`, exclusion `etatmbr!=3`.
-- Session legacy: `$_SESSION['idfmps'] = "identifiant*motdepasse"` (persistance "remember me" artisanale) → **remplacer par une vraie session Django/DRF** (comportement équivalent, sécurité correcte).
+- Session legacy: `$_SESSION['idfmps'] = "identifiant*motdepasse"` (persistance "remember me" artisanale) → **remplacé par une vraie session serveur** : jeton opaque en cookie httpOnly (ADR-0002).
 - Déconnexion: détruit session, remet `connexmsgpmt`/`connexmsgmbr` à 0.
 - Contexte posé à la connexion, équivalent futur de `request.user`: `$gtre` (type_compte), `$imbr` (id), `droitmbr`, `categoriembr`, `banqboutqmbr`, `pointcaissembr`, `nomprenmbr`.
 - `incl-connexion.php` = **formulaire mort/non fonctionnel** (champs sans `name`) — ignorer, se baser sur `incl-connex.php` (vrai formulaire pied de page).
 
 ### Mot de passe oublié (`pmotpasoublie.php`) — À SÉCURISER lors de la migration
-Flux legacy: vérification croisée (catégorie + nom + pseudo + téléphone) → **restitution du mot de passe en clair à l'écran**, sans email. **À remplacer par un vrai flux email + token de réinitialisation** côté Django (comportement fonctionnel équivalent — "retrouver l'accès à son compte" — mais implémentation sécurisée).
+Flux legacy: vérification croisée (catégorie + nom + pseudo + téléphone) → **restitution du mot de passe en clair à l'écran**, sans email. **Remplacé par un vrai flux e-mail + lien de réinitialisation** (comportement fonctionnel équivalent — « retrouver l'accès à son compte » — mais implémentation sécurisée).
 
 ---
 
@@ -151,7 +151,7 @@ Pilotée par `typeinscripthmn` (= `$ode`): 1=Demande d'emploi (préfixe réf. `D
 `indexmld`→`id`, `libelemld`→`libelle` (≥5, unique), `descriptionmld`→`description`.
 `index1pdt`..`index5pdt` + `posologie1pdtmld`..`posologie5pdtmld`: 5 couples (produit FK, posologie texte).
 
-**Recommandation Django**: remplacer le pattern "5 colonnes fixes" par une relation M2M `Maladie ↔ Produit` avec table de liaison portant `posologie` (plus extensible, même comportement fonctionnel).
+**Fait**: le pattern « 5 colonnes fixes » est remplacé par la table de liaison `maladie_produit` (`maladie_id`, `produit_id`, `ordre`, `posologie`) — plus extensible, même comportement fonctionnel.
 
 `etatmld`: `Etat` (1-3 utilisés), défaut 2.
 
@@ -174,7 +174,7 @@ Pilotée par `typeinscripthmn` (= `$ode`): 1=Demande d'emploi (préfixe réf. `D
 | `etatlkb1` | `statut_fiche` (`Etat`) | |
 | `periodelkb1` | `periodicite` (`Periode`: Semaine/Quinzaine/Mensuel, obligatoire) | |
 
-**Migration**: recalculer `nbentrelkb1`/`nbpayelkb1` via COUNT() ou séquence dédiée en Django, mais **préserver le format de code existant** (déjà communiqué aux membres sur papier).
+**Migration**: `nbentrelkb1`/`nbpayelkb1` deviennent des compteurs recalculés, mais le **format des codes est préservé** (il a déjà été communiqué aux membres sur papier).
 
 ---
 
@@ -220,7 +220,7 @@ Pilotée par `typeinscripthmn` (= `$ode`): 1=Demande d'emploi (préfixe réf. `D
 | `modepayelkb3` | `mode_paiement` (`ModePaye`) |
 | `codechardenlkb3` | `code_transfert_charden` (si mode = Charden Farell, validé par `codecharden()`) |
 
-**⚠ État du code legacy**: le formulaire de SAISIE d'un paiement (`incl-payelikelemba.php` lignes 24-238) est **entièrement commenté/mort**. Seules actives: régénération de reçu, et affichage lecture seule de l'historique. **Le code mort reste une excellente spec de référence** (validations, anti-doublon par date, génération de reçu) à réimplémenter fidèlement côté Django — mais vérifier où se fait réellement la saisie aujourd'hui (probablement le module caisse générique `incl-enregpaye.php`, cf. rapport finance).
+**⚠ État du code legacy**: le formulaire de SAISIE d'un paiement (`incl-payelikelemba.php` lignes 24-238) est **entièrement commenté/mort**. Seules actives: régénération de reçu, et affichage lecture seule de l'historique. **Le code mort reste une excellente spec de référence** (validations, anti-doublon par date, génération de reçu) — mais vérifier où se fait réellement la saisie aujourd'hui (probablement le module caisse générique `incl-enregpaye.php`, cf. rapport finance).
 
 ---
 
@@ -254,18 +254,18 @@ article.indexfam ──> familart.indexfam
 maladie.index{1-5}pdt ──> produit.indexpdt
 ```
 
-Table de séquencement partagée **`parametre`** (singleton `indexpmt=1`): compteurs `nummembrepmt`, `numreferencepmt`, `numadhesionpmt`, `numlikelembapmt`, etc. → remplacer par séquences Django par modèle, **en préservant le format des codes déjà émis**.
+Table de séquencement partagée **`parametre`** (singleton `indexpmt=1`): compteurs `nummembrepmt`, `numreferencepmt`, `numadhesionpmt`, `numlikelembapmt`, etc. → remplacés par un compteur par table, **en préservant le format des codes déjà émis**.
 
 ---
 
 ## 12. Points d'attention prioritaires migration
 
 1. **Mots de passe en clair** → migrer via `set_password()`, supprimer la restitution en clair de `pmotpasoublie.php`.
-2. **`droitmbr`** (bitstring positionnelle) → 3 booléens Django explicites.
+2. **`droitmbr`** (bitstring positionnelle) → 3 booléens explicites (`droit_attribution`, `droit_caisse`, `droit_activation`).
 3. **Table `adhesion`**: sens non confirmé par ce périmètre — migrer données brutes seulement, sans logique.
 4. **`familart`**: corriger le libellé d'erreur ("article", pas "maladie").
 5. **`maladie` 5-colonnes**: remodeler en M2M avec table de liaison.
 6. **`incl-payelikelemba.php`**: formulaire de saisie mort — vérifier le canal réel de saisie des paiements likelemba (probablement module caisse commun).
 7. **`incl-connexion.php`**: formulaire mort, ignorer.
-8. Compteurs séquentiels manuels → séquences Django propres, format de sortie identique.
-9. Pattern compteur de vues (`nbvisiteX`/`datevisiteX`) répété sur `humaine`, `article`, `immobilier`, `appelfond` → factoriser en mixin Django `Viewable`.
+8. Compteurs séquentiels manuels → compteurs applicatifs propres, format de sortie identique.
+9. Pattern compteur de vues (`nbvisiteX`/`datevisiteX`) répété sur `humaine`, `article`, `immobilier`, `appelfond` → factorisé dans le fragment de colonnes `consultable`.

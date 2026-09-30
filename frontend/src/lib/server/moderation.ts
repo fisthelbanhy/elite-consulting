@@ -15,7 +15,10 @@ export function actionsModeration(chemin: (p: Params) => string, apresSuppressio
 		etat: async (event: RequestEvent) => {
 			const fd = await event.request.formData();
 			const etat = Number(fd.get('etat'));
-			const r = await soumettre<Ok>(event, `${chemin(event.params as Params)}/etat`, { body: { etat }, cle: 'moderation' });
+			const r = await soumettre<Ok>(event, `${chemin(event.params as Params)}/etat`, {
+				body: { etat },
+				cle: 'moderation'
+			});
 			if (!r.ok) return r.echec;
 			return { cle: 'moderation', succes: r.data.message };
 		},
@@ -23,7 +26,8 @@ export function actionsModeration(chemin: (p: Params) => string, apresSuppressio
 			try {
 				await api<Ok>(event, chemin(event.params as Params), { method: 'DELETE' });
 			} catch (e) {
-				if (e instanceof ApiError) return fail(e.statut, { cle: 'moderation', message: e.message, champs: e.champs });
+				if (e instanceof ApiError)
+					return fail(e.statut, { cle: 'moderation', message: e.message, champs: e.champs });
 				throw e;
 			}
 			redirect(303, `${apresSuppression}?supprime=1`);

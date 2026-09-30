@@ -25,7 +25,10 @@
 <EnTetePage
 	titre={q.libelle}
 	sousTitre="Dossier {d.reference} · créé le {date(d.date_creation)}"
-	fil={[{ href: '/accompagnement', label: 'Accompagnement' }, { href: `/accompagnement/${q.slug}`, label: q.libelle }]}
+	fil={[
+		{ href: '/accompagnement', label: 'Accompagnement' },
+		{ href: `/accompagnement/${q.slug}`, label: q.libelle }
+	]}
 >
 	<BadgeEtat etat={d.etat} libelles={ETATS_DOSSIER} />
 </EnTetePage>
@@ -33,12 +36,18 @@
 <div class="conteneur grid gap-8 py-8 lg:grid-cols-[1fr_20rem]">
 	<div class="min-w-0 space-y-6">
 		{#if data.statut === 'envoye'}
-			<Alerte type="succes" titre="Votre dossier est envoyé à votre conseiller.">Il le relit et revient vers vous. Vous pouvez encore le compléter à tout moment.</Alerte>
+			<Alerte type="succes" titre="Votre dossier est envoyé à votre conseiller."
+				>Il le relit et revient vers vous. Vous pouvez encore le compléter à tout moment.</Alerte
+			>
 		{:else if data.statut === 'sauvegarde'}
-			<Alerte type="succes" titre="Votre dossier est sauvegardé.">Complétez-le à votre rythme, puis envoyez-le à votre conseiller.</Alerte>
+			<Alerte type="succes" titre="Votre dossier est sauvegardé."
+				>Complétez-le à votre rythme, puis envoyez-le à votre conseiller.</Alerte
+			>
 		{/if}
 		{#if d.etat === 4 && !d.peut_modifier}
-			<Alerte type="info" titre="Votre conseiller a traité ce dossier.">Pour le modifier, écrivez-lui : il le rouvrira.</Alerte>
+			<Alerte type="info" titre="Votre conseiller a traité ce dossier."
+				>Pour le modifier, écrivez-lui : il le rouvrira.</Alerte
+			>
 		{/if}
 		<FormulaireDossier questionnaire={q} {form} initial={d} lecture={!d.peut_modifier} />
 	</div>
@@ -47,14 +56,30 @@
 		{#if d.contact}
 			<section class="carte space-y-2 p-5">
 				<h2 class="text-lg font-bold">Membre</h2>
-				<p class="font-semibold">{d.contact.nom} <span class="font-normal text-ardoise">({d.contact.pseudonyme})</span></p>
+				<p class="font-semibold">
+					{d.contact.nom} <span class="font-normal text-ardoise">({d.contact.pseudonyme})</span>
+				</p>
 				{#if d.contact.telephone}
 					<p class="flex flex-wrap gap-3">
-						<a href={lienTel(d.contact.telephone)} class="lien inline-flex items-center gap-1"><Phone class="size-4" aria-hidden="true" />{telephone(d.contact.telephone)}</a>
-						<a href={lienWhatsApp(d.contact.telephone, `Bonjour, je suis votre conseiller La Frangine pour le dossier ${d.reference}.`)} target="_blank" rel="noopener" class="font-semibold text-foret-700">WhatsApp</a>
+						<a href={lienTel(d.contact.telephone)} class="lien inline-flex items-center gap-1"
+							><Phone class="size-4" aria-hidden="true" />{telephone(d.contact.telephone)}</a
+						>
+						<a
+							href={lienWhatsApp(
+								d.contact.telephone,
+								`Bonjour, je suis votre conseiller La Frangine pour le dossier ${d.reference}.`
+							)}
+							target="_blank"
+							rel="noopener"
+							class="font-semibold text-foret-700">WhatsApp</a
+						>
 					</p>
 				{/if}
-				{#if d.contact.email}<p><a href="mailto:{d.contact.email}" class="lien inline-flex items-center gap-1"><Mail class="size-4" aria-hidden="true" />{d.contact.email}</a></p>{/if}
+				{#if d.contact.email}<p>
+						<a href="mailto:{d.contact.email}" class="lien inline-flex items-center gap-1"
+							><Mail class="size-4" aria-hidden="true" />{d.contact.email}</a
+						>
+					</p>{/if}
 			</section>
 		{/if}
 		<PanneauModeration
@@ -68,7 +93,16 @@
 			<section class="carte space-y-3 p-5">
 				<h2 class="text-lg font-bold">Une question sur une rubrique ?</h2>
 				<p class="text-sm text-ardoise">Votre conseiller vous aide à trouver les bons chiffres.</p>
-				<Bouton href={lienWhatsApp(wa, `Bonjour la Frangine, j’ai une question sur mon dossier ${d.reference}.`)} variante="whatsapp" target="_blank" rel="noopener" pleineLargeur>
+				<Bouton
+					href={lienWhatsApp(
+						wa,
+						`Bonjour la Frangine, j’ai une question sur mon dossier ${d.reference}.`
+					)}
+					variante="whatsapp"
+					target="_blank"
+					rel="noopener"
+					pleineLargeur
+				>
 					<MessageCircle class="size-5" aria-hidden="true" />Écrire sur WhatsApp
 				</Bouton>
 			</section>

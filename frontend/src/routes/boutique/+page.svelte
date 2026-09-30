@@ -35,7 +35,10 @@
 	{titre}
 	surtitre="Bien-être"
 	sousTitre="Les produits Forever Living à l'aloe vera, commandés en toute confiance auprès de votre frangine."
-	fil={[{ href: '/boutique', label: 'Boutique' }, ...(groupe ? [{ href: `/boutique?groupe=${groupe.groupe}`, label: groupe.libelle }] : [])]}
+	fil={[
+		{ href: '/boutique', label: 'Boutique' },
+		...(groupe ? [{ href: `/boutique?groupe=${groupe.groupe}`, label: groupe.libelle }] : [])
+	]}
 >
 	<Bouton href="/panier" variante="secondaire">
 		<ShoppingCart class="size-5" aria-hidden="true" />Mon panier{#if panier}&nbsp;({panier}){/if}
@@ -47,7 +50,9 @@
 				onglets={[
 					{ href: '/boutique', label: 'Produits', actif: true },
 					{ href: '/devenir-distributeur', label: 'Devenir distributeur' },
-					...(data.parametres.module_sante_actif ? [{ href: '/bien-etre', label: 'Fiches bien-être' }] : [])
+					...(data.parametres.module_sante_actif
+						? [{ href: '/bien-etre', label: 'Fiches bien-être' }]
+						: [])
 				]}
 			/>
 		</div>
@@ -57,17 +62,32 @@
 <div class="conteneur space-y-8 py-8">
 	{#if c.distributeur}
 		<p class="flex items-center gap-2 rounded-xl bg-foret-50 p-4 font-semibold text-foret-700">
-			<BadgeCheck class="size-5 shrink-0" aria-hidden="true" />Vous êtes distributeur : le prix distributeur s'applique à tous vos achats.
+			<BadgeCheck class="size-5 shrink-0" aria-hidden="true" />Vous êtes distributeur : le prix
+			distributeur s'applique à tous vos achats.
 		</p>
 	{/if}
 
-	<form method="GET" class="carte grid gap-3 p-4 sm:grid-cols-[1fr_auto_auto] sm:items-end" data-sveltekit-keepfocus>
+	<form
+		method="GET"
+		class="carte grid gap-3 p-4 sm:grid-cols-[1fr_auto_auto] sm:items-end"
+		data-sveltekit-keepfocus
+	>
 		{#if f.groupe}<input type="hidden" name="groupe" value={f.groupe} />{/if}
 		<div>
 			<label for="q" class="mb-1.5 block text-[15px] font-semibold">Rechercher un produit</label>
 			<div class="relative">
-				<Search class="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-ardoise" aria-hidden="true" />
-				<input id="q" name="q" type="search" value={f.q} placeholder="Nom, référence, ingrédient…" class="pl-10" />
+				<Search
+					class="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-ardoise"
+					aria-hidden="true"
+				/>
+				<input
+					id="q"
+					name="q"
+					type="search"
+					value={f.q}
+					placeholder="Nom, référence, ingrédient…"
+					class="pl-10"
+				/>
 			</div>
 		</div>
 		<div>
@@ -98,7 +118,12 @@
 				<span class="text-base font-normal text-ardoise" aria-live="polite">({c.total})</span>
 			</h2>
 			{#if c.items.length}
-				<GrilleProduits produits={c.items.map((p) => ({ produit: p }))} distributeur={c.distributeur} {form} colonnes="grid-cols-2 md:grid-cols-3" />
+				<GrilleProduits
+					produits={c.items.map((p) => ({ produit: p }))}
+					distributeur={c.distributeur}
+					{form}
+					colonnes="grid-cols-2 md:grid-cols-3"
+				/>
 				<Pagination total={c.total} page={c.page} taille={c.taille} />
 			{:else}
 				<EtatVide
@@ -121,10 +146,15 @@
 					<ol class="mt-3 divide-y divide-fleuve-900/5">
 						{#each data.populaires as p, i (p.id)}
 							<li>
-								<a href="/boutique/{p.id}" class="flex min-h-12 items-center gap-3 py-2 hover:text-fleuve-700">
+								<a
+									href="/boutique/{p.id}"
+									class="flex min-h-12 items-center gap-3 py-2 hover:text-fleuve-700"
+								>
 									<span class="w-5 text-sm font-bold text-ardoise">{i + 1}</span>
 									<span class="flex-1 text-[15px] leading-snug font-semibold">{p.nom}</span>
-									{#if p.prix > 0}<span class="montant text-sm text-laterite-700">{fcfa(p.prix)}</span>{/if}
+									{#if p.prix > 0}<span class="montant text-sm text-laterite-700"
+											>{fcfa(p.prix)}</span
+										>{/if}
 								</a>
 							</li>
 						{/each}

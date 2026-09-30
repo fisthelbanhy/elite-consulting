@@ -15,7 +15,7 @@ export const FAQ: Question[] = [
 	{
 		question: 'Combien coûte l’inscription ?',
 		reponse:
-			"L'inscription est gratuite. Certains services (produits de la boutique, accompagnements, statut Master pour les entreprises) sont payants : leur prix est toujours affiché avant de payer.",
+			"L'inscription est gratuite. Certains services (produits de la boutique, accompagnements, statut Master pour les entreprises) sont payants : leur prix est toujours affiché avant de payer."
 	},
 	{
 		question: 'Qu’est-ce que la Likelemba ?',
@@ -32,7 +32,7 @@ export const FAQ: Question[] = [
 	{
 		question: 'Comment publier une annonce, une offre d’emploi ou un projet ?',
 		reponse:
-			"Connectez-vous, ouvrez la rubrique qui vous intéresse (Emplois, Immobilier, Petites annonces, Appels de fonds…) et choisissez « Publier ». Les publications sont relues par l'équipe ; celles qui ne respectent pas les règles sont retirées.",
+			"Connectez-vous, ouvrez la rubrique qui vous intéresse (Emplois, Immobilier, Petites annonces, Appels de fonds…) et choisissez « Publier ». Les publications sont relues par l'équipe ; celles qui ne respectent pas les règles sont retirées."
 	},
 	{
 		question: 'Comment joindre une conseillère ?',
@@ -44,7 +44,10 @@ export const FAQ: Question[] = [
 		question: 'Comment reconnaître une arnaque ?',
 		reponse:
 			"Méfiez-vous de toute personne qui demande de l'argent pour un emploi, un « dossier » ou un prêt garanti, ou qui réclame votre code Mobile Money. Ne payez jamais d'avance un inconnu. En cas de doute, signalez-le-nous : nous vérifions et retirons les annonces frauduleuses.",
-		lien: { href: '/contact?objet=Signalement%20d%E2%80%99une%20arnaque', label: 'Signaler une arnaque' }
+		lien: {
+			href: '/contact?objet=Signalement%20d%E2%80%99une%20arnaque',
+			label: 'Signaler une arnaque'
+		}
 	},
 	{
 		question: 'Comment modifier ou supprimer mes informations ?',

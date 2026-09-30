@@ -15,18 +15,31 @@
 		<label for="choix-boutique" class="flex items-center gap-2 text-lg font-bold text-fleuve-700">
 			<Store class="size-5" aria-hidden="true" />Acheter chez une boutique partenaire ?
 		</label>
-		<p class="mt-1 text-[15px] text-ardoise">Facultatif : choisissez une boutique pour commander dans son catalogue, à ses prix.</p>
+		<p class="mt-1 text-[15px] text-ardoise">
+			Facultatif : choisissez une boutique pour commander dans son catalogue, à ses prix.
+		</p>
 		<div class="mt-3 flex flex-wrap gap-2">
-			<select id="choix-boutique" name="boutique" class="min-w-0 flex-1" onchange={(e) => e.currentTarget.form?.requestSubmit()}>
+			<select
+				id="choix-boutique"
+				name="boutique"
+				class="min-w-0 flex-1"
+				onchange={(e) => e.currentTarget.form?.requestSubmit()}
+			>
 				<option value="">Non, j'indique moi-même le lieu d'achat</option>
 				{#each boutiques as b (b.id)}
-					<option value={b.id} selected={b.id === boutique?.id}>{b.pseudonyme}{b.nombre_articles ? ` — ${b.nombre_articles} article${b.nombre_articles > 1 ? 's' : ''}` : ''}</option>
+					<option value={b.id} selected={b.id === boutique?.id}
+						>{b.pseudonyme}{b.nombre_articles
+							? ` — ${b.nombre_articles} article${b.nombre_articles > 1 ? 's' : ''}`
+							: ''}</option
+					>
 				{/each}
 			</select>
 			<Bouton type="submit" variante="secondaire">Choisir</Bouton>
 		</div>
 		{#if boutique}
-			<p class="mt-2 text-sm text-ardoise">{boutique.nom}{boutique.adresse ? ` — ${boutique.adresse}` : ''}</p>
+			<p class="mt-2 text-sm text-ardoise">
+				{boutique.nom}{boutique.adresse ? ` — ${boutique.adresse}` : ''}
+			</p>
 		{/if}
 	</form>
 {/if}

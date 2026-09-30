@@ -1,0 +1,14 @@
+node_modules/
+dist/
+# Verrou volontairement absent : l'API s'installe avec `npm install --no-package-lock` pour que
+# les binaires natifs (better-sqlite3, sharp) se résolvent selon la plateforme — un verrou
+# produit sous Windows ferait échouer l'installation Linux chez l'hébergeur (DEPLOIEMENT-HOSTINGER).
+package-lock.json
+data/
+media/
+.env
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm
+.tmp-tests/

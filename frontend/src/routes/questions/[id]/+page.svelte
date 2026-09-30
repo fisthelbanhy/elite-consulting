@@ -52,6 +52,7 @@
 		<meta name="robots" content="noindex" />
 	{:else}
 		<meta name="description" content={tronquer(s.texte, 155)} />
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -- jsonLd() échappe <, & et les séparateurs de ligne : aucune saisie ne peut fermer la balise -->
 		{@html donnees}
 	{/if}
 </svelte:head>
@@ -59,10 +60,18 @@
 <EnTetePage
 	titre={s.objet}
 	surtitre={prive ? 'Question privée' : 'Questions & conseils'}
-	fil={[{ href: '/se-lancer', label: 'Se lancer' }, { href: '/questions', label: 'Questions & conseils' }]}
+	fil={[
+		{ href: '/se-lancer', label: 'Se lancer' },
+		{ href: '/questions', label: 'Questions & conseils' }
+	]}
 >
 	{#if !prive}
-		<Bouton href={lienPartageWhatsApp(`${s.objet} — ${page.url.href}`)} variante="secondaire" target="_blank" rel="noopener">
+		<Bouton
+			href={lienPartageWhatsApp(`${s.objet} — ${page.url.href}`)}
+			variante="secondaire"
+			target="_blank"
+			rel="noopener"
+		>
 			<Share2 class="size-5" aria-hidden="true" />Partager
 		</Bouton>
 	{/if}
@@ -72,7 +81,10 @@
 	<div class="space-y-6">
 		{#if data.enregistre}
 			<Alerte type="succes" titre="Votre question est publiée.">
-				{prive ? 'La frangine va vous répondre ici.' : 'Les membres et la frangine peuvent maintenant vous répondre.'} Vous serez prévenu·e dans votre messagerie.
+				{prive
+					? 'La frangine va vous répondre ici.'
+					: 'Les membres et la frangine peuvent maintenant vous répondre.'} Vous serez prévenu·e dans
+				votre messagerie.
 			</Alerte>
 		{:else if data.modifie}
 			<Alerte type="succes" titre="Modification effectuée." />
@@ -90,14 +102,18 @@
 						<time datetime={s.date_creation ?? undefined}>{dateHeure(s.date_creation)}</time> · {s.reference}
 					</p>
 				</div>
-				{#if prive}<Badge ton="soleil"><Lock class="size-3" aria-hidden="true" />Privé : vous et la frangine</Badge>{/if}
+				{#if prive}<Badge ton="soleil"
+						><Lock class="size-3" aria-hidden="true" />Privé : vous et la frangine</Badge
+					>{/if}
 			</div>
 			<p class="mt-4 text-lg whitespace-pre-line">{s.texte}</p>
 		</article>
 
 		<section class="carte px-6 py-2" aria-labelledby="titre-reponses">
 			<h2 id="titre-reponses" class="pt-4 text-xl font-bold">
-				{s.reponses.length ? `${s.reponses.length} réponse${s.reponses.length > 1 ? 's' : ''}` : 'Aucune réponse pour le moment'}
+				{s.reponses.length
+					? `${s.reponses.length} réponse${s.reponses.length > 1 ? 's' : ''}`
+					: 'Aucune réponse pour le moment'}
 			</h2>
 			{#if s.reponses.length}
 				<div class="divide-y divide-fleuve-900/5">
@@ -106,16 +122,24 @@
 					{/each}
 				</div>
 			{:else}
-				<p class="pt-2 pb-4 text-ardoise">{prive ? 'La frangine lit votre question et vous répond très vite.' : 'Vous connaissez la réponse ? Partagez votre expérience.'}</p>
+				<p class="pt-2 pb-4 text-ardoise">
+					{prive
+						? 'La frangine lit votre question et vous répond très vite.'
+						: 'Vous connaissez la réponse ? Partagez votre expérience.'}
+				</p>
 			{/if}
 		</section>
 
 		<section class="carte p-6" aria-labelledby="titre-repondre">
-			<h2 id="titre-repondre" class="text-xl font-bold">{prive && s.est_auteur ? 'Compléter votre question' : 'Répondre'}</h2>
+			<h2 id="titre-repondre" class="text-xl font-bold">
+				{prive && s.est_auteur ? 'Compléter votre question' : 'Répondre'}
+			</h2>
 			{#if s.etat === 4}
 				<p class="mt-2 text-ardoise">Ce sujet est clôturé : il n'accepte plus de réponses.</p>
 			{:else if !connecte}
-				<p class="mt-2 text-[15px] text-ardoise">Créez votre compte gratuit pour répondre et poser vos propres questions.</p>
+				<p class="mt-2 text-[15px] text-ardoise">
+					Créez votre compte gratuit pour répondre et poser vos propres questions.
+				</p>
 				<div class="mt-4 flex flex-wrap gap-3">
 					<Bouton href="/inscription?suite={suite}">Créer mon compte</Bouton>
 					<Bouton href="/connexion?suite={suite}" variante="fantome">J'ai déjà un compte</Bouton>
@@ -123,7 +147,13 @@
 			{:else if s.peut_repondre}
 				<Formulaire action="?/repondre" {form} cle="reponse" reinitialiser class="mt-4">
 					{#snippet children({ envoi })}
-						<Zone label="Votre réponse" id="texte-nouvelle-reponse" lignes={4} requis {...champ(form, 'texte', '', 'reponse')} />
+						<Zone
+							label="Votre réponse"
+							id="texte-nouvelle-reponse"
+							lignes={4}
+							requis
+							{...champ(form, 'texte', '', 'reponse')}
+						/>
 						<Bouton type="submit" class="mt-4" chargement={envoi}>Publier ma réponse</Bouton>
 					{/snippet}
 				</Formulaire>
@@ -132,7 +162,9 @@
 			{/if}
 		</section>
 
-		<a href="/questions" class="lien inline-flex items-center gap-1"><ArrowLeft class="size-4" aria-hidden="true" />Retour aux sujets</a>
+		<a href="/questions" class="lien inline-flex items-center gap-1"
+			><ArrowLeft class="size-4" aria-hidden="true" />Retour aux sujets</a
+		>
 	</div>
 
 	<aside class="space-y-6">
@@ -151,8 +183,12 @@
 		/>
 		<section class="carte p-5">
 			<h2 class="text-lg font-bold">Besoin d'un vrai coup de main ?</h2>
-			<p class="mt-2 text-[15px] text-ardoise">Faites le point en 3 minutes : votre frangine vous propose un plan d'action.</p>
-			<Bouton href="/diagnostic" variante="fleuve" class="mt-4" pleineLargeur>Faire mon diagnostic gratuit</Bouton>
+			<p class="mt-2 text-[15px] text-ardoise">
+				Faites le point en 3 minutes : votre frangine vous propose un plan d'action.
+			</p>
+			<Bouton href="/diagnostic" variante="fleuve" class="mt-4" pleineLargeur
+				>Faire mon diagnostic gratuit</Bouton
+			>
 		</section>
 	</aside>
 </div>

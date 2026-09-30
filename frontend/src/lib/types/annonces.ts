@@ -1,4 +1,4 @@
-/** Types des petites annonces et du panier, alignés sur `backend/app/schemas/annonces.py`. */
+/** Types des petites annonces et du panier, alignés sur `api/src/routes/annonces.ts`. */
 import type { Auteur } from '$lib/types';
 import type { InteretRecu } from './immobilier';
 

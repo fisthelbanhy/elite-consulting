@@ -5,4 +5,7 @@ import type { CreditDetail } from '$lib/types/tresorerie';
 
 export const load: PageServerLoad = (event) => chargerFiche<CreditDetail>(event, 'credits');
 
-export const actions: Actions = { ...actionsFiche('credits', enregistrerCredit), dialogue: actionDialogue };
+export const actions: Actions = {
+	...actionsFiche('credits', enregistrerCredit),
+	dialogue: actionDialogue
+};

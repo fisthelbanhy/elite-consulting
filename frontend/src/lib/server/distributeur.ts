@@ -70,9 +70,13 @@ export function corpsEtape(fd: FormData, etape: number): Record<string, unknown>
 			const produits: { produit_id: number; quantite: number }[] = [];
 			for (const [cle] of fd.entries()) {
 				const m = /^kit_(\d+)$/.exec(cle);
-				if (m) produits.push({ produit_id: Number(m[1]), quantite: Math.min(999, entier(fd, cle)) });
+				if (m)
+					produits.push({ produit_id: Number(m[1]), quantite: Math.min(999, entier(fd, cle)) });
 			}
-			return { mode_souscription: entier(fd, 'mode_souscription'), produits: produits.filter((p) => p.quantite > 0) };
+			return {
+				mode_souscription: entier(fd, 'mode_souscription'),
+				produits: produits.filter((p) => p.quantite > 0)
+			};
 		}
 		default:
 			return {};

@@ -15,6 +15,9 @@ export const load: PageServerLoad = async (event) => {
 		envoyees: u.get('envoyees') ?? '',
 		page: u.get('page') ?? '1'
 	};
-	const liste = await charger<Liste<SouscriptionResume>>(event, '/distributeur/souscriptions', { ...filtres, taille: 50 });
+	const liste = await charger<Liste<SouscriptionResume>>(event, '/distributeur/souscriptions', {
+		...filtres,
+		taille: 50
+	});
 	return { liste, filtres };
 };

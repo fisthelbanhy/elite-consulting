@@ -15,7 +15,10 @@
 <EnTetePage
 	titre="Modifier la course {c.reference}"
 	sousTitre="Les frais de service restent ceux fixés à la commande."
-	fil={[{ href: '/courses', label: 'Courses & livraison' }, { href: `/courses/${c.id}`, label: c.reference }]}
+	fil={[
+		{ href: '/courses', label: 'Courses & livraison' },
+		{ href: `/courses/${c.id}`, label: c.reference }
+	]}
 />
 <div class="conteneur max-w-4xl space-y-6 py-8">
 	<ChoixBoutique boutiques={data.boutiques} boutique={data.boutique} />

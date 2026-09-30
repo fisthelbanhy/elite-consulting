@@ -20,8 +20,9 @@
 	<div class="w-full max-w-lg">
 		<h1 class="text-3xl font-bold">Mot de passe oublié</h1>
 		<p class="mt-2 text-ardoise">
-			Pour protéger votre compte, confirmez qui vous êtes. Nous vous envoyons un lien de réinitialisation par e-mail ;
-			sans e-mail enregistré, une conseillère vous rappelle au numéro indiqué. Votre mot de passe n'est jamais affiché.
+			Pour protéger votre compte, confirmez qui vous êtes. Nous vous envoyons un lien de
+			réinitialisation par e-mail ; sans e-mail enregistré, une conseillère vous rappelle au numéro
+			indiqué. Votre mot de passe n'est jamais affiché.
 		</p>
 
 		{#if form?.succes}
@@ -41,9 +42,24 @@
 									{ value: '2', label: "D'une entreprise" }
 								]}
 							/>
-							<Saisie label={categorie === '2' ? "Nom de l'entreprise" : 'Nom et prénom'} requis {...champ(form, 'nom')} />
-							<Saisie label={categorie === '2' ? 'Sigle' : 'Pseudonyme'} requis {...champ(form, 'pseudonyme')} />
-							<Saisie label="Téléphone" type="tel" inputmode="tel" prefixe="+242" requis {...champ(form, 'telephone')} />
+							<Saisie
+								label={categorie === '2' ? "Nom de l'entreprise" : 'Nom et prénom'}
+								requis
+								{...champ(form, 'nom')}
+							/>
+							<Saisie
+								label={categorie === '2' ? 'Sigle' : 'Pseudonyme'}
+								requis
+								{...champ(form, 'pseudonyme')}
+							/>
+							<Saisie
+								label="Téléphone"
+								type="tel"
+								inputmode="tel"
+								prefixe="+242"
+								requis
+								{...champ(form, 'telephone')}
+							/>
 							<Bouton type="submit" pleineLargeur chargement={envoi}>Retrouver mon compte</Bouton>
 						</div>
 					{/snippet}
@@ -52,7 +68,16 @@
 			{#if data.parametres.whatsapp}
 				<p class="mt-4 text-center text-sm text-ardoise">
 					Plus rapide :
-					<a href={lienWhatsApp(data.parametres.whatsapp, "Bonjour la Frangine, j'ai oublié mon mot de passe.")} target="_blank" rel="noopener" class="font-semibold text-foret-700 underline underline-offset-4">écrivez-nous sur WhatsApp</a>
+					<a
+						href={lienWhatsApp(
+							data.parametres.whatsapp,
+							"Bonjour la Frangine, j'ai oublié mon mot de passe."
+						)}
+						target="_blank"
+						rel="noopener"
+						class="font-semibold text-foret-700 underline underline-offset-4"
+						>écrivez-nous sur WhatsApp</a
+					>
 				</p>
 			{/if}
 		{/if}

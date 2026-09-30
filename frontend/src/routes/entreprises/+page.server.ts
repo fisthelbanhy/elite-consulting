@@ -21,7 +21,9 @@ export const load: PageServerLoad = async (event) => {
 		secteurs(event),
 		villes(event),
 		chargerOuDefaut<CompteursMarches | null>(event, '/marches/compteurs', null),
-		event.locals.membre?.est_gestionnaire ? Promise.resolve([]) : chargerEncart(event, { limite: 4 })
+		event.locals.membre?.est_gestionnaire
+			? Promise.resolve([])
+			: chargerEncart(event, { limite: 4 })
 	]);
 	return {
 		liste,

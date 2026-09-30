@@ -29,10 +29,17 @@ export async function enregistrerReussite(event: RequestEvent, id?: number | str
 		if (photo) await televerser(event, `/reussites/${r.data.id}/photo`, 'fichier', photo);
 	} catch (e) {
 		if (e instanceof ApiError) {
-			return fail(e.statut, { message: `Témoignage enregistré, mais photo refusée : ${e.message}`, champs: e.champs, valeurs });
+			return fail(e.statut, {
+				message: `Témoignage enregistré, mais photo refusée : ${e.message}`,
+				champs: e.champs,
+				valeurs
+			});
 		}
 		throw e;
 	}
 	const retour = String(fd.get('retour') ?? '');
-	redirect(303, retour.startsWith('/reussites/') ? `${retour}?enregistre=1` : `/reussites/ma-fiche?enregistre=1`);
+	redirect(
+		303,
+		retour.startsWith('/reussites/') ? `${retour}?enregistre=1` : `/reussites/ma-fiche?enregistre=1`
+	);
 }

@@ -23,7 +23,9 @@
 		2: { lib: 'Master', ton: 'soleil' },
 		3: { lib: 'Membre', ton: 'neutre' }
 	};
-	const exportHref = $derived(`/gestion/membres/export?${new URLSearchParams(Object.entries(f).filter(([k, v]) => v && k !== 'page')).toString()}`);
+	const exportHref = $derived(
+		`/gestion/membres/export?${new URLSearchParams(Object.entries(f).filter(([k, v]) => v && k !== 'page')).toString()}`
+	);
 	const filtreActif = $derived(!!(f.q || f.type_compte || f.categorie || f.ville_id || f.etat));
 </script>
 
@@ -31,29 +33,55 @@
 	<title>Membres — Gestion — {data.parametres.nom_site}</title>
 </svelte:head>
 
-<EnTeteGestion titre="Membres" sousTitre="{data.liste.total} membre{data.liste.total > 1 ? 's' : ''}{filtreActif ? ' correspondant aux filtres' : ''}" fil={[{ href: '/gestion/membres', label: 'Membres' }]}>
-	<Bouton href={exportHref} variante="secondaire" taille="sm"><Download class="size-4" aria-hidden="true" />Exporter (CSV)</Bouton>
-	<Bouton href="/gestion/membres/nouveau" taille="sm"><Plus class="size-4" aria-hidden="true" />Nouveau membre</Bouton>
+<EnTeteGestion
+	titre="Membres"
+	sousTitre="{data.liste.total} membre{data.liste.total > 1 ? 's' : ''}{filtreActif
+		? ' correspondant aux filtres'
+		: ''}"
+	fil={[{ href: '/gestion/membres', label: 'Membres' }]}
+>
+	<Bouton href={exportHref} variante="secondaire" taille="sm"
+		><Download class="size-4" aria-hidden="true" />Exporter (CSV)</Bouton
+	>
+	<Bouton href="/gestion/membres/nouveau" taille="sm"
+		><Plus class="size-4" aria-hidden="true" />Nouveau membre</Bouton
+	>
 </EnTeteGestion>
 
 <div class="mx-auto max-w-7xl space-y-5 px-4 py-6 sm:px-6">
 	{#if form?.message && !form?.succes}<Alerte type="erreur" titre={form.message} />{/if}
 	{#if form?.succes}<Alerte type="succes" titre={form.succes} />{/if}
 
-	<form method="GET" class="carte grid gap-3 p-4 sm:grid-cols-2 lg:grid-cols-[2fr_repeat(5,1fr)_auto] lg:items-end" data-sveltekit-keepfocus>
+	<form
+		method="GET"
+		class="carte grid gap-3 p-4 sm:grid-cols-2 lg:grid-cols-[2fr_repeat(5,1fr)_auto] lg:items-end"
+		data-sveltekit-keepfocus
+	>
 		<input type="hidden" name="taille" value={data.taille} />
 		<div>
 			<label for="q" class="mb-1 block text-sm font-semibold">Rechercher</label>
 			<div class="relative">
-				<Search class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-ardoise" aria-hidden="true" />
-				<input id="q" name="q" type="search" value={f.q} placeholder="Nom, téléphone, observation…" class="py-2 pl-9" />
+				<Search
+					class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-ardoise"
+					aria-hidden="true"
+				/>
+				<input
+					id="q"
+					name="q"
+					type="search"
+					value={f.q}
+					placeholder="Nom, téléphone, observation…"
+					class="py-2 pl-9"
+				/>
 			</div>
 		</div>
 		<div>
 			<label for="type_compte" class="mb-1 block text-sm font-semibold">Type</label>
 			<select id="type_compte" name="type_compte" class="py-2">
 				<option value="">Tous</option>
-				{#each [1, 2, 3] as t (t)}<option value={String(t)} selected={f.type_compte === String(t)}>{types[t].lib}</option>{/each}
+				{#each [1, 2, 3] as t (t)}<option value={String(t)} selected={f.type_compte === String(t)}
+						>{types[t].lib}</option
+					>{/each}
 			</select>
 		</div>
 		<div>
@@ -68,7 +96,10 @@
 			<label for="ville_id" class="mb-1 block text-sm font-semibold">Ville</label>
 			<select id="ville_id" name="ville_id" class="py-2">
 				<option value="">Toutes</option>
-				{#each data.villes as v (v.id)}<option value={String(v.id)} selected={f.ville_id === String(v.id)}>{v.nom}</option>{/each}
+				{#each data.villes as v (v.id)}<option
+						value={String(v.id)}
+						selected={f.ville_id === String(v.id)}>{v.nom}</option
+					>{/each}
 			</select>
 		</div>
 		<div>
@@ -89,7 +120,9 @@
 		</div>
 		<div class="flex gap-2">
 			<Bouton type="submit" variante="fleuve" taille="sm">Filtrer</Bouton>
-			{#if filtreActif}<Bouton href="/gestion/membres" variante="fantome" taille="sm">Effacer</Bouton>{/if}
+			{#if filtreActif}<Bouton href="/gestion/membres" variante="fantome" taille="sm"
+					>Effacer</Bouton
+				>{/if}
 		</div>
 	</form>
 
@@ -106,35 +139,57 @@
 						<th scope="col" class="hidden px-3 py-2.5 font-semibold md:table-cell">Ville</th>
 						<th scope="col" class="px-3 py-2.5 font-semibold">État</th>
 						<th scope="col" class="hidden px-3 py-2.5 font-semibold xl:table-cell">Inscrit</th>
-						<th scope="col" class="hidden px-3 py-2.5 font-semibold xl:table-cell">Dernière connexion</th>
+						<th scope="col" class="hidden px-3 py-2.5 font-semibold xl:table-cell"
+							>Dernière connexion</th
+						>
 					</tr>
 				</thead>
 				<tbody>
 					{#each data.liste.items as m (m.id)}
 						<tr class="border-t border-fleuve-900/5 align-top hover:bg-creme">
 							<td class="px-3 py-2.5">
-								<a href="/gestion/membres/{m.id}" class="font-semibold text-fleuve-700 hover:underline">{m.nom}</a>
-								<span class="block text-sm text-ardoise">{m.pseudonyme} · {m.categorie === 2 ? 'Morale' : 'Physique'} · {m.code_membre}</span>
+								<a
+									href="/gestion/membres/{m.id}"
+									class="font-semibold text-fleuve-700 hover:underline">{m.nom}</a
+								>
+								<span class="block text-sm text-ardoise"
+									>{m.pseudonyme} · {m.categorie === 2 ? 'Morale' : 'Physique'} · {m.code_membre}</span
+								>
 							</td>
-							<td class="px-3 py-2.5"><Badge ton={types[m.type_compte]?.ton ?? 'neutre'}>{types[m.type_compte]?.lib ?? '—'}</Badge></td>
+							<td class="px-3 py-2.5"
+								><Badge ton={types[m.type_compte]?.ton ?? 'neutre'}
+									>{types[m.type_compte]?.lib ?? '—'}</Badge
+								></td
+							>
 							<td class="px-3 py-2.5 whitespace-nowrap">{telephone(m.telephone) || '—'}</td>
 							<td class="hidden max-w-56 truncate px-3 py-2.5 lg:table-cell">{m.email ?? '—'}</td>
 							<td class="hidden px-3 py-2.5 md:table-cell">{m.ville?.nom ?? '—'}</td>
 							<td class="px-3 py-2.5">
 								<div class="flex flex-wrap items-center gap-2">
-									<BadgeEtat etat={m.etat} libelles={{ 1: 'À valider', 2: 'Validé', 3: 'Supprimé' }} />
+									<BadgeEtat
+										etat={m.etat}
+										libelles={{ 1: 'À valider', 2: 'Validé', 3: 'Supprimé' }}
+									/>
 									{#if m.etat === 1 && data.gestionnaire.droit_activation}
 										<form method="POST" action="?/valider" use:enhance>
 											<input type="hidden" name="id" value={m.id} />
-											<button class="inline-flex min-h-9 items-center gap-1 rounded-lg px-2 text-sm font-semibold text-foret-700 ring-1 ring-foret-600/40 hover:bg-foret-50">
-												<Check class="size-4" aria-hidden="true" />Valider<span class="sr-only"> {m.nom}</span>
+											<button
+												class="inline-flex min-h-9 items-center gap-1 rounded-lg px-2 text-sm font-semibold text-foret-700 ring-1 ring-foret-600/40 hover:bg-foret-50"
+											>
+												<Check class="size-4" aria-hidden="true" />Valider<span class="sr-only">
+													{m.nom}</span
+												>
 											</button>
 										</form>
 									{/if}
 								</div>
 							</td>
-							<td class="hidden px-3 py-2.5 whitespace-nowrap xl:table-cell">{dateCourte(m.date_creation)}</td>
-							<td class="hidden px-3 py-2.5 whitespace-nowrap text-ardoise xl:table-cell">{m.derniere_connexion ? relatif(m.derniere_connexion) : 'Jamais'}</td>
+							<td class="hidden px-3 py-2.5 whitespace-nowrap xl:table-cell"
+								>{dateCourte(m.date_creation)}</td
+							>
+							<td class="hidden px-3 py-2.5 whitespace-nowrap text-ardoise xl:table-cell"
+								>{m.derniere_connexion ? relatif(m.derniere_connexion) : 'Jamais'}</td
+							>
 						</tr>
 					{/each}
 				</tbody>
@@ -145,7 +200,11 @@
 		</div>
 		<Pagination total={data.liste.total} page={data.liste.page} taille={data.liste.taille} />
 	{:else}
-		<EtatVide icone={Users} titre="Aucun membre ne correspond" texte="Modifiez ou effacez les filtres pour élargir la recherche.">
+		<EtatVide
+			icone={Users}
+			titre="Aucun membre ne correspond"
+			texte="Modifiez ou effacez les filtres pour élargir la recherche."
+		>
 			<Bouton href="/gestion/membres" variante="secondaire">Effacer les filtres</Bouton>
 		</EtatVide>
 	{/if}

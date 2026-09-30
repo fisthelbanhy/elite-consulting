@@ -11,7 +11,12 @@ export const load: PageServerLoad = async (event) => {
 	const [projets, groupes, compteurs] = await Promise.all([
 		chargerOuDefaut<Liste<ProjetResume>>(event, '/projets', VIDE, { taille: 3 }),
 		chargerOuDefaut<Liste<GroupeResume>>(event, '/likelemba', VIDE, { taille: 3 }),
-		chargerOuDefaut<CompteursProjets>(event, '/projets/compteurs', { projets: 0, besoin_total: 0, montant_promis: 0, montant_collecte: 0 })
+		chargerOuDefaut<CompteursProjets>(event, '/projets/compteurs', {
+			projets: 0,
+			besoin_total: 0,
+			montant_promis: 0,
+			montant_collecte: 0
+		})
 	]);
 	return { projets, groupes, compteurs };
 };

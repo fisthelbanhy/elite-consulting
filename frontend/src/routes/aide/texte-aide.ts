@@ -9,7 +9,12 @@
 const BALISES = ['strong', 'b', 'em', 'i', 'u', 'ul', 'ol', 'li', 'p', 'br'];
 
 function echapper(t: string): string {
-	return t.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+	return t
+		.replaceAll('&', '&amp;')
+		.replaceAll('<', '&lt;')
+		.replaceAll('>', '&gt;')
+		.replaceAll('"', '&quot;')
+		.replaceAll("'", '&#39;');
 }
 
 export function texteAideHtml(brut: string | null | undefined): string {

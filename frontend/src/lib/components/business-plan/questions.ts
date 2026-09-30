@@ -43,19 +43,22 @@ export const LIBELLES: Record<ChampBP, string> = {
 	ambition: 'Quelle est votre ambition ?',
 	strategie_resultats: 'Comment comptez-vous atteindre vos résultats ?',
 	valeur_ajoutee: 'Quelle est votre valeur ajoutée ?',
-	prevision_ca_benefice: 'Combien comptez-vous brasser une fois le projet lancé, en ventes et en bénéfice ?',
+	prevision_ca_benefice:
+		'Combien comptez-vous brasser une fois le projet lancé, en ventes et en bénéfice ?',
 	processus_activite: 'Quel est le processus de cette activité ?',
 	estimation_charges: "À combien quantifiez-vous l'ensemble des charges ?",
 	composantes_ca: "Quelles sont les composantes de votre chiffre d'affaires ?",
 	repartition_ca: "Quelle est la répartition de votre chiffre d'affaires ?",
-	elements_environnementaux: 'Quels sont les éléments environnementaux qui vous confortent dans votre projet ?',
+	elements_environnementaux:
+		'Quels sont les éléments environnementaux qui vous confortent dans votre projet ?',
 	strategie_attaque: "Quelle sera votre stratégie d'attaque ?",
 	devis_chiffre_besoin: 'Quel est le devis chiffré de votre besoin ?',
 	apport_prevu: 'Quel sera votre apport ?',
 	niveau_realisation: 'Quel est le niveau de réalisation de votre projet ?',
 	difficultes_realisation: 'Quelles sont les difficultés dans la réalisation de votre projet ?',
 	planning_execution: "Quel est votre planning d'exécution du projet ?",
-	difficultes_futures: 'Quelles sont les difficultés à venir auxquelles vous pourriez être confronté·e ?'
+	difficultes_futures:
+		'Quelles sont les difficultés à venir auxquelles vous pourriez être confronté·e ?'
 };
 
 export const ETAPES_BP: { titre: string; aide: string; champs: ChampBP[] }[] = [
@@ -72,17 +75,35 @@ export const ETAPES_BP: { titre: string; aide: string; champs: ChampBP[] }[] = [
 	{
 		titre: 'Votre organisation',
 		aide: 'Comment vous travaillez aujourd’hui et comment vous voulez travailler demain.',
-		champs: ['organisation_actuelle', 'organisation_souhaitee', 'processus_activite', 'detail_besoin']
+		champs: [
+			'organisation_actuelle',
+			'organisation_souhaitee',
+			'processus_activite',
+			'detail_besoin'
+		]
 	},
 	{
 		titre: 'Votre marché et votre stratégie',
 		aide: 'Vos clients, ce qui vous différencie, la façon de vous lancer.',
-		champs: ['ambition', 'valeur_ajoutee', 'elements_environnementaux', 'strategie_attaque', 'strategie_resultats']
+		champs: [
+			'ambition',
+			'valeur_ajoutee',
+			'elements_environnementaux',
+			'strategie_attaque',
+			'strategie_resultats'
+		]
 	},
 	{
 		titre: 'Vos chiffres',
 		aide: 'Des estimations suffisent : votre frangine vous aidera à les affiner.',
-		champs: ['prevision_ca_benefice', 'estimation_charges', 'composantes_ca', 'repartition_ca', 'devis_chiffre_besoin', 'apport_prevu']
+		champs: [
+			'prevision_ca_benefice',
+			'estimation_charges',
+			'composantes_ca',
+			'repartition_ca',
+			'devis_chiffre_besoin',
+			'apport_prevu'
+		]
 	},
 	{
 		titre: 'La réalisation',
@@ -91,4 +112,6 @@ export const ETAPES_BP: { titre: string; aide: string; champs: ChampBP[] }[] = [
 	}
 ];
 
-export const CHAMPS_TEXTE = ETAPES_BP.flatMap((e) => e.champs).filter((c) => c !== 'niveau_realisation');
+export const CHAMPS_TEXTE = ETAPES_BP.flatMap((e) => e.champs).filter(
+	(c) => c !== 'niveau_realisation'
+);

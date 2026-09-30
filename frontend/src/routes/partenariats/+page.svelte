@@ -28,17 +28,27 @@
 	titre="Partenariat & troc"
 	surtitre="Opportunités"
 	sousTitre="Vous avez un actif, il vous manque un partenaire ? Proposez un échange, trouvez la pièce qui manque à votre projet."
-	fil={[{ href: '/opportunites', label: 'Opportunités' }, { href: '/partenariats', label: 'Partenariat & troc' }]}
+	fil={[
+		{ href: '/opportunites', label: 'Opportunités' },
+		{ href: '/partenariats', label: 'Partenariat & troc' }
+	]}
 >
 	{#if peutPublier}
-		<Bouton href="/partenariats/nouveau"><Plus class="size-5" aria-hidden="true" />Proposer un partenariat</Bouton>
+		<Bouton href="/partenariats/nouveau"
+			><Plus class="size-5" aria-hidden="true" />Proposer un partenariat</Bouton
+		>
 	{/if}
 	{#snippet bas()}
 		{#if data.membre}
 			<div class="mt-6">
 				<Onglets
 					onglets={[
-						{ href: '/partenariats', label: 'Toutes les propositions', compteur: data.compteur.publies, actif: !f.miennes },
+						{
+							href: '/partenariats',
+							label: 'Toutes les propositions',
+							compteur: data.compteur.publies,
+							actif: !f.miennes
+						},
 						{ href: '/partenariats?miennes=1', label: 'Mes propositions', actif: !!f.miennes }
 					]}
 				/>
@@ -50,13 +60,29 @@
 <div class="conteneur space-y-6 py-8">
 	{#if data.supprime}<Alerte type="succes" titre="La fiche a été supprimée." />{/if}
 
-	<form method="GET" class="carte grid gap-3 p-4 sm:grid-cols-[1fr_auto] sm:items-end" data-sveltekit-keepfocus>
+	<form
+		method="GET"
+		class="carte grid gap-3 p-4 sm:grid-cols-[1fr_auto] sm:items-end"
+		data-sveltekit-keepfocus
+	>
 		{#if f.miennes}<input type="hidden" name="miennes" value="1" />{/if}
 		<div>
-			<label for="q" class="mb-1.5 block text-[15px] font-semibold">Rechercher dans les actifs, recherches et objectifs</label>
+			<label for="q" class="mb-1.5 block text-[15px] font-semibold"
+				>Rechercher dans les actifs, recherches et objectifs</label
+			>
 			<div class="relative">
-				<Search class="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-ardoise" aria-hidden="true" />
-				<input id="q" name="q" type="search" value={f.q} placeholder="Terrain, local, tracteur, financement…" class="pl-10" />
+				<Search
+					class="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-ardoise"
+					aria-hidden="true"
+				/>
+				<input
+					id="q"
+					name="q"
+					type="search"
+					value={f.q}
+					placeholder="Terrain, local, tracteur, financement…"
+					class="pl-10"
+				/>
 			</div>
 		</div>
 		<Bouton type="submit" variante="fleuve">Rechercher</Bouton>
@@ -73,7 +99,9 @@
 	{:else}
 		<EtatVide
 			icone={Handshake}
-			titre={f.q ? 'Aucune proposition ne correspond à votre recherche' : 'Pas encore de proposition ici'}
+			titre={f.q
+				? 'Aucune proposition ne correspond à votre recherche'
+				: 'Pas encore de proposition ici'}
 			texte="Dites-nous ce que vous cherchez : votre frangine vous prévient dès qu'une proposition correspond."
 			messageWhatsApp="Bonjour la Frangine, je cherche un partenaire pour mon projet : prévenez-moi si une proposition correspond."
 		>

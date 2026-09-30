@@ -28,18 +28,31 @@
 		src={pub.fichier_url}
 		alt={grand ? `Publicité de ${nom}` : ''}
 		loading={grand ? 'eager' : 'lazy'}
-		class="w-full rounded-xl bg-sable object-cover {grand ? 'max-h-[70vh] object-contain' : 'aspect-[4/3]'} {classe}"
+		class="w-full rounded-xl bg-sable object-cover {grand
+			? 'max-h-[70vh] object-contain'
+			: 'aspect-[4/3]'} {classe}"
 	/>
 {:else if pub.fichier_url && pub.genre === 'video' && grand}
 	<!-- svelte-ignore a11y_media_has_caption -->
-	<video src={pub.fichier_url} controls preload="metadata" playsinline class="aspect-video w-full rounded-xl bg-encre {classe}">
-		Votre navigateur ne lit pas cette vidéo : <a href={pub.fichier_url} class="lien">téléchargez-la</a>.
+	<video
+		src={pub.fichier_url}
+		controls
+		preload="metadata"
+		playsinline
+		class="aspect-video w-full rounded-xl bg-encre {classe}"
+	>
+		Votre navigateur ne lit pas cette vidéo : <a href={pub.fichier_url} class="lien"
+			>téléchargez-la</a
+		>.
 	</video>
 {:else if pub.fichier_url && pub.genre === 'son' && grand}
 	<div class="pagne grid place-items-center gap-4 rounded-xl bg-fleuve-50 p-8 {classe}">
-		<span class="grid size-16 place-items-center rounded-full bg-white text-fleuve-700 shadow-douce"><Music class="size-8" aria-hidden="true" /></span>
+		<span class="grid size-16 place-items-center rounded-full bg-white text-fleuve-700 shadow-douce"
+			><Music class="size-8" aria-hidden="true" /></span
+		>
 		<audio src={pub.fichier_url} controls preload="metadata" class="w-full max-w-md">
-			Votre navigateur ne lit pas ce son : <a href={pub.fichier_url} class="lien">téléchargez-le</a>.
+			Votre navigateur ne lit pas ce son : <a href={pub.fichier_url} class="lien">téléchargez-le</a
+			>.
 		</audio>
 	</div>
 {:else}
@@ -49,7 +62,9 @@
 			? 'min-h-64'
 			: 'aspect-[4/3]'} {classe}"
 	>
-		<span class="grid size-12 place-items-center rounded-full bg-white shadow-douce"><Icone class="size-6" aria-hidden="true" /></span>
+		<span class="grid size-12 place-items-center rounded-full bg-white shadow-douce"
+			><Icone class="size-6" aria-hidden="true" /></span
+		>
 		<span class="text-sm font-semibold">
 			{pub.genre === 'son' ? 'Annonce audio' : pub.genre === 'video' ? 'Annonce vidéo' : nom}
 		</span>

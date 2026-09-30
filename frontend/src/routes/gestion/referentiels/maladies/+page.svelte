@@ -23,17 +23,30 @@
 <EnTeteGestion
 	titre="Fiches bien-être"
 	sousTitre="Chaque fiche associe un besoin à des produits conseillés, exactement comme sur la page publique."
-	fil={[{ href: '/gestion/referentiels', label: 'Référentiels' }, { href: '/gestion/referentiels/maladies', label: 'Fiches bien-être' }]}
+	fil={[
+		{ href: '/gestion/referentiels', label: 'Référentiels' },
+		{ href: '/gestion/referentiels/maladies', label: 'Fiches bien-être' }
+	]}
 >
-	<Bouton href="/gestion/referentiels/maladies/nouveau" taille="sm"><Plus class="size-4" aria-hidden="true" />Nouvelle fiche</Bouton>
+	<Bouton href="/gestion/referentiels/maladies/nouveau" taille="sm"
+		><Plus class="size-4" aria-hidden="true" />Nouvelle fiche</Bouton
+	>
 </EnTeteGestion>
 
 <div class="mx-auto max-w-5xl space-y-4 px-4 py-6 sm:px-6">
 	{#if !data.parametres.module_sante_actif}
-		<Alerte type="attention" titre="Module bien-être désactivé">Les fiches ne sont pas visibles du public (Paramètres › Modules).</Alerte>
+		<Alerte type="attention" titre="Module bien-être désactivé"
+			>Les fiches ne sont pas visibles du public (Paramètres › Modules).</Alerte
+		>
 	{/if}
-	{#if data.enregistre}<Alerte type="succes" titre={data.enregistre === 'cree' ? 'Enregistrement effectué.' : 'Modification effectuée.'} />{/if}
-	{#if form?.succes}<Alerte type="succes" titre={form.succes} />{:else if form?.message}<Alerte type="erreur" titre={form.message} />{/if}
+	{#if data.enregistre}<Alerte
+			type="succes"
+			titre={data.enregistre === 'cree' ? 'Enregistrement effectué.' : 'Modification effectuée.'}
+		/>{/if}
+	{#if form?.succes}<Alerte type="succes" titre={form.succes} />{:else if form?.message}<Alerte
+			type="erreur"
+			titre={form.message}
+		/>{/if}
 
 	<form method="GET" class="carte flex flex-wrap items-end gap-3 p-4" data-sveltekit-keepfocus>
 		<div class="min-w-48 flex-1">
@@ -58,14 +71,33 @@
 				<li class="flex items-center gap-3 p-4">
 					<a href="/gestion/referentiels/maladies/{x.id}" class="min-w-0 flex-1">
 						<span class="block font-semibold text-fleuve-700 hover:underline">{x.libelle}</span>
-						<span class="block text-sm text-ardoise">{x.nombre_produits} produit{x.nombre_produits > 1 ? 's' : ''} conseillé{x.nombre_produits > 1 ? 's' : ''}{x.description ? ` · ${tronquer(x.description, 90)}` : ''}</span>
+						<span class="block text-sm text-ardoise"
+							>{x.nombre_produits} produit{x.nombre_produits > 1 ? 's' : ''} conseillé{x.nombre_produits >
+							1
+								? 's'
+								: ''}{x.description ? ` · ${tronquer(x.description, 90)}` : ''}</span
+						>
 					</a>
-					<BadgeEtat etat={x.etat} libelles={{ 1: 'Non traité', 2: 'Publiée', 3: 'Supprimée', 4: 'Clôturée' }} />
+					<BadgeEtat
+						etat={x.etat}
+						libelles={{ 1: 'Non traité', 2: 'Publiée', 3: 'Supprimée', 4: 'Clôturée' }}
+					/>
 					{#if x.etat !== 3}
-						<form method="POST" action="?/supprimer" use:enhance={({ cancel }) => { if (!confirm(`Retirer la fiche « ${x.libelle} » ?`)) cancel(); }}>
+						<form
+							method="POST"
+							action="?/supprimer"
+							use:enhance={({ cancel }) => {
+								if (!confirm(`Retirer la fiche « ${x.libelle} » ?`)) cancel();
+							}}
+						>
 							<input type="hidden" name="id" value={x.id} />
-							<button class="grid size-10 place-items-center rounded-lg text-alerte hover:bg-alerte-50" title="Supprimer">
-								<Trash2 class="size-4" aria-hidden="true" /><span class="sr-only">Supprimer {x.libelle}</span>
+							<button
+								class="grid size-10 place-items-center rounded-lg text-alerte hover:bg-alerte-50"
+								title="Supprimer"
+							>
+								<Trash2 class="size-4" aria-hidden="true" /><span class="sr-only"
+									>Supprimer {x.libelle}</span
+								>
 							</button>
 						</form>
 					{/if}

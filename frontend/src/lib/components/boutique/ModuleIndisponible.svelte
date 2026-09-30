@@ -8,8 +8,8 @@
 	<Leaf class="mx-auto size-12 text-foret-600" aria-hidden="true" />
 	<h2 class="text-2xl font-bold">Les fiches bien-être sont en cours de révision</h2>
 	<p class="text-ardoise">
-		Nous revoyons ces contenus avec des professionnels pour vous donner des informations fiables. En attendant, la
-		boutique reste ouverte et votre frangine répond à vos questions.
+		Nous revoyons ces contenus avec des professionnels pour vous donner des informations fiables. En
+		attendant, la boutique reste ouverte et votre frangine répond à vos questions.
 	</p>
 	<div class="flex flex-wrap justify-center gap-3">
 		<Bouton href="/boutique">Voir la boutique</Bouton>

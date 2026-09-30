@@ -25,9 +25,13 @@
 	let zone = $state<HTMLDivElement>();
 
 	function jour(iso: string): string {
+		// Dates locales à une fonction pure de formatage : rien n'est stocké ni observé,
+		// `SvelteDate` n'apporterait rien ici.
+		/* eslint-disable svelte/prefer-svelte-reactivity */
 		const d = new Date(iso);
 		const auj = new Date();
 		const hier = new Date();
+		/* eslint-enable svelte/prefer-svelte-reactivity */
 		hier.setDate(auj.getDate() - 1);
 		if (d.toDateString() === auj.toDateString()) return "Aujourd'hui";
 		if (d.toDateString() === hier.toDateString()) return 'Hier';
@@ -50,7 +54,8 @@
 	});
 
 	/** Un message est « à moi » s'il a été écrit par la personne qui lit le fil. */
-	const estAMoi = (m: MessageFil) => (perspective === 'frangine' ? m.de_la_frangine : !m.de_la_frangine);
+	const estAMoi = (m: MessageFil) =>
+		perspective === 'frangine' ? m.de_la_frangine : !m.de_la_frangine;
 
 	// Défile jusqu'au dernier message à l'ouverture et à chaque nouveau message
 	$effect(() => {
@@ -75,7 +80,10 @@
 		{#each groupes as g (g.jour)}
 			<section aria-label={g.jour} class="space-y-3">
 				<p class="flex justify-center">
-					<span class="rounded-full bg-white px-3 py-1 text-xs font-semibold text-ardoise shadow-douce">{g.jour}</span>
+					<span
+						class="rounded-full bg-white px-3 py-1 text-xs font-semibold text-ardoise shadow-douce"
+						>{g.jour}</span
+					>
 				</p>
 				<ul class="space-y-3">
 					{#each g.messages as m (m.id)}
@@ -88,12 +96,19 @@
 							>
 								<p class="text-xs font-semibold {moi ? 'text-fleuve-100' : 'text-fleuve-700'}">
 									{#if m.de_la_frangine}
-										{perspective === 'frangine' ? (m.auteur ? `${m.auteur.pseudonyme} (la frangine)` : 'La frangine') : 'Votre frangine'}
+										{perspective === 'frangine'
+											? m.auteur
+												? `${m.auteur.pseudonyme} (la frangine)`
+												: 'La frangine'
+											: 'Votre frangine'}
 									{:else}
 										{perspective === 'membre' ? 'Vous' : nomMembre}
 									{/if}
 									{#if !moi && !m.lu}
-										<span class="ml-1 rounded-full bg-soleil-300 px-2 py-0.5 text-[11px] font-bold text-encre">Nouveau</span>
+										<span
+											class="ml-1 rounded-full bg-soleil-300 px-2 py-0.5 text-[11px] font-bold text-encre"
+											>Nouveau</span
+										>
 									{/if}
 								</p>
 								<p class="mt-0.5 break-words whitespace-pre-line">{m.texte}</p>

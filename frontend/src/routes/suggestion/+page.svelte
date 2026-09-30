@@ -60,14 +60,23 @@
 		{:else}
 			<div class="space-y-4">
 				<p>
-					La boîte à idées est réservée aux membres, pour éviter les messages automatiques. L'inscription est gratuite et prend une
-					minute.
+					La boîte à idées est réservée aux membres, pour éviter les messages automatiques.
+					L'inscription est gratuite et prend une minute.
 				</p>
 				<div class="flex flex-wrap gap-3">
-					<Bouton href="/connexion?suite={encodeURIComponent(page.url.pathname + page.url.search)}">Me connecter</Bouton>
-					<Bouton href="/inscription?suite={encodeURIComponent(page.url.pathname)}" variante="secondaire">Créer mon compte</Bouton>
+					<Bouton href="/connexion?suite={encodeURIComponent(page.url.pathname + page.url.search)}"
+						>Me connecter</Bouton
+					>
+					<Bouton
+						href="/inscription?suite={encodeURIComponent(page.url.pathname)}"
+						variante="secondaire">Créer mon compte</Bouton
+					>
 				</div>
-				<p class="text-[15px] text-ardoise">Pas envie de créer un compte ? <a href="/contact?objet=Suggestion" class="lien">Écrivez-nous par le formulaire de contact</a>.</p>
+				<p class="text-[15px] text-ardoise">
+					Pas envie de créer un compte ? <a href="/contact?objet=Suggestion" class="lien"
+						>Écrivez-nous par le formulaire de contact</a
+					>.
+				</p>
 			</div>
 		{/if}
 	</section>
@@ -75,12 +84,16 @@
 	<aside class="space-y-4">
 		<div class="carte flex gap-3 p-5">
 			<EyeOff class="mt-0.5 size-5 shrink-0 text-foret-600" aria-hidden="true" />
-			<p class="text-[15px]"><strong>Anonyme.</strong> Votre nom n'est pas enregistré avec votre suggestion : dites-nous tout franchement.</p>
+			<p class="text-[15px]">
+				<strong>Anonyme.</strong> Votre nom n'est pas enregistré avec votre suggestion : dites-nous tout
+				franchement.
+			</p>
 		</div>
 		<div class="carte flex gap-3 p-5">
 			<Users class="mt-0.5 size-5 shrink-0 text-fleuve-600" aria-hidden="true" />
 			<p class="text-[15px]">
-				<strong>Lue par l'équipe.</strong> Chaque idée est étudiée. Si vous attendez une réponse personnelle, passez plutôt par
+				<strong>Lue par l'équipe.</strong> Chaque idée est étudiée. Si vous attendez une réponse
+				personnelle, passez plutôt par
 				<a href="/contact" class="lien">le formulaire de contact</a>.
 			</p>
 		</div>

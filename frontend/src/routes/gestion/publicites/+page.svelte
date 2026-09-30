@@ -31,9 +31,14 @@
 		<div>
 			<p class="text-sm font-semibold tracking-wide text-laterite-600 uppercase">Gestion</p>
 			<h1 class="text-3xl font-bold">Publicités</h1>
-			<p class="mt-1 text-ardoise">Au plus 10 publicités actives de la période sont diffusées, au hasard, dans les encarts du site.</p>
+			<p class="mt-1 text-ardoise">
+				Au plus 10 publicités actives de la période sont diffusées, au hasard, dans les encarts du
+				site.
+			</p>
 		</div>
-		<Bouton href="/gestion/publicites/nouvelle"><Plus class="size-5" aria-hidden="true" />Nouvelle publicité</Bouton>
+		<Bouton href="/gestion/publicites/nouvelle"
+			><Plus class="size-5" aria-hidden="true" />Nouvelle publicité</Bouton
+		>
 	</header>
 
 	{#if data.supprime}<Alerte type="succes" titre="La publicité a été supprimée." />{/if}
@@ -41,12 +46,15 @@
 	<FiltresPublicites filtres={data.filtres} choix={data.choix} />
 
 	<div class="flex flex-wrap items-center justify-between gap-3">
-		<p class="text-ardoise" aria-live="polite">{data.liste.total} publicité{data.liste.total > 1 ? 's' : ''}</p>
+		<p class="text-ardoise" aria-live="polite">
+			{data.liste.total} publicité{data.liste.total > 1 ? 's' : ''}
+		</p>
 		<nav aria-label="Affichage" class="flex gap-1 rounded-xl bg-white p-1 ring-1 ring-fleuve-900/5">
 			<a
 				href={lienVue('tableau')}
 				aria-current={data.filtres.vue === 'tableau' ? 'true' : undefined}
-				class="inline-flex min-h-10 items-center gap-2 rounded-lg px-3 text-[15px] font-semibold {data.filtres.vue === 'tableau'
+				class="inline-flex min-h-10 items-center gap-2 rounded-lg px-3 text-[15px] font-semibold {data
+					.filtres.vue === 'tableau'
 					? 'bg-fleuve-700 text-white'
 					: 'text-fleuve-700 hover:bg-fleuve-50'}"
 			>
@@ -55,7 +63,8 @@
 			<a
 				href={lienVue('cartes')}
 				aria-current={data.filtres.vue === 'cartes' ? 'true' : undefined}
-				class="inline-flex min-h-10 items-center gap-2 rounded-lg px-3 text-[15px] font-semibold {data.filtres.vue === 'cartes'
+				class="inline-flex min-h-10 items-center gap-2 rounded-lg px-3 text-[15px] font-semibold {data
+					.filtres.vue === 'cartes'
 					? 'bg-fleuve-700 text-white'
 					: 'text-fleuve-700 hover:bg-fleuve-50'}"
 			>
@@ -68,7 +77,11 @@
 		<ListePublicitesGestion items={data.liste.items} vue={data.filtres.vue} />
 		<Pagination total={data.liste.total} page={data.liste.page} taille={data.liste.taille} />
 	{:else}
-		<EtatVide icone={Megaphone} titre="Aucune publicité ne correspond" texte="Modifiez les filtres ou créez une nouvelle publicité.">
+		<EtatVide
+			icone={Megaphone}
+			titre="Aucune publicité ne correspond"
+			texte="Modifiez les filtres ou créez une nouvelle publicité."
+		>
 			<Bouton href="/gestion/publicites/nouvelle" variante="secondaire">Nouvelle publicité</Bouton>
 		</EtatVide>
 	{/if}

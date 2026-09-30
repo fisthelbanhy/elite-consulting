@@ -14,7 +14,10 @@
 <EnTetePage
 	titre="Modifier la fiche de {e.nom}"
 	sousTitre="Référence {e.reference}"
-	fil={[{ href: '/entreprises', label: 'Annuaire' }, { href: `/entreprises/${e.id}`, label: e.nom }]}
+	fil={[
+		{ href: '/entreprises', label: 'Annuaire' },
+		{ href: `/entreprises/${e.id}`, label: e.nom }
+	]}
 />
 <div class="conteneur max-w-3xl py-8">
 	<FormulaireEntreprise

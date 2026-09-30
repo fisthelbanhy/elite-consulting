@@ -8,15 +8,15 @@
 
 | Couche | Fichiers |
 |---|---|
-| Routeurs | `backend/app/routers/{conseil_financier,accompagnement,tresorerie,dialogues,tarifs_bancaires}.py` |
-| Schémas | `backend/app/schemas/` (mêmes noms) |
-| Services | `app/services/questionnaires_accompagnement.py` (libellés et découpage des 4 questionnaires), `app/services/tresorerie.py` (banques, e-mail aux banques, Débit/Crédit), `app/services/tarifs_bancaires.py` (initialisation du référentiel) |
-| Tests | `backend/tests/test_{conseil_financier,accompagnement,tresorerie,dialogues,tarifs_bancaires}.py` (29 tests) |
+| Routeurs | `api/src/routes/{conseil-financier,accompagnement,tresorerie,dialogues,tarifs-bancaires}.ts` |
+| Schémas | Zod, dans chaque routeur |
+| Services | `api/src/services/questionnaires-accompagnement.ts` (libellés et découpage des 4 questionnaires), `api/src/services/tresorerie.ts` (banques, e-mail aux banques, Débit/Crédit), `api/src/services/tarifs-bancaires.ts` (initialisation du référentiel) |
+| Tests | `api/tests/{conseil-financier,accompagnement,tresorerie,dialogues,tarifs-bancaires}.test.ts` (29 tests) |
 | Frontend serveur | `src/lib/server/{conseil-financier,accompagnement,tresorerie,dialogues,tarifs-bancaires}.ts` |
 | Types | `src/lib/types/` (mêmes noms) |
 | Composants | `src/lib/components/{conseil-financier,accompagnement,tresorerie,dialogues,tarifs-bancaires}/` |
 
-Aucune colonne ni table ajoutée : les modèles existants de `finance.py` et `Dialogue` suffisent.
+Aucune colonne ni table ajoutée : les tables existantes de `finance.ts` et `dialogue` suffisent.
 
 ## 2. Pages
 
@@ -59,7 +59,7 @@ Aucune colonne ni table ajoutée : les modèles existants de `finance.py` et `Di
 | F-S7-03 à F-S7-06 | Un sujet ouvert (état 1/2) par rubrique pour un membre ; objet et texte ≥ 2 ; référence CFR ; doublon d'objet signalé ; tri croissant (conseil) / décroissant (actus) ; recherche objet + texte + référence ; supprimés exclus |
 | F-S7-07 | **Décision** : un sujet privé n'est visible que de son auteur et des gestionnaires (cf. S1a) |
 | F-S7-08 à F-S7-11 | Modification par l'auteur (même simple membre) ou gestionnaire habilité ; réponses ≥ 2, doublon « Ce message est déjà envoyé. » (dans le sujet), confidentialité héritée, compteur ; clôture par l'auteur ou un gestionnaire, sujet clôturé fermé aux réponses ; l'auteur est prévenu quand un conseiller répond |
-| F-S7-12 à F-S7-21 | Libellés exacts (orthographe corrigée) et découpage legacy dans `questionnaires_accompagnement.py` (55, 77, 45, 35 questions) ; objet ≥ 10 ; doublon membre + objet ; ABP/APA/ARC/ACI ; toutes les zones enregistrées et rechargées (question 48 incluse) ; modification effective ; consultation réservée au titulaire et aux gestionnaires |
+| F-S7-12 à F-S7-21 | Libellés exacts (orthographe corrigée) et découpage legacy dans `questionnaires-accompagnement.ts` (55, 77, 45, 35 questions) ; objet ≥ 10 ; doublon membre + objet ; ABP/APA/ARC/ACI ; toutes les zones enregistrées et rechargées (question 48 incluse) ; modification effective ; consultation réservée au titulaire et aux gestionnaires |
 | F-S7-22 à F-S7-24 | Listes par sous-rubrique (membre : les siennes ; gestionnaire : toutes + filtre d'état), annulation avec confirmation, contentieux compris |
 | F-S7-25 à F-S7-28 | Placement : messages legacy, banques ≥ 1 sans limite d'id, type modifiable sans perte, anti-doublon clarifié, état par gestionnaire habilité |
 | F-S7-29 à F-S7-34 | Grille 1–15 ordres, lignes incomplètes signalées ligne par ligne, anti-doublon legacy, e-mail « Programmation opérations bancaires » à la banque émettrice (saisie, sinon adresse du référentiel), renvoi depuis la fiche, date d'opération modifiable, vue gestionnaire Débit/Crédit corrigée |
@@ -77,11 +77,11 @@ Aucune colonne ni table ajoutée : les modèles existants de `finance.py` et `Di
 5. **Banques d'un placement** : colonne texte conservée, liste d'identifiants séparés par « * » (lecture compatible avec le format positionnel legacy) — pas de table N-N, pas de migration.
 6. **Référence commune** à un lot d'opérations bancaires (comportement legacy constaté) ; une banque bénéficiaire n'est pas exigée pour un versement ou un retrait ; « Autres » n'est plus proposée (remplacée par « Autre banque (non listée) » + nom libre).
 7. **E-mail aux banques** : un e-mail par adresse, regroupant les ordres du lot ; `Reply-To` = e-mail du membre ; adresse du référentiel utilisée si aucune n'est saisie.
-8. **Tarifs** : un seul tarif actif par banque et par opération (la règle legacy banque + opération + tarif est incluse) ; initialisation des 9 types / 25 opérations avec un rattachement opération → type décidé ici (voir `services/tarifs_bancaires.py`), les types « Escompte » et « Encaissement d'effets » restent vides.
+8. **Tarifs** : un seul tarif actif par banque et par opération (la règle legacy banque + opération + tarif est incluse) ; initialisation des 9 types / 25 opérations avec un rattachement opération → type décidé ici (voir `services/tarifs-bancaires.ts`), les types « Escompte » et « Encaissement d'effets » restent vides.
 9. **États de trésorerie** affichés « En attente / Enregistrée / Annulée / Traitée » ; le titulaire ne modifie plus une fiche traitée ; le changement d'état notifie le membre.
 10. **Dialogue** : type 0 (accueil) accepté par l'API ; anti-double envoi (même texte < 2 min) ; la page 1 contient les 50 messages les plus récents.
 
 ## 6. Points ouverts / fichiers partagés
 
-- Données reprises : les 5 réponses legacy de `dialogue` adressées au membre n° 1 (bug) restent telles quelles ; une correction de reprise (réattribuer au dernier auteur du fil) relèverait de `scripts/reprise_legacy.py`.
+- Données reprises : les 5 réponses legacy de `dialogue` adressées au membre n° 1 (bug) restent telles quelles ; une correction de reprise (réattribuer au dernier auteur du fil) relèverait de `api/src/scripts/reprise-legacy.ts`.
 - F-S7-44 (administration du référentiel `banque`) n'est pas dans ce module : l'écran gestionnaire des banques reste à porter (lecture seule ici).

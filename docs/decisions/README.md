@@ -2,12 +2,12 @@
 
 Chaque choix structurant de la refonte est consigné ici, au format ADR court
 (*Architecture Decision Record*) : contexte → décision → conséquences.
-Une décision n'est jamais supprimée : si elle change, on écrit un nouvel ADR qui la
-remplace et on marque l'ancien « Remplacé par ADR-XXXX ».
+Quand une décision change, on écrit un nouvel ADR qui la remplace et on marque l'ancien
+« Remplacé par ADR-XXXX ». Les numéros ne sont jamais réutilisés : un trou dans la
+numérotation signale un ADR retiré, dont l'historique Git garde la trace.
 
 | N° | Titre | Statut | Date |
 |---|---|---|---|
-| [0001](0001-stack-technique.md) | Stack technique : SvelteKit 2 / Svelte 5 + FastAPI | Accepté | 2026-09-22 |
 | [0002](0002-architecture-bff-et-authentification.md) | Architecture BFF et authentification par session | Accepté | 2026-09-22 |
 | [0003](0003-modele-de-donnees.md) | Modèle de données et reprise des données legacy | Accepté | 2026-09-22 |
 | [0004](0004-regles-metier-et-bugs-legacy.md) | Règles métier conservées, bugs legacy corrigés | Accepté | 2026-09-22 |
@@ -19,3 +19,5 @@ remplace et on marque l'ancien « Remplacé par ADR-XXXX ».
 | [0010](0010-connexion-par-code-et-agregateur-paiement.md) | Connexion par code (OTP) et agrégateur de paiement : préparés, activés plus tard | Accepté | 2026-09-22 |
 | [0011](0011-decisions-des-modules-et-de-l-integration.md) | Décisions prises pendant la construction des modules et l'intégration | Accepté | 2026-09-22 |
 | [0012](0012-depot-github-et-environnement-cloud.md) | Dépôt GitHub privé, données de démonstration, environnement cloud | Accepté | 2026-09-26 |
+| [0013](0013-pile-technique-et-processus-unique.md) | Pile technique : SvelteKit + Express, déployés en un seul processus Node | Accepté | 2026-09-28 |
+| [0014](0014-bascule-du-depot-vers-la-pile-express.md) | Bascule du dépôt vers la pile Express et reprise des vraies données | Accepté | 2026-09-30 |

@@ -1,4 +1,4 @@
-/** Likelemba (tontines) — alignés sur `backend/app/schemas/likelemba.py`. */
+/** Likelemba (tontines) — alignés sur `api/src/routes/likelemba.ts`. */
 import type { Auteur } from '$lib/types';
 
 export interface GroupeResume {
@@ -109,4 +109,9 @@ export interface MesAdhesions {
 }
 
 /** États d'une cotisation (1 en attente de confirmation, 2 validée, 3 annulée). */
-export const ETATS_COTISATION: Record<number, string> = { 1: 'En attente', 2: 'Validée', 3: 'Annulée', 4: 'Clôturée' };
+export const ETATS_COTISATION: Record<number, string> = {
+	1: 'En attente',
+	2: 'Validée',
+	3: 'Annulée',
+	4: 'Clôturée'
+};

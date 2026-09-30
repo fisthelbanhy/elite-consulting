@@ -24,7 +24,10 @@
 </svelte:head>
 
 <div class="conteneur max-w-5xl space-y-6 py-6">
-	<a href="/gestion/contacts" class="inline-flex min-h-11 items-center gap-2 font-semibold text-fleuve-700 hover:underline">
+	<a
+		href="/gestion/contacts"
+		class="inline-flex min-h-11 items-center gap-2 font-semibold text-fleuve-700 hover:underline"
+	>
 		<ArrowLeft class="size-5" aria-hidden="true" />Tous les messages
 	</a>
 
@@ -33,7 +36,9 @@
 			<article class="carte space-y-4 p-5 sm:p-6">
 				<div class="flex flex-wrap items-center gap-2">
 					<BadgeEtat etat={c.etat} libelles={ETATS_CONTACT} />
-					<span class="text-sm text-ardoise">Reçu le <time datetime={c.date_envoi}>{dateHeure(c.date_envoi)}</time></span>
+					<span class="text-sm text-ardoise"
+						>Reçu le <time datetime={c.date_envoi}>{dateHeure(c.date_envoi)}</time></span
+					>
 				</div>
 				<h1 class="text-2xl font-bold break-words">{c.objet}</h1>
 				<p class="break-words whitespace-pre-line">{c.texte}</p>
@@ -43,7 +48,10 @@
 				<h2 id="titre-reponse" class="text-xl font-bold">Réponse</h2>
 				{#if c.repondu}
 					<div class="rounded-xl bg-foret-50 p-4 ring-1 ring-foret-100">
-						<p class="text-sm font-semibold text-foret-700">Réponse envoyée{#if c.date_reponse} le {dateHeure(c.date_reponse)}{/if}</p>
+						<p class="text-sm font-semibold text-foret-700">
+							Réponse envoyée{#if c.date_reponse}
+								le {dateHeure(c.date_reponse)}{/if}
+						</p>
 						<p class="mt-1 break-words whitespace-pre-line">{c.reponse}</p>
 					</div>
 				{/if}
@@ -62,7 +70,9 @@
 							{...champ(form, 'reponse', '', 'reponse')}
 						/>
 						<Bouton type="submit" class="mt-4" chargement={envoi}>
-							<Send class="size-5" aria-hidden="true" />{c.email ? 'Enregistrer et envoyer par e-mail' : 'Enregistrer la réponse'}
+							<Send class="size-5" aria-hidden="true" />{c.email
+								? 'Enregistrer et envoyer par e-mail'
+								: 'Enregistrer la réponse'}
 						</Bouton>
 					{/snippet}
 				</Formulaire>
@@ -73,21 +83,46 @@
 			<section class="carte space-y-3 p-5" aria-labelledby="titre-expediteur">
 				<h2 id="titre-expediteur" class="text-lg font-bold">Expéditeur</h2>
 				<p class="font-semibold">{c.nom}</p>
-				<p class="text-sm text-ardoise">{estMembre ? `Membre ${c.membre?.pseudonyme}` : 'Visiteur (sans compte)'}</p>
+				<p class="text-sm text-ardoise">
+					{estMembre ? `Membre ${c.membre?.pseudonyme}` : 'Visiteur (sans compte)'}
+				</p>
 				<ul class="space-y-2 text-[15px]">
 					{#if c.email}
-						<li class="flex items-center gap-2"><Mail class="size-4 shrink-0 text-fleuve-600" aria-hidden="true" /><a href="mailto:{c.email}" class="lien break-all">{c.email}</a></li>
+						<li class="flex items-center gap-2">
+							<Mail class="size-4 shrink-0 text-fleuve-600" aria-hidden="true" /><a
+								href="mailto:{c.email}"
+								class="lien break-all">{c.email}</a
+							>
+						</li>
 					{/if}
 					{#if c.telephone}
-						<li class="flex items-center gap-2"><Phone class="size-4 shrink-0 text-fleuve-600" aria-hidden="true" /><a href={lienTel(c.telephone)} class="lien">{telephone(c.telephone)}</a></li>
+						<li class="flex items-center gap-2">
+							<Phone class="size-4 shrink-0 text-fleuve-600" aria-hidden="true" /><a
+								href={lienTel(c.telephone)}
+								class="lien">{telephone(c.telephone)}</a
+							>
+						</li>
 						<li class="flex items-center gap-2">
 							<MessageCircle class="size-4 shrink-0 text-foret-600" aria-hidden="true" />
-							<a href={lienWhatsApp(c.telephone, `Bonjour ${c.nom}, c'est La Frangine au sujet de votre message « ${c.objet} ».`)} target="_blank" rel="noopener" class="font-semibold text-foret-700">Répondre sur WhatsApp</a>
+							<a
+								href={lienWhatsApp(
+									c.telephone,
+									`Bonjour ${c.nom}, c'est La Frangine au sujet de votre message « ${c.objet} ».`
+								)}
+								target="_blank"
+								rel="noopener"
+								class="font-semibold text-foret-700">Répondre sur WhatsApp</a
+							>
 						</li>
 					{/if}
 				</ul>
 				{#if estMembre && c.membre}
-					<Bouton href="/gestion/messages/{c.membre.id}" variante="secondaire" pleineLargeur taille="sm">
+					<Bouton
+						href="/gestion/messages/{c.membre.id}"
+						variante="secondaire"
+						pleineLargeur
+						taille="sm"
+					>
 						<MessagesSquare class="size-4" aria-hidden="true" />Sa messagerie privée
 					</Bouton>
 				{/if}
@@ -100,7 +135,10 @@
 						<label for="etat" class="mb-1.5 block text-[15px] font-semibold">État du message</label>
 						<div class="flex gap-2">
 							<select id="etat" name="etat" class="flex-1">
-								{#each Object.entries(ETATS_CONTACT) as [v, l] (v)}<option value={v} selected={Number(v) === c.etat}>{l}</option>{/each}
+								{#each Object.entries(ETATS_CONTACT) as [v, l] (v)}<option
+										value={v}
+										selected={Number(v) === c.etat}>{l}</option
+									>{/each}
 							</select>
 							<Bouton type="submit" variante="fleuve" chargement={envoi}>OK</Bouton>
 						</div>

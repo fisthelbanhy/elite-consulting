@@ -42,8 +42,15 @@
 		libelleBouton?: string;
 	} = $props();
 
-	const f = $derived(form as { valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null);
-	const groupes = $derived(secteurs.map((s) => ({ label: s.libelle, options: s.domaines.map((d) => ({ value: d.id, label: d.libelle })) })));
+	const f = $derived(
+		form as { valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null
+	);
+	const groupes = $derived(
+		secteurs.map((s) => ({
+			label: s.libelle,
+			options: s.domaines.map((d) => ({ value: d.id, label: d.libelle }))
+		}))
+	);
 	const optionsVilles = $derived(villes.map((v) => ({ value: v.id, label: v.nom })));
 </script>
 
@@ -53,9 +60,20 @@
 			<fieldset class="carte space-y-5 p-6">
 				<legend class="sr-only">L'entreprise</legend>
 				<h2 class="text-xl font-bold">L'entreprise</h2>
-				<Saisie label="Nom de l'entreprise" requis maxlength={150} autocomplete="organization" {...champ(f, 'nom', initial.nom)} />
+				<Saisie
+					label="Nom de l'entreprise"
+					requis
+					maxlength={150}
+					autocomplete="organization"
+					{...champ(f, 'nom', initial.nom)}
+				/>
 				<div class="grid gap-5 sm:grid-cols-2">
-					<Liste label="Forme juridique" requis options={formes} {...champ(f, 'forme_juridique', initial.forme_juridique)} />
+					<Liste
+						label="Forme juridique"
+						requis
+						options={formes}
+						{...champ(f, 'forme_juridique', initial.forme_juridique)}
+					/>
 					<Saisie
 						label="Capital social"
 						inputmode="numeric"
@@ -84,16 +102,46 @@
 				<legend class="sr-only">Coordonnées</legend>
 				<div>
 					<h2 class="text-xl font-bold">Coordonnées de l'entreprise</h2>
-					<p class="mt-1 text-[15px] text-ardoise">Elles sont publiées dans l'annuaire : c'est ainsi que vos clients et partenaires vous contactent.</p>
+					<p class="mt-1 text-[15px] text-ardoise">
+						Elles sont publiées dans l'annuaire : c'est ainsi que vos clients et partenaires vous
+						contactent.
+					</p>
 				</div>
 				<div class="grid gap-5 sm:grid-cols-2">
-					<Saisie label="Téléphone" type="tel" inputmode="tel" prefixe="+242" autocomplete="tel-national" {...champ(f, 'telephone', initial.telephone)} />
-					<Saisie label="E-mail" type="email" autocomplete="email" {...champ(f, 'email', initial.email)} />
+					<Saisie
+						label="Téléphone"
+						type="tel"
+						inputmode="tel"
+						prefixe="+242"
+						autocomplete="tel-national"
+						{...champ(f, 'telephone', initial.telephone)}
+					/>
+					<Saisie
+						label="E-mail"
+						type="email"
+						autocomplete="email"
+						{...champ(f, 'email', initial.email)}
+					/>
 				</div>
-				<Saisie label="Site internet" inputmode="url" placeholder="www.monentreprise.cg" {...champ(f, 'site_web', initial.site_web)} />
+				<Saisie
+					label="Site internet"
+					inputmode="url"
+					placeholder="www.monentreprise.cg"
+					{...champ(f, 'site_web', initial.site_web)}
+				/>
 				<div class="grid gap-5 sm:grid-cols-[1fr_14rem]">
-					<Saisie label="Adresse" aide="Ex. 59 rue Bétou, Moungali" autocomplete="street-address" {...champ(f, 'adresse', initial.adresse)} />
-					<Liste label="Ville" requis options={optionsVilles} {...champ(f, 'ville_id', initial.ville_id)} />
+					<Saisie
+						label="Adresse"
+						aide="Ex. 59 rue Bétou, Moungali"
+						autocomplete="street-address"
+						{...champ(f, 'adresse', initial.adresse)}
+					/>
+					<Liste
+						label="Ville"
+						requis
+						options={optionsVilles}
+						{...champ(f, 'ville_id', initial.ville_id)}
+					/>
 				</div>
 			</fieldset>
 

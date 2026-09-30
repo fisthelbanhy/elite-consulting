@@ -11,8 +11,10 @@ type Evenement = Pick<RequestEvent, 'locals' | 'url'>;
 /** Exige un gestionnaire connecté (sinon connexion, ou 403 pour un simple membre). */
 export function exigerGestionnaire(event: Evenement) {
 	const membre = event.locals.membre;
-	if (!membre) redirect(303, `/connexion?suite=${encodeURIComponent(event.url.pathname + event.url.search)}`);
-	if (!membre.est_gestionnaire) error(403, 'Cet espace est réservé aux gestionnaires de La Frangine.');
+	if (!membre)
+		redirect(303, `/connexion?suite=${encodeURIComponent(event.url.pathname + event.url.search)}`);
+	if (!membre.est_gestionnaire)
+		error(403, 'Cet espace est réservé aux gestionnaires de La Frangine.');
 	return membre;
 }
 
@@ -36,9 +38,19 @@ export function taillePage(url: URL): number {
 export async function executer<T extends Ok = Ok>(
 	event: RequestEvent,
 	chemin: string,
-	opts: { method?: OptionsApi['method']; body?: unknown; cle?: string; valeurs?: Record<string, unknown> } = {}
+	opts: {
+		method?: OptionsApi['method'];
+		body?: unknown;
+		cle?: string;
+		valeurs?: Record<string, unknown>;
+	} = {}
 ) {
-	const r = await soumettre<T>(event, chemin, { method: opts.method ?? 'POST', body: opts.body, cle: opts.cle, valeurs: opts.valeurs });
+	const r = await soumettre<T>(event, chemin, {
+		method: opts.method ?? 'POST',
+		body: opts.body,
+		cle: opts.cle,
+		valeurs: opts.valeurs
+	});
 	if (!r.ok) return r.echec;
 	return { cle: opts.cle, succes: r.data.message, donnees: r.data };
 }
@@ -49,7 +61,8 @@ export async function supprimer(event: RequestEvent, chemin: string, cle = 'supp
 		const r = await api<Ok>(event, chemin, { method: 'DELETE' });
 		return { cle, succes: r.message };
 	} catch (e) {
-		if (e instanceof ApiError) return fail(e.statut, { cle, message: e.message, champs: e.champs, valeurs: {} });
+		if (e instanceof ApiError)
+			return fail(e.statut, { cle, message: e.message, champs: e.champs, valeurs: {} });
 		throw e;
 	}
 }

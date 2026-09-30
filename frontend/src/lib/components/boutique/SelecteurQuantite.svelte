@@ -14,7 +14,14 @@
 		max = 999,
 		min = 0,
 		id
-	}: { name: string; label: string; valeur?: number; max?: number; min?: number; id?: string } = $props();
+	}: {
+		name: string;
+		label: string;
+		valeur?: number;
+		max?: number;
+		min?: number;
+		id?: string;
+	} = $props();
 
 	let champ = $state<HTMLInputElement>();
 	const ident = $derived(id ?? `q-${name}`);

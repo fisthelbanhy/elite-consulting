@@ -4,7 +4,13 @@ import { api, ApiError, chargerOuDefaut, lireFormulaire, soumettre } from './api
 import type { Ok } from '$lib/types';
 import type { Acces } from '$lib/types/comparateur';
 
-const SANS_ACCES: Acces = { acces: false, motif: 'visiteur', message: null, gestionnaire: false, entreprises: [] };
+const SANS_ACCES: Acces = {
+	acces: false,
+	motif: 'visiteur',
+	message: null,
+	gestionnaire: false,
+	entreprises: []
+};
 
 /** Droit de consulter le comparateur (jamais bloquant : la page affiche l'invitation adaptée). */
 export function chargerAcces(event: RequestEvent) {
@@ -24,14 +30,19 @@ export async function enregistrerLigne(event: RequestEvent) {
 		quantite_mensuelle: 'entier',
 		fournisseur_ou_client: 'texte'
 	});
-	for (const k of ['prix', 'quantite_mensuelle'] as const) if (Number.isNaN(valeurs[k])) valeurs[k] = 0;
+	for (const k of ['prix', 'quantite_mensuelle'] as const)
+		if (Number.isNaN(valeurs[k])) valeurs[k] = 0;
 	const ligneId = String(fd.get('ligne_id') ?? '');
-	const r = await soumettre<Ok>(event, ligneId ? `/comparateur/lignes/${ligneId}` : '/comparateur/lignes', {
-		method: ligneId ? 'PUT' : 'POST',
-		body: valeurs,
-		valeurs: { ...valeurs, ligne_id: ligneId },
-		cle: 'ligne'
-	});
+	const r = await soumettre<Ok>(
+		event,
+		ligneId ? `/comparateur/lignes/${ligneId}` : '/comparateur/lignes',
+		{
+			method: ligneId ? 'PUT' : 'POST',
+			body: valeurs,
+			valeurs: { ...valeurs, ligne_id: ligneId },
+			cle: 'ligne'
+		}
+	);
 	if (!r.ok) return r.echec;
 	// Après une modification, on quitte le mode édition (`?modifier=…`)
 	if (ligneId) redirect(303, `${event.url.pathname}?entreprise=${valeurs.entreprise_id}&modifie=1`);
@@ -45,7 +56,8 @@ export async function supprimerLigne(event: RequestEvent) {
 		const r = await api<Ok>(event, `/comparateur/lignes/${id}`, { method: 'DELETE' });
 		return { cle: 'ligne', succes: r.message };
 	} catch (e) {
-		if (e instanceof ApiError) return fail(e.statut, { cle: 'ligne', message: e.message, champs: e.champs, valeurs: {} });
+		if (e instanceof ApiError)
+			return fail(e.statut, { cle: 'ligne', message: e.message, champs: e.champs, valeurs: {} });
 		throw e;
 	}
 }

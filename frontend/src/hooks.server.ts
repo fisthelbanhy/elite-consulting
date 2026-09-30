@@ -12,7 +12,7 @@ const redirections: Handle = async ({ event, resolve }) => {
 	return resolve(event);
 };
 
-/** Session : le cookie httpOnly porte un jeton opaque, validé auprès de FastAPI. */
+/** Session : le cookie httpOnly porte un jeton opaque, validé auprès de l'API. */
 const authentification: Handle = async ({ event, resolve }) => {
 	event.locals.membre = null;
 	event.locals.jeton = event.cookies.get(COOKIE_SESSION) ?? null;
@@ -38,7 +38,13 @@ const visites: Handle = async ({ event, resolve }) => {
 		!p.includes('.') &&
 		!event.request.headers.get('x-sveltekit-action');
 	if (estPage && !event.cookies.get('lf_v')) {
-		event.cookies.set('lf_v', '1', { path: '/', maxAge: 60 * 30, httpOnly: true, sameSite: 'lax', secure: !dev });
+		event.cookies.set('lf_v', '1', {
+			path: '/',
+			maxAge: 60 * 30,
+			httpOnly: true,
+			sameSite: 'lax',
+			secure: !dev
+		});
 		api(event, '/visites', { method: 'POST' }).catch(() => {});
 	}
 	return resolve(event);

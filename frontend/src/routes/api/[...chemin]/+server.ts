@@ -1,5 +1,5 @@
 /**
- * Proxy navigateur → FastAPI pour les rares appels faits côté client (widget de messagerie,
+ * Proxy navigateur → API pour les rares appels faits côté client (widget de messagerie,
  * compteurs). Le jeton est ajouté côté serveur : il n'est jamais exposé au JavaScript (ADR-0002).
  */
 import type { RequestHandler } from './$types';
@@ -22,7 +22,10 @@ const relayer: RequestHandler = async ({ params, request, url, locals, getClient
 	});
 	return new Response(rep.body, {
 		status: rep.status,
-		headers: { 'content-type': rep.headers.get('content-type') ?? 'application/json', 'cache-control': 'no-store' }
+		headers: {
+			'content-type': rep.headers.get('content-type') ?? 'application/json',
+			'cache-control': 'no-store'
+		}
 	});
 };
 

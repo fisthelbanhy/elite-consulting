@@ -1,7 +1,7 @@
-# Conventions de développement — La Frangine (SvelteKit + FastAPI)
+# Conventions de développement — La Frangine (SvelteKit + Express)
 
 > À lire avant de toucher au code. Le module **Emplois** est l'implémentation de référence :
-> backend `backend/app/routers/emplois.py` + `backend/app/schemas/emplois.py` + `backend/tests/test_emplois.py`,
+> backend `api/src/routes/emplois.ts` + `api/src/schemas/emplois.ts` + `api/tests/emplois.test.ts`,
 > frontend `frontend/src/routes/emplois/**`, `frontend/src/lib/components/emplois/*`,
 > `frontend/src/lib/server/emplois.ts`, `frontend/src/lib/types/emplois.ts`.
 > En cas de doute, faites comme lui.
@@ -9,8 +9,13 @@
 ## 1. Architecture (rappel)
 
 ```
-Navigateur ──▶ SvelteKit (SSR + form actions, cookie httpOnly) ──▶ FastAPI /api/* ──▶ SQLAlchemy ──▶ SQLite/PostgreSQL
+Navigateur ──▶ SvelteKit (SSR + form actions, cookie httpOnly) ──▶ Express /api/* ──▶ Drizzle ──▶ SQLite
 ```
+
+En production, le site et l'API tournent dans **un seul processus Node** (ADR-0013) : Express monte
+`/api/*` et `/media/*`, puis délègue tout le reste au handler `adapter-node`. La frontière BFF de
+l'ADR-0002 est conservée telle quelle — le navigateur ne parle qu'au site, le jeton de session ne
+quitte pas le serveur —, seul le déploiement est fusionné.
 
 - ADR à respecter : `docs/decisions/` (surtout 0004 règles/bugs, 0005 sécurité, 0006 paiements,
   0007 arbitrages, 0008 design/IA, 0009 modules à risque).
@@ -20,55 +25,74 @@ Navigateur ──▶ SvelteKit (SSR + form actions, cookie httpOnly) ──▶ F
   seulement sur le poste local** : il contient les identifiants de la base de production et n'est
   pas dans le dépôt (ADR-0012). Les inventaires en citent tout ce qui est nécessaire.
 - Lancer : `npm run dev` à la racine (API + site, `scripts/dev.mjs`), ou séparément
-  `npm run dev:api`
-  et `npm --prefix frontend run dev`. Documentation API : http://127.0.0.1:8000/api/docs.
+  `npm run dev:api` et `npm run dev:site`. Contrôle de vie : http://127.0.0.1:8000/api/sante.
 
-## 2. Backend (FastAPI)
+## 2. Backend (Express 5 + TypeScript)
 
 ### Fichiers d'un module
-- `app/routers/<module>.py` : routes ; se termine par `routers = [router]` (déjà enregistré dans
-  `app/routers/__init__.py`, **ne pas modifier ce registre**).
-- `app/schemas/<module>.py` : schémas Pydantic (entrée `XxxEntree`, sortie `XxxResume` / `XxxDetail`).
-- `app/services/<module>.py` si la logique métier dépasse quelques lignes (machines à états, calculs).
-- `tests/test_<module>.py` : tests pytest (fixtures dans `tests/conftest.py` :
-  `client`, `creer_membre(identifiant, type_compte=…, droit_activation=True, …)`, `entetes(client, identifiant)`).
-- Modèles : `app/models/*.py` existent déjà pour les 62 tables. Vous pouvez **ajouter** une
-  colonne au(x) modèle(s) de votre domaine (avec `Edit`, jamais en réécrivant le fichier) ;
-  signalez-le dans votre compte rendu. Ne lancez pas `scripts/reprise_legacy.py` (il recrée la
-  base partagée) : mettez à jour son mapping si vous ajoutez une colonne alimentée par le legacy.
+- `src/routes/<module>.ts` : routes ; exporte `routeur` et `prefixe` (déjà enregistré dans
+  `src/routes/index.ts`, **ne pas modifier ce registre**).
+- Schémas Zod (entrée `xxxEntreeSchema`) et vues de sortie (`vueResume`, `vueDetail`) : dans le
+  routeur tant qu'ils y tiennent, ce qui est le cas de la plupart des modules ; dans
+  `src/schemas/<module>.ts` quand ils deviennent envahissants ou servent à plusieurs routeurs —
+  c'est le cas d'`emplois`, `immobilier` et `membres`.
+- `src/services/<module>.ts` si la logique métier dépasse quelques lignes (machines à états, calculs).
+- `tests/<module>.test.ts` : tests Vitest (aides dans `tests/aides.ts` :
+  `client()`, `creerMembre(identifiant, { type_compte, droit_activation, … })`, `entetes(identifiant)`).
+- Schéma : `src/schema/*.ts` existent déjà pour les 62 tables. Vous pouvez **ajouter** une colonne
+  à la table de votre domaine (avec `Edit`, jamais en réécrivant le fichier), puis
+  `npm run migration` et `npm run migrer` ; signalez-le dans votre compte rendu. Ne lancez pas
+  `src/scripts/reprise-legacy.ts` (il recrée la base partagée) : mettez à jour son mapping si vous
+  ajoutez une colonne alimentée par le legacy.
 
 ### Règles
+- **Accès à la base synchrone** (`.get()`, `.all()`, `.run()`) : le pilote `better-sqlite3` l'est,
+  et ses transactions n'acceptent pas de rappel asynchrone. `async` est réservé à ce qui l'est
+  réellement : hachage Argon2, traitement des images, envoi d'e-mails.
 - **Droits vérifiés côté serveur, toujours** (le legacy n'en vérifiait aucun) :
-  - `MembreOpt` (lecture publique), `MembreReq` (connecté), `Gestionnaire` ;
-  - `verifier_modification(membre, auteur_id)` : l'auteur ou un gestionnaire avec droit Activation ;
-  - `exiger_droit(membre, "activation" | "caisse" | "attribution")`.
-- Helpers de `app/services/fiches.py` : `visibilite()` (public = état 2 ; auteur = les siennes ;
-  gestionnaire = tout), `obtenir()` (404 si non visible), `paginer()`, `recherche(q, *colonnes)`,
-  `compter_visite()` (tiers seulement), `changer_etat()` (droit Activation), `supprimer()` (état 3).
-- Listes : `GET /<module>?q=&page=&taille=&…` → `Liste[XxxResume]` (`items,total,page,taille`).
-  Détail : champs de contexte `peut_modifier`, `peut_moderer`, et données privées mises à `None`
-  pour les non-propriétaires (voir `_detail` d'emplois — **ne pas oublier** : `model_validate`
-  recopie tous les attributs homonymes).
-- Écritures : `POST /<module>` (201, `Ok(message, id, reference)`), `PUT /<module>/{id}`,
-  `POST /<module>/{id}/etat` (`{"etat": n}`), `DELETE /<module>/{id}` (suppression logique),
-  fichiers `POST /<module>/{id}/photo` (multipart, champ `fichier`) via `services/fichiers.enregistrer()`.
-- Références : `nouvelle_reference(db, Prefixe.XXX)` (format legacy). Codes Likelemba :
-  `code_adhesion_likelemba`, `numero_recu_likelemba`.
-- Erreurs : `raise erreur("Message global.", champ="Message du champ.")` (400),
-  `introuvable()`, `interdit()`. Messages en **français**, repris du legacy quand il en avait
-  (« Enregistrement effectué. », « Modification effectuée. », « Cette fiche est déjà enregistrée. »…),
-  orthographe corrigée.
+  - intergiciels `membreOptionnel` (lecture publique), `membreRequis`, `gestionnaireRequis` ;
+    puis `exigerMembre(req)` pour récupérer le membre typé ;
+  - `verifierModification(membre, auteur_id)` : l'auteur ou un gestionnaire avec droit Activation ;
+  - `exigerDroit(membre, 'activation' | 'caisse' | 'attribution')`.
+- Helpers de `src/services/fiches.ts` : `visibilite()` (public = état 2 ; auteur = les siennes ;
+  gestionnaire = tout), `exigerVisible()` (404 si non visible), `paginer()`,
+  `recherche(q, …colonnes)`, `compterVisite()` (tiers seulement), `changerEtat()` (droit
+  Activation), `supprimer()` (état 3), `nonSupprimee()`.
+- Validation : `valider(schema, req.body)` lève un 422 `{message, champs}` listant **tous** les
+  champs en faute — les contrôles croisés sont exécutés à part, car Zod les abandonne dès qu'un
+  champ échoue. Briques dans `src/schemas/commun.ts` (`entier`, `entierFacultatif`, `texte`,
+  `dateFacultative`, `telephoneFacultatif`…). Pour un entier venant de la **chaîne de requête**,
+  utiliser `entierRequis()` / `entierFacultatifRequete()` et non `z.coerce.number()` (ADR-0011 I12).
+- Listes : `GET /<module>?q=&page=&taille=&…` → `{items, total, page, taille}` (`pagination(req)`).
+  Détail : champs de contexte `peut_modifier`, `peut_moderer`, et données privées mises à `null`
+  pour les non-propriétaires (voir `vueDetail` d'emplois).
+- Écritures : `POST /<module>` (201, `ok(message, id, reference)`), `PUT /<module>/:id`,
+  `POST /<module>/:id/etat` (`{"etat": n}`), `DELETE /<module>/:id` (suppression logique),
+  fichiers `POST /<module>/:id/photo` (multipart, champ `fichier`) via `services/fichiers.enregistrer()`.
+- Références : `nouvelleReference(Prefixe.XXX)` (format legacy). Codes Likelemba :
+  `codeAdhesionLikelemba`, `numeroRecuLikelemba`.
+- Erreurs : `throw erreur('Message global.', { champ: 'Message du champ.' })` (400),
+  `introuvable()`, `interdit()`, `nonAuthentifie()`. Messages en **français**, repris du legacy
+  quand il en avait (« Enregistrement effectué. », « Modification effectuée. », « Cette fiche est
+  déjà enregistrée. »…), orthographe corrigée. **Apostrophes droites** (`l'ACPCE`), comme le
+  legacy : ces chaînes se comparent mot pour mot (ADR-0011 I14).
+- Dates : une colonne `DATE` se lit en `JourSeul` et sort en JSON sans heure (`2026-10-15`) ; une
+  colonne `DATETIME` sort en date-heure naïve (`2026-09-28T14:30:05`), jamais en UTC (ADR-0011 I10).
+  Ne posez pas `date_creation` à la main : le défaut `maintenant()` la rend strictement croissante,
+  ce dont dépend l'ordre des listes (ADR-0011 I11).
 - Intérêts (« besoin / intéressement ») : `services/interets.deposer()` (1 par membre et par fiche,
   notification de l'auteur).
 - Paiements : déclarer un `Traitement` pour votre `TypeObjetPaye` dans votre service
   (`services/paiements.declarer(...)`) avec `libelle`, `montant`, `retour`, `verifier`,
-  `enregistrer`, `confirmer`, `rejeter`. Le frontend envoie simplement le membre vers
+  `enregistrer`, `confirmer`, `rejeter`, puis importer ce service depuis
+  `services/traitements.ts`. Le frontend envoie simplement le membre vers
   `/paiement/{type}?objet={id}`. Effets à l'**enregistrement**, annulés au **rejet** (ADR-0006/0007).
-- Messagerie système : pour prévenir un membre, créer un `Message(membre_id=…, de_la_frangine=True, texte=…)`.
-- E-mails : `services/emails.envoyer(destinataire, sujet, texte)` via `BackgroundTasks`.
-- Montants en entiers FCFA ; dates ISO ; énumérations = `app/enums.py` (valeurs legacy).
-- Qualité : `npm test -- tests/test_<module>.py` doit passer ;
-  `npm run lint  # ou : node scripts/py.mjs -m ruff check app/routers/<module>.py`.
+- Messagerie système : pour prévenir un membre, `services/messages.notifier(membreId, texte)`.
+- E-mails : `services/emails.envoyerEnArrierePlan(destinataire, sujet, texte)` — la réponse HTTP
+  ne doit pas attendre le serveur SMTP.
+- Montants en entiers FCFA ; énumérations = `src/enums.ts` (valeurs legacy).
+- Qualité : `npm test -- <module>` doit passer ; `npm run lint` (Prettier + ESLint) et
+  `npm run check` (types) doivent être propres.
 
 ## 3. Frontend (SvelteKit 2 / Svelte 5)
 
@@ -137,7 +161,7 @@ d'erreurs), `Saisie`, `Zone`, `Liste` (options ou `groupes`), `Choix` (tuiles ra
 
 ## 4. Travail en parallèle
 - Chaque domaine possède ses fichiers ; ne modifiez pas ceux d'un autre domaine.
-- N'utilisez pas le navigateur intégré (partagé) : vérifiez par pytest, `svelte-check`, et au
+- N'utilisez pas le navigateur intégré (partagé) : vérifiez par Vitest, `svelte-check`, et au
   besoin des requêtes HTTP (`curl`) sur les serveurs locaux s'ils tournent.
 - Compte rendu final : fichiers créés/modifiés, points de checklist couverts (`F-…`), écarts
   assumés, colonnes ajoutées, et tout besoin sur un fichier partagé.

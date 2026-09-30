@@ -8,7 +8,10 @@ import type { MaladieGestion } from '$lib/types/gestion';
 export const load: PageServerLoad = async (event) => {
 	const f = filtres(event.url, ['q', 'etat', 'page'] as const);
 	const taille = taillePage(event.url);
-	const liste = await charger<Liste<MaladieGestion>>(event, '/gestion/referentiels/maladies', { ...f, taille });
+	const liste = await charger<Liste<MaladieGestion>>(event, '/gestion/referentiels/maladies', {
+		...f,
+		taille
+	});
 	return { liste, filtres: f, taille, enregistre: event.url.searchParams.get('ok') };
 };
 

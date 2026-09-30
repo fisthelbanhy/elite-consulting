@@ -21,7 +21,10 @@
 	titre="Fiches bien-être"
 	surtitre="Bien-être"
 	sousTitre="Des repères simples et les conseils d'utilisation des produits à l'aloe vera, par besoin."
-	fil={[{ href: '/boutique', label: 'Boutique' }, { href: '/bien-etre', label: 'Fiches bien-être' }]}
+	fil={[
+		{ href: '/boutique', label: 'Boutique' },
+		{ href: '/bien-etre', label: 'Fiches bien-être' }
+	]}
 >
 	{#snippet bas()}
 		<div class="mt-6">
@@ -46,10 +49,15 @@
 			<ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 				{#each data.fiches as f (f.id)}
 					<li>
-						<a href="/bien-etre/{f.id}" class="carte group flex h-full flex-col gap-2 p-5 transition-shadow hover:shadow-levee">
+						<a
+							href="/bien-etre/{f.id}"
+							class="carte group flex h-full flex-col gap-2 p-5 transition-shadow hover:shadow-levee"
+						>
 							<Leaf class="size-7 text-foret-600" aria-hidden="true" />
 							<h2 class="text-xl font-bold group-hover:underline">{f.libelle}</h2>
-							{#if f.description}<p class="text-[15px] text-ardoise">{tronquer(f.description, 120)}</p>{/if}
+							{#if f.description}<p class="text-[15px] text-ardoise">
+									{tronquer(f.description, 120)}
+								</p>{/if}
 							<p class="mt-auto flex items-center gap-1 pt-2 text-sm font-semibold text-fleuve-700">
 								{f.nombre_produits
 									? `${f.nombre_produits} produit${f.nombre_produits > 1 ? 's' : ''} et conseils d'utilisation`

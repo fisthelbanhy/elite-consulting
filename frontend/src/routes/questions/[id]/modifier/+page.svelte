@@ -14,8 +14,16 @@
 <EnTetePage
 	titre="Modifier le sujet"
 	sousTitre="Changer la confidentialité s'applique aussi aux réponses déjà publiées."
-	fil={[{ href: '/questions', label: 'Questions & conseils' }, { href: `/questions/${s.id}`, label: s.reference }]}
+	fil={[
+		{ href: '/questions', label: 'Questions & conseils' },
+		{ href: `/questions/${s.id}`, label: s.reference }
+	]}
 />
 <div class="conteneur max-w-3xl py-8">
-	<FormulaireSujet {form} initial={s} libelleBouton="Enregistrer les modifications" annuler="/questions/{s.id}" />
+	<FormulaireSujet
+		{form}
+		initial={s}
+		libelleBouton="Enregistrer les modifications"
+		annuler="/questions/{s.id}"
+	/>
 </div>

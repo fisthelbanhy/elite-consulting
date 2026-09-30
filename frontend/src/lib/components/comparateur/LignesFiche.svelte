@@ -14,12 +14,20 @@
 		lignes,
 		lienModifier,
 		vide
-	}: { titre: string; description: string; lignes: Ligne[]; lienModifier: (id: number) => string; vide: string } = $props();
+	}: {
+		titre: string;
+		description: string;
+		lignes: Ligne[];
+		lienModifier: (id: number) => string;
+		vide: string;
+	} = $props();
 </script>
 
 <section class="carte p-6" aria-label={titre}>
 	<div class="flex flex-wrap items-baseline justify-between gap-2">
-		<h2 class="text-xl font-bold">{titre} <span class="text-base font-normal text-ardoise">({lignes.length})</span></h2>
+		<h2 class="text-xl font-bold">
+			{titre} <span class="text-base font-normal text-ardoise">({lignes.length})</span>
+		</h2>
 		<p class="text-sm text-ardoise">{description}</p>
 	</div>
 	{#if lignes.length}
@@ -35,12 +43,22 @@
 						</p>
 					</div>
 					<div class="flex gap-2">
-						<Bouton href={lienModifier(l.id)} variante="secondaire" taille="sm"><Pencil class="size-4" aria-hidden="true" />Modifier<span class="sr-only"> {l.produit.nom}</span></Bouton>
-						<Formulaire action="?/supprimer" cle="ligne-{l.id}" confirmer="Retirer « {l.produit.nom} » de votre fiche ?">
+						<Bouton href={lienModifier(l.id)} variante="secondaire" taille="sm"
+							><Pencil class="size-4" aria-hidden="true" />Modifier<span class="sr-only">
+								{l.produit.nom}</span
+							></Bouton
+						>
+						<Formulaire
+							action="?/supprimer"
+							cle="ligne-{l.id}"
+							confirmer="Retirer « {l.produit.nom} » de votre fiche ?"
+						>
 							{#snippet children({ envoi })}
 								<input type="hidden" name="ligne_id" value={l.id} />
 								<Bouton type="submit" variante="danger" taille="sm" chargement={envoi}>
-									<Trash2 class="size-4" aria-hidden="true" />Retirer<span class="sr-only"> {l.produit.nom}</span>
+									<Trash2 class="size-4" aria-hidden="true" />Retirer<span class="sr-only">
+										{l.produit.nom}</span
+									>
 								</Bouton>
 							{/snippet}
 						</Formulaire>

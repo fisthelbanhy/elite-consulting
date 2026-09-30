@@ -17,11 +17,22 @@ export const load: PageServerLoad = async (event) => {
 		page: q.get('page') ?? '1'
 	};
 	const [liste, compteurs, sects, publicites] = await Promise.all([
-		charger<Liste<ProjetResume>>(event, '/projets', { ...filtres, miens: filtres.miens ? 'true' : '', taille: 20 }),
-		chargerOuDefaut<CompteursProjets>(event, '/projets/compteurs', { projets: 0, besoin_total: 0, montant_promis: 0, montant_collecte: 0 }),
+		charger<Liste<ProjetResume>>(event, '/projets', {
+			...filtres,
+			miens: filtres.miens ? 'true' : '',
+			taille: 20
+		}),
+		chargerOuDefaut<CompteursProjets>(event, '/projets/compteurs', {
+			projets: 0,
+			besoin_total: 0,
+			montant_promis: 0,
+			montant_collecte: 0
+		}),
 		secteurs(event),
 		// Colonne « LES PUBLICITES » du legacy (F-S4-03), masquée pour les gestionnaires
-		event.locals.membre?.est_gestionnaire ? Promise.resolve([]) : chargerEncart(event, { limite: 4 })
+		event.locals.membre?.est_gestionnaire
+			? Promise.resolve([])
+			: chargerEncart(event, { limite: 4 })
 	]);
 	return { liste, compteurs, secteurs: sects, filtres, supprime: q.has('supprime'), publicites };
 };

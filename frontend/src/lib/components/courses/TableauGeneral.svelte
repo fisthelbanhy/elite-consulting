@@ -31,11 +31,17 @@
 								<span class="block text-sm text-ardoise">{c.client?.pseudonyme ?? ''}</span>
 							</td>
 							<td class="px-3 py-2 align-top text-sm" rowspan={Math.max(c.lignes.length, 1)}>
-								{dateCourte(c.date_achat)}<br /><span class="text-ardoise">{dateHeure(c.date_livraison)}</span>
+								{dateCourte(c.date_achat)}<br /><span class="text-ardoise"
+									>{dateHeure(c.date_livraison)}</span
+								>
 							</td>
 						{/if}
 						{#if l}
-							<td class="px-3 py-2">{l.nom_article}{#if l.observation}<span class="block text-sm text-ardoise">{l.observation}</span>{/if}</td>
+							<td class="px-3 py-2"
+								>{l.nom_article}{#if l.observation}<span class="block text-sm text-ardoise"
+										>{l.observation}</span
+									>{/if}</td
+							>
 							<td class="montant px-3 py-2 text-right">{fcfa(l.prix_plafond)}</td>
 							<td class="px-3 py-2 text-right">{l.quantite}</td>
 							<td class="montant px-3 py-2 text-right font-semibold">{fcfa(l.montant)}</td>

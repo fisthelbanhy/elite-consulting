@@ -21,20 +21,33 @@
 	<meta name="robots" content="noindex" />
 </svelte:head>
 
-<EnTeteTresorerie titre="Opérations bancaires" sousTitre="Programmez vos virements : votre banque reçoit l’ordre par e-mail, vous gardez l’historique." compteurs={data.compteurs}>
-	<Bouton href="/tresorerie/operations/nouveau"><Plus class="size-5" aria-hidden="true" />Nouvelle opération</Bouton>
+<EnTeteTresorerie
+	titre="Opérations bancaires"
+	sousTitre="Programmez vos virements : votre banque reçoit l’ordre par e-mail, vous gardez l’historique."
+	compteurs={data.compteurs}
+>
+	<Bouton href="/tresorerie/operations/nouveau"
+		><Plus class="size-5" aria-hidden="true" />Nouvelle opération</Bouton
+	>
 </EnTeteTresorerie>
 
 <div class="conteneur space-y-8 py-8">
 	{#if data.supprime}<Alerte type="succes" titre="L’opération est annulée." />{/if}
 	<div>
 		{#if data.gestion}
-			<VueGestionOperations operations={data.liste.items} synthese={data.synthese} banques={data.banques} filtres={data.filtres} />
+			<VueGestionOperations
+				operations={data.liste.items}
+				synthese={data.synthese}
+				banques={data.banques}
+				filtres={data.filtres}
+			/>
 			<Pagination total={data.liste.total} page={data.liste.page} taille={data.liste.taille} />
 		{:else}
 			<BarreFiltres q={data.filtres.q} placeholder="Référence, bénéficiaire, banque…" />
 			{#if data.liste.items.length}
-				<p class="mb-4 text-ardoise" aria-live="polite">{data.liste.total} opération{data.liste.total > 1 ? 's' : ''}</p>
+				<p class="mb-4 text-ardoise" aria-live="polite">
+					{data.liste.total} opération{data.liste.total > 1 ? 's' : ''}
+				</p>
 				<ul class="grid gap-4 md:grid-cols-2">
 					{#each data.liste.items as o (o.id)}
 						<li>
@@ -58,7 +71,9 @@
 			{:else}
 				<EtatVide
 					icone={ArrowLeftRight}
-					titre={data.filtres.q ? 'Aucune opération ne correspond à votre recherche' : 'Programmez vos virements en une fois'}
+					titre={data.filtres.q
+						? 'Aucune opération ne correspond à votre recherche'
+						: 'Programmez vos virements en une fois'}
 					texte="Fournisseurs, salaires, rapatriements : saisissez jusqu’à 15 ordres, votre banque les reçoit directement par e-mail."
 					messageWhatsApp="Bonjour la Frangine, je voudrais programmer des virements. Comment faire ?"
 				>

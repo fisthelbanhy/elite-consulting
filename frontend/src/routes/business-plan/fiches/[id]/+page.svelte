@@ -31,7 +31,13 @@
 						<div>
 							<dt class="text-sm font-semibold text-ardoise">{LIBELLES[c]}</dt>
 							{#if c === 'niveau_realisation'}
-								<dd class="mt-1"><Jauge valeur={bp.niveau_realisation} max={100} label="{bp.niveau_realisation} % réalisé" /></dd>
+								<dd class="mt-1">
+									<Jauge
+										valeur={bp.niveau_realisation}
+										max={100}
+										label="{bp.niveau_realisation} % réalisé"
+									/>
+								</dd>
 							{:else}
 								<dd class="mt-1 whitespace-pre-line">{bp[c] || '—'}</dd>
 							{/if}
@@ -48,7 +54,10 @@
 				<Avatar src={bp.membre.photo_url} nom={bp.membre.nom} taille="lg" />
 				<div>
 					<p class="font-semibold">{bp.membre.nom}</p>
-					<p class="text-sm text-ardoise">{bp.membre.pseudonyme}{#if bp.membre.sexe !== 3} · {libelle(data.enums, 'Sexe', bp.membre.sexe)}{/if}</p>
+					<p class="text-sm text-ardoise">
+						{bp.membre.pseudonyme}{#if bp.membre.sexe !== 3}
+							· {libelle(data.enums, 'Sexe', bp.membre.sexe)}{/if}
+					</p>
 					<a href="/gestion/membres/{bp.membre.id}" class="lien text-sm">Fiche du membre</a>
 				</div>
 			</section>

@@ -7,7 +7,11 @@ import type { FilResume } from '$lib/types/messages';
 export const load: PageServerLoad = async (event) => {
 	exigerGestionnaire(event);
 	const u = event.url.searchParams;
-	const filtres = { q: u.get('q') ?? '', tous: u.get('tous') === '1', page: filtreEntier(event.url, 'page') || '1' };
+	const filtres = {
+		q: u.get('q') ?? '',
+		tous: u.get('tous') === '1',
+		page: filtreEntier(event.url, 'page') || '1'
+	};
 	const liste = await charger<Liste<FilResume>>(event, '/messages/fils', {
 		q: filtres.q,
 		tous: filtres.tous || undefined,

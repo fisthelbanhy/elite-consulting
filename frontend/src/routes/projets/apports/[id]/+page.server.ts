@@ -11,12 +11,16 @@ export const load: PageServerLoad = async (event) => {
 
 export const actions: Actions = {
 	valider: async (event) => {
-		const r = await soumettre<Ok>(event, `/projets/apports/${event.params.id}/valider`, { cle: 'gestion' });
+		const r = await soumettre<Ok>(event, `/projets/apports/${event.params.id}/valider`, {
+			cle: 'gestion'
+		});
 		if (!r.ok) return r.echec;
 		return { cle: 'gestion', succes: r.data.message };
 	},
 	annuler: async (event) => {
-		const r = await soumettre<Ok>(event, `/projets/apports/${event.params.id}/annuler`, { cle: 'gestion' });
+		const r = await soumettre<Ok>(event, `/projets/apports/${event.params.id}/annuler`, {
+			cle: 'gestion'
+		});
 		if (!r.ok) return r.echec;
 		return { cle: 'gestion', succes: r.data.message };
 	},
@@ -26,7 +30,11 @@ export const actions: Actions = {
 			date_versement: 'date?',
 			observation_mediateur: 'texte'
 		});
-		const r = await soumettre<Ok>(event, `/projets/apports/${event.params.id}/versements`, { body: valeurs, valeurs, cle: 'versement' });
+		const r = await soumettre<Ok>(event, `/projets/apports/${event.params.id}/versements`, {
+			body: valeurs,
+			valeurs,
+			cle: 'versement'
+		});
 		if (!r.ok) return r.echec;
 		return { cle: 'versement', succes: r.data.message };
 	}

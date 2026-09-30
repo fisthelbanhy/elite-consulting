@@ -16,14 +16,22 @@ export const actions: Actions = {
 	/** Réponse enregistrée puis envoyée par e-mail (F-TRV-40, F-TRV-42). */
 	repondre: async (event) => {
 		const valeurs = lireFormulaire(await event.request.formData(), { reponse: 'texte' });
-		const r = await soumettre<Ok>(event, `/contact/${event.params.id}/reponse`, { body: valeurs, valeurs, cle: 'reponse' });
+		const r = await soumettre<Ok>(event, `/contact/${event.params.id}/reponse`, {
+			body: valeurs,
+			valeurs,
+			cle: 'reponse'
+		});
 		if (!r.ok) return r.echec;
 		return { cle: 'reponse', succes: r.data.message };
 	},
 	/** Suivi : à traiter, traité, supprimé (F-TRV-41). */
 	etat: async (event) => {
 		const valeurs = lireFormulaire(await event.request.formData(), { etat: 'entier' });
-		const r = await soumettre<Ok>(event, `/contact/${event.params.id}/etat`, { body: valeurs, valeurs, cle: 'etat' });
+		const r = await soumettre<Ok>(event, `/contact/${event.params.id}/etat`, {
+			body: valeurs,
+			valeurs,
+			cle: 'etat'
+		});
 		if (!r.ok) return r.echec;
 		return { cle: 'etat', succes: r.data.message };
 	}

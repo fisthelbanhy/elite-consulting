@@ -7,13 +7,28 @@ import { charger, chargerOuDefaut, exigerConnexion, lireFormulaire, soumettre } 
 import { actionsModeration } from './moderation';
 import { chargerDialogue } from './dialogues';
 import type { Liste, Ok } from '$lib/types';
-import { RUBRIQUES_TRESORERIE, type CleRubrique, type CompteursTresorerie, type OperationsOk } from '$lib/types/tresorerie';
+import {
+	RUBRIQUES_TRESORERIE,
+	type CleRubrique,
+	type CompteursTresorerie,
+	type OperationsOk
+} from '$lib/types/tresorerie';
 
 /** Liste d'une sous-rubrique + compteurs des onglets + fil « Écrire à la frangine ». */
-export async function chargerListe<T>(event: RequestEvent, cle: CleRubrique, extra: Record<string, string> = {}, taille = 20) {
+export async function chargerListe<T>(
+	event: RequestEvent,
+	cle: CleRubrique,
+	extra: Record<string, string> = {},
+	taille = 20
+) {
 	exigerConnexion(event);
 	const q = event.url.searchParams;
-	const filtres = { q: q.get('q') ?? '', etat: q.get('etat') ?? '', page: q.get('page') ?? '1', ...extra };
+	const filtres = {
+		q: q.get('q') ?? '',
+		etat: q.get('etat') ?? '',
+		page: q.get('page') ?? '1',
+		...extra
+	};
 	const [liste, compteurs, dialogue] = await Promise.all([
 		charger<Liste<T>>(event, `/tresorerie/${cle}`, { ...filtres, taille }),
 		chargerOuDefaut<CompteursTresorerie | null>(event, '/tresorerie/compteurs', null),
@@ -30,7 +45,13 @@ export async function chargerFiche<T>(event: RequestEvent, cle: CleRubrique) {
 		charger<T>(event, `/tresorerie/${cle}/${event.params.id}`),
 		chargerDialogue(event, RUBRIQUES_TRESORERIE[cle].type)
 	]);
-	return { fiche, dialogue, enregistre: q.has('enregistre'), modifie: q.has('modifie'), modifier: q.has('modifier') };
+	return {
+		fiche,
+		dialogue,
+		enregistre: q.has('enregistre'),
+		modifie: q.has('modifie'),
+		modifier: q.has('modifier')
+	};
 }
 
 /** Identifiant de banque d'une liste « référentiel ou non listée » (valeur « autre » → null). */
@@ -39,7 +60,13 @@ function idBanque(v: FormDataEntryValue | null): number | null {
 	return /^\d+$/.test(s) ? Number(s) : null;
 }
 
-async function envoyer(event: RequestEvent, cle: CleRubrique, id: string | undefined, body: Record<string, unknown>, valeurs = body) {
+async function envoyer(
+	event: RequestEvent,
+	cle: CleRubrique,
+	id: string | undefined,
+	body: Record<string, unknown>,
+	valeurs = body
+) {
 	const r = await soumettre<Ok>(event, id ? `/tresorerie/${cle}/${id}` : `/tresorerie/${cle}`, {
 		method: id ? 'PUT' : 'POST',
 		body,
@@ -162,7 +189,11 @@ export async function enregistrerOperations(event: RequestEvent) {
 	const lignes = Array.from({ length: n }, (_, i) => lireOperation(fd, `_${i}`));
 	let valeurs: Record<string, unknown> = { nombre_lignes: n };
 	for (let i = 0; i < n; i++) valeurs = { ...valeurs, ...valeursBrutes(fd, `_${i}`) };
-	const r = await soumettre<OperationsOk>(event, '/tresorerie/operations', { body: { lignes }, valeurs, cle: 'fiche' });
+	const r = await soumettre<OperationsOk>(event, '/tresorerie/operations', {
+		body: { lignes },
+		valeurs,
+		cle: 'fiche'
+	});
 	if (!r.ok) {
 		// « lignes.2.montant » (API) → « montant_2 » (champ du formulaire)
 		const echec = r.echec.data;
@@ -174,7 +205,10 @@ export async function enregistrerOperations(event: RequestEvent) {
 		return fail(r.echec.status, { ...echec, champs });
 	}
 	const { reference, ids, emails } = r.data;
-	redirect(303, `/tresorerie/operations/${ids[0]}?enregistre=1&lot=${ids.length}&emails=${emails}&ref=${reference ?? ''}`);
+	redirect(
+		303,
+		`/tresorerie/operations/${ids[0]}?enregistre=1&lot=${ids.length}&emails=${emails}&ref=${reference ?? ''}`
+	);
 }
 
 export async function enregistrerOperation(event: RequestEvent, id: string) {
@@ -183,7 +217,10 @@ export async function enregistrerOperation(event: RequestEvent, id: string) {
 }
 
 /** Actions communes des fiches : `?/etat`, `?/supprimer` (annulation), `?/modifier`. */
-export function actionsFiche(cle: CleRubrique, modifier: (event: RequestEvent, id: string) => Promise<unknown>) {
+export function actionsFiche(
+	cle: CleRubrique,
+	modifier: (event: RequestEvent, id: string) => Promise<unknown>
+) {
 	return {
 		...actionsModeration((p) => `/tresorerie/${cle}/${p.id}`, `/tresorerie/${cle}`),
 		modifier: (event: RequestEvent) => modifier(event, event.params.id as string)

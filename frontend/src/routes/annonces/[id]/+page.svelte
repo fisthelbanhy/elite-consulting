@@ -17,14 +17,19 @@
 	let { data, form } = $props();
 	const a = $derived(data.article);
 	const offre = $derived(a.offre_ou_recherche === 1);
-	const prix = $derived(a.prix ? (offre ? fcfa(a.prix) : `Budget ${fcfa(a.prix)}`) : 'Prix à débattre');
+	const prix = $derived(
+		a.prix ? (offre ? fcfa(a.prix) : `Budget ${fcfa(a.prix)}`) : 'Prix à débattre'
+	);
 	const partage = $derived(lienPartageWhatsApp(`${a.libelle} — ${prix} : ${page.url.href}`));
 	const caracteristiques = $derived(
 		[
 			['Référence', a.reference],
 			['Famille', a.famille?.libelle ?? ''],
 			['État', a.neuf_ou_occasion === 1 ? 'Neuf' : 'Occasion'],
-			[offre ? 'Disponible' : 'Quantité recherchée', a.quantite ? String(a.quantite) : offre ? 'Épuisé' : ''],
+			[
+				offre ? 'Disponible' : 'Quantité recherchée',
+				a.quantite ? String(a.quantite) : offre ? 'Épuisé' : ''
+			],
 			['Publiée le', date(a.date_creation)],
 			['Publiée par', a.auteur?.pseudonyme ?? '']
 		].filter(([, v]) => v)
@@ -44,8 +49,12 @@
 						price: a.prix,
 						priceCurrency: 'XAF',
 						url: page.url.href,
-						availability: a.quantite > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-						itemCondition: a.neuf_ou_occasion === 1 ? 'https://schema.org/NewCondition' : 'https://schema.org/UsedCondition'
+						availability:
+							a.quantite > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+						itemCondition:
+							a.neuf_ou_occasion === 1
+								? 'https://schema.org/NewCondition'
+								: 'https://schema.org/UsedCondition'
 					}
 				})
 			: null
@@ -54,40 +63,66 @@
 
 <svelte:head>
 	<title>{a.libelle} — {prix} ({a.reference}) — {data.parametres.nom_site}</title>
-	<meta name="description" content={tronquer(`${offre ? 'À vendre' : 'Recherché'} : ${a.libelle}, ${a.neuf_ou_occasion === 1 ? 'neuf' : "d'occasion"}, ${prix}. ${a.description}`, 155)} />
-	{#if a.photo_url}<meta property="og:image" content={new URL(a.photo_url, page.url.origin).href} />{/if}
+	<meta
+		name="description"
+		content={tronquer(
+			`${offre ? 'À vendre' : 'Recherché'} : ${a.libelle}, ${a.neuf_ou_occasion === 1 ? 'neuf' : "d'occasion"}, ${prix}. ${a.description}`,
+			155
+		)}
+	/>
+	{#if a.photo_url}<meta
+			property="og:image"
+			content={new URL(a.photo_url, page.url.origin).href}
+		/>{/if}
 	{#if a.etat !== 2}<meta name="robots" content="noindex" />{/if}
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -- jsonLd() échappe <, & et les séparateurs de ligne : aucune saisie ne peut fermer la balise -->
 	{#if donneesStructurees}{@html donneesStructurees}{/if}
 </svelte:head>
 
 <EnTetePage
 	titre={a.libelle}
 	surtitre={offre ? 'Article à vendre' : 'Article recherché'}
-	fil={[{ href: '/annonces', label: 'Petites annonces' }, { href: `/annonces?type=${a.offre_ou_recherche}`, label: offre ? 'À vendre' : 'Recherchés' }]}
+	fil={[
+		{ href: '/annonces', label: 'Petites annonces' },
+		{ href: `/annonces?type=${a.offre_ou_recherche}`, label: offre ? 'À vendre' : 'Recherchés' }
+	]}
 >
-	<Bouton href={partage} variante="secondaire" target="_blank" rel="noopener"><Share2 class="size-5" aria-hidden="true" />Partager</Bouton>
+	<Bouton href={partage} variante="secondaire" target="_blank" rel="noopener"
+		><Share2 class="size-5" aria-hidden="true" />Partager</Bouton
+	>
 </EnTetePage>
 
 <div class="conteneur grid gap-8 py-8 lg:grid-cols-[1fr_22rem]">
 	<div class="min-w-0 space-y-6">
-		{#if data.enregistre}<Alerte type="succes" titre="Votre annonce est publiée.">Référence {a.reference}. Partagez-la pour la faire connaître.</Alerte>{/if}
+		{#if data.enregistre}<Alerte type="succes" titre="Votre annonce est publiée."
+				>Référence {a.reference}. Partagez-la pour la faire connaître.</Alerte
+			>{/if}
 
 		<section class="carte grid overflow-hidden sm:grid-cols-2">
 			{#if a.photo_url}
-				<a href={a.photo_url} target="_blank" rel="noopener" aria-label="Agrandir la photo"><Vignette src={a.photo_url} alt={a.libelle} icone={Package} ratio="aspect-square" /></a>
+				<a href={a.photo_url} target="_blank" rel="noopener" aria-label="Agrandir la photo"
+					><Vignette src={a.photo_url} alt={a.libelle} icone={Package} ratio="aspect-square" /></a
+				>
 			{:else}
 				<Vignette icone={Package} ratio="aspect-square" />
 			{/if}
 			<div class="p-6">
 				<div class="flex flex-wrap items-center gap-2">
-					<Badge ton={a.neuf_ou_occasion === 1 ? 'foret' : 'neutre'}>{a.neuf_ou_occasion === 1 ? 'Neuf' : 'Occasion'}</Badge>
+					<Badge ton={a.neuf_ou_occasion === 1 ? 'foret' : 'neutre'}
+						>{a.neuf_ou_occasion === 1 ? 'Neuf' : 'Occasion'}</Badge
+					>
 					{#if a.etat !== 2}<Badge ton="alerte">Non publiée</Badge>{/if}
-					<span class="flex items-center gap-1 text-sm text-ardoise"><Eye class="size-4" aria-hidden="true" />{a.nombre_visites}</span>
+					<span class="flex items-center gap-1 text-sm text-ardoise"
+						><Eye class="size-4" aria-hidden="true" />{a.nombre_visites}</span
+					>
 				</div>
 				<p class="montant mt-3 font-display text-3xl font-extrabold text-laterite-700">{prix}</p>
 				<dl class="mt-5 space-y-2 text-[15px]">
 					{#each caracteristiques as [t, v] (t)}
-						<div class="flex justify-between gap-4 border-b border-fleuve-900/5 pb-2"><dt class="text-ardoise">{t}</dt><dd class="text-right font-semibold">{v}</dd></div>
+						<div class="flex justify-between gap-4 border-b border-fleuve-900/5 pb-2">
+							<dt class="text-ardoise">{t}</dt>
+							<dd class="text-right font-semibold">{v}</dd>
+						</div>
 					{/each}
 				</dl>
 			</div>
@@ -120,7 +155,15 @@
 				messageWhatsApp={`Bonjour la Frangine, je vous contacte au sujet de l'annonce ${a.reference} (${a.libelle}).`}
 			/>
 		{/if}
-		<PanneauModeration etat={a.etat} peutModerer={a.peut_moderer} peutModifier={a.peut_modifier} lienModifier="/annonces/{a.id}/modifier" {form} />
-		<Bouton href="/annonces?type={a.offre_ou_recherche}" variante="fantome" pleineLargeur>Voir les autres annonces</Bouton>
+		<PanneauModeration
+			etat={a.etat}
+			peutModerer={a.peut_moderer}
+			peutModifier={a.peut_modifier}
+			lienModifier="/annonces/{a.id}/modifier"
+			{form}
+		/>
+		<Bouton href="/annonces?type={a.offre_ou_recherche}" variante="fantome" pleineLargeur
+			>Voir les autres annonces</Bouton
+		>
 	</aside>
 </div>

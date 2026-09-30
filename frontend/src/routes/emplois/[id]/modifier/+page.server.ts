@@ -8,7 +8,8 @@ import type { AnnonceDetail } from '$lib/types/emplois';
 export const load: PageServerLoad = async (event) => {
 	exigerConnexion(event);
 	const annonce = await charger<AnnonceDetail>(event, `/emplois/${event.params.id}`);
-	if (!annonce.peut_modifier) error(403, "Seul l'auteur de la fiche ou un gestionnaire habilité peut la modifier.");
+	if (!annonce.peut_modifier)
+		error(403, "Seul l'auteur de la fiche ou un gestionnaire habilité peut la modifier.");
 	return { annonce, secteurs: await secteurs(event) };
 };
 

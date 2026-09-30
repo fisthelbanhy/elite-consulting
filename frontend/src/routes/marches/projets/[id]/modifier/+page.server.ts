@@ -7,7 +7,8 @@ import type { ProjetDetail } from '$lib/types/marches';
 export const load: PageServerLoad = async (event) => {
 	exigerConnexion(event);
 	const projet = await charger<ProjetDetail>(event, `/marches/projets/${event.params.id}`);
-	if (!projet.peut_modifier) error(403, "Seul l'auteur de la fiche ou un gestionnaire habilité peut la modifier.");
+	if (!projet.peut_modifier)
+		error(403, "Seul l'auteur de la fiche ou un gestionnaire habilité peut la modifier.");
 	return { projet };
 };
 

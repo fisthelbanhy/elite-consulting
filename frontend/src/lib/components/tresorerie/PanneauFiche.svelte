@@ -27,24 +27,40 @@
 		form?: Record<string, unknown> | null;
 	} = $props();
 
-	const retour = $derived(form as { cle?: string; message?: string; champs?: Record<string, string>; succes?: string } | null);
+	const retour = $derived(
+		form as {
+			cle?: string;
+			message?: string;
+			champs?: Record<string, string>;
+			succes?: string;
+		} | null
+	);
 </script>
 
 <aside class="carte space-y-4 p-5" aria-label="Gestion de la fiche">
 	<div class="flex items-center justify-between gap-2">
-		<h2 class="flex items-center gap-2 text-lg font-bold"><ShieldCheck class="size-5 text-fleuve-600" aria-hidden="true" />Suivi</h2>
+		<h2 class="flex items-center gap-2 text-lg font-bold">
+			<ShieldCheck class="size-5 text-fleuve-600" aria-hidden="true" />Suivi
+		</h2>
 		<BadgeEtat {etat} libelles={ETATS_TRESORERIE} />
 	</div>
 	{#if peutModifier && lienModifier}
-		<Bouton href={lienModifier} variante="secondaire" pleineLargeur><Pencil class="size-4" aria-hidden="true" />Modifier</Bouton>
+		<Bouton href={lienModifier} variante="secondaire" pleineLargeur
+			><Pencil class="size-4" aria-hidden="true" />Modifier</Bouton
+		>
 	{/if}
 	{#if peutModerer}
 		<Formulaire action="?/etat" form={retour} cle="moderation">
 			{#snippet children({ envoi })}
-				<label for="suivi-etat" class="mb-1.5 block text-[15px] font-semibold">État (le membre est prévenu)</label>
+				<label for="suivi-etat" class="mb-1.5 block text-[15px] font-semibold"
+					>État (le membre est prévenu)</label
+				>
 				<div class="flex gap-2">
 					<select id="suivi-etat" name="etat" class="flex-1">
-						{#each Object.entries(ETATS_TRESORERIE) as [v, l] (v)}<option value={v} selected={Number(v) === etat}>{l}</option>{/each}
+						{#each Object.entries(ETATS_TRESORERIE) as [v, l] (v)}<option
+								value={v}
+								selected={Number(v) === etat}>{l}</option
+							>{/each}
 					</select>
 					<Bouton type="submit" variante="fleuve" chargement={envoi}>OK</Bouton>
 				</div>
@@ -52,9 +68,16 @@
 		</Formulaire>
 	{/if}
 	{#if peutAnnuler && etat !== 3}
-		<Formulaire action="?/supprimer" form={retour} cle="moderation" confirmer="Annuler cette fiche ? Elle disparaîtra de vos listes.">
+		<Formulaire
+			action="?/supprimer"
+			form={retour}
+			cle="moderation"
+			confirmer="Annuler cette fiche ? Elle disparaîtra de vos listes."
+		>
 			{#snippet children({ envoi })}
-				<Bouton type="submit" variante="danger" pleineLargeur chargement={envoi}><Ban class="size-4" aria-hidden="true" />Annuler la fiche</Bouton>
+				<Bouton type="submit" variante="danger" pleineLargeur chargement={envoi}
+					><Ban class="size-4" aria-hidden="true" />Annuler la fiche</Bouton
+				>
 			{/snippet}
 		</Formulaire>
 	{/if}

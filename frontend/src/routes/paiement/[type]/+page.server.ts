@@ -33,7 +33,11 @@ export const actions: Actions = {
 		const valeurs = lireFormulaire(fd, { mode: 'entier', montant: 'entier?', remarque: 'texte' });
 		const objet = event.url.searchParams.get('objet');
 		const r = await soumettre<Ok>(event, '/paiements', {
-			body: { ...valeurs, type_objet: Number(event.params.type), objet_id: objet ? Number(objet) : null },
+			body: {
+				...valeurs,
+				type_objet: Number(event.params.type),
+				objet_id: objet ? Number(objet) : null
+			},
 			valeurs
 		});
 		if (!r.ok) return r.echec;

@@ -26,7 +26,10 @@
 	titre="Apport {a.reference}"
 	sousTitre="Au projet « {a.appel_fond.nom_projet} » ({a.appel_fond.reference})"
 	surtitre="Appels de fonds"
-	fil={[{ href: '/projets/apports', label: 'Apports' }, { href: `/projets/${a.appel_fond.id}`, label: a.appel_fond.reference }]}
+	fil={[
+		{ href: '/projets/apports', label: 'Apports' },
+		{ href: `/projets/${a.appel_fond.id}`, label: a.appel_fond.reference }
+	]}
 >
 	<Bouton href="/projets/{a.appel_fond.id}" variante="secondaire">Voir le projet</Bouton>
 </EnTetePage>
@@ -49,44 +52,81 @@
 			</div>
 			<div class="space-y-2">
 				<p>
-					<span class="montant font-display text-3xl font-extrabold text-foret-700">{fcfa(a.montant_verse)}</span>
+					<span class="montant font-display text-3xl font-extrabold text-foret-700"
+						>{fcfa(a.montant_verse)}</span
+					>
 					<span class="text-ardoise">versés sur {fcfa(a.montant_promis)} promis</span>
 				</p>
 				<Jauge valeur={a.montant_verse} max={a.montant_promis} label="Part versée de l'apport" />
 			</div>
 			<dl class="grid gap-3 sm:grid-cols-3">
-				<div class="rounded-xl bg-creme p-3"><dt class="text-sm text-ardoise">Reste à verser</dt><dd class="montant text-lg font-bold">{fcfa(a.reste_a_verser)}</dd></div>
-				<div class="rounded-xl bg-creme p-3"><dt class="text-sm text-ardoise">Promis le</dt><dd class="text-lg font-bold">{dateCourte(a.date_engagement)}</dd></div>
-				<div class="rounded-xl bg-creme p-3"><dt class="text-sm text-ardoise">Échéance</dt><dd class="text-lg font-bold">{a.echeance_mois ? `${a.echeance_mois} mois` : 'Aucune'}</dd></div>
+				<div class="rounded-xl bg-creme p-3">
+					<dt class="text-sm text-ardoise">Reste à verser</dt>
+					<dd class="montant text-lg font-bold">{fcfa(a.reste_a_verser)}</dd>
+				</div>
+				<div class="rounded-xl bg-creme p-3">
+					<dt class="text-sm text-ardoise">Promis le</dt>
+					<dd class="text-lg font-bold">{dateCourte(a.date_engagement)}</dd>
+				</div>
+				<div class="rounded-xl bg-creme p-3">
+					<dt class="text-sm text-ardoise">Échéance</dt>
+					<dd class="text-lg font-bold">
+						{a.echeance_mois ? `${a.echeance_mois} mois` : 'Aucune'}
+					</dd>
+				</div>
 			</dl>
 			{#if a.en_attente}
 				<p class="flex items-center gap-2 rounded-xl bg-soleil-100 p-3 text-[15px]">
 					<Clock class="size-5 shrink-0" aria-hidden="true" />
-					<span><strong class="montant">{fcfa(a.en_attente)}</strong> déclarés, en attente de confirmation par la caisse.</span>
+					<span
+						><strong class="montant">{fcfa(a.en_attente)}</strong> déclarés, en attente de confirmation
+						par la caisse.</span
+					>
 				</p>
 			{/if}
 			{#if a.remarque}
-				<div><h3 class="text-base font-bold">Remarque du créancier</h3><p class="mt-1 text-[15px] whitespace-pre-line">{a.remarque}</p></div>
+				<div>
+					<h3 class="text-base font-bold">Remarque du créancier</h3>
+					<p class="mt-1 text-[15px] whitespace-pre-line">{a.remarque}</p>
+				</div>
 			{/if}
 			{#if a.observation_mediateur}
-				<div><h3 class="text-base font-bold">Observation de la frangine</h3><p class="mt-1 text-[15px] whitespace-pre-line">{a.observation_mediateur}</p></div>
+				<div>
+					<h3 class="text-base font-bold">Observation de la frangine</h3>
+					<p class="mt-1 text-[15px] whitespace-pre-line">{a.observation_mediateur}</p>
+				</div>
 			{/if}
 		</section>
 
 		<section class="carte p-6" aria-labelledby="titre-versements">
-			<h2 id="titre-versements" class="flex items-center gap-2 text-xl font-bold"><Receipt class="size-5" aria-hidden="true" />Versements reçus</h2>
+			<h2 id="titre-versements" class="flex items-center gap-2 text-xl font-bold">
+				<Receipt class="size-5" aria-hidden="true" />Versements reçus
+			</h2>
 			{#if a.versements.length}
 				<table class="mt-4 w-full text-[15px]">
 					<thead>
-						<tr class="border-b border-fleuve-900/10 text-left text-sm text-ardoise"><th scope="col" class="py-2 font-semibold">Date</th><th scope="col" class="py-2 text-right font-semibold">Montant</th></tr>
+						<tr class="border-b border-fleuve-900/10 text-left text-sm text-ardoise"
+							><th scope="col" class="py-2 font-semibold">Date</th><th
+								scope="col"
+								class="py-2 text-right font-semibold">Montant</th
+							></tr
+						>
 					</thead>
 					<tbody>
 						{#each a.versements as v (v.id)}
-							<tr class="border-b border-fleuve-900/5"><td class="py-2">{dateCourte(v.date_versement)}</td><td class="montant py-2 text-right font-semibold">{fcfa(v.montant)}</td></tr>
+							<tr class="border-b border-fleuve-900/5"
+								><td class="py-2">{dateCourte(v.date_versement)}</td><td
+									class="montant py-2 text-right font-semibold">{fcfa(v.montant)}</td
+								></tr
+							>
 						{/each}
 					</tbody>
 					<tfoot>
-						<tr><th scope="row" class="py-2 text-left">Total</th><td class="montant py-2 text-right font-bold text-foret-700">{fcfa(a.montant_verse)}</td></tr>
+						<tr
+							><th scope="row" class="py-2 text-left">Total</th><td
+								class="montant py-2 text-right font-bold text-foret-700">{fcfa(a.montant_verse)}</td
+							></tr
+						>
 					</tfoot>
 				</table>
 			{:else}
@@ -98,17 +138,21 @@
 	<aside class="space-y-6">
 		{#if a.est_creancier}
 			<section class="carte space-y-3 p-5" aria-labelledby="titre-verser">
-				<h2 id="titre-verser" class="flex items-center gap-2 text-lg font-bold"><Wallet class="size-5 text-laterite-600" aria-hidden="true" />Verser</h2>
+				<h2 id="titre-verser" class="flex items-center gap-2 text-lg font-bold">
+					<Wallet class="size-5 text-laterite-600" aria-hidden="true" />Verser
+				</h2>
 				{#if a.peut_declarer}
 					<p class="text-[15px] text-ardoise">
-						Payez par Mobile Money, espèces ou Charden Farell, puis déclarez le montant : notre caisse le confirme et vous délivre une
-						référence.
+						Payez par Mobile Money, espèces ou Charden Farell, puis déclarez le montant : notre
+						caisse le confirme et vous délivre une référence.
 					</p>
 					<Bouton href="/paiement/8?objet={a.id}" pleineLargeur>Déclarer un versement</Bouton>
 				{:else if a.etat === 3}
 					<p class="text-[15px] text-ardoise">Cet apport est annulé.</p>
 				{:else}
-					<p class="text-[15px] text-ardoise">Merci : votre apport est entièrement versé ou déclaré.</p>
+					<p class="text-[15px] text-ardoise">
+						Merci : votre apport est entièrement versé ou déclaré.
+					</p>
 				{/if}
 			</section>
 		{/if}
@@ -116,7 +160,9 @@
 		{#if a.creancier}
 			<section class="carte space-y-2 p-5" aria-labelledby="titre-creancier">
 				<h2 id="titre-creancier" class="text-lg font-bold">Créancier</h2>
-				<p class="font-semibold">{a.creancier.pseudonyme} <span class="font-normal text-ardoise">· {a.creancier.nom}</span></p>
+				<p class="font-semibold">
+					{a.creancier.pseudonyme} <span class="font-normal text-ardoise">· {a.creancier.nom}</span>
+				</p>
 				{#if a.creancier.telephone}<p>{telephone(a.creancier.telephone)}</p>{/if}
 				{#if a.creancier.email}<p>{a.creancier.email}</p>{/if}
 			</section>

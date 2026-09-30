@@ -18,10 +18,11 @@ l'[ADR-0011](../decisions/0011-decisions-des-modules-et-de-l-integration.md)).
 
 ## Socle (réalisé hors agents)
 
-- **Backend** : `app/config.py`, `db.py`, `enums.py`, `erreurs.py`, `security.py`, `deps.py`,
-  `models/*` (62 tables), `services/{references,validation,fichiers,emails,fiches,interets,paiements}.py`,
-  `routers/{auth,referentiels,espace (compteurs),paiements,emplois}.py`, `scripts/reprise_legacy.py`,
-  `scripts/sqldump.py`, `scripts/comptes_demo.py`, `migrations/` (Alembic).
+- **Backend** (`api/src/`) : `config.ts`, `db.ts`, `enums.ts`, `erreurs.ts`, `securite.ts`, `deps.ts`,
+  `schema/*` (62 tables), `services/{references,validation,fichiers,emails,fiches,interets,paiements}.ts`,
+  `routes/{auth,referentiels,espace (compteurs),paiements,emplois}.ts`,
+  `scripts/{reprise-legacy,lire-dump,donnees-demo,comptes-demo,exporter-referentiels}.ts`,
+  `api/migrations/` (drizzle-kit).
 - **Frontend** : `hooks.server.ts` (session BFF, visites, redirections legacy, en-têtes de sécurité),
   `lib/server/{api,session,referentiels,moderation,redirections,emplois}.ts`, `lib/components/ui/*`
   (système de design), `lib/components/layout/*`, `lib/navigation.ts`, `lib/format.ts`,

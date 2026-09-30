@@ -20,7 +20,11 @@ export async function enregistrerMarche(event: RequestEvent, id?: string) {
 		beneficiaire: 'texte'
 	});
 	if (Number.isNaN(valeurs.montant)) valeurs.montant = 0;
-	const r = await soumettre<Ok>(event, id ? `/marches/${id}` : '/marches', { method: id ? 'PUT' : 'POST', body: valeurs, valeurs });
+	const r = await soumettre<Ok>(event, id ? `/marches/${id}` : '/marches', {
+		method: id ? 'PUT' : 'POST',
+		body: valeurs,
+		valeurs
+	});
 	if (!r.ok) return r.echec;
 	const idFiche = r.data.id;
 	let suite = 'enregistre=1';

@@ -22,30 +22,46 @@
 <section class="carte overflow-hidden">
 	<div class="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1.2fr_1fr]">
 		<div>
-			<p class="inline-flex items-center gap-2 rounded-full bg-soleil-100 px-3 py-1 text-sm font-semibold text-encre">
+			<p
+				class="inline-flex items-center gap-2 rounded-full bg-soleil-100 px-3 py-1 text-sm font-semibold text-encre"
+			>
 				<Lock class="size-4" aria-hidden="true" />Réservé aux entreprises
 			</p>
-			<h2 class="mt-4 text-2xl font-bold">{acces.message ?? 'Il faut avoir un compte entreprise pour y avoir accès.'}</h2>
+			<h2 class="mt-4 text-2xl font-bold">
+				{acces.message ?? 'Il faut avoir un compte entreprise pour y avoir accès.'}
+			</h2>
 			{#if acces.motif === 'personne_physique'}
 				<p class="mt-3 text-ardoise">
-					Votre compte est un compte personnel. Le comparateur est ouvert aux comptes « personne morale » ayant inscrit leur entreprise
-					dans l'annuaire : votre frangine peut faire évoluer votre compte.
+					Votre compte est un compte personnel. Le comparateur est ouvert aux comptes « personne
+					morale » ayant inscrit leur entreprise dans l'annuaire : votre frangine peut faire évoluer
+					votre compte.
 				</p>
 			{:else if acces.motif === 'sans_entreprise'}
-				<p class="mt-3 text-ardoise">Il ne vous reste qu'une étape : inscrire votre entreprise dans l'annuaire. C'est gratuit et rapide.</p>
+				<p class="mt-3 text-ardoise">
+					Il ne vous reste qu'une étape : inscrire votre entreprise dans l'annuaire. C'est gratuit
+					et rapide.
+				</p>
 			{:else}
-				<p class="mt-3 text-ardoise">Créez gratuitement le compte de votre entreprise, ou connectez-vous s'il existe déjà.</p>
+				<p class="mt-3 text-ardoise">
+					Créez gratuitement le compte de votre entreprise, ou connectez-vous s'il existe déjà.
+				</p>
 			{/if}
 			<div class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
 				{#if acces.motif === 'visiteur'}
-					<Bouton href="/inscription?categorie=2&suite={encodeURIComponent('/entreprises/nouvelle')}">Créer mon compte entreprise</Bouton>
+					<Bouton
+						href="/inscription?categorie=2&suite={encodeURIComponent('/entreprises/nouvelle')}"
+						>Créer mon compte entreprise</Bouton
+					>
 					<Bouton href="/connexion?suite={suite}" variante="secondaire">J'ai déjà un compte</Bouton>
 				{:else if acces.motif === 'sans_entreprise'}
 					<Bouton href="/entreprises/nouvelle">Inscrire mon entreprise</Bouton>
 				{:else}
 					{#if wa}
 						<Bouton
-							href={lienWhatsApp(wa, "Bonjour la Frangine, je souhaite passer mon compte en compte entreprise pour accéder au comparateur de prix.")}
+							href={lienWhatsApp(
+								wa,
+								'Bonjour la Frangine, je souhaite passer mon compte en compte entreprise pour accéder au comparateur de prix.'
+							)}
 							variante="whatsapp"
 							target="_blank"
 							rel="noopener"
@@ -61,7 +77,9 @@
 			<h3 class="text-lg font-bold">Ce que vous y trouvez</h3>
 			<ul class="mt-3 space-y-3 text-[15px]">
 				{#each avantages as a (a)}
-					<li class="flex gap-2"><CircleCheck class="mt-0.5 size-5 shrink-0 text-foret-600" aria-hidden="true" />{a}</li>
+					<li class="flex gap-2">
+						<CircleCheck class="mt-0.5 size-5 shrink-0 text-foret-600" aria-hidden="true" />{a}
+					</li>
 				{/each}
 			</ul>
 		</div>

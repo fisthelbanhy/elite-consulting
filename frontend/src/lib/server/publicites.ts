@@ -9,7 +9,14 @@
  *   <EncartPublicites publicites={data.publicites} />
  */
 import { fail, redirect, type RequestEvent } from '@sveltejs/kit';
-import { ApiError, chargerOuDefaut, fichierJoint, lireFormulaire, soumettre, televerser } from './api';
+import {
+	ApiError,
+	chargerOuDefaut,
+	fichierJoint,
+	lireFormulaire,
+	soumettre,
+	televerser
+} from './api';
 import type { Ok } from '$lib/types';
 import type { PubliciteDiffusee } from '$lib/types/publicites';
 
@@ -19,7 +26,10 @@ type Evenement = Pick<RequestEvent, 'locals' | 'getClientAddress' | 'request'>;
  * Publicités à diffuser : au plus 10 actives de la période, en ordre aléatoire (F-TRV-04).
  * Ne bloque jamais la page : en cas d'erreur, l'encart est simplement vide.
  */
-export function chargerEncart(event: Evenement, options: { limite?: number; exclure?: number } = {}): Promise<PubliciteDiffusee[]> {
+export function chargerEncart(
+	event: Evenement,
+	options: { limite?: number; exclure?: number } = {}
+): Promise<PubliciteDiffusee[]> {
 	return chargerOuDefaut<PubliciteDiffusee[]>(event, '/publicites/diffusion', [], {
 		limite: Math.min(Math.max(options.limite ?? 10, 1), 50),
 		exclure: options.exclure
@@ -53,8 +63,16 @@ export async function enregistrerPublicite(event: RequestEvent, id?: string) {
 		} catch (e) {
 			if (e instanceof ApiError) {
 				// La publicité est enregistrée : on renvoie vers sa fiche pour corriger le fichier
-				if (!id) redirect(303, `/gestion/publicites/${idPub}?fichier_refuse=${encodeURIComponent(e.champs.fichier ?? e.message)}`);
-				return fail(e.statut, { message: `Publicité enregistrée, mais fichier refusé : ${e.message}`, champs: e.champs, valeurs });
+				if (!id)
+					redirect(
+						303,
+						`/gestion/publicites/${idPub}?fichier_refuse=${encodeURIComponent(e.champs.fichier ?? e.message)}`
+					);
+				return fail(e.statut, {
+					message: `Publicité enregistrée, mais fichier refusé : ${e.message}`,
+					champs: e.champs,
+					valeurs
+				});
 			}
 			throw e;
 		}

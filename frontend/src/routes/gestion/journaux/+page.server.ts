@@ -17,7 +17,9 @@ export const load: PageServerLoad = async (event) => {
 			membre_id: journal === 'connexions' ? f.membre_id : undefined,
 			taille
 		}),
-		journal === 'connexions' ? chargerOuDefaut<OptionMembre[]>(event, '/gestion/membres/options', []) : Promise.resolve([])
+		journal === 'connexions'
+			? chargerOuDefaut<OptionMembre[]>(event, '/gestion/membres/options', [])
+			: Promise.resolve([])
 	]);
 	return { journal, liste, membres, filtres: f, taille };
 };
@@ -30,13 +32,22 @@ export const actions: Actions = {
 	/** Purge des lignes cochées (confirmation demandée dans la page). */
 	purger: async (event) => {
 		const fd = await event.request.formData();
-		const ids = fd.getAll('ids').map(Number).filter((n) => Number.isInteger(n) && n > 0);
-		return executer(event, `/gestion/journaux/${nomJournal(fd)}/purger`, { body: { ids }, cle: 'purge' });
+		const ids = fd
+			.getAll('ids')
+			.map(Number)
+			.filter((n) => Number.isInteger(n) && n > 0);
+		return executer(event, `/gestion/journaux/${nomJournal(fd)}/purger`, {
+			body: { ids },
+			cle: 'purge'
+		});
 	},
 	/** Purge de tout l'historique antérieur à une date. */
 	purgerAvant: async (event) => {
 		const fd = await event.request.formData();
 		const { avant } = lireFormulaire(fd, { avant: 'date?' });
-		return executer(event, `/gestion/journaux/${nomJournal(fd)}/purger`, { body: { avant }, cle: 'purge' });
+		return executer(event, `/gestion/journaux/${nomJournal(fd)}/purger`, {
+			body: { avant },
+			cle: 'purge'
+		});
 	}
 };

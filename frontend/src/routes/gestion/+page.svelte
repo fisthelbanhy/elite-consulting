@@ -26,13 +26,22 @@
 	<title>Tableau de bord — Gestion — {data.parametres.nom_site}</title>
 </svelte:head>
 
-<EnTeteGestion titre="Mbote {data.gestionnaire.pseudonyme || data.gestionnaire.nom} !" sousTitre="Voici ce qui attend la frangine aujourd'hui." />
+<EnTeteGestion
+	titre="Mbote {data.gestionnaire.pseudonyme || data.gestionnaire.nom} !"
+	sousTitre="Voici ce qui attend la frangine aujourd'hui."
+/>
 
 <div class="mx-auto max-w-7xl space-y-8 px-4 py-6 sm:px-6">
 	<section aria-labelledby="titre-a-traiter">
 		<h2 id="titre-a-traiter" class="mb-3 text-lg font-bold">À traiter</h2>
 		<div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-			<CarteStat libelle="Nouveaux membres à valider" valeur={t.nouveaux_membres} href="/gestion/membres?etat=1" icone={UserPlus} action />
+			<CarteStat
+				libelle="Nouveaux membres à valider"
+				valeur={t.nouveaux_membres}
+				href="/gestion/membres?etat=1"
+				icone={UserPlus}
+				action
+			/>
 			<CarteStat
 				libelle="Paiements à confirmer"
 				valeur={t.paiements_en_attente}
@@ -41,12 +50,47 @@
 				icone={Wallet}
 				action
 			/>
-			<CarteStat libelle="Fiches en attente de modération" valeur={t.fiches_en_attente} href="/gestion/moderation" icone={ShieldCheck} action />
-			<CarteStat libelle="Mots de passe oubliés" valeur={t.reinitialisations_en_attente} href="/gestion/reinitialisations" icone={KeyRound} action />
-			<CarteStat libelle="Messages non lus" valeur={t.messages_non_lus} href="/gestion/messages" icone={MessagesSquare} action />
-			<CarteStat libelle="Contacts à traiter" valeur={t.contacts_a_traiter} href="/gestion/contacts" icone={Inbox} action />
-			<CarteStat libelle="Suggestions à lire" valeur={t.suggestions_a_lire} href="/gestion/suggestions" icone={Lightbulb} action />
-			<CarteStat libelle="Courses en attente" valeur={t.courses_en_attente} href="/courses" icone={ShoppingBasket} />
+			<CarteStat
+				libelle="Fiches en attente de modération"
+				valeur={t.fiches_en_attente}
+				href="/gestion/moderation"
+				icone={ShieldCheck}
+				action
+			/>
+			<CarteStat
+				libelle="Mots de passe oubliés"
+				valeur={t.reinitialisations_en_attente}
+				href="/gestion/reinitialisations"
+				icone={KeyRound}
+				action
+			/>
+			<CarteStat
+				libelle="Messages non lus"
+				valeur={t.messages_non_lus}
+				href="/gestion/messages"
+				icone={MessagesSquare}
+				action
+			/>
+			<CarteStat
+				libelle="Contacts à traiter"
+				valeur={t.contacts_a_traiter}
+				href="/gestion/contacts"
+				icone={Inbox}
+				action
+			/>
+			<CarteStat
+				libelle="Suggestions à lire"
+				valeur={t.suggestions_a_lire}
+				href="/gestion/suggestions"
+				icone={Lightbulb}
+				action
+			/>
+			<CarteStat
+				libelle="Courses en attente"
+				valeur={t.courses_en_attente}
+				href="/courses"
+				icone={ShoppingBasket}
+			/>
 		</div>
 	</section>
 
@@ -78,9 +122,14 @@
 					<ul class="mt-3 divide-y divide-fleuve-900/5">
 						{#each modules as m (m.cle)}
 							<li>
-								<a href="/gestion/moderation?module={m.cle}" class="flex min-h-11 items-center justify-between gap-2 py-2 hover:text-fleuve-700">
+								<a
+									href="/gestion/moderation?module={m.cle}"
+									class="flex min-h-11 items-center justify-between gap-2 py-2 hover:text-fleuve-700"
+								>
 									<span>{m.libelle}</span>
-									<span class="rounded-full bg-soleil-100 px-2.5 py-0.5 text-sm font-bold">{m.total}</span>
+									<span class="rounded-full bg-soleil-100 px-2.5 py-0.5 text-sm font-bold"
+										>{m.total}</span
+									>
 								</a>
 							</li>
 						{/each}
@@ -98,15 +147,23 @@
 				<ul class="mt-3 divide-y divide-fleuve-900/5">
 					{#each t.derniers_inscrits as m (m.id)}
 						<li>
-							<a href="/gestion/membres/{m.id}" class="flex items-center gap-3 py-2.5 hover:bg-creme">
+							<a
+								href="/gestion/membres/{m.id}"
+								class="flex items-center gap-3 py-2.5 hover:bg-creme"
+							>
 								<Avatar src={m.photo_url} nom={m.pseudonyme || m.nom} taille="sm" />
 								<span class="min-w-0 flex-1">
 									<span class="block truncate font-semibold">{m.nom}</span>
 									<span class="block truncate text-sm text-ardoise">
-										{libelle(data.enums, 'CategorieMembre', m.categorie)}{m.ville ? ` · ${m.ville.nom}` : ''} · {relatif(m.date_creation)}
+										{libelle(data.enums, 'CategorieMembre', m.categorie)}{m.ville
+											? ` · ${m.ville.nom}`
+											: ''} · {relatif(m.date_creation)}
 									</span>
 								</span>
-								<BadgeEtat etat={m.etat} libelles={{ 1: 'À valider', 2: 'Validé', 3: 'Supprimé' }} />
+								<BadgeEtat
+									etat={m.etat}
+									libelles={{ 1: 'À valider', 2: 'Validé', 3: 'Supprimé' }}
+								/>
 							</a>
 						</li>
 					{:else}

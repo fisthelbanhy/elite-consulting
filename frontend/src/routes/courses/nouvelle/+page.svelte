@@ -21,7 +21,13 @@
 <div class="conteneur grid gap-8 py-8 lg:grid-cols-[1fr_20rem]">
 	<div class="min-w-0 space-y-6">
 		<ChoixBoutique boutiques={data.boutiques} boutique={data.boutique} />
-		<FormulaireCourse {form} boutique={data.boutique} catalogue={data.catalogue} gestion={!!data.membre?.est_gestionnaire} aujourdhui={data.aujourdhui} />
+		<FormulaireCourse
+			{form}
+			boutique={data.boutique}
+			catalogue={data.catalogue}
+			gestion={!!data.membre?.est_gestionnaire}
+			aujourdhui={data.aujourdhui}
+		/>
 	</div>
 	<aside class="order-first lg:order-none">
 		<PresentationCourses compact />

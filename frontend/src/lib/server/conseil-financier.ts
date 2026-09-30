@@ -5,7 +5,12 @@ import type { Ok } from '$lib/types';
 
 export async function enregistrerSujet(event: RequestEvent, id?: string) {
 	const fd = await event.request.formData();
-	const valeurs = lireFormulaire(fd, { rubrique: 'entier', objet: 'texte', texte: 'texte', confidentialite: 'entier?' });
+	const valeurs = lireFormulaire(fd, {
+		rubrique: 'entier',
+		objet: 'texte',
+		texte: 'texte',
+		confidentialite: 'entier?'
+	});
 	const r = await soumettre<Ok>(event, id ? `/conseil-financier/${id}` : '/conseil-financier', {
 		method: id ? 'PUT' : 'POST',
 		body: valeurs,

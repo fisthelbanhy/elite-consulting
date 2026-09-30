@@ -14,7 +14,10 @@
 <EnTetePage
 	titre="Faire un don ou un placement"
 	sousTitre="Enregistrez votre souscription, puis payez-la en toute sécurité : elle reçoit une référence FDS."
-	fil={[{ href: '/epargne', label: 'Épargne solidaire' }, { href: '/epargne/dons-placements', label: 'Dons & placements' }]}
+	fil={[
+		{ href: '/epargne', label: 'Épargne solidaire' },
+		{ href: '/epargne/dons-placements', label: 'Dons & placements' }
+	]}
 />
 <div class="conteneur max-w-3xl space-y-6 py-8">
 	<AvertissementEpargne pin={false} />

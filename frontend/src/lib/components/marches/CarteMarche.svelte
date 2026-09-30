@@ -10,16 +10,27 @@
 	let { marche: m }: { marche: MarcheResume } = $props();
 </script>
 
-<a href="/marches/{m.id}" class="carte flex h-full flex-col gap-3 p-5 transition-shadow hover:shadow-levee {m.ouvert ? '' : 'opacity-80'}">
+<a
+	href="/marches/{m.id}"
+	class="carte flex h-full flex-col gap-3 p-5 transition-shadow hover:shadow-levee {m.ouvert
+		? ''
+		: 'opacity-80'}"
+>
 	<div class="flex flex-wrap items-center gap-2">
-		<Badge ton={m.type_marche === 2 ? 'fleuve' : 'soleil'}>Marché {m.type_marche === 2 ? 'public' : 'privé'}</Badge>
+		<Badge ton={m.type_marche === 2 ? 'fleuve' : 'soleil'}
+			>Marché {m.type_marche === 2 ? 'public' : 'privé'}</Badge
+		>
 		{#if m.etat !== 2 && m.etat !== 4}<BadgeEtat etat={m.etat} />{/if}
 		<span class="text-xs text-ardoise">N° {m.numero_appel_offre}</span>
 	</div>
-	<h3 class="font-display text-lg leading-snug font-bold text-fleuve-800">{tronquer(m.libelle, 110)}</h3>
+	<h3 class="font-display text-lg leading-snug font-bold text-fleuve-800">
+		{tronquer(m.libelle, 110)}
+	</h3>
 	{#if m.maitre_ouvrage}
 		<p class="flex items-start gap-1.5 text-[15px] text-ardoise">
-			<Landmark class="mt-0.5 size-4 shrink-0" aria-hidden="true" /><span><span class="sr-only">Maître d'ouvrage : </span>{tronquer(m.maitre_ouvrage, 80)}</span>
+			<Landmark class="mt-0.5 size-4 shrink-0" aria-hidden="true" /><span
+				><span class="sr-only">Maître d'ouvrage : </span>{tronquer(m.maitre_ouvrage, 80)}</span
+			>
 		</p>
 	{/if}
 	<div class="mt-auto flex flex-wrap items-center justify-between gap-2 pt-2">

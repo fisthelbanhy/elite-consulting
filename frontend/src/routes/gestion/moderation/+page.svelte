@@ -18,12 +18,14 @@
 	const total = $derived(file.modules.reduce((s, m) => s + m.total, 0));
 	const onglets = $derived([
 		{ href: '/gestion/moderation', label: 'Tout', compteur: total, actif: !data.filtres.module },
-		...file.modules.filter((m) => m.total > 0 || m.cle === data.filtres.module).map((m) => ({
-			href: `/gestion/moderation?module=${m.cle}`,
-			label: m.libelle,
-			compteur: m.total,
-			actif: data.filtres.module === m.cle
-		}))
+		...file.modules
+			.filter((m) => m.total > 0 || m.cle === data.filtres.module)
+			.map((m) => ({
+				href: `/gestion/moderation?module=${m.cle}`,
+				label: m.libelle,
+				compteur: m.total,
+				actif: data.filtres.module === m.cle
+			}))
 	]);
 </script>
 
@@ -31,15 +33,21 @@
 	<title>Modération — Gestion — {data.parametres.nom_site}</title>
 </svelte:head>
 
-<EnTeteGestion titre="Modération" sousTitre="Fiches publiées par les membres en attente de relecture." fil={[{ href: '/gestion/moderation', label: 'Modération' }]}>
+<EnTeteGestion
+	titre="Modération"
+	sousTitre="Fiches publiées par les membres en attente de relecture."
+	fil={[{ href: '/gestion/moderation', label: 'Modération' }]}
+>
 	{#snippet bas()}
-		<div class="mt-4"><Onglets onglets={onglets} label="Modules" /></div>
+		<div class="mt-4"><Onglets {onglets} label="Modules" /></div>
 	{/snippet}
 </EnTeteGestion>
 
 <div class="mx-auto max-w-7xl space-y-5 px-4 py-6 sm:px-6">
 	{#if !data.gestionnaire.droit_activation}
-		<Alerte type="attention" titre="Consultation seule">Publier, clôturer ou supprimer une fiche nécessite le droit Activation.</Alerte>
+		<Alerte type="attention" titre="Consultation seule"
+			>Publier, clôturer ou supprimer une fiche nécessite le droit Activation.</Alerte
+		>
 	{/if}
 
 	{#if file.items.length}
@@ -51,23 +59,35 @@
 							<Badge ton="fleuve">{e.module_libelle}</Badge>
 							{#if e.reference}<span class="text-sm text-ardoise">{e.reference}</span>{/if}
 						</div>
-						<a href={e.lien} class="mt-1 block font-semibold text-fleuve-800 hover:underline">{e.titre}</a>
+						<a href={e.lien} class="mt-1 block font-semibold text-fleuve-800 hover:underline"
+							>{e.titre}</a
+						>
 						<p class="text-sm text-ardoise">
-							{#if e.auteur_id}Par <a href="/gestion/membres/{e.auteur_id}" class="lien">{e.auteur_pseudonyme ?? 'un membre'}</a>{:else}Sans auteur{/if}
-							{#if e.date} · <time datetime={e.date} title={dateCourte(e.date)}>{relatif(e.date)}</time>{/if}
+							{#if e.auteur_id}Par <a href="/gestion/membres/{e.auteur_id}" class="lien"
+									>{e.auteur_pseudonyme ?? 'un membre'}</a
+								>{:else}Sans auteur{/if}
+							{#if e.date}
+								· <time datetime={e.date} title={dateCourte(e.date)}>{relatif(e.date)}</time>{/if}
 						</p>
 					</div>
 					<a
 						href={e.lien}
 						class="inline-flex min-h-11 shrink-0 items-center gap-1.5 self-start rounded-xl px-4 font-semibold text-fleuve-700 ring-1 ring-fleuve-200 ring-inset hover:bg-fleuve-50 sm:self-center"
 					>
-						Relire<span class="sr-only"> {e.titre}</span><ArrowUpRight class="size-4" aria-hidden="true" />
+						Relire<span class="sr-only"> {e.titre}</span><ArrowUpRight
+							class="size-4"
+							aria-hidden="true"
+						/>
 					</a>
 				</li>
 			{/each}
 		</ul>
 		<Pagination total={file.total} page={file.page} taille={file.taille} />
 	{:else}
-		<EtatVide icone={ShieldCheck} titre="Rien à relire" texte="Toutes les fiches de ce module sont traitées. Beau travail !" />
+		<EtatVide
+			icone={ShieldCheck}
+			titre="Rien à relire"
+			texte="Toutes les fiches de ce module sont traitées. Beau travail !"
+		/>
 	{/if}
 </div>

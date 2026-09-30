@@ -2,7 +2,7 @@
 
 > Source : code PHP **en production** `lafrangine/V04/prog/` (PHP 5, `mysql_*`). `prog-1/` ignoré.
 > Dump de référence : `cp1019011_lafrangine.sql` (volumétries citées ci-dessous = nombre de lignes dans le dump ; aucune donnée personnelle reproduite).
-> Cible : SvelteKit 2 / Svelte 5 + FastAPI. Ce document décrit **les écrans, formulaires, comportements et règles** ; le mapping colonnes → noms métier reste dans `docs/data-dictionary-*.md` (corrigé en §5).
+> Cible : SvelteKit 2 / Svelte 5 + Express. Ce document décrit **les écrans, formulaires, comportements et règles** ; le mapping colonnes → noms métier reste dans `docs/data-dictionary-*.md` (corrigé en §5).
 > Méthode : tous les fichiers listés ci-dessous ont été lus intégralement ; les `include` ont été suivis depuis `choix5.php`, `choix6.php`, `choix7.php`. Quand un comportement est ambigu, c'est signalé « ⚠ Ambigu ».
 
 ---

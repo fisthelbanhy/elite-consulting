@@ -12,8 +12,12 @@ export const load: PageServerLoad = async (event) => {
 	exigerConnexion(event);
 	const groupe = await charger<GroupeDetail>(event, `/likelemba/${event.params.id}`);
 	const choisie = Number(event.url.searchParams.get('adhesion')) || groupe.mon_adhesion_id;
-	if (!choisie && !groupe.peut_gerer) error(403, "Vous n'êtes pas membre de ce likelemba : rejoignez-le d'abord.");
-	const adhesion = choisie ? await charger<AdhesionDetail>(event, `/likelemba/adhesions/${choisie}`) : null;
-	if (adhesion && adhesion.groupe.id !== groupe.id) error(404, "Cette adhésion n'appartient pas à ce likelemba.");
+	if (!choisie && !groupe.peut_gerer)
+		error(403, "Vous n'êtes pas membre de ce likelemba : rejoignez-le d'abord.");
+	const adhesion = choisie
+		? await charger<AdhesionDetail>(event, `/likelemba/adhesions/${choisie}`)
+		: null;
+	if (adhesion && adhesion.groupe.id !== groupe.id)
+		error(404, "Cette adhésion n'appartient pas à ce likelemba.");
 	return { groupe, adhesion, paye: event.url.searchParams.has('paye') };
 };

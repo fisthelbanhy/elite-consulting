@@ -11,7 +11,8 @@
 	import { dateHeure, lienWhatsApp, lienPartageWhatsApp, telephone } from '$lib/format';
 	import type { LienReinitialisation } from '$lib/types/gestion';
 
-	let { lien, titre = 'Lien à transmettre' }: { lien: LienReinitialisation; titre?: string } = $props();
+	let { lien, titre = 'Lien à transmettre' }: { lien: LienReinitialisation; titre?: string } =
+		$props();
 
 	// Le lien est reconstruit sur l'origine réelle du site (l'API ne connaît que son URL configurée)
 	const url = $derived(`${page.url.origin}${lien.chemin}`);
@@ -30,16 +31,34 @@
 </script>
 
 <section class="rounded-xl bg-foret-50 p-4 ring-1 ring-foret-100" aria-live="polite">
-	<h3 class="flex items-center gap-2 font-bold text-foret-700"><KeyRound class="size-5" aria-hidden="true" />{titre}</h3>
+	<h3 class="flex items-center gap-2 font-bold text-foret-700">
+		<KeyRound class="size-5" aria-hidden="true" />{titre}
+	</h3>
 	<p class="mt-1 text-sm text-encre">
-		Pour <strong>{lien.membre.pseudonyme}</strong> ({lien.membre.nom}). Valable jusqu'au {dateHeure(lien.expire)}, une seule fois.
+		Pour <strong>{lien.membre.pseudonyme}</strong> ({lien.membre.nom}). Valable jusqu'au {dateHeure(
+			lien.expire
+		)}, une seule fois.
 		<strong>Ce lien ne sera plus affiché</strong> : transmettez-le maintenant.
 	</p>
 	<label class="mt-3 block text-sm font-semibold" for="lien-unique-{lien.membre.id}">Lien</label>
 	<div class="mt-1 flex gap-2">
-		<input id="lien-unique-{lien.membre.id}" type="text" readonly value={url} class="font-mono text-sm" onfocus={(e) => e.currentTarget.select()} />
-		<button type="button" onclick={copier} class="inline-flex min-h-12 shrink-0 items-center gap-1.5 rounded-xl bg-white px-4 font-semibold text-fleuve-700 ring-1 ring-fleuve-200 ring-inset hover:bg-fleuve-50">
-			{#if copie}<Check class="size-4" aria-hidden="true" />Copié{:else}<Copy class="size-4" aria-hidden="true" />Copier{/if}
+		<input
+			id="lien-unique-{lien.membre.id}"
+			type="text"
+			readonly
+			value={url}
+			class="font-mono text-sm"
+			onfocus={(e) => e.currentTarget.select()}
+		/>
+		<button
+			type="button"
+			onclick={copier}
+			class="inline-flex min-h-12 shrink-0 items-center gap-1.5 rounded-xl bg-white px-4 font-semibold text-fleuve-700 ring-1 ring-fleuve-200 ring-inset hover:bg-fleuve-50"
+		>
+			{#if copie}<Check class="size-4" aria-hidden="true" />Copié{:else}<Copy
+					class="size-4"
+					aria-hidden="true"
+				/>Copier{/if}
 		</button>
 	</div>
 	<div class="mt-3 flex flex-wrap gap-2">
@@ -49,7 +68,9 @@
 			rel="noopener"
 			class="inline-flex min-h-12 items-center gap-2 rounded-xl bg-foret-600 px-4 font-semibold text-white hover:bg-foret-700"
 		>
-			<MessageCircle class="size-5" aria-hidden="true" />Envoyer par WhatsApp{lien.telephone ? ` au ${telephone(lien.telephone)}` : ''}
+			<MessageCircle class="size-5" aria-hidden="true" />Envoyer par WhatsApp{lien.telephone
+				? ` au ${telephone(lien.telephone)}`
+				: ''}
 		</a>
 	</div>
 </section>

@@ -1,24 +1,15 @@
-# Python
-__pycache__/
-*.py[cod]
-.venv/
-venv/
-*.egg-info/
-.pytest_cache/
-.ruff_cache/
-.mypy_cache/
-
 # Node / SvelteKit
 node_modules/
 .svelte-kit/
 build/
+api/dist/
 .env
 .env.*
 !.env.example
 
 # Données locales / uploads / bases
-backend/data/
-backend/media/
+api/data/
+api/media/
 *.sqlite3
 *.db
 
@@ -38,3 +29,7 @@ Thumbs.db
 # Archives locales
 site.zip
 *.zip
+
+# Sauvegarde de l'arborescence FastAPI remplacée le 30/09/2026 (ADR-0014) : conservée sur le
+# poste le temps de valider la nouvelle pile, jamais versionnée — l'historique git en garde trace.
+.ancien-fastapi/

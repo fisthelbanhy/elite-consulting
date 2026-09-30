@@ -10,7 +10,10 @@
 	import { tick } from 'svelte';
 	import Alerte from './Alerte.svelte';
 
-	type Retour = { cle?: string; message?: string; champs?: Record<string, string>; succes?: string } | null | undefined;
+	type Retour =
+		| { cle?: string; message?: string; champs?: Record<string, string>; succes?: string }
+		| null
+		| undefined;
 
 	let {
 		action = '',

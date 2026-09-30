@@ -23,7 +23,11 @@ export async function enregistrerSujet(event: RequestEvent, id?: string) {
 export const actionsReponses = {
 	repondre: async (event: RequestEvent) => {
 		const valeurs = lireFormulaire(await event.request.formData(), { texte: 'texte' });
-		const r = await soumettre<Ok>(event, `/questions/${event.params.id}/reponses`, { body: valeurs, valeurs, cle: 'reponse' });
+		const r = await soumettre<Ok>(event, `/questions/${event.params.id}/reponses`, {
+			body: valeurs,
+			valeurs,
+			cle: 'reponse'
+		});
 		if (!r.ok) return r.echec;
 		return { cle: 'reponse', succes: 'Votre réponse est publiée. Merci !' };
 	},
@@ -32,7 +36,12 @@ export const actionsReponses = {
 		const rid = String(fd.get('rid') ?? '');
 		const cle = `reponse-${rid}`;
 		const valeurs = lireFormulaire(fd, { texte: 'texte' });
-		const r = await soumettre<Ok>(event, `/questions/reponses/${rid}`, { method: 'PUT', body: valeurs, valeurs, cle });
+		const r = await soumettre<Ok>(event, `/questions/reponses/${rid}`, {
+			method: 'PUT',
+			body: valeurs,
+			valeurs,
+			cle
+		});
 		if (!r.ok) return r.echec;
 		return { cle, succes: r.data.message };
 	},
@@ -40,7 +49,10 @@ export const actionsReponses = {
 		const fd = await event.request.formData();
 		const rid = String(fd.get('rid') ?? '');
 		const cle = `etat-reponse-${rid}`;
-		const r = await soumettre<Ok>(event, `/questions/reponses/${rid}/etat`, { body: { etat: Number(fd.get('etat')) }, cle });
+		const r = await soumettre<Ok>(event, `/questions/reponses/${rid}/etat`, {
+			body: { etat: Number(fd.get('etat')) },
+			cle
+		});
 		if (!r.ok) return r.echec;
 		return { cle, succes: r.data.message };
 	},
@@ -49,7 +61,8 @@ export const actionsReponses = {
 		try {
 			await api<Ok>(event, `/questions/reponses/${rid}`, { method: 'DELETE' });
 		} catch (e) {
-			if (e instanceof ApiError) return fail(e.statut, { cle: `reponse-${rid}`, message: e.message, champs: e.champs });
+			if (e instanceof ApiError)
+				return fail(e.statut, { cle: `reponse-${rid}`, message: e.message, champs: e.champs });
 			throw e;
 		}
 		return { cle: 'reponse', succes: 'La réponse a été supprimée.' };

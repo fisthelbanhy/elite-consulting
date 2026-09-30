@@ -6,7 +6,13 @@ import type { RequestEvent } from '@sveltejs/kit';
 import { soumettre, type OptionsApi } from './api';
 import type { Ok } from '$lib/types';
 
-async function appeler(event: RequestEvent, chemin: string, method: OptionsApi['method'], cle: string, body?: Record<string, unknown>) {
+async function appeler(
+	event: RequestEvent,
+	chemin: string,
+	method: OptionsApi['method'],
+	cle: string,
+	body?: Record<string, unknown>
+) {
 	const r = await soumettre<Ok>(event, chemin, { method, body, valeurs: body, cle });
 	if (!r.ok) return r.echec;
 	return { cle, succes: r.data.message };
@@ -16,7 +22,8 @@ const texte = (fd: FormData, k: string) => String(fd.get(k) ?? '').trim();
 const nombre = (fd: FormData, k: string) => Number(fd.get(k)) || null;
 
 export const actionsTarifs = {
-	initialiser: (event: RequestEvent) => appeler(event, '/tarifs-bancaires/initialiser', 'POST', 'referentiel'),
+	initialiser: (event: RequestEvent) =>
+		appeler(event, '/tarifs-bancaires/initialiser', 'POST', 'referentiel'),
 
 	grille: async (event: RequestEvent) => {
 		const fd = await event.request.formData();
@@ -31,12 +38,16 @@ export const actionsTarifs = {
 
 	ajouterType: async (event: RequestEvent) => {
 		const fd = await event.request.formData();
-		return appeler(event, '/tarifs-bancaires/types', 'POST', 'type-nouveau', { libelle: texte(fd, 'libelle') });
+		return appeler(event, '/tarifs-bancaires/types', 'POST', 'type-nouveau', {
+			libelle: texte(fd, 'libelle')
+		});
 	},
 	modifierType: async (event: RequestEvent) => {
 		const fd = await event.request.formData();
 		const id = nombre(fd, 'id');
-		return appeler(event, `/tarifs-bancaires/types/${id}`, 'PUT', `type-${id}`, { libelle: texte(fd, 'libelle') });
+		return appeler(event, `/tarifs-bancaires/types/${id}`, 'PUT', `type-${id}`, {
+			libelle: texte(fd, 'libelle')
+		});
 	},
 	supprimerType: async (event: RequestEvent) => {
 		const id = nombre(await event.request.formData(), 'id');

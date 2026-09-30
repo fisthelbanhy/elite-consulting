@@ -17,9 +17,29 @@
 	let { data } = $props();
 	const f = $derived(data.filtres);
 	const titre = $derived(
-		f.miens ? 'Mes annonces immobilières' : f.type === '1' ? 'Biens à louer et à vendre' : f.type === '2' ? 'Recherches de biens' : 'Immobilier'
+		f.miens
+			? 'Mes annonces immobilières'
+			: f.type === '1'
+				? 'Biens à louer et à vendre'
+				: f.type === '2'
+					? 'Recherches de biens'
+					: 'Immobilier'
 	);
-	const filtre = $derived(['transaction', 'type_bien', 'ville_id', 'quartier_id', 'chambres', 'pieces_min', 'surface_min', 'surface_max', 'prix_min', 'prix_max', 'q'].some((k) => f[k]));
+	const filtre = $derived(
+		[
+			'transaction',
+			'type_bien',
+			'ville_id',
+			'quartier_id',
+			'chambres',
+			'pieces_min',
+			'surface_min',
+			'surface_max',
+			'prix_min',
+			'prix_max',
+			'q'
+		].some((k) => f[k])
+	);
 	const versEncart = (b: BienResume) => ({
 		href: `/immobilier/${b.id}`,
 		titre: titreBien(data.enums, b),
@@ -41,17 +61,39 @@
 	{titre}
 	sousTitre="Location, vente et recherches publiées par les membres. La frangine fait le lien entre vous."
 	surtitre="Opportunités"
-	fil={[{ href: '/opportunites', label: 'Opportunités' }, { href: '/immobilier', label: 'Immobilier' }]}
+	fil={[
+		{ href: '/opportunites', label: 'Opportunités' },
+		{ href: '/immobilier', label: 'Immobilier' }
+	]}
 >
-	<Bouton href="/immobilier/publier?type={f.type === '2' ? '2' : '1'}"><Plus class="size-5" aria-hidden="true" />Publier une annonce</Bouton>
+	<Bouton href="/immobilier/publier?type={f.type === '2' ? '2' : '1'}"
+		><Plus class="size-5" aria-hidden="true" />Publier une annonce</Bouton
+	>
 	{#snippet bas()}
 		<div class="mt-6">
 			<Onglets
 				onglets={[
-					{ href: '/immobilier', label: 'Tout', compteur: data.compteurs.total, actif: !f.type && !f.miens },
-					{ href: '/immobilier?type=1', label: 'Offres', compteur: data.compteurs.offres, actif: f.type === '1' && !f.miens },
-					{ href: '/immobilier?type=2', label: 'Recherches', compteur: data.compteurs.recherches, actif: f.type === '2' && !f.miens },
-					...(data.membre ? [{ href: '/immobilier?miens=1', label: 'Mes annonces', actif: !!f.miens }] : [])
+					{
+						href: '/immobilier',
+						label: 'Tout',
+						compteur: data.compteurs.total,
+						actif: !f.type && !f.miens
+					},
+					{
+						href: '/immobilier?type=1',
+						label: 'Offres',
+						compteur: data.compteurs.offres,
+						actif: f.type === '1' && !f.miens
+					},
+					{
+						href: '/immobilier?type=2',
+						label: 'Recherches',
+						compteur: data.compteurs.recherches,
+						actif: f.type === '2' && !f.miens
+					},
+					...(data.membre
+						? [{ href: '/immobilier?miens=1', label: 'Mes annonces', actif: !!f.miens }]
+						: [])
 				]}
 			/>
 		</div>
@@ -66,7 +108,9 @@
 		{#if data.liste.items.length}
 			<p class="mb-4 text-ardoise" aria-live="polite">
 				{data.liste.total}
-				{data.gestion ? 'immobilier' : 'bien'}{data.liste.total > 1 ? 's' : ''}{f.q || filtre ? ' correspondant à votre recherche' : ''}
+				{data.gestion ? 'immobilier' : 'bien'}{data.liste.total > 1 ? 's' : ''}{f.q || filtre
+					? ' correspondant à votre recherche'
+					: ''}
 			</p>
 			<ul class="grid gap-5 sm:grid-cols-2 {data.encarts ? '' : 'lg:grid-cols-3'}">
 				{#each data.liste.items as b (b.id)}
@@ -77,11 +121,17 @@
 		{:else}
 			<EtatVide
 				icone={House}
-				titre={filtre ? 'Aucun bien ne correspond à votre recherche' : f.miens ? "Vous n'avez pas encore publié d'annonce" : 'Pas encore de bien ici'}
+				titre={filtre
+					? 'Aucun bien ne correspond à votre recherche'
+					: f.miens
+						? "Vous n'avez pas encore publié d'annonce"
+						: 'Pas encore de bien ici'}
 				texte="Publiez votre recherche : les propriétaires vous répondent. Ou laissez votre numéro à la frangine, elle vous prévient dès qu'un bien correspond."
 				messageWhatsApp="Bonjour la Frangine, je cherche un logement (quartier, budget) : prévenez-moi dès qu'un bien correspond."
 			>
-				<Bouton href="/immobilier/publier?type={f.type === '1' ? '1' : '2'}">{f.type === '1' ? 'Proposer mon bien' : 'Publier ma recherche'}</Bouton>
+				<Bouton href="/immobilier/publier?type={f.type === '1' ? '1' : '2'}"
+					>{f.type === '1' ? 'Proposer mon bien' : 'Publier ma recherche'}</Bouton
+				>
 			</EtatVide>
 		{/if}
 	</div>
@@ -90,10 +140,17 @@
 		<aside class="space-y-6" aria-label="À découvrir">
 			<div class="flex gap-3 rounded-xl bg-soleil-100 p-4 text-[15px]">
 				<ShieldAlert class="mt-0.5 size-5 shrink-0 text-laterite-700" aria-hidden="true" />
-				<p><strong>Visitez toujours avant de payer.</strong> Ne versez ni avance ni caution sans avoir vu le bien et son propriétaire.</p>
+				<p>
+					<strong>Visitez toujours avant de payer.</strong> Ne versez ni avance ni caution sans avoir
+					vu le bien et son propriétaire.
+				</p>
 			</div>
 			<EncartFiches titre="Nouveautés" elements={data.encarts.nouveautes.map(versEncart)} />
-			<EncartFiches titre="Les plus visités" ton="laterite" elements={data.encarts.plus_visites.map(versEncart)} />
+			<EncartFiches
+				titre="Les plus visités"
+				ton="laterite"
+				elements={data.encarts.plus_visites.map(versEncart)}
+			/>
 		</aside>
 	{/if}
 </div>

@@ -33,12 +33,21 @@
 	titre={m ? (gestion ? 'Toutes les courses' : 'Mes courses') : 'Courses & livraison'}
 	sousTitre="On fait vos achats, on vous livre. Vous fixez le prix maxi de chaque article."
 	surtitre="Opportunités"
-	fil={[{ href: '/opportunites', label: 'Opportunités' }, { href: '/courses', label: 'Courses & livraison' }]}
+	fil={[
+		{ href: '/opportunites', label: 'Opportunités' },
+		{ href: '/courses', label: 'Courses & livraison' }
+	]}
 >
 	{#if boutique || gestion}
-		<Bouton href="/courses/catalogue" variante="secondaire"><Store class="size-5" aria-hidden="true" />{gestion ? 'Catalogues des boutiques' : 'Mon catalogue'}</Bouton>
+		<Bouton href="/courses/catalogue" variante="secondaire"
+			><Store class="size-5" aria-hidden="true" />{gestion
+				? 'Catalogues des boutiques'
+				: 'Mon catalogue'}</Bouton
+		>
 	{/if}
-	<Bouton href="/courses/nouvelle"><Plus class="size-5" aria-hidden="true" />Commander une course</Bouton>
+	<Bouton href="/courses/nouvelle"
+		><Plus class="size-5" aria-hidden="true" />Commander une course</Bouton
+	>
 	{#snippet bas()}
 		{#if boutique}
 			<div class="mt-6">
@@ -46,7 +55,11 @@
 					onglets={[
 						{ href: '/courses', label: 'Tout', actif: !f.role },
 						{ href: '/courses?role=client', label: 'Mes commandes', actif: f.role === 'client' },
-						{ href: '/courses?role=boutique', label: 'Commandes reçues', actif: f.role === 'boutique' }
+						{
+							href: '/courses?role=boutique',
+							label: 'Commandes reçues',
+							actif: f.role === 'boutique'
+						}
 					]}
 				/>
 			</div>
@@ -61,16 +74,24 @@
 		<PresentationCourses boutiques={data.boutiques} />
 		<div class="carte pagne flex flex-col items-center gap-4 p-8 text-center">
 			<h2 class="text-2xl font-bold">Prêt·e à passer commande ?</h2>
-			<p class="max-w-lg text-ardoise">Créez votre compte gratuit en une minute, puis envoyez votre liste de courses.</p>
+			<p class="max-w-lg text-ardoise">
+				Créez votre compte gratuit en une minute, puis envoyez votre liste de courses.
+			</p>
 			<div class="flex flex-wrap justify-center gap-3">
-				<Bouton href="/inscription?suite=/courses/nouvelle" variante="fleuve">Créer mon compte</Bouton>
-				<Bouton href="/connexion?suite=/courses/nouvelle" variante="secondaire">J'ai déjà un compte</Bouton>
+				<Bouton href="/inscription?suite=/courses/nouvelle" variante="fleuve"
+					>Créer mon compte</Bouton
+				>
+				<Bouton href="/connexion?suite=/courses/nouvelle" variante="secondaire"
+					>J'ai déjà un compte</Bouton
+				>
 			</div>
 		</div>
 	{:else}
 		<FiltresCourses filtres={f} vue={data.vue} {boutique} {gestion} />
 		{#if data.liste.items.length}
-			<p class="text-ardoise" aria-live="polite">{data.liste.total} course{data.liste.total > 1 ? 's' : ''}</p>
+			<p class="text-ardoise" aria-live="polite">
+				{data.liste.total} course{data.liste.total > 1 ? 's' : ''}
+			</p>
 			{#if data.vue === 'general' && (gestion || boutique)}
 				<TableauGeneral courses={data.liste.items} />
 			{:else}
@@ -84,7 +105,11 @@
 		{:else}
 			<EtatVide
 				icone={ShoppingBasket}
-				titre={filtre ? 'Aucune course ne correspond à ces critères' : f.role === 'boutique' ? 'Aucune commande reçue pour le moment' : "Vous n'avez pas encore commandé de course"}
+				titre={filtre
+					? 'Aucune course ne correspond à ces critères'
+					: f.role === 'boutique'
+						? 'Aucune commande reçue pour le moment'
+						: "Vous n'avez pas encore commandé de course"}
 				texte="Envoyez votre liste : on achète au meilleur prix, sans dépasser votre prix maxi, et on vous livre."
 				messageWhatsApp="Bonjour la Frangine, j'aimerais faire faire mes courses : comment ça se passe ?"
 			>

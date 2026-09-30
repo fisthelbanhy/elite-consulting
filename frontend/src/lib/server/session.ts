@@ -18,7 +18,8 @@ export function fermerSession(cookies: Cookies) {
 
 /** N'accepte qu'un chemin local comme destination après connexion (pas de redirection ouverte). */
 export function suiteSure(suite: string | null | undefined, defaut = '/espace'): string {
-	if (!suite || !suite.startsWith('/') || suite.startsWith('//') || suite.startsWith('/\\')) return defaut;
+	if (!suite || !suite.startsWith('/') || suite.startsWith('//') || suite.startsWith('/\\'))
+		return defaut;
 	if (suite.startsWith('/connexion') || suite.startsWith('/inscription')) return defaut;
 	return suite;
 }

@@ -31,7 +31,10 @@
 	} = $props();
 
 	const ident = $derived(id ?? `champ-${name}`);
-	const decrit = $derived([aide ? `${ident}-aide` : '', erreur ? `${ident}-erreur` : ''].filter(Boolean).join(' ') || undefined);
+	const decrit = $derived(
+		[aide ? `${ident}-aide` : '', erreur ? `${ident}-erreur` : ''].filter(Boolean).join(' ') ||
+			undefined
+	);
 	const courant = $derived(value === null || value === undefined ? '' : String(value));
 </script>
 
@@ -54,7 +57,8 @@
 			{#each groupes as g (g.label)}
 				<optgroup label={g.label}>
 					{#each g.options as o (o.value)}
-						<option value={String(o.value)} selected={String(o.value) === courant}>{o.label}</option>
+						<option value={String(o.value)} selected={String(o.value) === courant}>{o.label}</option
+						>
 					{/each}
 				</optgroup>
 			{/each}

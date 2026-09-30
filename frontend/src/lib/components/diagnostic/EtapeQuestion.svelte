@@ -42,12 +42,19 @@
 					>
 						<span class="min-w-0 flex-1">
 							<span class="block text-lg font-semibold text-encre">{o.libelle}</span>
-							{#if o.description}<span class="mt-0.5 block text-[15px] text-ardoise">{o.description}</span>{/if}
+							{#if o.description}<span class="mt-0.5 block text-[15px] text-ardoise"
+									>{o.description}</span
+								>{/if}
 						</span>
 						{#if choisie}
-							<Check class="size-6 shrink-0 text-fleuve-700" aria-hidden="true" /><span class="sr-only">(votre réponse actuelle)</span>
+							<Check class="size-6 shrink-0 text-fleuve-700" aria-hidden="true" /><span
+								class="sr-only">(votre réponse actuelle)</span
+							>
 						{:else}
-							<ChevronRight class="size-6 shrink-0 text-fleuve-300 group-hover:text-fleuve-700" aria-hidden="true" />
+							<ChevronRight
+								class="size-6 shrink-0 text-fleuve-300 group-hover:text-fleuve-700"
+								aria-hidden="true"
+							/>
 						{/if}
 					</button>
 				{/each}

@@ -11,7 +11,10 @@ export const load: PageServerLoad = async (event) => {
 export const actions: Actions = {
 	default: async (event) => {
 		exigerConnexion(event); // dépôt réservé aux connectés (ADR-0007 T8)
-		const valeurs = lireFormulaire(await event.request.formData(), { module: 'entier?', texte: 'texte' });
+		const valeurs = lireFormulaire(await event.request.formData(), {
+			module: 'entier?',
+			texte: 'texte'
+		});
 		const r = await soumettre<Ok>(event, '/suggestions', { body: valeurs, valeurs });
 		if (!r.ok) return r.echec;
 		return { succes: r.data.message };

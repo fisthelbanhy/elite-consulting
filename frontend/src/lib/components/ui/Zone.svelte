@@ -24,7 +24,10 @@
 	} = $props();
 
 	const ident = $derived(id ?? `champ-${name}`);
-	const decrit = $derived([aide ? `${ident}-aide` : '', erreur ? `${ident}-erreur` : ''].filter(Boolean).join(' ') || undefined);
+	const decrit = $derived(
+		[aide ? `${ident}-aide` : '', erreur ? `${ident}-erreur` : ''].filter(Boolean).join(' ') ||
+			undefined
+	);
 </script>
 
 <div class="space-y-1.5 {classe}">
@@ -40,7 +43,6 @@
 		required={requis}
 		aria-invalid={erreur ? 'true' : undefined}
 		aria-describedby={decrit}
-		{...rest}
-	></textarea>
+		{...rest}></textarea>
 	{#if erreur}<p id="{ident}-erreur" class="text-sm font-medium text-alerte">{erreur}</p>{/if}
 </div>

@@ -62,7 +62,14 @@ export interface OperationDetail extends OperationResume, Contexte {
 	banque_beneficiaire_nom: string;
 	banque_beneficiaire_adresse: string;
 	email_destinataire: boolean;
-	lot: { id: number; date_operation: string | null; montant: number; devise: number; type_operation: number; beneficiaire: string }[];
+	lot: {
+		id: number;
+		date_operation: string | null;
+		montant: number;
+		devise: number;
+		type_operation: number;
+		beneficiaire: string;
+	}[];
 }
 
 export interface SyntheseLigne {
@@ -138,7 +145,10 @@ export interface ContentieuxDetail extends ContentieuxResume, Contexte {
 /** Sous-rubriques de trésorerie = type de dialogue (ADR-0007 T9). */
 export type CleRubrique = 'placements' | 'operations' | 'credits' | 'contentieux';
 
-export const RUBRIQUES_TRESORERIE: Record<CleRubrique, { type: 1 | 2 | 3 | 4; titre: string; nouveau: string; description: string }> = {
+export const RUBRIQUES_TRESORERIE: Record<
+	CleRubrique,
+	{ type: 1 | 2 | 3 | 4; titre: string; nouveau: string; description: string }
+> = {
 	placements: {
 		type: 1,
 		titre: 'Placements',
@@ -166,4 +176,9 @@ export const RUBRIQUES_TRESORERIE: Record<CleRubrique, { type: 1 | 2 | 3 | 4; ti
 };
 
 /** États d'une fiche de trésorerie (libellés adaptés au contexte). */
-export const ETATS_TRESORERIE: Record<number, string> = { 1: 'En attente', 2: 'Enregistrée', 3: 'Annulée', 4: 'Traitée' };
+export const ETATS_TRESORERIE: Record<number, string> = {
+	1: 'En attente',
+	2: 'Enregistrée',
+	3: 'Annulée',
+	4: 'Traitée'
+};

@@ -9,4 +9,3 @@
 | [CONVENTIONS.md](CONVENTIONS.md) | Règles de développement (backend, frontend, design, accessibilité) |
 | [modules/](modules/) | Documentation de chaque module de la nouvelle version (routes, API, règles, couverture de la checklist) |
 | [data-dictionary-*.md](.) | Dictionnaires de données legacy (sens des 65 tables) — corrigés par les inventaires |
-| [historique/](historique/) | Documents de la tentative de migration Django abandonnée (référence) |

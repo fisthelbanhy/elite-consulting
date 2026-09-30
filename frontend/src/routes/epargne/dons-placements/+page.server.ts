@@ -16,6 +16,9 @@ export const load: PageServerLoad = async (event) => {
 		q: q.get('q') ?? '',
 		page: q.get('page') ?? '1'
 	};
-	const liste = await charger<Liste<FondResume>>(event, '/epargne/fonds', { ...filtres, taille: 20 });
+	const liste = await charger<Liste<FondResume>>(event, '/epargne/fonds', {
+		...filtres,
+		taille: 20
+	});
 	return { liste, filtres };
 };

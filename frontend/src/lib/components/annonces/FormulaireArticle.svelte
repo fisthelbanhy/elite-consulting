@@ -10,7 +10,15 @@
 	import { champ, valeur } from '$lib/forms';
 	import type { ArticleDetail } from '$lib/types/annonces';
 
-	type Retour = { cle?: string; message?: string; champs?: Record<string, string>; valeurs?: Record<string, unknown> } | null | undefined;
+	type Retour =
+		| {
+				cle?: string;
+				message?: string;
+				champs?: Record<string, string>;
+				valeurs?: Record<string, unknown>;
+		  }
+		| null
+		| undefined;
 
 	let {
 		form,
@@ -26,8 +34,12 @@
 		libelleBouton?: string;
 	} = $props();
 
-	let type = $state(String(valeur(form, 'offre_ou_recherche', initial?.offre_ou_recherche ?? typeInitial)));
-	let etatArticle = $state(String(valeur(form, 'neuf_ou_occasion', initial?.neuf_ou_occasion || '')));
+	let type = $state(
+		String(valeur(form, 'offre_ou_recherche', initial?.offre_ou_recherche ?? typeInitial))
+	);
+	let etatArticle = $state(
+		String(valeur(form, 'neuf_ou_occasion', initial?.neuf_ou_occasion || ''))
+	);
 	const recherche = $derived(type === '2');
 </script>
 
@@ -43,8 +55,16 @@
 					requis
 					erreur={form?.champs?.offre_ou_recherche}
 					options={[
-						{ value: '1', label: 'Une offre', description: 'Je vends un article, payable via la frangine' },
-						{ value: '2', label: 'Une recherche', description: 'Je cherche un article, les vendeurs me répondent' }
+						{
+							value: '1',
+							label: 'Une offre',
+							description: 'Je vends un article, payable via la frangine'
+						},
+						{
+							value: '2',
+							label: 'Une recherche',
+							description: 'Je cherche un article, les vendeurs me répondent'
+						}
 					]}
 				/>
 				<Saisie
@@ -56,7 +76,12 @@
 					{...champ(form, 'libelle', initial?.libelle)}
 				/>
 				<div class="grid gap-5 sm:grid-cols-2">
-					<Liste label="Famille" requis options={familles.map((x) => ({ value: x.id, label: x.libelle }))} {...champ(form, 'famille_id', initial?.famille_id)} />
+					<Liste
+						label="Famille"
+						requis
+						options={familles.map((x) => ({ value: x.id, label: x.libelle }))}
+						{...champ(form, 'famille_id', initial?.famille_id)}
+					/>
 					<Choix
 						legende="État de l'article"
 						name="neuf_ou_occasion"
@@ -76,7 +101,9 @@
 						inputmode="numeric"
 						min="0"
 						suffixe="FCFA"
-						aide={recherche ? 'Laissez 0 si le budget est à discuter.' : "Prix payé par l'acheteur via la frangine."}
+						aide={recherche
+							? 'Laissez 0 si le budget est à discuter.'
+							: "Prix payé par l'acheteur via la frangine."}
 						{...champ(form, 'prix', initial?.prix ?? '')}
 					/>
 					<Saisie
@@ -88,13 +115,28 @@
 						{...champ(form, 'quantite', initial?.quantite ?? 1)}
 					/>
 				</div>
-				<Zone label="Description" lignes={4} aide="Marque, taille, couleur, état, lieu de retrait…" {...champ(form, 'description', initial?.description)} />
-				<Fichier label="Photo de l'article" name="photo" actuel={initial?.photo_url} erreur={form?.champs?.photo} aide="Une photo nette, sur fond clair, fait vendre plus vite." />
+				<Zone
+					label="Description"
+					lignes={4}
+					aide="Marque, taille, couleur, état, lieu de retrait…"
+					{...champ(form, 'description', initial?.description)}
+				/>
+				<Fichier
+					label="Photo de l'article"
+					name="photo"
+					actuel={initial?.photo_url}
+					erreur={form?.champs?.photo}
+					aide="Une photo nette, sur fond clair, fait vendre plus vite."
+				/>
 			</fieldset>
 
 			<div class="flex flex-wrap gap-3">
 				<Bouton type="submit" taille="lg" chargement={envoi}>{libelleBouton}</Bouton>
-				<Bouton href={initial ? `/annonces/${initial.id}` : '/annonces'} variante="fantome" taille="lg">Annuler</Bouton>
+				<Bouton
+					href={initial ? `/annonces/${initial.id}` : '/annonces'}
+					variante="fantome"
+					taille="lg">Annuler</Bouton
+				>
 			</div>
 		</div>
 	{/snippet}

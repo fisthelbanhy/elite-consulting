@@ -133,7 +133,7 @@ Utilisée par tous les modules nécessitant un encaissement. Le type d'objet pay
 | `promisfondadf` | `montant_promis` (**agrégat calculé, jamais saisi directement**) | Alimenté uniquement par le module `collectefond` |
 | `colectefondadf` | `montant_collecte` (**agrégat calculé**) | Idem |
 
-**Règles**: `devisprojetadf` ≥ `apportfondadf` et ≥ `besoinfondadf`; `besoinfondadf` ≤ `devisprojetadf - apportfondadf` (cohérence plan de financement). Upload PDF présentation. **`promisfondadf`/`colectefondadf` à modéliser en Django via agrégation (annotate/Sum) ou signal post_save — jamais en saisie manuelle**, pour rester fidèle au comportement legacy.
+**Règles**: `devisprojetadf` ≥ `apportfondadf` et ≥ `besoinfondadf`; `besoinfondadf` ≤ `devisprojetadf - apportfondadf` (cohérence plan de financement). Upload PDF présentation. **`promisfondadf`/`colectefondadf` sont des agrégats calculés, jamais une saisie manuelle**, pour rester fidèle au comportement legacy.
 
 ---
 
@@ -162,7 +162,7 @@ Utilisée par tous les modules nécessitant un encaissement. Le type d'objet pay
 - Tant que `etatcdf==2`, chaque versement saisi (`$chp13>0`): `collectefond.montantversecdf += chp13`; `appelfond.colectefondadf += chp13`; **+ insertion dans `mouvcollectefond`**.
 - Modification de `montantprevucdf`: recalcul différentiel de `appelfond.promisfondadf`.
 
-**Trou fonctionnel identifié (legacy, non corrigé)**: en cas d'annulation tardive (2→3) après versements déjà effectués, **`colectefondadf` (montant collecté) n'est jamais décrémenté** — le montant reste affiché comme "collecté" même si la promesse est annulée. À clarifier avec le porteur de projet: faut-il corriger ce comportement dans la version Django, ou le reproduire à l'identique par fidélité ?
+**Trou fonctionnel identifié (legacy, non corrigé)**: en cas d'annulation tardive (2→3) après versements déjà effectués, **`colectefondadf` (montant collecté) n'est jamais décrémenté** — le montant reste affiché comme "collecté" même si la promesse est annulée. À clarifier avec le porteur de projet : faut-il corriger ce comportement, ou le reproduire à l'identique par fidélité ?
 
 ---
 
@@ -215,7 +215,7 @@ Questionnaires libres remplis par le membre, relus/validés par un conseiller. `
 
 ### 11. `acompbusinesplan` (préfixe BSP) — zones 03 à 58 utilisées (60 en base)
 Sections: Identification entreprise/promoteur, Environnement socio-éco, Marché, Environnement zone projet, Description projet, Études financières. Libellés détaillés: voir rapport complet de l'agent (denomination, historique, forme juridique, siège social... jusqu'à tableau de financement).
-⚠ `zone59abp`/`zone60abp`: **colonnes mortes**, toujours écrites vides — ne pas rendre obligatoires en Django.
+⚠ `zone59abp`/`zone60abp`: **colonnes mortes**, toujours écrites vides — ne pas les rendre obligatoires.
 ⚠ Bug UPDATE: `zone53abp`/`zone44abp` reçoivent les valeurs de `chp0A[43]`/`chp0A[54]` (erreur de copier-coller) — ne pas reproduire.
 
 ### 12. `acompprojetagricol` (préfixe PJT/APA) — zones 03 à 80, TOUTES utilisées
@@ -230,7 +230,7 @@ Sections: Historique société, Historique crédit, Objet crédit, Situation act
 Sections: Activité, Financement et projet.
 ⚠ `zone39/40aci`: colonnes mortes.
 
-**Note générale sur les 4 tables**: pour les libellés exacts de chaque zone (question), se référer au rapport source de l'agent d'analyse finance (conservé dans l'historique de session) ou relire directement `incl-acompbusinesplan.php` etc. — la liste complète est longue (jusqu'à 80 items) et a été omise ici pour concision; elle est nécessaire uniquement au moment de générer les formulaires Django/SvelteKit de ces 4 modules spécifiques.
+**Note générale sur les 4 tables**: pour les libellés exacts de chaque zone (question), se référer au rapport source de l'agent d'analyse finance (conservé dans l'historique de session) ou relire directement `incl-acompbusinesplan.php` etc. — la liste complète est longue (jusqu'à 80 items) et a été omise ici pour concision; elle est nécessaire uniquement au moment de générer les formulaires de ces 4 modules spécifiques.
 
 ---
 

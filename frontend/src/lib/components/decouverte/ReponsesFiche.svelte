@@ -5,7 +5,11 @@
 
 	let { fiche }: { fiche: FicheDetail } = $props();
 
-	function affichage(champ: keyof FicheDetail, genre: string, question: (typeof ETAPES_FICHE)[number]['questions'][number]): string {
+	function affichage(
+		champ: keyof FicheDetail,
+		genre: string,
+		question: (typeof ETAPES_FICHE)[number]['questions'][number]
+	): string {
 		const v = fiche[champ];
 		if (genre === 'ouinon') return libelleOuiNon(question, Number(v));
 		if (genre === 'pourcentage') return v || v === 0 ? `${v} %` : '';
@@ -22,7 +26,9 @@
 					{@const texte = affichage(q.champ, q.genre, q)}
 					<div class="py-3">
 						<dt class="text-[15px] font-semibold text-ardoise">{q.numero}. {q.libelle}</dt>
-						<dd class="mt-1 whitespace-pre-line {texte ? '' : 'text-ardoise italic'}">{texte || 'Pas de réponse'}</dd>
+						<dd class="mt-1 whitespace-pre-line {texte ? '' : 'text-ardoise italic'}">
+							{texte || 'Pas de réponse'}
+						</dd>
 					</div>
 				{/each}
 			</dl>

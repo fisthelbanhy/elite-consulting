@@ -14,9 +14,20 @@
 
 <EnTetePage
 	titre="Modifier l'annonce {a.reference}"
-	sousTitre="Publiée le {date(a.date_creation)} · {a.nombre_visites} consultation{a.nombre_visites > 1 ? 's' : ''}"
-	fil={[{ href: '/annonces', label: 'Petites annonces' }, { href: `/annonces/${a.id}`, label: a.reference }]}
+	sousTitre="Publiée le {date(a.date_creation)} · {a.nombre_visites} consultation{a.nombre_visites >
+	1
+		? 's'
+		: ''}"
+	fil={[
+		{ href: '/annonces', label: 'Petites annonces' },
+		{ href: `/annonces/${a.id}`, label: a.reference }
+	]}
 />
 <div class="conteneur max-w-3xl py-8">
-	<FormulaireArticle {form} familles={data.familles} initial={a} libelleBouton="Enregistrer les modifications" />
+	<FormulaireArticle
+		{form}
+		familles={data.familles}
+		initial={a}
+		libelleBouton="Enregistrer les modifications"
+	/>
 </div>

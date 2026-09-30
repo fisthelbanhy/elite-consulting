@@ -5,11 +5,17 @@
 	import Choix from '$lib/components/ui/Choix.svelte';
 	import type { QuestionFiche } from './questions';
 
-	let { question: q, valeur, erreur }: { question: QuestionFiche; valeur: unknown; erreur?: string } = $props();
+	let {
+		question: q,
+		valeur,
+		erreur
+	}: { question: QuestionFiche; valeur: unknown; erreur?: string } = $props();
 
 	const libelle = $derived(`${q.numero}. ${q.libelle}`);
 	const choix = $derived(q.choix ?? ['Oui', 'Non']);
-	const courant = $derived(valeur === 1 || valeur === 2 || valeur === '1' || valeur === '2' ? String(valeur) : '');
+	const courant = $derived(
+		valeur === 1 || valeur === 2 || valeur === '1' || valeur === '2' ? String(valeur) : ''
+	);
 </script>
 
 {#if q.genre === 'ouinon'}

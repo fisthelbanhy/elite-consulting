@@ -21,6 +21,10 @@
 	};
 </script>
 
-<span class="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold {tons[ton]} {classe}">
+<span
+	class="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold {tons[
+		ton
+	]} {classe}"
+>
 	{@render children()}
 </span>

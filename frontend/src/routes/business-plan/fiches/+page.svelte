@@ -10,7 +10,12 @@
 	let { data } = $props();
 	const f = $derived(data.filtres);
 	const l = $derived(data.liste);
-	const etats = { 1: ['Brouillon', 'soleil'], 2: ['Envoyé', 'foret'], 3: ['Supprimé', 'alerte'], 4: ['Clôturé', 'neutre'] } as const;
+	const etats = {
+		1: ['Brouillon', 'soleil'],
+		2: ['Envoyé', 'foret'],
+		3: ['Supprimé', 'alerte'],
+		4: ['Clôturé', 'neutre']
+	} as const;
 </script>
 
 <svelte:head>
@@ -21,13 +26,18 @@
 <EnTetePage
 	titre="Business plans des membres"
 	sousTitre="Les auto-diagnostics envoyés sont à relire en priorité ; répondez au membre dans la messagerie."
-	fil={[{ href: '/business-plan', label: 'Business plan' }, { href: '/business-plan/fiches', label: 'Fiches' }]}
+	fil={[
+		{ href: '/business-plan', label: 'Business plan' },
+		{ href: '/business-plan/fiches', label: 'Fiches' }
+	]}
 />
 
 <div class="conteneur space-y-6 py-8">
 	<form method="GET" class="carte grid gap-3 p-4 sm:grid-cols-[1fr_auto_auto] sm:items-end">
 		<div>
-			<label for="q" class="mb-1.5 block text-[15px] font-semibold">Rechercher dans la description du projet</label>
+			<label for="q" class="mb-1.5 block text-[15px] font-semibold"
+				>Rechercher dans la description du projet</label
+			>
 			<input id="q" name="q" type="search" value={f.q} />
 		</div>
 		<div>
@@ -60,12 +70,22 @@
 					{#each l.items as bp (bp.id)}
 						{@const e = etats[bp.etat as 1 | 2 | 3 | 4] ?? etats[1]}
 						<tr>
-							<td class="px-4 py-3"><a href="/business-plan/fiches/{bp.id}" class="lien font-semibold">{bp.reference || `#${bp.id}`}</a></td>
+							<td class="px-4 py-3"
+								><a href="/business-plan/fiches/{bp.id}" class="lien font-semibold"
+									>{bp.reference || `#${bp.id}`}</a
+								></td
+							>
 							<td class="px-4 py-3 whitespace-nowrap">{dateHeure(bp.date_creation)}</td>
 							<td class="px-4 py-3">
-								{#if bp.membre}<a href="/gestion/membres/{bp.membre.id}" class="lien">{bp.membre.nom}</a><span class="block text-sm text-ardoise">{bp.membre.pseudonyme}</span>{/if}
+								{#if bp.membre}<a href="/gestion/membres/{bp.membre.id}" class="lien"
+										>{bp.membre.nom}</a
+									><span class="block text-sm text-ardoise">{bp.membre.pseudonyme}</span>{/if}
 							</td>
-							<td class="px-4 py-3"><span class="font-semibold">{bp.type_activite}</span><span class="block text-sm text-ardoise">{tronquer(bp.description_projet, 60)}</span></td>
+							<td class="px-4 py-3"
+								><span class="font-semibold">{bp.type_activite}</span><span
+									class="block text-sm text-ardoise">{tronquer(bp.description_projet, 60)}</span
+								></td
+							>
 							<td class="px-4 py-3"><Badge ton={e[1]}>{e[0]}</Badge></td>
 						</tr>
 					{/each}
@@ -74,6 +94,10 @@
 		</div>
 		<Pagination total={l.total} page={l.page} taille={l.taille} />
 	{:else}
-		<EtatVide icone={ClipboardList} titre="Aucun business plan" texte="Aucune fiche ne correspond à ces critères." />
+		<EtatVide
+			icone={ClipboardList}
+			titre="Aucun business plan"
+			texte="Aucune fiche ne correspond à ces critères."
+		/>
 	{/if}
 </div>

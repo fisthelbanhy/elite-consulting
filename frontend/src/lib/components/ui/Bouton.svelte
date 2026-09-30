@@ -2,7 +2,8 @@
 	import type { Snippet } from 'svelte';
 	import LoaderCircle from '@lucide/svelte/icons/loader-circle';
 
-	type Variante = 'principal' | 'secondaire' | 'fleuve' | 'fantome' | 'whatsapp' | 'danger' | 'clair';
+	type Variante =
+		'principal' | 'secondaire' | 'fleuve' | 'fantome' | 'whatsapp' | 'danger' | 'clair';
 
 	let {
 		variante = 'principal',
@@ -61,7 +62,13 @@
 		{@render children?.()}
 	</a>
 {:else}
-	<button {type} class={classes} disabled={disabled || chargement} aria-busy={chargement || undefined} {...rest}>
+	<button
+		{type}
+		class={classes}
+		disabled={disabled || chargement}
+		aria-busy={chargement || undefined}
+		{...rest}
+	>
 		{#if chargement}<LoaderCircle class="size-5 animate-spin" aria-hidden="true" />{/if}
 		{@render children?.()}
 	</button>

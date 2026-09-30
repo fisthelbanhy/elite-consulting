@@ -26,14 +26,21 @@
 		lecture?: boolean;
 	} = $props();
 
-	type Retour = { cle?: string; valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null;
+	type Retour = {
+		cle?: string;
+		valeurs?: Record<string, unknown>;
+		champs?: Record<string, string>;
+	} | null;
 	const f = $derived((form as Retour)?.cle === 'dossier' ? (form as Retour) : null);
 
 	const depart = () => {
 		const r: Record<string, string> = {};
 		for (const s of q.sections)
 			for (const g of s.groupes)
-				for (const x of g.questions) r[String(x.zone)] = String(valeur(f, `z${x.zone}`, initial?.reponses?.[String(x.zone)] ?? ''));
+				for (const x of g.questions)
+					r[String(x.zone)] = String(
+						valeur(f, `z${x.zone}`, initial?.reponses?.[String(x.zone)] ?? '')
+					);
 		return r;
 	};
 	let reponses = $state(depart());
@@ -60,11 +67,23 @@
 					/>
 				{/if}
 				<div>
-					<p class="mb-1.5 flex justify-between text-sm"><span class="font-semibold">Progression</span><span class="text-ardoise">{remplies} / {q.nombre_questions} questions</span></p>
-					<Jauge valeur={remplies} max={q.nombre_questions} label="Questions remplies" couleur="foret" />
+					<p class="mb-1.5 flex justify-between text-sm">
+						<span class="font-semibold">Progression</span><span class="text-ardoise"
+							>{remplies} / {q.nombre_questions} questions</span
+						>
+					</p>
+					<Jauge
+						valeur={remplies}
+						max={q.nombre_questions}
+						label="Questions remplies"
+						couleur="foret"
+					/>
 				</div>
 				{#if !lecture}
-					<p class="text-sm text-ardoise">Pas besoin de tout remplir d’un coup : sauvegardez, revenez quand vous voulez. Votre conseiller vous aide à compléter le reste.</p>
+					<p class="text-sm text-ardoise">
+						Pas besoin de tout remplir d’un coup : sauvegardez, revenez quand vous voulez. Votre
+						conseiller vous aide à compléter le reste.
+					</p>
 				{/if}
 			</div>
 
@@ -73,15 +92,29 @@
 			{/each}
 
 			{#if !lecture}
-				<div class="sticky bottom-0 z-10 -mx-4 border-t border-fleuve-900/10 bg-white/95 px-4 py-3 backdrop-blur sm:mx-0 sm:rounded-xl sm:border sm:shadow-levee">
+				<div
+					class="sticky bottom-0 z-10 -mx-4 border-t border-fleuve-900/10 bg-white/95 px-4 py-3 backdrop-blur sm:mx-0 sm:rounded-xl sm:border sm:shadow-levee"
+				>
 					<div class="flex flex-wrap items-center justify-end gap-3">
-						<span class="mr-auto hidden text-sm text-ardoise sm:inline">{remplies} / {q.nombre_questions} questions remplies</span>
+						<span class="mr-auto hidden text-sm text-ardoise sm:inline"
+							>{remplies} / {q.nombre_questions} questions remplies</span
+						>
 						{#if envoye}
 							<!-- Déjà transmis : le conseiller voit directement la version enregistrée -->
-							<Bouton type="submit" name="envoyer" value="0" chargement={envoi}><Save class="size-5" aria-hidden="true" />Enregistrer les modifications</Bouton>
+							<Bouton type="submit" name="envoyer" value="0" chargement={envoi}
+								><Save class="size-5" aria-hidden="true" />Enregistrer les modifications</Bouton
+							>
 						{:else}
-							<Bouton type="submit" name="envoyer" value="0" variante="secondaire" chargement={envoi}><Save class="size-5" aria-hidden="true" />Sauvegarder</Bouton>
-							<Bouton type="submit" name="envoyer" value="1" chargement={envoi}><Send class="size-5" aria-hidden="true" />Envoyer à mon conseiller</Bouton>
+							<Bouton
+								type="submit"
+								name="envoyer"
+								value="0"
+								variante="secondaire"
+								chargement={envoi}><Save class="size-5" aria-hidden="true" />Sauvegarder</Bouton
+							>
+							<Bouton type="submit" name="envoyer" value="1" chargement={envoi}
+								><Send class="size-5" aria-hidden="true" />Envoyer à mon conseiller</Bouton
+							>
 						{/if}
 					</div>
 				</div>

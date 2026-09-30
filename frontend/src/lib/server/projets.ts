@@ -37,7 +37,11 @@ export async function enregistrerProjet(event: RequestEvent, id?: string) {
 	} catch (e) {
 		if (e instanceof ApiError) {
 			// Le projet est enregistré ; seul le fichier est refusé
-			return fail(e.statut, { message: `Projet enregistré, mais fichier refusé : ${e.message}`, champs: e.champs, valeurs });
+			return fail(e.statut, {
+				message: `Projet enregistré, mais fichier refusé : ${e.message}`,
+				champs: e.champs,
+				valeurs
+			});
 		}
 		throw e;
 	}

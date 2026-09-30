@@ -13,7 +13,11 @@ export const load: PageServerLoad = async (event) => {
 		page: q.get('page') ?? '1'
 	};
 	const [liste, compteurs] = await Promise.all([
-		charger<Liste<GroupeResume>>(event, '/likelemba', { ...filtres, miens: filtres.miens ? 'true' : '', taille: 20 }),
+		charger<Liste<GroupeResume>>(event, '/likelemba', {
+			...filtres,
+			miens: filtres.miens ? 'true' : '',
+			taille: 20
+		}),
 		chargerOuDefaut(event, '/likelemba/compteurs', { groupes: 0, adherents: 0 })
 	]);
 	return { liste, compteurs, filtres, supprime: q.has('supprime') };

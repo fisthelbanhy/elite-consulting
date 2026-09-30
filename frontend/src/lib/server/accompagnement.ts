@@ -13,7 +13,9 @@ let cache: { expire: number; valeur: Questionnaire[] } | null = null;
 export async function questionnaires(event: RequestEvent): Promise<Questionnaire[]> {
 	if (cache && cache.expire > Date.now()) return cache.valeur;
 	try {
-		const valeur = await api<Questionnaire[]>(event, '/accompagnement/questionnaires', { jeton: null });
+		const valeur = await api<Questionnaire[]>(event, '/accompagnement/questionnaires', {
+			jeton: null
+		});
 		cache = { expire: Date.now() + 5 * 60 * 1000, valeur };
 		return valeur;
 	} catch {
@@ -41,7 +43,9 @@ export async function enregistrerDossier(event: RequestEvent, q: Questionnaire, 
 	const objet = String(fd.get('objet') ?? '').trim();
 	const envoyer = fd.get('envoyer') === '1';
 	valeurs.objet = objet;
-	const body = id ? { objet, reponses, envoyer } : { type_dossier: q.type, objet, reponses, envoyer };
+	const body = id
+		? { objet, reponses, envoyer }
+		: { type_dossier: q.type, objet, reponses, envoyer };
 	const r = await soumettre<Ok>(event, id ? `/accompagnement/${id}` : '/accompagnement', {
 		method: id ? 'PUT' : 'POST',
 		body,
@@ -49,5 +53,8 @@ export async function enregistrerDossier(event: RequestEvent, q: Questionnaire, 
 		cle: 'dossier'
 	});
 	if (!r.ok) return r.echec;
-	redirect(303, `/accompagnement/${q.slug}/${r.data.id}?statut=${envoyer ? 'envoye' : 'sauvegarde'}`);
+	redirect(
+		303,
+		`/accompagnement/${q.slug}/${r.data.id}?statut=${envoyer ? 'envoye' : 'sauvegarde'}`
+	);
 }

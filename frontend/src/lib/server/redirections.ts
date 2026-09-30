@@ -3,13 +3,35 @@
  * Ex. `/V04/prog/choix2.php?insc=0&opt=0&ode=2` → `/emplois?type=2`.
  */
 const SOUS_ONGLETS: Record<string, [string, Record<string, string>]> = {
-	'1': ['vcpm', { '1': '/questions', '2': '/decouverte-de-soi', '3': '/bien-etre', '': '/questions' }],
+	'1': [
+		'vcpm',
+		{ '1': '/questions', '2': '/decouverte-de-soi', '3': '/bien-etre', '': '/questions' }
+	],
 	'2': ['ode', { '1': '/emplois?type=1', '2': '/emplois?type=2', '': '/emplois' }],
 	'3': ['imbart', { '1': '/immobilier', '2': '/annonces', '3': '/courses', '': '/immobilier' }],
 	'4': ['pjlk', { '1': '/projets', '2': '/likelemba', '3': '/epargne', '': '/projets' }],
-	'5': ['opaf', { '1': '/devenir-distributeur', '2': '/business-plan', '3': '/partenariats', '': '/devenir-distributeur' }],
-	'6': ['rere', { '1': '/entreprises', '2': '/comparateur-prix', '3': '/marches', '': '/entreprises' }],
-	'7': ['cgb', { '1': '/conseil-financier', '2': '/tresorerie', '3': '/tarifs-bancaires', '': '/conseil-financier' }]
+	'5': [
+		'opaf',
+		{
+			'1': '/devenir-distributeur',
+			'2': '/business-plan',
+			'3': '/partenariats',
+			'': '/devenir-distributeur'
+		}
+	],
+	'6': [
+		'rere',
+		{ '1': '/entreprises', '2': '/comparateur-prix', '3': '/marches', '': '/entreprises' }
+	],
+	'7': [
+		'cgb',
+		{
+			'1': '/conseil-financier',
+			'2': '/tresorerie',
+			'3': '/tarifs-bancaires',
+			'': '/conseil-financier'
+		}
+	]
 };
 
 const PAGES: Record<string, string> = {
@@ -28,7 +50,8 @@ export function redirectionLegacy(url: URL): string | null {
 
 	if (q.get('insc') === '1') return '/inscription';
 	if (q.get('aide') === '1') return '/aide';
-	if (fichier === 'incl-affichpub.php' && /^\d+$/.test(q.get('ipub') ?? '')) return `/publicites/${q.get('ipub')}`;
+	if (fichier === 'incl-affichpub.php' && /^\d+$/.test(q.get('ipub') ?? ''))
+		return `/publicites/${q.get('ipub')}`;
 	if (fichier === 'psugest.php') return '/suggestion';
 
 	// Fiches précises (identifiants legacy conservés, ADR-0003)

@@ -1,4 +1,4 @@
-/** Types partagés, alignés sur les schémas Pydantic de l'API FastAPI. */
+/** Types partagés, alignés sur les schémas de l'API. */
 
 export interface Option {
 	value: number;

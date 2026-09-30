@@ -12,8 +12,15 @@
 
 <EnTetePage
 	titre="Modifier la proposition {data.fiche.reference}"
-	fil={[{ href: '/partenariats', label: 'Partenariat & troc' }, { href: `/partenariats/${data.fiche.id}`, label: data.fiche.reference }]}
+	fil={[
+		{ href: '/partenariats', label: 'Partenariat & troc' },
+		{ href: `/partenariats/${data.fiche.id}`, label: data.fiche.reference }
+	]}
 />
 <div class="conteneur max-w-3xl py-8">
-	<FormulairePartenariat {form} initial={data.fiche} libelleBouton="Enregistrer les modifications" />
+	<FormulairePartenariat
+		{form}
+		initial={data.fiche}
+		libelleBouton="Enregistrer les modifications"
+	/>
 </div>

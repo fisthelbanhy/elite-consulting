@@ -8,7 +8,9 @@ export const load: PageServerLoad = async (event) => {
 	const membre = event.locals.membre;
 	// Les gestionnaires consultent les fiches de tous les membres
 	if (membre?.est_gestionnaire) redirect(303, '/business-plan/fiches');
-	const plan = membre ? await charger<BusinessPlanDetail | null>(event, '/business-plan/mien') : null;
+	const plan = membre
+		? await charger<BusinessPlanDetail | null>(event, '/business-plan/mien')
+		: null;
 	const u = event.url.searchParams;
 	return { plan, enregistre: u.has('enregistre'), envoye: u.has('envoye') };
 };

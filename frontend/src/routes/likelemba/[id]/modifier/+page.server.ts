@@ -8,11 +8,16 @@ import type { GroupeDetail, MembreChoix } from '$lib/types/likelemba';
 export const load: PageServerLoad = async (event) => {
 	exigerConnexion(event);
 	const groupe = await charger<GroupeDetail>(event, `/likelemba/${event.params.id}`);
-	if (!groupe.peut_modifier) error(403, 'Seuls le responsable du likelemba et la frangine peuvent le modifier.');
+	if (!groupe.peut_modifier)
+		error(403, 'Seuls le responsable du likelemba et la frangine peuvent le modifier.');
 	const membres = await chargerOuDefaut<MembreChoix[]>(event, '/likelemba/membres', []);
 	// Garantit que le responsable actuel figure dans la liste
 	if (groupe.responsable && !membres.some((m) => m.id === groupe.responsable!.id)) {
-		membres.unshift({ id: groupe.responsable.id, pseudonyme: groupe.responsable.pseudonyme, nom: groupe.responsable.pseudonyme });
+		membres.unshift({
+			id: groupe.responsable.id,
+			pseudonyme: groupe.responsable.pseudonyme,
+			nom: groupe.responsable.pseudonyme
+		});
 	}
 	return { groupe, membres };
 };
@@ -20,7 +25,11 @@ export const load: PageServerLoad = async (event) => {
 export const actions: Actions = {
 	default: async (event) => {
 		const valeurs = lireGroupe(await event.request.formData());
-		const r = await soumettre<Ok>(event, `/likelemba/${event.params.id}`, { method: 'PUT', body: valeurs, valeurs });
+		const r = await soumettre<Ok>(event, `/likelemba/${event.params.id}`, {
+			method: 'PUT',
+			body: valeurs,
+			valeurs
+		});
 		if (!r.ok) return r.echec;
 		redirect(303, `/likelemba/${event.params.id}?modifie=1`);
 	}

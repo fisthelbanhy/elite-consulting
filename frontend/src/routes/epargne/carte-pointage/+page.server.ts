@@ -21,7 +21,9 @@ export const load: PageServerLoad = async (event) => {
 	const operateur = membre.est_gestionnaire || membre.point_caisse_actif;
 	const [liste, titulaires] = await Promise.all([
 		charger<ListePointages>(event, '/epargne/pointages', { ...filtres, taille: 50 }),
-		operateur ? chargerOuDefaut<Titulaire[]>(event, '/epargne/pointages/titulaires', []) : Promise.resolve([] as Titulaire[])
+		operateur
+			? chargerOuDefaut<Titulaire[]>(event, '/epargne/pointages/titulaires', [])
+			: Promise.resolve([] as Titulaire[])
 	]);
 	return { liste, titulaires, filtres, effectue: q.get('effectue') };
 };

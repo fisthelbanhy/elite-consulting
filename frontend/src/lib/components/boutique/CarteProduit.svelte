@@ -18,7 +18,12 @@
 		distributeur = false,
 		conseil,
 		envoi = false
-	}: { produit: ProduitResume; distributeur?: boolean; conseil?: string; envoi?: boolean } = $props();
+	}: {
+		produit: ProduitResume;
+		distributeur?: boolean;
+		conseil?: string;
+		envoi?: boolean;
+	} = $props();
 
 	const vendable = $derived(p.prix > 0 && p.quantite_stock > 0);
 	const wa = $derived(page.data.parametres?.whatsapp as string | undefined);
@@ -38,11 +43,17 @@
 					class="size-full object-contain p-3 transition-transform group-hover:scale-105"
 				/>
 			{:else}
-				<div class="grid size-full place-items-center text-fleuve-200"><Package class="size-14" aria-hidden="true" /></div>
+				<div class="grid size-full place-items-center text-fleuve-200">
+					<Package class="size-14" aria-hidden="true" />
+				</div>
 			{/if}
 		</div>
 		<div class="px-4 pt-3">
-			<h3 class="font-display text-base leading-snug font-bold text-fleuve-800 group-hover:underline sm:text-lg">{p.nom}</h3>
+			<h3
+				class="font-display text-base leading-snug font-bold text-fleuve-800 group-hover:underline sm:text-lg"
+			>
+				{p.nom}
+			</h3>
 			{#if p.reference}<p class="text-xs text-ardoise">Réf. {p.reference}</p>{/if}
 		</div>
 	</a>
@@ -55,12 +66,21 @@
 		{:else if p.description}
 			<p class="hidden text-sm text-ardoise sm:block">{tronquer(p.description, 90)}</p>
 		{/if}
-		<Prix prix={p.prix} prixPublic={p.prix_public} prixDistributeur={p.prix_distributeur} {distributeur} />
+		<Prix
+			prix={p.prix}
+			prixPublic={p.prix_public}
+			prixDistributeur={p.prix_distributeur}
+			{distributeur}
+		/>
 		<EtatStock stock={p.quantite_stock} />
 		<div class="mt-auto">
 			{#if vendable}
 				<div class="flex flex-wrap items-center gap-2">
-					<SelecteurQuantite name="quantite_{p.id}" label="Quantité de {p.nom}" max={Math.min(999, p.quantite_stock)} />
+					<SelecteurQuantite
+						name="quantite_{p.id}"
+						label="Quantité de {p.nom}"
+						max={Math.min(999, p.quantite_stock)}
+					/>
 					<button
 						type="submit"
 						name="seul"
@@ -68,17 +88,24 @@
 						disabled={envoi}
 						class="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-fleuve-700 px-3 font-semibold text-white hover:bg-fleuve-800 disabled:opacity-60"
 					>
-						<ShoppingCart class="size-5" aria-hidden="true" />Ajouter<span class="sr-only"> {p.nom} au panier</span>
+						<ShoppingCart class="size-5" aria-hidden="true" />Ajouter<span class="sr-only">
+							{p.nom} au panier</span
+						>
 					</button>
 				</div>
 			{:else if wa}
 				<a
-					href={lienWhatsApp(wa, `Bonjour la Frangine, je suis intéressé·e par le produit « ${p.nom} » (réf. ${p.reference}). Est-il disponible ?`)}
+					href={lienWhatsApp(
+						wa,
+						`Bonjour la Frangine, je suis intéressé·e par le produit « ${p.nom} » (réf. ${p.reference}). Est-il disponible ?`
+					)}
 					target="_blank"
 					rel="noopener"
 					class="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl px-3 font-semibold text-foret-700 ring-1 ring-foret-600/40 ring-inset hover:bg-foret-50"
 				>
-					<MessageCircle class="size-5" aria-hidden="true" />{p.prix > 0 ? 'Me prévenir' : 'Demander le prix'}
+					<MessageCircle class="size-5" aria-hidden="true" />{p.prix > 0
+						? 'Me prévenir'
+						: 'Demander le prix'}
 				</a>
 			{/if}
 		</div>

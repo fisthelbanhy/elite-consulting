@@ -14,7 +14,10 @@
 <EnTetePage
 	titre="Nouveau dossier : {q.libelle}"
 	sousTitre="Commencez par l’objet, puis répondez aux questions que vous maîtrisez déjà. Sauvegardez quand vous voulez."
-	fil={[{ href: '/accompagnement', label: 'Accompagnement' }, { href: `/accompagnement/${q.slug}`, label: q.libelle }]}
+	fil={[
+		{ href: '/accompagnement', label: 'Accompagnement' },
+		{ href: `/accompagnement/${q.slug}`, label: q.libelle }
+	]}
 />
 <div class="conteneur max-w-3xl py-8">
 	<FormulaireDossier questionnaire={q} {form} />

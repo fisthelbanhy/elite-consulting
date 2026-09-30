@@ -66,11 +66,30 @@ export interface ChoixPublicite {
 
 /** Filtres de la liste de gestion (F-ADM-37) ; `vue` = « tableau » ou « cartes » (F-ADM-38). */
 export type FiltresPublicites = Record<
-	'q' | 'demandeur_id' | 'entreprise_id' | 'debut_du' | 'debut_au' | 'fin_du' | 'fin_au' | 'vues_min' | 'vues_max' | 'etat' | 'vue' | 'page',
+	| 'q'
+	| 'demandeur_id'
+	| 'entreprise_id'
+	| 'debut_du'
+	| 'debut_au'
+	| 'fin_du'
+	| 'fin_au'
+	| 'vues_min'
+	| 'vues_max'
+	| 'etat'
+	| 'vue'
+	| 'page',
 	string
 > & { en_diffusion: boolean };
 
 /** Type déclaré (enums.TypeFichierPub) → genre attendu du fichier. */
-export const GENRE_PAR_TYPE: Record<number, Exclude<GenrePublicite, null>> = { 1: 'image', 2: 'son', 3: 'video' };
+export const GENRE_PAR_TYPE: Record<number, Exclude<GenrePublicite, null>> = {
+	1: 'image',
+	2: 'son',
+	3: 'video'
+};
 
-export const ETATS_PUBLICITE: Record<number, string> = { 1: 'En attente', 2: 'Active', 3: 'Supprimée' };
+export const ETATS_PUBLICITE: Record<number, string> = {
+	1: 'En attente',
+	2: 'Active',
+	3: 'Supprimée'
+};

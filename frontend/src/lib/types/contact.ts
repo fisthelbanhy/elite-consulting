@@ -35,4 +35,8 @@ export interface Suggestion {
 export const ETATS_CONTACT: Record<number, string> = { 1: 'À traiter', 2: 'Traité', 3: 'Supprimé' };
 
 /** Libellés d'état des suggestions. */
-export const ETATS_SUGGESTION: Record<number, string> = { 1: 'À lire', 2: 'Prise en compte', 3: 'Supprimée' };
+export const ETATS_SUGGESTION: Record<number, string> = {
+	1: 'À lire',
+	2: 'Prise en compte',
+	3: 'Supprimée'
+};

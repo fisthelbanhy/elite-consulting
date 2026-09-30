@@ -32,9 +32,14 @@ export function lireReponses(cookies: Cookies): ReponsesDiagnostic {
 	const recue = Buffer.from(signature);
 	if (attendue.length !== recue.length || !timingSafeEqual(attendue, recue)) return {};
 	try {
-		const objet = JSON.parse(Buffer.from(donnees, 'base64url').toString('utf8')) as Record<string, unknown>;
+		const objet = JSON.parse(Buffer.from(donnees, 'base64url').toString('utf8')) as Record<
+			string,
+			unknown
+		>;
 		return Object.fromEntries(
-			Object.entries(objet).filter(([k, v]) => CODE.test(k) && typeof v === 'string' && CODE.test(v))
+			Object.entries(objet).filter(
+				([k, v]) => CODE.test(k) && typeof v === 'string' && CODE.test(v)
+			)
 		) as ReponsesDiagnostic;
 	} catch {
 		return {};
@@ -62,13 +67,18 @@ let cache: { expire: number; questions: QuestionDiagnostic[] } | null = null;
 /** Questions du diagnostic (API), en cache 5 minutes. */
 export async function questionsDiagnostic(event: RequestEvent): Promise<QuestionDiagnostic[]> {
 	if (cache && cache.expire > Date.now()) return cache.questions;
-	const questions = await api<QuestionDiagnostic[]>(event, '/decouverte/diagnostic/questions', { jeton: null });
+	const questions = await api<QuestionDiagnostic[]>(event, '/decouverte/diagnostic/questions', {
+		jeton: null
+	});
 	cache = { expire: Date.now() + 5 * 60 * 1000, questions };
 	return questions;
 }
 
 /** Numéro (1…n) de la première question sans réponse valide, ou null si tout est répondu. */
-export function premiereManquante(questions: QuestionDiagnostic[], reponses: ReponsesDiagnostic): number | null {
+export function premiereManquante(
+	questions: QuestionDiagnostic[],
+	reponses: ReponsesDiagnostic
+): number | null {
 	const i = questions.findIndex((q) => !q.options.some((o) => o.code === reponses[q.cle]));
 	return i < 0 ? null : i + 1;
 }

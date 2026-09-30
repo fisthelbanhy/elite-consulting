@@ -45,11 +45,19 @@
 				· <a href="/publicites#devenir-annonceur" class="lien">Devenir annonceur</a>
 			</p>
 		{:else}
-			<a href="/publicites#devenir-annonceur" class="pagne flex items-center gap-3 rounded-carte bg-white p-4 ring-1 ring-fleuve-900/5 hover:shadow-levee">
-				<span class="grid size-11 shrink-0 place-items-center rounded-full bg-soleil-100 text-laterite-700"><Megaphone class="size-5" aria-hidden="true" /></span>
+			<a
+				href="/publicites#devenir-annonceur"
+				class="pagne flex items-center gap-3 rounded-carte bg-white p-4 ring-1 ring-fleuve-900/5 hover:shadow-levee"
+			>
+				<span
+					class="grid size-11 shrink-0 place-items-center rounded-full bg-soleil-100 text-laterite-700"
+					><Megaphone class="size-5" aria-hidden="true" /></span
+				>
 				<span>
 					<span class="block font-semibold text-fleuve-800">Votre entreprise ici ?</span>
-					<span class="block text-sm text-ardoise">Faites-vous connaître des entrepreneurs de Brazzaville et Pointe-Noire.</span>
+					<span class="block text-sm text-ardoise"
+						>Faites-vous connaître des entrepreneurs de Brazzaville et Pointe-Noire.</span
+					>
 				</span>
 			</a>
 		{/if}

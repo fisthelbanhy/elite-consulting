@@ -32,7 +32,11 @@ export const actions: Actions = {
 			module_epargne_actif: 'bool',
 			module_sante_actif: 'bool'
 		});
-		const r = await soumettre<Ok>(event, '/gestion/parametres', { method: 'PUT', body: valeurs, valeurs });
+		const r = await soumettre<Ok>(event, '/gestion/parametres', {
+			method: 'PUT',
+			body: valeurs,
+			valeurs
+		});
 		if (!r.ok) return r.echec;
 		// Le nom du site, les numéros et les interrupteurs sont mis en cache côté serveur
 		invaliderReferentiels();

@@ -39,7 +39,12 @@ export const GET: RequestHandler = async (event) => {
 	];
 	const listes = await Promise.all(
 		DYNAMIQUES.map(async ([api, page]) => {
-			const l = await chargerOuDefaut<{ items: { id: number }[] }>(event, api, { items: [] }, { taille: 100 });
+			const l = await chargerOuDefaut<{ items: { id: number }[] }>(
+				event,
+				api,
+				{ items: [] },
+				{ taille: 100 }
+			);
 			return l.items.map((i) => `${page}/${i.id}`);
 		})
 	);
@@ -48,5 +53,7 @@ export const GET: RequestHandler = async (event) => {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map((u) => `  <url><loc>${origine}${u}</loc></url>`).join('\n')}
 </urlset>`;
-	return new Response(xml, { headers: { 'content-type': 'application/xml; charset=utf-8', 'cache-control': 'max-age=3600' } });
+	return new Response(xml, {
+		headers: { 'content-type': 'application/xml; charset=utf-8', 'cache-control': 'max-age=3600' }
+	});
 };

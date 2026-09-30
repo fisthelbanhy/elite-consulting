@@ -11,12 +11,20 @@
 	let { sujet: s }: { sujet: SujetResume } = $props();
 </script>
 
-<a href="/questions/{s.id}" class="carte flex h-full flex-col p-5 transition-shadow hover:shadow-levee">
+<a
+	href="/questions/{s.id}"
+	class="carte flex h-full flex-col p-5 transition-shadow hover:shadow-levee"
+>
 	<div class="flex flex-wrap items-center gap-2">
 		{#if s.confidentialite === 1}
-			<Badge ton="soleil"><Lock class="size-3" aria-hidden="true" />Privé : vous et la frangine</Badge>
+			<Badge ton="soleil"
+				><Lock class="size-3" aria-hidden="true" />Privé : vous et la frangine</Badge
+			>
 		{/if}
-		{#if s.etat !== 2}<BadgeEtat etat={s.etat} libelles={{ 1: 'Masqué', 3: 'Supprimé', 4: 'Clôturé' }} />{/if}
+		{#if s.etat !== 2}<BadgeEtat
+				etat={s.etat}
+				libelles={{ 1: 'Masqué', 3: 'Supprimé', 4: 'Clôturé' }}
+			/>{/if}
 	</div>
 	<h3 class="mt-2 font-display text-lg leading-snug font-bold text-fleuve-800">{s.objet}</h3>
 	<p class="mt-1.5 line-clamp-3 flex-1 text-[15px] text-ardoise">{s.extrait}</p>

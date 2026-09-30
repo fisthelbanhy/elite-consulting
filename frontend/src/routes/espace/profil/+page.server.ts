@@ -28,36 +28,73 @@ export const actions: Actions = {
 			type_partenaire: 'entier?',
 			domaine_activite_id: 'entier?'
 		});
-		const r = await soumettre<MembreMoi>(event, '/auth/profil', { method: 'PUT', body: valeurs, valeurs, cle: 'profil' });
+		const r = await soumettre<MembreMoi>(event, '/auth/profil', {
+			method: 'PUT',
+			body: valeurs,
+			valeurs,
+			cle: 'profil'
+		});
 		if (!r.ok) return r.echec;
 		return { cle: 'profil', succes: 'Modification effectuée.' }; // F-TRV-30
 	},
 	photo: async (event) => {
 		const f = fichierJoint(await event.request.formData(), 'photo');
-		if (!f) return fail(400, { cle: 'photo', message: 'Choisissez une photo.', champs: { photo: 'Choisissez une photo.' }, valeurs: {} });
+		if (!f)
+			return fail(400, {
+				cle: 'photo',
+				message: 'Choisissez une photo.',
+				champs: { photo: 'Choisissez une photo.' },
+				valeurs: {}
+			});
 		try {
 			await televerser<MembreMoi>(event, '/auth/profil/photo', 'photo', f);
 			return { cle: 'photo', succes: 'Photo enregistrée.' };
 		} catch (e) {
-			if (e instanceof ApiError) return fail(e.statut, { cle: 'photo', message: e.message, champs: e.champs, valeurs: {} });
+			if (e instanceof ApiError)
+				return fail(e.statut, { cle: 'photo', message: e.message, champs: e.champs, valeurs: {} });
 			throw e;
 		}
 	},
 	motDePasse: async (event) => {
-		const valeurs = lireFormulaire(await event.request.formData(), { actuel: 'texte', nouveau: 'texte', confirmation: 'texte' });
-		const r = await soumettre<Ok>(event, '/auth/mot-de-passe', { body: valeurs, valeurs, cle: 'mdp' });
+		const valeurs = lireFormulaire(await event.request.formData(), {
+			actuel: 'texte',
+			nouveau: 'texte',
+			confirmation: 'texte'
+		});
+		const r = await soumettre<Ok>(event, '/auth/mot-de-passe', {
+			body: valeurs,
+			valeurs,
+			cle: 'mdp'
+		});
 		if (!r.ok) return r.echec;
 		return { cle: 'mdp', succes: r.data.message };
 	},
 	identifiant: async (event) => {
-		const valeurs = lireFormulaire(await event.request.formData(), { identifiant: 'texte', mot_de_passe: 'texte' });
-		const r = await soumettre<Ok>(event, '/espace/identifiant', { method: 'PUT', body: valeurs, valeurs, cle: 'identifiant' });
+		const valeurs = lireFormulaire(await event.request.formData(), {
+			identifiant: 'texte',
+			mot_de_passe: 'texte'
+		});
+		const r = await soumettre<Ok>(event, '/espace/identifiant', {
+			method: 'PUT',
+			body: valeurs,
+			valeurs,
+			cle: 'identifiant'
+		});
 		if (!r.ok) return r.echec;
 		return { cle: 'identifiant', succes: 'Votre identifiant de connexion est modifié.' };
 	},
 	codePointage: async (event) => {
-		const valeurs = lireFormulaire(await event.request.formData(), { mot_de_passe: 'texte', code: 'texte', confirmation: 'texte' });
-		const r = await soumettre<Ok>(event, '/espace/code-pointage', { method: 'PUT', body: valeurs, valeurs: {}, cle: 'code' });
+		const valeurs = lireFormulaire(await event.request.formData(), {
+			mot_de_passe: 'texte',
+			code: 'texte',
+			confirmation: 'texte'
+		});
+		const r = await soumettre<Ok>(event, '/espace/code-pointage', {
+			method: 'PUT',
+			body: valeurs,
+			valeurs: {},
+			cle: 'code'
+		});
 		if (!r.ok) return r.echec;
 		return { cle: 'code', succes: r.data.message };
 	}

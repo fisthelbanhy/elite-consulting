@@ -18,7 +18,9 @@
 />
 <div class="conteneur max-w-3xl space-y-6 py-8">
 	{#if data.modele.personne_morale}
-		<Alerte type="info" titre="Nous avons repris les informations de votre profil.">Vérifiez-les et complétez la fiche avant de l'enregistrer.</Alerte>
+		<Alerte type="info" titre="Nous avons repris les informations de votre profil."
+			>Vérifiez-les et complétez la fiche avant de l'enregistrer.</Alerte
+		>
 	{/if}
 	<FormulaireEntreprise
 		{form}

@@ -13,7 +13,11 @@ export const actions: Actions = {
 	...actionsModeration((p) => `/emplois/${p.id}`, '/emplois'),
 	interet: async (event) => {
 		const valeurs = lireFormulaire(await event.request.formData(), { message: 'texte' });
-		const r = await soumettre<Ok>(event, `/emplois/${event.params.id}/interet`, { body: valeurs, valeurs, cle: 'interet' });
+		const r = await soumettre<Ok>(event, `/emplois/${event.params.id}/interet`, {
+			body: valeurs,
+			valeurs,
+			cle: 'interet'
+		});
 		if (!r.ok) return r.echec;
 		return { cle: 'interet', succes: r.data.message };
 	}

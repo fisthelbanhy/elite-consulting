@@ -25,7 +25,8 @@
 	afterNavigate(() => (coches = []));
 	const tous = $derived(data.liste.items.length > 0 && coches.length === data.liste.items.length);
 
-	const quand = (x: VisiteLigne | ConnexionLigne) => ('date_heure' in x ? x.date_heure : x.date_connexion);
+	const quand = (x: VisiteLigne | ConnexionLigne) =>
+		'date_heure' in x ? x.date_heure : x.date_connexion;
 	function toutCocher(e: Event) {
 		coches = (e.currentTarget as HTMLInputElement).checked ? data.liste.items.map((x) => x.id) : [];
 	}
@@ -35,14 +36,22 @@
 	<title>Journaux — Gestion — {data.parametres.nom_site}</title>
 </svelte:head>
 
-<EnTeteGestion titre="Journaux" sousTitre="Qui passe sur le site, et quand." fil={[{ href: '/gestion/journaux', label: 'Journaux' }]}>
+<EnTeteGestion
+	titre="Journaux"
+	sousTitre="Qui passe sur le site, et quand."
+	fil={[{ href: '/gestion/journaux', label: 'Journaux' }]}
+>
 	{#snippet bas()}
 		<div class="mt-4">
 			<Onglets
 				label="Journal"
 				onglets={[
 					{ href: '/gestion/journaux', label: 'Visites anonymes', actif: !connexions },
-					{ href: '/gestion/journaux?journal=connexions', label: 'Connexions des membres', actif: connexions }
+					{
+						href: '/gestion/journaux?journal=connexions',
+						label: 'Connexions des membres',
+						actif: connexions
+					}
 				]}
 			/>
 		</div>
@@ -51,10 +60,18 @@
 
 <div class="mx-auto max-w-7xl space-y-4 px-4 py-6 sm:px-6">
 	{#if form?.cle === 'purge'}
-		{#if form.succes}<Alerte type="succes" titre={form.succes} />{:else if form.message}<Alerte type="erreur" titre={form.message} champs={form.champs} />{/if}
+		{#if form.succes}<Alerte type="succes" titre={form.succes} />{:else if form.message}<Alerte
+				type="erreur"
+				titre={form.message}
+				champs={form.champs}
+			/>{/if}
 	{/if}
 
-	<form method="GET" class="carte grid gap-3 p-4 sm:grid-cols-2 lg:grid-cols-6 lg:items-end" data-sveltekit-keepfocus>
+	<form
+		method="GET"
+		class="carte grid gap-3 p-4 sm:grid-cols-2 lg:grid-cols-6 lg:items-end"
+		data-sveltekit-keepfocus
+	>
 		{#if connexions}<input type="hidden" name="journal" value="connexions" />{/if}
 		<input type="hidden" name="taille" value={data.taille} />
 		<div>
@@ -82,24 +99,35 @@
 				<label for="membre_id" class="mb-1 block text-sm font-semibold">Membre</label>
 				<select id="membre_id" name="membre_id" class="py-2">
 					<option value="">Tous</option>
-					{#each data.membres as o (o.value)}<option value={String(o.value)} selected={f.membre_id === String(o.value)}>{o.label}</option>{/each}
+					{#each data.membres as o (o.value)}<option
+							value={String(o.value)}
+							selected={f.membre_id === String(o.value)}>{o.label}</option
+						>{/each}
 				</select>
 			</div>
 		{/if}
 		<div class="flex gap-2 lg:col-span-6">
 			<Bouton type="submit" variante="fleuve" taille="sm">Filtrer</Bouton>
-			<Bouton href={connexions ? '/gestion/journaux?journal=connexions' : '/gestion/journaux'} variante="fantome" taille="sm">Effacer</Bouton>
+			<Bouton
+				href={connexions ? '/gestion/journaux?journal=connexions' : '/gestion/journaux'}
+				variante="fantome"
+				taille="sm">Effacer</Bouton
+			>
 		</div>
 	</form>
 
-	<p class="text-[15px]" aria-live="polite"><strong class="montant">{entier(data.liste.total)}</strong> {connexions ? 'connexion' : 'visite'}{data.liste.total > 1 ? 's' : ''}</p>
+	<p class="text-[15px]" aria-live="polite">
+		<strong class="montant">{entier(data.liste.total)}</strong>
+		{connexions ? 'connexion' : 'visite'}{data.liste.total > 1 ? 's' : ''}
+	</p>
 
 	{#if data.liste.items.length}
 		<form
 			method="POST"
 			action="?/purger"
 			use:enhance={({ cancel }) => {
-				if (!confirm(`Supprimer définitivement ${coches.length} ligne(s) du journal ?`)) return cancel();
+				if (!confirm(`Supprimer définitivement ${coches.length} ligne(s) du journal ?`))
+					return cancel();
 				return async ({ update }) => {
 					await update();
 					coches = [];
@@ -109,11 +137,20 @@
 			<input type="hidden" name="journal" value={data.journal} />
 			<div class="carte overflow-x-auto">
 				<table class="w-full text-left text-[15px]">
-					<caption class="sr-only">{connexions ? 'Connexions des membres' : 'Visites anonymes'}</caption>
+					<caption class="sr-only"
+						>{connexions ? 'Connexions des membres' : 'Visites anonymes'}</caption
+					>
 					<thead class="bg-sable/60 text-sm text-ardoise">
 						<tr>
 							{#if peutPurger}
-								<th scope="col" class="w-10 px-3 py-2.5"><input type="checkbox" checked={tous} onchange={toutCocher} aria-label="Tout sélectionner" /></th>
+								<th scope="col" class="w-10 px-3 py-2.5"
+									><input
+										type="checkbox"
+										checked={tous}
+										onchange={toutCocher}
+										aria-label="Tout sélectionner"
+									/></th
+								>
 							{/if}
 							<th scope="col" class="px-3 py-2.5 font-semibold">Date et heure</th>
 							<th scope="col" class="px-3 py-2.5 font-semibold">Adresse IP</th>
@@ -124,12 +161,22 @@
 						{#each data.liste.items as x (x.id)}
 							<tr class="border-t border-fleuve-900/5 hover:bg-creme">
 								{#if peutPurger}
-									<td class="px-3 py-2"><input type="checkbox" name="ids" value={x.id} bind:group={coches} aria-label="Sélectionner la ligne du {dateHeure(quand(x))}" /></td>
+									<td class="px-3 py-2"
+										><input
+											type="checkbox"
+											name="ids"
+											value={x.id}
+											bind:group={coches}
+											aria-label="Sélectionner la ligne du {dateHeure(quand(x))}"
+										/></td
+									>
 								{/if}
 								<td class="px-3 py-2 whitespace-nowrap">{dateHeure(quand(x))}</td>
 								<td class="px-3 py-2 font-mono text-sm">{x.adresse_ip || '—'}</td>
 								<td class="px-3 py-2">
-									{#if x.membre}<a href="/gestion/membres/{x.membre.id}" class="lien">{x.membre.nom}</a>{:else}<span class="text-ardoise">—</span>{/if}
+									{#if x.membre}<a href="/gestion/membres/{x.membre.id}" class="lien"
+											>{x.membre.nom}</a
+										>{:else}<span class="text-ardoise">—</span>{/if}
 								</td>
 							</tr>
 						{/each}
@@ -147,19 +194,28 @@
 		<TaillePage taille={data.taille} />
 		<Pagination total={data.liste.total} page={data.liste.page} taille={data.liste.taille} />
 	{:else}
-		<EtatVide icone={ScrollText} titre="Aucune ligne" texte="Aucun passage ne correspond à ces critères." />
+		<EtatVide
+			icone={ScrollText}
+			titre="Aucune ligne"
+			texte="Aucun passage ne correspond à ces critères."
+		/>
 	{/if}
 
 	{#if peutPurger}
 		<section class="carte p-5" aria-labelledby="titre-purge">
 			<h2 id="titre-purge" class="text-lg font-bold">Purger l'historique</h2>
-			<p class="mt-1 text-[15px] text-ardoise">Supprime toutes les lignes de ce journal antérieures à la date choisie.</p>
+			<p class="mt-1 text-[15px] text-ardoise">
+				Supprime toutes les lignes de ce journal antérieures à la date choisie.
+			</p>
 			<form
 				method="POST"
 				action="?/purgerAvant"
 				class="mt-3 flex flex-wrap items-end gap-3"
 				use:enhance={({ cancel, formData }) => {
-					if (!confirm(`Supprimer définitivement tout le journal avant le ${formData.get('avant')} ?`)) cancel();
+					if (
+						!confirm(`Supprimer définitivement tout le journal avant le ${formData.get('avant')} ?`)
+					)
+						cancel();
 				}}
 			>
 				<input type="hidden" name="journal" value={data.journal} />

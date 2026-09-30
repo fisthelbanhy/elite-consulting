@@ -25,8 +25,12 @@ export const actions: Actions = {
 		const fd = await event.request.formData();
 		const id = String(fd.get('id') ?? '');
 		const etat = Number(fd.get('etat'));
-		if (!/^\d+$/.test(id)) return fail(400, { cle: `etat-${id}`, message: 'Suggestion inconnue.', champs: {} });
-		const r = await soumettre<Ok>(event, `/suggestions/${id}/etat`, { body: { etat }, cle: `etat-${id}` });
+		if (!/^\d+$/.test(id))
+			return fail(400, { cle: `etat-${id}`, message: 'Suggestion inconnue.', champs: {} });
+		const r = await soumettre<Ok>(event, `/suggestions/${id}/etat`, {
+			body: { etat },
+			cle: `etat-${id}`
+		});
 		if (!r.ok) return r.echec;
 		return { cle: `etat-${id}`, succes: r.data.message };
 	}

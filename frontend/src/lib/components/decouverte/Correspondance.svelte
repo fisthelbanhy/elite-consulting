@@ -5,7 +5,10 @@
 	let { texte }: { texte: string } = $props();
 </script>
 
-<section class="rounded-2xl bg-foret-50 p-5 ring-1 ring-foret-100" aria-labelledby="titre-correspondance">
+<section
+	class="rounded-2xl bg-foret-50 p-5 ring-1 ring-foret-100"
+	aria-labelledby="titre-correspondance"
+>
 	<h2 id="titre-correspondance" class="flex items-center gap-2 text-lg font-bold text-foret-700">
 		<MessageCircleHeart class="size-5" aria-hidden="true" />Le mot de votre conseillère
 	</h2>

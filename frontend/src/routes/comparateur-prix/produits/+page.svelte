@@ -30,12 +30,20 @@
 
 <div class="conteneur max-w-4xl space-y-6 py-8">
 	{#if !data.peutModifier}
-		<Alerte type="info" titre="Consultation seulement.">La création et la modification des produits nécessitent le droit d'activation des fiches.</Alerte>
+		<Alerte type="info" titre="Consultation seulement."
+			>La création et la modification des produits nécessitent le droit d'activation des fiches.</Alerte
+		>
 	{:else}
 		<Formulaire action="?/creer" {form} cle="creer" reinitialiser class="carte p-6">
 			{#snippet children({ envoi })}
 				<div class="flex flex-col gap-3 sm:flex-row sm:items-end">
-					<Saisie label="Nouveau produit" requis maxlength={200} class="flex-1" {...champ(form, 'nom', '', 'creer')} />
+					<Saisie
+						label="Nouveau produit"
+						requis
+						maxlength={200}
+						class="flex-1"
+						{...champ(form, 'nom', '', 'creer')}
+					/>
 					<Bouton type="submit" chargement={envoi}>Ajouter</Bouton>
 				</div>
 			{/snippet}
@@ -46,7 +54,10 @@
 		<div class="flex-1">
 			<label for="q" class="mb-1.5 block text-[15px] font-semibold">Rechercher un produit</label>
 			<div class="relative">
-				<Search class="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-ardoise" aria-hidden="true" />
+				<Search
+					class="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-ardoise"
+					aria-hidden="true"
+				/>
 				<input id="q" name="q" type="search" value={data.q} class="pl-10" />
 			</div>
 		</div>
@@ -62,16 +73,30 @@
 						{#snippet children({ envoi })}
 							<input type="hidden" name="id" value={p.id} />
 							<div class="grid gap-3 sm:grid-cols-[1fr_11rem_auto] sm:items-end">
-								<Saisie label="Nom du produit" id="nom-{p.id}" maxlength={200} {...champ(form, 'nom', p.nom, `produit-${p.id}`)} />
+								<Saisie
+									label="Nom du produit"
+									id="nom-{p.id}"
+									maxlength={200}
+									{...champ(form, 'nom', p.nom, `produit-${p.id}`)}
+								/>
 								<div>
-									<label for="etat-{p.id}" class="mb-1.5 block text-[15px] font-semibold">État</label>
+									<label for="etat-{p.id}" class="mb-1.5 block text-[15px] font-semibold"
+										>État</label
+									>
 									<select id="etat-{p.id}" name="etat">
-										{#each etats as e (e.value)}<option value={e.value} selected={e.value === p.etat}>{e.label}</option>{/each}
+										{#each etats as e (e.value)}<option
+												value={e.value}
+												selected={e.value === p.etat}>{e.label}</option
+											>{/each}
 									</select>
 								</div>
 								<Bouton type="submit" variante="fleuve" chargement={envoi}>Enregistrer</Bouton>
 							</div>
-							<p class="mt-2 text-sm text-ardoise">{p.offres} offre{p.offres > 1 ? 's' : ''} · {p.demandes} demande{p.demandes > 1 ? 's' : ''} publiées</p>
+							<p class="mt-2 text-sm text-ardoise">
+								{p.offres} offre{p.offres > 1 ? 's' : ''} · {p.demandes} demande{p.demandes > 1
+									? 's'
+									: ''} publiées
+							</p>
 						{/snippet}
 					</Formulaire>
 				{:else}

@@ -12,8 +12,16 @@
 
 <EnTetePage
 	titre="Modifier le likelemba {data.groupe.code}"
-	fil={[{ href: '/likelemba', label: 'Likelemba' }, { href: `/likelemba/${data.groupe.id}`, label: data.groupe.code }]}
+	fil={[
+		{ href: '/likelemba', label: 'Likelemba' },
+		{ href: `/likelemba/${data.groupe.id}`, label: data.groupe.code }
+	]}
 />
 <div class="conteneur max-w-3xl py-8">
-	<FormulaireGroupe {form} membres={data.membres} initial={data.groupe} libelleBouton="Enregistrer les modifications" />
+	<FormulaireGroupe
+		{form}
+		membres={data.membres}
+		initial={data.groupe}
+		libelleBouton="Enregistrer les modifications"
+	/>
 </div>

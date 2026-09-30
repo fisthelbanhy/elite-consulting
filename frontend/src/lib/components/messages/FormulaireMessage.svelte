@@ -28,7 +28,13 @@
 		auto?: number;
 	} = $props();
 
-	type Retour = { cle?: string; message?: string; champs?: Record<string, string>; succes?: string; valeurs?: Record<string, unknown> } | null;
+	type Retour = {
+		cle?: string;
+		message?: string;
+		champs?: Record<string, string>;
+		succes?: string;
+		valeurs?: Record<string, unknown>;
+	} | null;
 	const f = $derived(form as Retour);
 	let actualisation = $state(false);
 
@@ -71,11 +77,23 @@
 			{...champ(f, 'texte', '', 'message')}
 		/>
 		<div class="mt-3 flex flex-wrap items-center gap-2">
-			<Bouton type="submit" chargement={envoi}><Send class="size-5" aria-hidden="true" />{libelleEnvoyer}</Bouton>
-			<Bouton href={page.url.pathname} variante="secondaire" onclick={actualiser} aria-busy={actualisation || undefined}>
-				<RefreshCw class="size-5 {actualisation ? 'animate-spin' : ''}" aria-hidden="true" />Actualiser
+			<Bouton type="submit" chargement={envoi}
+				><Send class="size-5" aria-hidden="true" />{libelleEnvoyer}</Bouton
+			>
+			<Bouton
+				href={page.url.pathname}
+				variante="secondaire"
+				onclick={actualiser}
+				aria-busy={actualisation || undefined}
+			>
+				<RefreshCw
+					class="size-5 {actualisation ? 'animate-spin' : ''}"
+					aria-hidden="true"
+				/>Actualiser
 			</Bouton>
-			{#if auto}<p class="text-sm text-ardoise">Actualisation automatique toutes les {auto} secondes.</p>{/if}
+			{#if auto}<p class="text-sm text-ardoise">
+					Actualisation automatique toutes les {auto} secondes.
+				</p>{/if}
 		</div>
 	{/snippet}
 </Formulaire>

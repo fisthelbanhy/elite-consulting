@@ -15,8 +15,15 @@
 
 <EnTetePage
 	titre={soiMeme ? `Rejoindre le likelemba ${g.code}` : `Inscrire un membre au likelemba ${g.code}`}
-	sousTitre="Cotisation de {fcfa(g.montant_cotisation)}, {libelle(data.enums, 'Periodicite', g.periodicite).toLowerCase()}. Votre code d'adhérent est attribué dès l'enregistrement."
-	fil={[{ href: '/likelemba', label: 'Likelemba' }, { href: `/likelemba/${g.id}`, label: g.code }]}
+	sousTitre="Cotisation de {fcfa(g.montant_cotisation)}, {libelle(
+		data.enums,
+		'Periodicite',
+		g.periodicite
+	).toLowerCase()}. Votre code d'adhérent est attribué dès l'enregistrement."
+	fil={[
+		{ href: '/likelemba', label: 'Likelemba' },
+		{ href: `/likelemba/${g.id}`, label: g.code }
+	]}
 />
 <div class="conteneur max-w-3xl py-8">
 	<FormulaireAdhesion

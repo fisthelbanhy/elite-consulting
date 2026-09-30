@@ -3,7 +3,12 @@
 	import Badge from '$lib/components/ui/Badge.svelte';
 
 	let { etat }: { etat: number } = $props();
-	const libelles: Record<number, string> = { 1: 'En attente', 2: 'Annulée', 3: 'Achats effectués', 4: 'Livrée' };
+	const libelles: Record<number, string> = {
+		1: 'En attente',
+		2: 'Annulée',
+		3: 'Achats effectués',
+		4: 'Livrée'
+	};
 	const tons = { 1: 'soleil', 2: 'alerte', 3: 'fleuve', 4: 'foret' } as const;
 </script>
 

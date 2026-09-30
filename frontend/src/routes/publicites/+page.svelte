@@ -53,12 +53,19 @@
 						<div class="flex flex-wrap items-center gap-2">
 							<span class="text-sm font-semibold text-ardoise">{p.reference}</span>
 							<BadgeEtat etat={p.etat} libelles={ETATS_PUBLICITE} />
-							{#if p.en_diffusion}<span class="text-sm font-semibold text-foret-700">En diffusion</span>{/if}
+							{#if p.en_diffusion}<span class="text-sm font-semibold text-foret-700"
+									>En diffusion</span
+								>{/if}
 						</div>
 						<p class="text-[15px]">{tronquer(p.texte_affiche, 120)}</p>
 						<p class="flex flex-wrap items-center gap-x-4 text-sm text-ardoise">
 							<span>Du {dateCourte(p.date_debut)} au {dateCourte(p.date_fin)}</span>
-							<span class="flex items-center gap-1"><Eye class="size-4" aria-hidden="true" />{entier(p.nombre_vues)} vue{p.nombre_vues > 1 ? 's' : ''}</span>
+							<span class="flex items-center gap-1"
+								><Eye class="size-4" aria-hidden="true" />{entier(p.nombre_vues)} vue{p.nombre_vues >
+								1
+									? 's'
+									: ''}</span
+							>
 						</p>
 					</li>
 				{/each}

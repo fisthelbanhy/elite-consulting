@@ -3,6 +3,10 @@ import { actionsFiche, chargerFiche, enregistrerContentieux } from '$lib/server/
 import { actionDialogue } from '$lib/server/dialogues';
 import type { ContentieuxDetail } from '$lib/types/tresorerie';
 
-export const load: PageServerLoad = (event) => chargerFiche<ContentieuxDetail>(event, 'contentieux');
+export const load: PageServerLoad = (event) =>
+	chargerFiche<ContentieuxDetail>(event, 'contentieux');
 
-export const actions: Actions = { ...actionsFiche('contentieux', enregistrerContentieux), dialogue: actionDialogue };
+export const actions: Actions = {
+	...actionsFiche('contentieux', enregistrerContentieux),
+	dialogue: actionDialogue
+};

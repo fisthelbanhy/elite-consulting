@@ -17,7 +17,8 @@
 				<th scope="col" class="px-4 py-3 font-semibold">Membre</th>
 				<th scope="col" class="px-4 py-3 text-right font-semibold">Versement</th>
 				<th scope="col" class="px-4 py-3 text-right font-semibold">Retrait</th>
-				{#if l.afficher_solde}<th scope="col" class="px-4 py-3 text-right font-semibold">Solde</th>{/if}
+				{#if l.afficher_solde}<th scope="col" class="px-4 py-3 text-right font-semibold">Solde</th
+					>{/if}
 			</tr>
 		</thead>
 		<tbody>
@@ -25,16 +26,25 @@
 				<tr class="border-b border-fleuve-900/5 align-top">
 					<td class="px-4 py-3">
 						{dateHeure(p.date_heure)}
-						<span class="block text-xs text-ardoise">{p.reference}{#if p.type_caisse === 2} · encaisse{/if}</span>
+						<span class="block text-xs text-ardoise"
+							>{p.reference}{#if p.type_caisse === 2}
+								· encaisse{/if}</span
+						>
 					</td>
 					<td class="px-4 py-3">{p.operateur?.nom ?? '—'}</td>
 					<td class="px-4 py-3">
 						{p.membre.nom}
 						{#if p.motif}<span class="block text-xs text-ardoise">{p.motif}</span>{/if}
 					</td>
-					<td class="montant px-4 py-3 text-right font-semibold text-foret-700">{p.type_operation === 1 ? fcfa(p.montant) : ''}</td>
-					<td class="montant px-4 py-3 text-right font-semibold text-alerte">{p.type_operation === 2 ? fcfa(p.montant) : ''}</td>
-					{#if l.afficher_solde}<td class="montant px-4 py-3 text-right">{p.solde_apres !== null ? fcfa(p.solde_apres) : '—'}</td>{/if}
+					<td class="montant px-4 py-3 text-right font-semibold text-foret-700"
+						>{p.type_operation === 1 ? fcfa(p.montant) : ''}</td
+					>
+					<td class="montant px-4 py-3 text-right font-semibold text-alerte"
+						>{p.type_operation === 2 ? fcfa(p.montant) : ''}</td
+					>
+					{#if l.afficher_solde}<td class="montant px-4 py-3 text-right"
+							>{p.solde_apres !== null ? fcfa(p.solde_apres) : '—'}</td
+						>{/if}
 				</tr>
 			{/each}
 		</tbody>
@@ -46,14 +56,18 @@
 				{#if l.afficher_solde}<td class="montant px-4 py-3 text-right">{fcfa(l.net)}</td>{/if}
 			</tr>
 			<tr>
-				<th scope="row" colspan="3" class="px-4 py-3 text-left">Rentabilité <span class="font-normal text-ardoise">(3 % des versements)</span></th>
+				<th scope="row" colspan="3" class="px-4 py-3 text-left"
+					>Rentabilité <span class="font-normal text-ardoise">(3 % des versements)</span></th
+				>
 				<td class="montant px-4 py-3 text-right">{fcfa(l.rentabilite)}</td>
 				<td></td>
 				{#if l.afficher_solde}<td></td>{/if}
 			</tr>
 			{#if l.encaisse !== null}
 				<tr>
-					<th scope="row" colspan="3" class="px-4 py-3 text-left">{l.libelle_encaisse || 'Encaisse'}</th>
+					<th scope="row" colspan="3" class="px-4 py-3 text-left"
+						>{l.libelle_encaisse || 'Encaisse'}</th
+					>
 					<td class="montant px-4 py-3 text-right text-fleuve-800">{fcfa(l.encaisse)}</td>
 					<td></td>
 					{#if l.afficher_solde}<td></td>{/if}

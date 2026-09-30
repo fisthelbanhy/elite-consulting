@@ -2,7 +2,7 @@
 
 > Source : code legacy en production `lafrangine/V04/prog/` (PHP 5, `mysql_*`), lu intégralement pour le périmètre ci-dessous.
 > Les comportements « réels » ont été confrontés au dump `cp1019011_lafrangine.sql` (agrégats et formats uniquement, aucune donnée personnelle reprise).
-> Cible : SvelteKit 2 / Svelte 5 + FastAPI. Ce document décrit **ce que fait le legacy** (y compris ses défauts) ; les défauts sont signalés « ⚠ À NE PAS reproduire ».
+> Cible : SvelteKit 2 / Svelte 5 + Express. Ce document décrit **ce que fait le legacy** (y compris ses défauts) ; les défauts sont signalés « ⚠ À NE PAS reproduire ».
 
 ---
 

@@ -10,8 +10,10 @@
 	import { champ, valeur } from '$lib/forms';
 	import type { SouscriptionDetail } from '$lib/types/distributeur';
 
-	type Retour = { valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null | undefined;
-	let { souscription: s, form }: { souscription: SouscriptionDetail | null; form: Retour } = $props();
+	type Retour =
+		{ valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null | undefined;
+	let { souscription: s, form }: { souscription: SouscriptionDetail | null; form: Retour } =
+		$props();
 
 	const MAX = 25;
 	const existants = $derived(s?.prospects ?? []);
@@ -26,7 +28,10 @@
 
 <TexteBloc bloc={INTRODUCTIONS[4]} />
 
-<p class="text-sm text-ardoise">Indiquez au moins le nom et le prénom (6 caractères minimum) ; les autres informations sont facultatives.</p>
+<p class="text-sm text-ardoise">
+	Indiquez au moins le nom et le prénom (6 caractères minimum) ; les autres informations sont
+	facultatives.
+</p>
 
 <ol class="space-y-3">
 	{#each Array.from({ length: visibles }, (_, k) => k + 1) as i (i)}
@@ -35,10 +40,33 @@
 			<fieldset class="rounded-xl border border-fleuve-100 bg-white p-4">
 				<legend class="px-1 text-sm font-semibold text-fleuve-700">Contact {i}</legend>
 				<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-					<Saisie label="Nom - Prénom" maxlength="60" autocomplete="off" {...champ(form, `prospect_${i}_nom`, p?.nom_prenom)} />
-					<Saisie label="Téléphone" type="tel" inputmode="tel" maxlength="20" autocomplete="off" {...champ(form, `prospect_${i}_tel`, p?.telephone)} />
-					<Saisie label="E-mail" type="email" maxlength="120" autocomplete="off" {...champ(form, `prospect_${i}_email`, p?.email)} />
-					<Saisie label="Commentaire" maxlength="120" autocomplete="off" {...champ(form, `prospect_${i}_commentaire`, p?.commentaire)} />
+					<Saisie
+						label="Nom - Prénom"
+						maxlength="60"
+						autocomplete="off"
+						{...champ(form, `prospect_${i}_nom`, p?.nom_prenom)}
+					/>
+					<Saisie
+						label="Téléphone"
+						type="tel"
+						inputmode="tel"
+						maxlength="20"
+						autocomplete="off"
+						{...champ(form, `prospect_${i}_tel`, p?.telephone)}
+					/>
+					<Saisie
+						label="E-mail"
+						type="email"
+						maxlength="120"
+						autocomplete="off"
+						{...champ(form, `prospect_${i}_email`, p?.email)}
+					/>
+					<Saisie
+						label="Commentaire"
+						maxlength="120"
+						autocomplete="off"
+						{...champ(form, `prospect_${i}_commentaire`, p?.commentaire)}
+					/>
 				</div>
 			</fieldset>
 		</li>

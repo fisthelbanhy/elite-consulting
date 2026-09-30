@@ -16,5 +16,9 @@
 	fil={[{ href: '/conseil-financier', label: 'Conseil financier' }]}
 />
 <div class="conteneur max-w-3xl py-8">
-	<FormulaireSujet {form} rubriqueInitiale={data.rubrique} annuler="/conseil-financier?rubrique={data.rubrique}" />
+	<FormulaireSujet
+		{form}
+		rubriqueInitiale={data.rubrique}
+		annuler="/conseil-financier?rubrique={data.rubrique}"
+	/>
 </div>

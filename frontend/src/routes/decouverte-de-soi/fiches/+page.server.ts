@@ -24,7 +24,8 @@ export const actions: Actions = {
 		try {
 			await api<Ok>(event, `/decouverte/${id}`, { method: 'DELETE' });
 		} catch (e) {
-			if (e instanceof ApiError) return fail(e.statut, { cle: 'liste', message: e.message, champs: e.champs });
+			if (e instanceof ApiError)
+				return fail(e.statut, { cle: 'liste', message: e.message, champs: e.champs });
 			throw e;
 		}
 		return { cle: 'liste', succes: 'La fiche a été supprimée.' };

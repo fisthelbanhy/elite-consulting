@@ -45,12 +45,19 @@
 			<img src={visuel} alt="" class="size-16 rounded-lg object-cover" />
 		{:else}
 			<span class="grid size-16 place-items-center rounded-lg bg-sable text-fleuve-600">
-				{#if image}<ImageIcon class="size-7" aria-hidden="true" />{:else}<FileText class="size-7" aria-hidden="true" />{/if}
+				{#if image}<ImageIcon class="size-7" aria-hidden="true" />{:else}<FileText
+						class="size-7"
+						aria-hidden="true"
+					/>{/if}
 			</span>
 		{/if}
 		<span class="min-w-0 flex-1 text-[15px]">
-			<span class="block font-semibold text-fleuve-700">{nomFichier ? 'Changer de fichier' : 'Choisir un fichier'}</span>
-			<span class="block truncate text-sm text-ardoise">{nomFichier || (actuel ? 'Fichier actuel conservé' : '4 Mo maximum')}</span>
+			<span class="block font-semibold text-fleuve-700"
+				>{nomFichier ? 'Changer de fichier' : 'Choisir un fichier'}</span
+			>
+			<span class="block truncate text-sm text-ardoise"
+				>{nomFichier || (actuel ? 'Fichier actuel conservé' : '4 Mo maximum')}</span
+			>
 		</span>
 		<input type="file" {name} {accept} class="sr-only" onchange={choisir} />
 	</label>

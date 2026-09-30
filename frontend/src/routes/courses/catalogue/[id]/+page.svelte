@@ -20,11 +20,22 @@
 <EnTetePage
 	titre={a.nom}
 	sousTitre={a.boutique ? `Catalogue de ${a.boutique.pseudonyme}` : undefined}
-	fil={[{ href: '/courses', label: 'Courses & livraison' }, { href: '/courses/catalogue', label: 'Catalogue' }]}
+	fil={[
+		{ href: '/courses', label: 'Courses & livraison' },
+		{ href: '/courses/catalogue', label: 'Catalogue' }
+	]}
 />
 <div class="conteneur grid gap-8 py-8 lg:grid-cols-[1fr_20rem]">
-	<div class="min-w-0"><FormulaireArticleCatalogue {form} initial={a} libelleBouton="Enregistrer les modifications" /></div>
+	<div class="min-w-0">
+		<FormulaireArticleCatalogue {form} initial={a} libelleBouton="Enregistrer les modifications" />
+	</div>
 	<aside>
-		<PanneauModeration etat={a.etat} peutModerer={a.peut_moderer} peutModifier={a.peut_modifier} {form} {etats} />
+		<PanneauModeration
+			etat={a.etat}
+			peutModerer={a.peut_moderer}
+			peutModifier={a.peut_modifier}
+			{form}
+			{etats}
+		/>
 	</aside>
 </div>

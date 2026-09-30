@@ -15,17 +15,24 @@ export const actions: Actions = {
 		const fd = await event.request.formData();
 		const ligne = String(fd.get('ligne') ?? '');
 		const quantite = Number(fd.get('quantite') ?? 0);
-		const r = await soumettre<Ok>(event, `/annonces/panier/${ligne}`, { method: 'PUT', body: { quantite }, cle: 'panier' });
+		const r = await soumettre<Ok>(event, `/annonces/panier/${ligne}`, {
+			method: 'PUT',
+			body: { quantite },
+			cle: 'panier'
+		});
 		if (!r.ok) return r.echec;
 		return { cle: 'panier', succes: r.data.message };
 	},
 	retirer: async (event) => {
 		const fd = await event.request.formData();
 		try {
-			const r = await api<Ok>(event, `/annonces/panier/${String(fd.get('ligne') ?? '')}`, { method: 'DELETE' });
+			const r = await api<Ok>(event, `/annonces/panier/${String(fd.get('ligne') ?? '')}`, {
+				method: 'DELETE'
+			});
 			return { cle: 'panier', succes: r.message };
 		} catch (e) {
-			if (e instanceof ApiError) return fail(e.statut, { cle: 'panier', message: e.message, champs: e.champs });
+			if (e instanceof ApiError)
+				return fail(e.statut, { cle: 'panier', message: e.message, champs: e.champs });
 			throw e;
 		}
 	}

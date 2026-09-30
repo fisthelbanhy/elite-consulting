@@ -21,16 +21,28 @@
 	<meta name="robots" content="noindex" />
 </svelte:head>
 
-<EnTeteTresorerie titre="Placements" sousTitre="Dépôt à terme ou investissement : nous comparons les propositions des banques pour vous." compteurs={data.compteurs}>
-	<Bouton href="/tresorerie/placements/nouveau"><Plus class="size-5" aria-hidden="true" />Nouveau placement</Bouton>
+<EnTeteTresorerie
+	titre="Placements"
+	sousTitre="Dépôt à terme ou investissement : nous comparons les propositions des banques pour vous."
+	compteurs={data.compteurs}
+>
+	<Bouton href="/tresorerie/placements/nouveau"
+		><Plus class="size-5" aria-hidden="true" />Nouveau placement</Bouton
+	>
 </EnTeteTresorerie>
 
 <div class="conteneur space-y-8 py-8">
 	{#if data.supprime}<Alerte type="succes" titre="La fiche est annulée." />{/if}
 	<div>
-		<BarreFiltres q={data.filtres.q} etat={data.filtres.etat} etats={gestion ? ETATS_TRESORERIE : undefined} />
+		<BarreFiltres
+			q={data.filtres.q}
+			etat={data.filtres.etat}
+			etats={gestion ? ETATS_TRESORERIE : undefined}
+		/>
 		{#if data.liste.items.length}
-			<p class="mb-4 text-ardoise" aria-live="polite">{data.liste.total} placement{data.liste.total > 1 ? 's' : ''}</p>
+			<p class="mb-4 text-ardoise" aria-live="polite">
+				{data.liste.total} placement{data.liste.total > 1 ? 's' : ''}
+			</p>
 			<ul class="grid gap-4 md:grid-cols-2">
 				{#each data.liste.items as p (p.id)}
 					<li>
@@ -55,7 +67,9 @@
 		{:else}
 			<EtatVide
 				icone={PiggyBank}
-				titre={data.filtres.q ? 'Aucun placement ne correspond à votre recherche' : 'Faites travailler votre épargne'}
+				titre={data.filtres.q
+					? 'Aucun placement ne correspond à votre recherche'
+					: 'Faites travailler votre épargne'}
 				texte="Indiquez le montant, la durée et le taux espéré : nous consultons les banques de votre choix."
 				messageWhatsApp="Bonjour la Frangine, je voudrais placer mon épargne. Pouvez-vous me conseiller ?"
 			>

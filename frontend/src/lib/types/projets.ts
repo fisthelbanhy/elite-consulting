@@ -1,4 +1,4 @@
-/** Appels de fonds et engagements d'apport — alignés sur `backend/app/schemas/projets.py`. */
+/** Appels de fonds et engagements d'apport — alignés sur `api/src/routes/projets.ts`. */
 import type { Auteur, Liste } from '$lib/types';
 
 export interface ProjetResume {
@@ -110,4 +110,9 @@ export interface CompteursProjets {
 }
 
 /** États d'un engagement (réinterprétation de l'état générique, ADR-0007 S4a). */
-export const ETATS_APPORT: Record<number, string> = { 1: 'Promesse', 2: 'Validé', 3: 'Annulé', 4: 'Clôturé' };
+export const ETATS_APPORT: Record<number, string> = {
+	1: 'Promesse',
+	2: 'Validé',
+	3: 'Annulé',
+	4: 'Clôturé'
+};

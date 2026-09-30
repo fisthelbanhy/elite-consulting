@@ -6,8 +6,10 @@
 	import { champ } from '$lib/forms';
 	import type { SouscriptionDetail } from '$lib/types/distributeur';
 
-	type Retour = { valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null | undefined;
-	let { souscription: s, form }: { souscription: SouscriptionDetail | null; form: Retour } = $props();
+	type Retour =
+		{ valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null | undefined;
+	let { souscription: s, form }: { souscription: SouscriptionDetail | null; form: Retour } =
+		$props();
 
 	const formation = (p: number) => s?.formations?.find((f) => f.prestation === p);
 </script>
@@ -21,8 +23,17 @@
 			<legend class="px-1 font-semibold text-fleuve-800">{p.label}</legend>
 			<div class="grid gap-3 sm:grid-cols-[10rem_1fr_10rem]">
 				<Saisie label="Date" type="date" {...champ(form, `formation_${p.value}_date`, f?.date)} />
-				<Saisie label="Lieu" maxlength="80" {...champ(form, `formation_${p.value}_lieu`, f?.lieu)} />
-				<Saisie label="Heure" maxlength="30" placeholder="Ex. 18 h 30" {...champ(form, `formation_${p.value}_heure`, f?.heure)} />
+				<Saisie
+					label="Lieu"
+					maxlength="80"
+					{...champ(form, `formation_${p.value}_lieu`, f?.lieu)}
+				/>
+				<Saisie
+					label="Heure"
+					maxlength="30"
+					placeholder="Ex. 18 h 30"
+					{...champ(form, `formation_${p.value}_heure`, f?.heure)}
+				/>
 			</div>
 		</fieldset>
 	{/each}

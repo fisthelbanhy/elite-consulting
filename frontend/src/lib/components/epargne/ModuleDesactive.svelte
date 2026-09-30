@@ -10,7 +10,8 @@
 <EtatVide
 	icone={PauseCircle}
 	titre="L'épargne solidaire est en pause"
-	texte={message || "Ce service est momentanément désactivé. Vos données sont conservées ; contactez la frangine pour toute question."}
+	texte={message ||
+		'Ce service est momentanément désactivé. Vos données sont conservées ; contactez la frangine pour toute question.'}
 	messageWhatsApp="Bonjour la Frangine, j'ai une question sur mon épargne solidaire."
 >
 	<Bouton href="/likelemba" variante="fleuve">Découvrir la Likelemba</Bouton>

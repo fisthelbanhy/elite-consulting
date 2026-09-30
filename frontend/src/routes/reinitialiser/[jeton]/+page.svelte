@@ -35,7 +35,11 @@
 								erreur={form?.champs?.nouveau}
 							>
 								{#snippet apres()}
-									<button type="button" class="pt-1 text-sm font-medium text-fleuve-700" onclick={() => (voir = !voir)}>{voir ? 'Masquer' : 'Afficher'}</button>
+									<button
+										type="button"
+										class="pt-1 text-sm font-medium text-fleuve-700"
+										onclick={() => (voir = !voir)}>{voir ? 'Masquer' : 'Afficher'}</button
+									>
 								{/snippet}
 							</Saisie>
 							<Bouton type="submit" pleineLargeur chargement={envoi}>Enregistrer</Bouton>

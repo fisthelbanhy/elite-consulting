@@ -21,7 +21,9 @@
 		libelleBouton?: string;
 	} = $props();
 
-	const f = $derived(form as { valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null);
+	const f = $derived(
+		form as { valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null
+	);
 	const aujourdhui = new Date().toISOString().slice(0, 10);
 </script>
 
@@ -35,8 +37,16 @@
 					legende="Type de marché"
 					requis
 					options={[
-						{ value: '2', label: 'Marché public', description: "État, collectivité, établissement public, bailleur" },
-						{ value: '1', label: 'Marché privé', description: 'Entreprise, association, particulier' }
+						{
+							value: '2',
+							label: 'Marché public',
+							description: 'État, collectivité, établissement public, bailleur'
+						},
+						{
+							value: '1',
+							label: 'Marché privé',
+							description: 'Entreprise, association, particulier'
+						}
 					]}
 					{...champ(f, 'type_marche', initial?.type_marche ?? '2')}
 				/>
@@ -48,9 +58,19 @@
 					{...champ(f, 'numero_appel_offre', initial?.numero_appel_offre)}
 				/>
 				<Saisie label="Libellé" requis maxlength={500} {...champ(f, 'libelle', initial?.libelle)} />
-				<Zone label="Description du marché" lignes={5} {...champ(f, 'description', initial?.description)} />
+				<Zone
+					label="Description du marché"
+					lignes={5}
+					{...champ(f, 'description', initial?.description)}
+				/>
 				<div class="grid gap-5 sm:grid-cols-2">
-					<Saisie label="Montant du marché" requis inputmode="numeric" suffixe="FCFA" {...champ(f, 'montant', initial?.montant || '')} />
+					<Saisie
+						label="Montant du marché"
+						requis
+						inputmode="numeric"
+						suffixe="FCFA"
+						{...champ(f, 'montant', initial?.montant || '')}
+					/>
 					<Saisie
 						label="Date limite de dépôt"
 						type="date"
@@ -64,9 +84,17 @@
 			<fieldset class="carte space-y-5 p-6">
 				<legend class="sr-only">Soumission</legend>
 				<h2 class="text-xl font-bold">Comment soumissionner</h2>
-				<Zone label="Dossier à fournir" lignes={4} {...champ(f, 'dossier_a_fournir', initial?.dossier_a_fournir)} />
+				<Zone
+					label="Dossier à fournir"
+					lignes={4}
+					{...champ(f, 'dossier_a_fournir', initial?.dossier_a_fournir)}
+				/>
 				<div class="grid gap-5 sm:grid-cols-2">
-					<Saisie label="Lieu de dépôt" maxlength={500} {...champ(f, 'lieu_depot', initial?.lieu_depot)} />
+					<Saisie
+						label="Lieu de dépôt"
+						maxlength={500}
+						{...champ(f, 'lieu_depot', initial?.lieu_depot)}
+					/>
 					<Saisie label="Adresse e-mail" type="email" {...champ(f, 'email', initial?.email)} />
 				</div>
 				<Fichier
@@ -83,10 +111,23 @@
 			<fieldset class="carte space-y-5 p-6">
 				<legend class="sr-only">Acteurs</legend>
 				<h2 class="text-xl font-bold">Acteurs du marché</h2>
-				<Saisie label="Maître d'ouvrage" maxlength={500} {...champ(f, 'maitre_ouvrage', initial?.maitre_ouvrage)} />
+				<Saisie
+					label="Maître d'ouvrage"
+					maxlength={500}
+					{...champ(f, 'maitre_ouvrage', initial?.maitre_ouvrage)}
+				/>
 				<div class="grid gap-5 sm:grid-cols-2">
-					<Saisie label="Publié par" maxlength={500} aide="Journal, site ou organisme source." {...champ(f, 'publie_par', initial?.publie_par)} />
-					<Saisie label="Bénéficiaire" maxlength={500} {...champ(f, 'beneficiaire', initial?.beneficiaire)} />
+					<Saisie
+						label="Publié par"
+						maxlength={500}
+						aide="Journal, site ou organisme source."
+						{...champ(f, 'publie_par', initial?.publie_par)}
+					/>
+					<Saisie
+						label="Bénéficiaire"
+						maxlength={500}
+						{...champ(f, 'beneficiaire', initial?.beneficiaire)}
+					/>
 				</div>
 			</fieldset>
 

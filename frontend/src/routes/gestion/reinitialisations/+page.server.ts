@@ -18,7 +18,11 @@ export const load: PageServerLoad = async (event) => {
 export const actions: Actions = {
 	traiter: async (event) => {
 		const id = idFormulaire(await event.request.formData());
-		const r = await executer<LienReinitialisation & Ok>(event, `/gestion/reinitialisations/${id}/traiter`, { cle: 'reinit' });
+		const r = await executer<LienReinitialisation & Ok>(
+			event,
+			`/gestion/reinitialisations/${id}/traiter`,
+			{ cle: 'reinit' }
+		);
 		return 'donnees' in r ? { cle: 'reinit', succes: r.succes, lien: r.donnees } : r;
 	},
 	ignorer: async (event) => {

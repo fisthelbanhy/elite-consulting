@@ -6,15 +6,24 @@
 	let { compact = false }: { compact?: boolean } = $props();
 </script>
 
-<aside class="pagne overflow-hidden rounded-carte bg-fleuve-800 text-white" aria-label="Devenir distributeur">
-	<div class="flex flex-col gap-4 bg-fleuve-800/90 p-5 sm:p-6 {compact ? '' : 'md:flex-row md:items-center md:justify-between'}">
+<aside
+	class="pagne overflow-hidden rounded-carte bg-fleuve-800 text-white"
+	aria-label="Devenir distributeur"
+>
+	<div
+		class="flex flex-col gap-4 bg-fleuve-800/90 p-5 sm:p-6 {compact
+			? ''
+			: 'md:flex-row md:items-center md:justify-between'}"
+	>
 		<div class="flex gap-3">
 			<Sparkles class="mt-1 size-6 shrink-0 text-soleil-300" aria-hidden="true" />
 			<div>
-				<p class="font-display text-lg font-bold text-white">Payez le prix distributeur, gagnez un revenu</p>
+				<p class="font-display text-lg font-bold text-white">
+					Payez le prix distributeur, gagnez un revenu
+				</p>
 				<p class="mt-1 text-[15px] text-fleuve-100">
-					En devenant distributeur, vous achetez vos produits au prix distributeur et vous pouvez les revendre
-					avec une marge. Votre frangine vous accompagne pas à pas.
+					En devenant distributeur, vous achetez vos produits au prix distributeur et vous pouvez
+					les revendre avec une marge. Votre frangine vous accompagne pas à pas.
 				</p>
 			</div>
 		</div>

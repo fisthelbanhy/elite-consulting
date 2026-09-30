@@ -41,16 +41,32 @@
 <svelte:head>
 	<title>{titre} — Réussite de {r.auteur.pseudonyme} — {data.parametres.nom_site}</title>
 	{#if r.etat === 2}
-		<meta name="description" content={tronquer(`${r.auteur.pseudonyme} raconte : ${r.succes || r.projet}`, 155)} />
+		<meta
+			name="description"
+			content={tronquer(`${r.auteur.pseudonyme} raconte : ${r.succes || r.projet}`, 155)}
+		/>
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -- jsonLd() échappe <, & et les séparateurs de ligne : aucune saisie ne peut fermer la balise -->
 		{@html donnees}
 	{:else}
 		<meta name="robots" content="noindex" />
 	{/if}
 </svelte:head>
 
-<EnTetePage titre={titre} surtitre="Ils se sont lancés" fil={[{ href: '/se-lancer', label: 'Se lancer' }, { href: '/reussites', label: 'Réussites' }]}>
+<EnTetePage
+	{titre}
+	surtitre="Ils se sont lancés"
+	fil={[
+		{ href: '/se-lancer', label: 'Se lancer' },
+		{ href: '/reussites', label: 'Réussites' }
+	]}
+>
 	{#if r.etat === 2}
-		<Bouton href={lienPartageWhatsApp(`Le parcours de ${r.auteur.pseudonyme} : ${page.url.href}`)} variante="secondaire" target="_blank" rel="noopener">
+		<Bouton
+			href={lienPartageWhatsApp(`Le parcours de ${r.auteur.pseudonyme} : ${page.url.href}`)}
+			variante="secondaire"
+			target="_blank"
+			rel="noopener"
+		>
 			<Share2 class="size-5" aria-hidden="true" />Partager
 		</Bouton>
 	{/if}
@@ -59,10 +75,16 @@
 <div class="conteneur grid gap-8 py-8 lg:grid-cols-[1fr_20rem]">
 	<article class="space-y-6">
 		{#if data.enregistre}
-			<Alerte type="succes" titre="Témoignage enregistré.">{r.etat === 2 ? 'Il est publié.' : 'Il sera publié après relecture par la frangine.'}</Alerte>
+			<Alerte type="succes" titre="Témoignage enregistré."
+				>{r.etat === 2
+					? 'Il est publié.'
+					: 'Il sera publié après relecture par la frangine.'}</Alerte
+			>
 		{/if}
 		{#if r.etat === 1 && (r.est_auteur || r.peut_moderer)}
-			<Alerte type="attention" titre="En attente de relecture">Ce témoignage n'est pas encore visible du public.</Alerte>
+			<Alerte type="attention" titre="En attente de relecture"
+				>Ce témoignage n'est pas encore visible du public.</Alerte
+			>
 		{/if}
 
 		<header class="carte flex flex-wrap items-center gap-5 p-6">
@@ -79,10 +101,20 @@
 		{#if r.fond_demarrage || r.besoin_reel_demarrage}
 			<dl class="grid gap-4 sm:grid-cols-2">
 				{#if r.fond_demarrage}
-					<div class="carte p-5"><dt class="text-ardoise">Fonds de démarrage</dt><dd class="montant mt-1 font-display text-2xl font-bold text-fleuve-800">{fcfa(r.fond_demarrage)}</dd></div>
+					<div class="carte p-5">
+						<dt class="text-ardoise">Fonds de démarrage</dt>
+						<dd class="montant mt-1 font-display text-2xl font-bold text-fleuve-800">
+							{fcfa(r.fond_demarrage)}
+						</dd>
+					</div>
 				{/if}
 				{#if r.besoin_reel_demarrage}
-					<div class="carte p-5"><dt class="text-ardoise">Besoin réel pour démarrer</dt><dd class="montant mt-1 font-display text-2xl font-bold text-fleuve-800">{fcfa(r.besoin_reel_demarrage)}</dd></div>
+					<div class="carte p-5">
+						<dt class="text-ardoise">Besoin réel pour démarrer</dt>
+						<dd class="montant mt-1 font-display text-2xl font-bold text-fleuve-800">
+							{fcfa(r.besoin_reel_demarrage)}
+						</dd>
+					</div>
 				{/if}
 			</dl>
 		{/if}
@@ -90,7 +122,10 @@
 		<ol class="relative space-y-6 border-l-2 border-sable pl-6">
 			{#each recit as [t, v] (t)}
 				<li class="relative">
-					<span class="absolute top-1.5 -left-[1.95rem] size-4 rounded-full border-4 border-creme bg-laterite-600" aria-hidden="true"></span>
+					<span
+						class="absolute top-1.5 -left-[1.95rem] size-4 rounded-full border-4 border-creme bg-laterite-600"
+						aria-hidden="true"
+					></span>
 					<h2 class="text-xl font-bold">{t}</h2>
 					<p class="mt-2 whitespace-pre-line">{v}</p>
 				</li>
@@ -100,7 +135,9 @@
 		{#if r.conseil}
 			<figure class="rounded-3xl bg-fleuve-700 p-6 text-white sm:p-8">
 				<Quote class="size-8 text-soleil-300" aria-hidden="true" />
-				<blockquote class="mt-3 font-display text-xl leading-snug font-bold text-white sm:text-2xl">{r.conseil}</blockquote>
+				<blockquote class="mt-3 font-display text-xl leading-snug font-bold text-white sm:text-2xl">
+					{r.conseil}
+				</blockquote>
 				<figcaption class="mt-4 text-fleuve-100">Le conseil de {r.auteur.pseudonyme}</figcaption>
 			</figure>
 		{/if}
@@ -109,8 +146,12 @@
 	<aside class="space-y-6">
 		<section class="carte p-5">
 			<h2 class="text-lg font-bold">Et vous, par où commencer ?</h2>
-			<p class="mt-2 text-[15px] text-ardoise">3 minutes, gratuit, sans compte : votre frangine vous propose les prochaines étapes.</p>
-			<Bouton href="/diagnostic" class="mt-4" pleineLargeur>Faire mon diagnostic <ArrowRight class="size-5" aria-hidden="true" /></Bouton>
+			<p class="mt-2 text-[15px] text-ardoise">
+				3 minutes, gratuit, sans compte : votre frangine vous propose les prochaines étapes.
+			</p>
+			<Bouton href="/diagnostic" class="mt-4" pleineLargeur
+				>Faire mon diagnostic <ArrowRight class="size-5" aria-hidden="true" /></Bouton
+			>
 		</section>
 		<PanneauModeration
 			etat={r.etat}

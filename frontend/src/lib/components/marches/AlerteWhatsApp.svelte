@@ -17,14 +17,22 @@
 </script>
 
 {#if wa}
-	<section class="overflow-hidden rounded-carte bg-fleuve-800 text-white {compact ? 'p-5' : 'p-6 sm:p-8'}">
-		<div class="flex flex-col gap-4 {compact ? '' : 'sm:flex-row sm:items-center sm:justify-between'}">
+	<section
+		class="overflow-hidden rounded-carte bg-fleuve-800 text-white {compact ? 'p-5' : 'p-6 sm:p-8'}"
+	>
+		<div
+			class="flex flex-col gap-4 {compact ? '' : 'sm:flex-row sm:items-center sm:justify-between'}"
+		>
 			<div class="flex gap-4">
-				<span class="grid size-12 shrink-0 place-items-center rounded-xl bg-white/10 text-soleil-300"><BellRing class="size-6" aria-hidden="true" /></span>
+				<span
+					class="grid size-12 shrink-0 place-items-center rounded-xl bg-white/10 text-soleil-300"
+					><BellRing class="size-6" aria-hidden="true" /></span
+				>
 				<div>
 					<h2 class="text-lg font-bold text-white">Ne ratez plus un appel d'offres</h2>
 					<p class="text-[15px] text-fleuve-100">
-						Dites-nous votre secteur et votre ville : votre frangine vous envoie les nouveaux marchés, et vous aide à monter le dossier.
+						Dites-nous votre secteur et votre ville : votre frangine vous envoie les nouveaux
+						marchés, et vous aide à monter le dossier.
 					</p>
 				</div>
 			</div>
@@ -34,7 +42,8 @@
 				rel="noopener"
 				class="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-white px-5 font-semibold text-foret-700 hover:bg-foret-50"
 			>
-				<MessageCircle class="size-5" aria-hidden="true" />Recevoir les nouveaux marchés sur WhatsApp
+				<MessageCircle class="size-5" aria-hidden="true" />Recevoir les nouveaux marchés sur
+				WhatsApp
 			</a>
 		</div>
 	</section>

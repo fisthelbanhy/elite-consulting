@@ -15,13 +15,22 @@
 </script>
 
 {#if etat === 2}
-	<p class="flex items-center gap-2 rounded-xl bg-alerte-50 p-4 font-semibold text-alerte"><X class="size-5" aria-hidden="true" />Cette course a été annulée.</p>
+	<p class="flex items-center gap-2 rounded-xl bg-alerte-50 p-4 font-semibold text-alerte">
+		<X class="size-5" aria-hidden="true" />Cette course a été annulée.
+	</p>
 {:else}
 	<ol class="grid grid-cols-4 gap-1" aria-label="Avancement de la course">
 		{#each etapes as e (e.n)}
 			{@const fait = e.n <= courant}
-			<li class="flex flex-col items-center gap-1 text-center text-xs sm:text-sm" aria-current={e.n === courant ? 'step' : undefined}>
-				<span class="grid size-9 place-items-center rounded-full font-bold {fait ? 'bg-foret-600 text-white' : 'bg-sable text-ardoise'}">
+			<li
+				class="flex flex-col items-center gap-1 text-center text-xs sm:text-sm"
+				aria-current={e.n === courant ? 'step' : undefined}
+			>
+				<span
+					class="grid size-9 place-items-center rounded-full font-bold {fait
+						? 'bg-foret-600 text-white'
+						: 'bg-sable text-ardoise'}"
+				>
 					{#if fait}<Check class="size-5" aria-hidden="true" />{:else}{e.n}{/if}
 				</span>
 				<span class={fait ? 'font-semibold text-encre' : 'text-ardoise'}>{e.label}</span>

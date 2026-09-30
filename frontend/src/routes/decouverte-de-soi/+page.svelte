@@ -37,7 +37,10 @@
 			? 'Votre bilan personnel, suivi par votre conseillère.'
 			: 'Répondez à votre rythme : chaque étape est enregistrée.'}
 	surtitre="Se lancer"
-	fil={[{ href: '/se-lancer', label: 'Se lancer' }, { href: '/decouverte-de-soi', label: 'Découverte de soi' }]}
+	fil={[
+		{ href: '/se-lancer', label: 'Se lancer' },
+		{ href: '/decouverte-de-soi', label: 'Découverte de soi' }
+	]}
 />
 
 <div class="conteneur py-8">
@@ -47,14 +50,19 @@
 		<div class="grid gap-8 lg:grid-cols-[1fr_20rem]">
 			<div class="min-w-0 space-y-6">
 				{#if data.enregistre}
-					<Alerte type="succes" titre={fiche?.reference ? 'Votre fiche est enregistrée.' : 'Enregistrement effectué.'}>
+					<Alerte
+						type="succes"
+						titre={fiche?.reference ? 'Votre fiche est enregistrée.' : 'Enregistrement effectué.'}
+					>
 						Votre conseillère la lira et vous répondra ici et dans votre messagerie.
 					</Alerte>
 				{/if}
 				{#if fiche?.notes_conseillere}<Correspondance texte={fiche.notes_conseillere} />{/if}
 
 				{#if cloturee && fiche}
-					<Alerte type="info" titre="Votre fiche est clôturée.">Vous pouvez la rouvrir à tout moment pour la compléter.</Alerte>
+					<Alerte type="info" titre="Votre fiche est clôturée."
+						>Vous pouvez la rouvrir à tout moment pour la compléter.</Alerte
+					>
 					<ReponsesFiche {fiche} />
 				{:else}
 					<Questionnaire {form} {fiche} etape={data.etape} />
@@ -66,18 +74,33 @@
 					<section class="carte space-y-3 p-5" aria-labelledby="titre-ma-fiche">
 						<h2 id="titre-ma-fiche" class="text-lg font-bold">Ma fiche</h2>
 						<dl class="space-y-1 text-[15px]">
-							<div class="flex justify-between gap-2"><dt class="text-ardoise">Référence</dt><dd class="font-semibold">{fiche.reference}</dd></div>
-							<div class="flex justify-between gap-2"><dt class="text-ardoise">Créée le</dt><dd class="font-semibold">{date(fiche.date_creation)}</dd></div>
-							<div class="flex justify-between gap-2"><dt class="text-ardoise">Statut</dt><dd class="font-semibold">{cloturee ? 'Clôturée' : 'Ouverte'}</dd></div>
+							<div class="flex justify-between gap-2">
+								<dt class="text-ardoise">Référence</dt>
+								<dd class="font-semibold">{fiche.reference}</dd>
+							</div>
+							<div class="flex justify-between gap-2">
+								<dt class="text-ardoise">Créée le</dt>
+								<dd class="font-semibold">{date(fiche.date_creation)}</dd>
+							</div>
+							<div class="flex justify-between gap-2">
+								<dt class="text-ardoise">Statut</dt>
+								<dd class="font-semibold">{cloturee ? 'Clôturée' : 'Ouverte'}</dd>
+							</div>
 						</dl>
 						<Formulaire action="?/cloture" {form} cle="cloture">
 							{#snippet children({ envoi })}
 								<input type="hidden" name="cloturee" value={cloturee ? '0' : '1'} />
 								{#if cloturee}
-									<Bouton type="submit" variante="fleuve" pleineLargeur chargement={envoi}><LockOpen class="size-5" aria-hidden="true" />Rouvrir ma fiche</Bouton>
+									<Bouton type="submit" variante="fleuve" pleineLargeur chargement={envoi}
+										><LockOpen class="size-5" aria-hidden="true" />Rouvrir ma fiche</Bouton
+									>
 								{:else}
-									<Bouton type="submit" variante="secondaire" pleineLargeur chargement={envoi}><Lock class="size-5" aria-hidden="true" />Clôturer ma fiche</Bouton>
-									<p class="mt-2 text-sm text-ardoise">Clôturez-la quand votre bilan est terminé. Vous pourrez la rouvrir.</p>
+									<Bouton type="submit" variante="secondaire" pleineLargeur chargement={envoi}
+										><Lock class="size-5" aria-hidden="true" />Clôturer ma fiche</Bouton
+									>
+									<p class="mt-2 text-sm text-ardoise">
+										Clôturez-la quand votre bilan est terminé. Vous pourrez la rouvrir.
+									</p>
 								{/if}
 							{/snippet}
 						</Formulaire>
@@ -85,8 +108,12 @@
 				{/if}
 				<section class="carte p-5">
 					<h2 class="text-lg font-bold">Une question en attendant ?</h2>
-					<p class="mt-2 text-[15px] text-ardoise">Écrivez à votre conseillère dans votre messagerie : elle vous répond personnellement.</p>
-					<Bouton href="/espace/messages" variante="secondaire" class="mt-4" pleineLargeur>Ma messagerie</Bouton>
+					<p class="mt-2 text-[15px] text-ardoise">
+						Écrivez à votre conseillère dans votre messagerie : elle vous répond personnellement.
+					</p>
+					<Bouton href="/espace/messages" variante="secondaire" class="mt-4" pleineLargeur
+						>Ma messagerie</Bouton
+					>
 				</section>
 			</aside>
 		</div>
@@ -100,7 +127,9 @@
 			</details>
 		{:else if !fiche}
 			<p class="mt-8 text-ardoise">
-				Vous préférez commencer plus court ? <a href="/diagnostic" class="lien">Faites le diagnostic gratuit en 3 minutes</a> : vos réponses rempliront déjà une partie de cette fiche.
+				Vous préférez commencer plus court ? <a href="/diagnostic" class="lien"
+					>Faites le diagnostic gratuit en 3 minutes</a
+				> : vos réponses rempliront déjà une partie de cette fiche.
 			</p>
 		{/if}
 	{/if}

@@ -7,7 +7,8 @@
 	function estActif(o: Onglet): boolean {
 		if (o.actif !== undefined) return o.actif;
 		const cible = new URL(o.href, page.url);
-		if (cible.pathname !== page.url.pathname) return page.url.pathname.startsWith(cible.pathname + '/');
+		if (cible.pathname !== page.url.pathname)
+			return page.url.pathname.startsWith(cible.pathname + '/');
 		for (const [k, v] of cible.searchParams) if (page.url.searchParams.get(k) !== v) return false;
 		return true;
 	}
@@ -27,7 +28,11 @@
 				>
 					{o.label}
 					{#if o.compteur !== undefined && o.compteur !== null}
-						<span class="rounded-full px-2 py-0.5 text-xs {actif ? 'bg-fleuve-700 text-white' : 'bg-sable text-ardoise'}">{o.compteur}</span>
+						<span
+							class="rounded-full px-2 py-0.5 text-xs {actif
+								? 'bg-fleuve-700 text-white'
+								: 'bg-sable text-ardoise'}">{o.compteur}</span
+						>
 					{/if}
 				</a>
 			</li>

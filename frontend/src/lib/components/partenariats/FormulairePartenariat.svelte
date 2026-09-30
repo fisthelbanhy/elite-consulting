@@ -7,7 +7,8 @@
 	import { champ } from '$lib/forms';
 	import type { PartenariatDetail } from '$lib/types/partenariats';
 
-	type Retour = { valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null | undefined;
+	type Retour =
+		{ valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null | undefined;
 	let {
 		form,
 		initial,
@@ -27,17 +28,36 @@
 					aide="Ce que vous mettez dans l'échange : un terrain, un local, du matériel, un savoir-faire, un réseau… (5 caractères minimum)"
 					{...champ(form, 'actif', initial?.actif)}
 				/>
-				<Zone label="Description" lignes={4} aide="Précisez : état, quantité, lieu, disponibilité." {...champ(form, 'description', initial?.description)} />
-				<Zone label="Je cherche" lignes={3} aide="Le partenaire, le bien ou le service que vous souhaitez en échange." {...champ(form, 'recherche', initial?.recherche)} />
-				<Zone label="Objectif" lignes={3} aide="Ce que vous voulez réaliser ensemble." {...champ(form, 'objectif', initial?.objectif)} />
+				<Zone
+					label="Description"
+					lignes={4}
+					aide="Précisez : état, quantité, lieu, disponibilité."
+					{...champ(form, 'description', initial?.description)}
+				/>
+				<Zone
+					label="Je cherche"
+					lignes={3}
+					aide="Le partenaire, le bien ou le service que vous souhaitez en échange."
+					{...champ(form, 'recherche', initial?.recherche)}
+				/>
+				<Zone
+					label="Objectif"
+					lignes={3}
+					aide="Ce que vous voulez réaliser ensemble."
+					{...champ(form, 'objectif', initial?.objectif)}
+				/>
 			</fieldset>
 			<p class="text-sm text-ardoise">
-				Votre proposition est publiée immédiatement sous votre pseudonyme. Vos coordonnées restent privées : les membres
-				intéressés vous écrivent par La Frangine.
+				Votre proposition est publiée immédiatement sous votre pseudonyme. Vos coordonnées restent
+				privées : les membres intéressés vous écrivent par La Frangine.
 			</p>
 			<div class="flex flex-wrap gap-3">
 				<Bouton type="submit" taille="lg" chargement={envoi}>{libelleBouton}</Bouton>
-				<Bouton href={initial ? `/partenariats/${initial.id}` : '/partenariats'} variante="fantome" taille="lg">Annuler</Bouton>
+				<Bouton
+					href={initial ? `/partenariats/${initial.id}` : '/partenariats'}
+					variante="fantome"
+					taille="lg">Annuler</Bouton
+				>
 			</div>
 		</div>
 	{/snippet}

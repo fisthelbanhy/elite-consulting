@@ -19,18 +19,28 @@ function versDate(v: string | Date | null | undefined): Date | null {
 
 export function date(v: string | Date | null | undefined): string {
 	const d = versDate(v);
-	return d ? d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : '—';
+	return d
+		? d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+		: '—';
 }
 
 export function dateCourte(v: string | Date | null | undefined): string {
 	const d = versDate(v);
-	return d ? d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '—';
+	return d
+		? d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })
+		: '—';
 }
 
 export function dateHeure(v: string | Date | null | undefined): string {
 	const d = versDate(v);
 	return d
-		? d.toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+		? d.toLocaleString('fr-FR', {
+				day: '2-digit',
+				month: '2-digit',
+				year: 'numeric',
+				hour: '2-digit',
+				minute: '2-digit'
+			})
 		: '—';
 }
 
@@ -66,7 +76,11 @@ export function age(naissance: string | null | undefined): string {
 	return `${Math.floor(mois / 12)} ans ${mois % 12} mois`;
 }
 
-export function libelle(enums: Enums | undefined, nom: string, valeur: number | null | undefined): string {
+export function libelle(
+	enums: Enums | undefined,
+	nom: string,
+	valeur: number | null | undefined
+): string {
 	if (valeur === null || valeur === undefined) return '';
 	return enums?.[nom]?.find((o) => o.value === valeur)?.label ?? '';
 }

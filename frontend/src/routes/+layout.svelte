@@ -11,7 +11,9 @@
 	let { data, children } = $props();
 
 	const gestion = $derived(page.url.pathname.startsWith('/gestion'));
-	const wa = $derived(lienWhatsApp(data.parametres.whatsapp, messageWhatsAppPour(page.url.pathname)));
+	const wa = $derived(
+		lienWhatsApp(data.parametres.whatsapp, messageWhatsAppPour(page.url.pathname))
+	);
 </script>
 
 <svelte:head>

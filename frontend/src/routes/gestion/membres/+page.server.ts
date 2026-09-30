@@ -21,6 +21,9 @@ export const actions: Actions = {
 	/** Validation rapide depuis la liste (F-ADM-15). */
 	valider: async (event) => {
 		const id = idFormulaire(await event.request.formData());
-		return executer(event, `/gestion/membres/${id}/etat`, { body: { etat: 2 }, cle: `valider-${id}` });
+		return executer(event, `/gestion/membres/${id}/etat`, {
+			body: { etat: 2 },
+			cle: `valider-${id}`
+		});
 	}
 };

@@ -7,7 +7,8 @@ import type { MarcheDetail } from '$lib/types/marches';
 export const load: PageServerLoad = async (event) => {
 	exigerConnexion(event);
 	const marche = await charger<MarcheDetail>(event, `/marches/${event.params.id}`);
-	if (!marche.peut_modifier) error(403, "Seul l'auteur de la fiche ou un gestionnaire habilité peut la modifier.");
+	if (!marche.peut_modifier)
+		error(403, "Seul l'auteur de la fiche ou un gestionnaire habilité peut la modifier.");
 	return { marche };
 };
 

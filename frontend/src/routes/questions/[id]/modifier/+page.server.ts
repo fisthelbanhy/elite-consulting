@@ -7,7 +7,8 @@ import type { SujetDetail } from '$lib/types/questions';
 export const load: PageServerLoad = async (event) => {
 	exigerConnexion(event);
 	const sujet = await charger<SujetDetail>(event, `/questions/${event.params.id}`);
-	if (!sujet.peut_modifier) error(403, "Seul l'auteur du sujet ou un gestionnaire habilité peut le modifier.");
+	if (!sujet.peut_modifier)
+		error(403, "Seul l'auteur du sujet ou un gestionnaire habilité peut le modifier.");
 	return { sujet };
 };
 

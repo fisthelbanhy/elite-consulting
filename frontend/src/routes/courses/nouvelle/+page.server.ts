@@ -7,9 +7,17 @@ import type { ArticleCatalogue, Boutique } from '$lib/types/courses';
 export const load: PageServerLoad = async (event) => {
 	exigerConnexion(event);
 	const boutiques = await chargerOuDefaut<Boutique[]>(event, '/courses/boutiques', []);
-	const choisie = boutiques.find((b) => String(b.id) === event.url.searchParams.get('boutique')) ?? null;
+	const choisie =
+		boutiques.find((b) => String(b.id) === event.url.searchParams.get('boutique')) ?? null;
 	const catalogue = choisie
-		? (await chargerOuDefaut<Liste<ArticleCatalogue>>(event, '/courses/catalogue', { items: [], total: 0, page: 1, taille: 100 }, { boutique_id: choisie.id, taille: 100 })).items
+		? (
+				await chargerOuDefaut<Liste<ArticleCatalogue>>(
+					event,
+					'/courses/catalogue',
+					{ items: [], total: 0, page: 1, taille: 100 },
+					{ boutique_id: choisie.id, taille: 100 }
+				)
+			).items
 		: [];
 	return { boutiques, boutique: choisie, catalogue, aujourdhui: aujourdhui() };
 };

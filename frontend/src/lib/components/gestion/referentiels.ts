@@ -38,7 +38,12 @@ export interface ConfigReferentiel {
 	libelle: string;
 }
 
-const ETAT: ChampRef = { nom: 'etat', label: 'État', genre: 'etat', aide: '« Supprimé » retire l’élément des listes du site.' };
+const ETAT: ChampRef = {
+	nom: 'etat',
+	label: 'État',
+	genre: 'etat',
+	aide: '« Supprimé » retire l’élément des listes du site.'
+};
 
 export const REFERENTIELS: Record<string, ConfigReferentiel> = {
 	villes: {
@@ -48,7 +53,15 @@ export const REFERENTIELS: Record<string, ConfigReferentiel> = {
 		nouveau: 'Nouvelle ville',
 		logique: false,
 		libelle: 'nom',
-		champs: [{ nom: 'nom', label: 'Nom de la ville', genre: 'texte', requis: true, aide: '4 caractères minimum.' }],
+		champs: [
+			{
+				nom: 'nom',
+				label: 'Nom de la ville',
+				genre: 'texte',
+				requis: true,
+				aide: '4 caractères minimum.'
+			}
+		],
 		colonnes: [
 			{ cle: 'nom', label: 'Ville' },
 			{ cle: 'nombre_quartiers', label: 'Quartiers', genre: 'nombre' },
@@ -65,7 +78,13 @@ export const REFERENTIELS: Record<string, ConfigReferentiel> = {
 		libelle: 'nom',
 		champs: [
 			{ nom: 'ville_id', label: 'Ville', genre: 'ville', requis: true },
-			{ nom: 'nom', label: 'Nom du quartier', genre: 'texte', requis: true, aide: '4 caractères minimum, unique dans la ville.' }
+			{
+				nom: 'nom',
+				label: 'Nom du quartier',
+				genre: 'texte',
+				requis: true,
+				aide: '4 caractères minimum, unique dans la ville.'
+			}
 		],
 		colonnes: [
 			{ cle: 'ville.nom', label: 'Ville' },
@@ -81,7 +100,16 @@ export const REFERENTIELS: Record<string, ConfigReferentiel> = {
 		filtreEtat: true,
 		logique: true,
 		libelle: 'libelle',
-		champs: [{ nom: 'libelle', label: 'Libellé', genre: 'texte', requis: true, aide: '5 caractères minimum.' }, ETAT],
+		champs: [
+			{
+				nom: 'libelle',
+				label: 'Libellé',
+				genre: 'texte',
+				requis: true,
+				aide: '5 caractères minimum.'
+			},
+			ETAT
+		],
 		colonnes: [
 			{ cle: 'libelle', label: 'Secteur' },
 			{ cle: 'nombre_domaines', label: 'Domaines', genre: 'nombre' },
@@ -98,8 +126,20 @@ export const REFERENTIELS: Record<string, ConfigReferentiel> = {
 		logique: true,
 		libelle: 'libelle',
 		champs: [
-			{ nom: 'secteur_id', label: 'Secteur', genre: 'secteur', requis: true, aide: 'Obligatoire : tout domaine est lié à un secteur.' },
-			{ nom: 'libelle', label: 'Libellé', genre: 'texte', requis: true, aide: '5 caractères minimum.' },
+			{
+				nom: 'secteur_id',
+				label: 'Secteur',
+				genre: 'secteur',
+				requis: true,
+				aide: 'Obligatoire : tout domaine est lié à un secteur.'
+			},
+			{
+				nom: 'libelle',
+				label: 'Libellé',
+				genre: 'texte',
+				requis: true,
+				aide: '5 caractères minimum.'
+			},
 			ETAT
 		],
 		colonnes: [
@@ -117,7 +157,13 @@ export const REFERENTIELS: Record<string, ConfigReferentiel> = {
 		libelle: 'libelle',
 		champs: [
 			{ nom: 'code', label: 'Code', genre: 'texte', aide: 'Mis en majuscules (ex. BTS).' },
-			{ nom: 'libelle', label: 'Libellé', genre: 'texte', requis: true, aide: '5 caractères minimum.' }
+			{
+				nom: 'libelle',
+				label: 'Libellé',
+				genre: 'texte',
+				requis: true,
+				aide: '5 caractères minimum.'
+			}
 		],
 		colonnes: [
 			{ cle: 'code', label: 'Code' },
@@ -131,7 +177,15 @@ export const REFERENTIELS: Record<string, ConfigReferentiel> = {
 		nouveau: 'Nouvelle famille',
 		logique: false,
 		libelle: 'libelle',
-		champs: [{ nom: 'libelle', label: 'Libellé', genre: 'texte', requis: true, aide: '5 caractères minimum.' }],
+		champs: [
+			{
+				nom: 'libelle',
+				label: 'Libellé',
+				genre: 'texte',
+				requis: true,
+				aide: '5 caractères minimum.'
+			}
+		],
 		colonnes: [
 			{ cle: 'libelle', label: 'Famille' },
 			{ cle: 'nombre_articles', label: 'Annonces', genre: 'nombre' }
@@ -145,7 +199,16 @@ export const REFERENTIELS: Record<string, ConfigReferentiel> = {
 		filtreEtat: true,
 		logique: true,
 		libelle: 'nom',
-		champs: [{ nom: 'nom', label: 'Nom du produit', genre: 'texte', requis: true, aide: '4 caractères minimum.' }, ETAT],
+		champs: [
+			{
+				nom: 'nom',
+				label: 'Nom du produit',
+				genre: 'texte',
+				requis: true,
+				aide: '4 caractères minimum.'
+			},
+			ETAT
+		],
 		colonnes: [
 			{ cle: 'nom', label: 'Produit' },
 			{ cle: 'nombre_lignes', label: 'Offres et demandes', genre: 'nombre' },
@@ -162,7 +225,13 @@ export const REFERENTIELS: Record<string, ConfigReferentiel> = {
 		libelle: 'nom',
 		champs: [
 			{ nom: 'sigle', label: 'Sigle', genre: 'texte', aide: 'Mis en majuscules.' },
-			{ nom: 'nom', label: 'Nom de la banque', genre: 'texte', requis: true, aide: '3 caractères minimum.' },
+			{
+				nom: 'nom',
+				label: 'Nom de la banque',
+				genre: 'texte',
+				requis: true,
+				aide: '3 caractères minimum.'
+			},
 			{ nom: 'telephones', label: 'Téléphones', genre: 'texte' },
 			{ nom: 'email', label: 'E-mail', genre: 'texte' },
 			{ nom: 'site_web', label: 'Site web', genre: 'texte' },
@@ -184,13 +253,27 @@ export const REFERENTIELS: Record<string, ConfigReferentiel> = {
 
 /** Lit une valeur par chemin pointé (« ville.nom »). */
 export function valeurChemin(objet: Record<string, unknown>, chemin: string): unknown {
-	return chemin.split('.').reduce<unknown>((o, k) => (o && typeof o === 'object' ? (o as Record<string, unknown>)[k] : undefined), objet);
+	return chemin
+		.split('.')
+		.reduce<unknown>(
+			(o, k) => (o && typeof o === 'object' ? (o as Record<string, unknown>)[k] : undefined),
+			objet
+		);
 }
 
 /** Spécification `lireFormulaire` déduite des champs. */
-export function specFormulaire(cfg: ConfigReferentiel): Record<string, 'texte' | 'entier' | 'entier?'> {
+export function specFormulaire(
+	cfg: ConfigReferentiel
+): Record<string, 'texte' | 'entier' | 'entier?'> {
 	return Object.fromEntries(
-		cfg.champs.map((c) => [c.nom, c.genre === 'etat' ? 'entier' : c.genre === 'ville' || c.genre === 'secteur' ? 'entier?' : 'texte'])
+		cfg.champs.map((c) => [
+			c.nom,
+			c.genre === 'etat'
+				? 'entier'
+				: c.genre === 'ville' || c.genre === 'secteur'
+					? 'entier?'
+					: 'texte'
+		])
 	);
 }
 

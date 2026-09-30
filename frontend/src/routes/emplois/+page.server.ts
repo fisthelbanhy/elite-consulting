@@ -19,7 +19,9 @@ export const load: PageServerLoad = async (event) => {
 		chargerOuDefaut(event, '/emplois/compteurs', { demandes: 0, offres: 0 }),
 		secteurs(event),
 		// Colonne « LES PUBLICITES » du legacy, masquée pour les gestionnaires (F-S2-08, F-S2-10)
-		event.locals.membre?.est_gestionnaire ? Promise.resolve([]) : chargerEncart(event, { limite: 5 })
+		event.locals.membre?.est_gestionnaire
+			? Promise.resolve([])
+			: chargerEncart(event, { limite: 5 })
 	]);
 	return { liste, compteurs, secteurs: sects, filtres, supprime: q.has('supprime'), publicites };
 };

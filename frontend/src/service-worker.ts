@@ -14,17 +14,37 @@ const sw = self as unknown as ServiceWorkerGlobalScope;
 const CACHE_APP = `lf-app-${version}`;
 const CACHE_PAGES = 'lf-pages';
 const APP = [...build, ...files];
-const PRIVE = ['/api', '/espace', '/gestion', '/panier', '/paiement', '/connexion', '/inscription', '/deconnexion'];
+const PRIVE = [
+	'/api',
+	'/espace',
+	'/gestion',
+	'/panier',
+	'/paiement',
+	'/connexion',
+	'/inscription',
+	'/deconnexion'
+];
 
 sw.addEventListener('install', (event) => {
-	event.waitUntil(caches.open(CACHE_APP).then((c) => c.addAll(APP)).then(() => sw.skipWaiting()));
+	event.waitUntil(
+		caches
+			.open(CACHE_APP)
+			.then((c) => c.addAll(APP))
+			.then(() => sw.skipWaiting())
+	);
 });
 
 sw.addEventListener('activate', (event) => {
 	event.waitUntil(
 		caches
 			.keys()
-			.then((cles) => Promise.all(cles.filter((c) => c.startsWith('lf-app-') && c !== CACHE_APP).map((c) => caches.delete(c))))
+			.then((cles) =>
+				Promise.all(
+					cles
+						.filter((c) => c.startsWith('lf-app-') && c !== CACHE_APP)
+						.map((c) => caches.delete(c))
+				)
+			)
 			.then(() => sw.clients.claim())
 	);
 });
@@ -51,7 +71,12 @@ sw.addEventListener('fetch', (event) => {
 					}
 					return rep;
 				})
-				.catch(async () => (await caches.match(req)) ?? (await caches.match('/hors-ligne.html')) ?? Response.error())
+				.catch(
+					async () =>
+						(await caches.match(req)) ??
+						(await caches.match('/hors-ligne.html')) ??
+						Response.error()
+				)
 		);
 	}
 });

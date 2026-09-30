@@ -8,7 +8,10 @@ import type { OperationDetail } from '$lib/types/tresorerie';
 
 export const load: PageServerLoad = async (event) => {
 	const q = event.url.searchParams;
-	const [donnees, liste] = await Promise.all([chargerFiche<OperationDetail>(event, 'operations'), banques(event)]);
+	const [donnees, liste] = await Promise.all([
+		chargerFiche<OperationDetail>(event, 'operations'),
+		banques(event)
+	]);
 	return {
 		...donnees,
 		banques: liste.filter((b) => !/^autres?$/i.test(b.nom.trim())),
@@ -22,7 +25,9 @@ export const actions: Actions = {
 	dialogue: actionDialogue,
 	// Bouton « Envoyer Mail » : renvoie l'ordre à la banque émettrice (F-S7-32)
 	mail: async (event) => {
-		const r = await soumettre<Ok>(event, `/tresorerie/operations/${event.params.id}/mail`, { cle: 'mail' });
+		const r = await soumettre<Ok>(event, `/tresorerie/operations/${event.params.id}/mail`, {
+			cle: 'mail'
+		});
 		if (!r.ok) return r.echec;
 		return { cle: 'mail', succes: r.data.message };
 	}

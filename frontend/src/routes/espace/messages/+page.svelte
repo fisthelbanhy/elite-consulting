@@ -22,7 +22,10 @@
 	titre="Mes messages"
 	surtitre="Mon espace"
 	sousTitre="Une question, un doute, une bonne nouvelle ? Écrivez à votre frangine : une vraie personne vous répond."
-	fil={[{ href: '/espace', label: 'Mon espace' }, { href: '/espace/messages', label: 'Messages' }]}
+	fil={[
+		{ href: '/espace', label: 'Mon espace' },
+		{ href: '/espace/messages', label: 'Messages' }
+	]}
 />
 
 <div class="conteneur max-w-3xl space-y-6 py-8">
@@ -54,8 +57,8 @@
 					</span>
 					<p class="font-display text-lg font-bold text-fleuve-700">Commencez la conversation</p>
 					<p class="mt-1 max-w-md text-ardoise">
-						Présentez-vous en quelques mots et dites-nous où vous en êtes : votre idée, votre activité, votre besoin. Votre frangine vous
-						oriente.
+						Présentez-vous en quelques mots et dites-nous où vous en êtes : votre idée, votre
+						activité, votre besoin. Votre frangine vous oriente.
 					</p>
 				</div>
 			{/snippet}
@@ -65,19 +68,28 @@
 	</section>
 
 	<div class="grid gap-4 sm:grid-cols-2">
-		<p class="flex items-start gap-3 rounded-carte bg-white p-4 text-[15px] ring-1 ring-fleuve-900/5">
+		<p
+			class="flex items-start gap-3 rounded-carte bg-white p-4 text-[15px] ring-1 ring-fleuve-900/5"
+		>
 			<Lock class="mt-0.5 size-5 shrink-0 text-foret-600" aria-hidden="true" />
-			<span>Vos messages sont privés : seule l'équipe de {data.parametres.nom_site} peut les lire.</span>
+			<span
+				>Vos messages sont privés : seule l'équipe de {data.parametres.nom_site} peut les lire.</span
+			>
 		</p>
 		{#if data.parametres.whatsapp}
 			<a
-				href={lienWhatsApp(data.parametres.whatsapp, "Bonjour la Frangine, je vous ai écrit dans la messagerie du site.")}
+				href={lienWhatsApp(
+					data.parametres.whatsapp,
+					'Bonjour la Frangine, je vous ai écrit dans la messagerie du site.'
+				)}
 				target="_blank"
 				rel="noopener"
 				class="flex items-start gap-3 rounded-carte bg-white p-4 text-[15px] ring-1 ring-foret-600/30 hover:bg-foret-50"
 			>
 				<MessageCircle class="mt-0.5 size-5 shrink-0 text-foret-600" aria-hidden="true" />
-				<span><strong class="text-foret-700">Urgent ?</strong> Écrivez-nous aussi sur WhatsApp.</span>
+				<span
+					><strong class="text-foret-700">Urgent ?</strong> Écrivez-nous aussi sur WhatsApp.</span
+				>
 			</a>
 		{/if}
 	</div>

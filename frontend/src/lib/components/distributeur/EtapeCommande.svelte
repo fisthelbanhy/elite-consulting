@@ -13,10 +13,20 @@
 	import { fcfa } from '$lib/format';
 	import type { ProduitKit, SouscriptionDetail } from '$lib/types/distributeur';
 
-	type Retour = { valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null | undefined;
-	let { souscription: s, kit, form }: { souscription: SouscriptionDetail | null; kit: ProduitKit[]; form: Retour } = $props();
+	type Retour =
+		{ valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null | undefined;
+	let {
+		souscription: s,
+		kit,
+		form
+	}: { souscription: SouscriptionDetail | null; kit: ProduitKit[]; form: Retour } = $props();
 
-	const initiales = $derived(Object.fromEntries((s?.kit ?? []).map((l) => [l.produit_id, l.quantite])) as Record<number, number>);
+	const initiales = $derived(
+		Object.fromEntries((s?.kit ?? []).map((l) => [l.produit_id, l.quantite])) as Record<
+			number,
+			number
+		>
+	);
 	let saisies = $state<Record<number, number>>({});
 	let mode = $state('');
 	let filtre = $state('');
@@ -31,7 +41,11 @@
 
 	const total = $derived(kit.reduce((t, p) => t + p.prix_distributeur * (saisies[p.id] || 0), 0));
 	const visibles = $derived(
-		filtre.trim() ? kit.filter((p) => `${p.nom} ${p.reference}`.toLowerCase().includes(filtre.trim().toLowerCase())) : kit
+		filtre.trim()
+			? kit.filter((p) =>
+					`${p.nom} ${p.reference}`.toLowerCase().includes(filtre.trim().toLowerCase())
+				)
+			: kit
 	);
 	const alerte = $derived(
 		total === 0
@@ -52,8 +66,16 @@
 	bind:value={mode}
 	erreur={form?.champs?.mode_souscription}
 	options={[
-		{ value: '1', label: 'Fonds propres', description: `Je règle mon kit (au moins ${fcfa(SEUIL_MINIMUM)})` },
-		{ value: '2', label: 'Crédit', description: `Votre frangine étudie ma demande (kit de ${fcfa(SEUIL_MINIMUM)} à ${fcfa(PLAFOND_CREDIT)})` }
+		{
+			value: '1',
+			label: 'Fonds propres',
+			description: `Je règle mon kit (au moins ${fcfa(SEUIL_MINIMUM)})`
+		},
+		{
+			value: '2',
+			label: 'Crédit',
+			description: `Votre frangine étudie ma demande (kit de ${fcfa(SEUIL_MINIMUM)} à ${fcfa(PLAFOND_CREDIT)})`
+		}
 	]}
 />
 
@@ -62,24 +84,49 @@
 		<h3 id="titre-kit" class="text-lg font-bold">Mon kit de démarrage</h3>
 		<div class="relative w-full sm:w-64">
 			<label for="filtre-kit" class="sr-only">Filtrer les produits</label>
-			<Search class="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-ardoise" aria-hidden="true" />
-			<input id="filtre-kit" type="search" bind:value={filtre} placeholder="Filtrer les produits" class="pl-10" />
+			<Search
+				class="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-ardoise"
+				aria-hidden="true"
+			/>
+			<input
+				id="filtre-kit"
+				type="search"
+				bind:value={filtre}
+				placeholder="Filtrer les produits"
+				class="pl-10"
+			/>
 		</div>
 	</div>
-	{#if form?.champs?.produits}<p class="font-semibold text-alerte" role="alert">{form.champs.produits}</p>{/if}
+	{#if form?.champs?.produits}<p class="font-semibold text-alerte" role="alert">
+			{form.champs.produits}
+		</p>{/if}
 
 	<ul class="divide-y divide-fleuve-900/5 rounded-xl bg-white ring-1 ring-fleuve-100">
 		{#each kit as p (p.id)}
-			<li class="grid grid-cols-[3rem_1fr_auto] items-center gap-3 p-3 {visibles.includes(p) ? '' : 'hidden'}">
+			<li
+				class="grid grid-cols-[3rem_1fr_auto] items-center gap-3 p-3 {visibles.includes(p)
+					? ''
+					: 'hidden'}"
+			>
 				<div class="size-12 overflow-hidden rounded-lg bg-sable">
-					{#if p.photo_url}<img src={p.photo_url} alt="" loading="lazy" width="48" height="48" class="size-full object-contain" />
+					{#if p.photo_url}<img
+							src={p.photo_url}
+							alt=""
+							loading="lazy"
+							width="48"
+							height="48"
+							class="size-full object-contain"
+						/>
 					{:else}<Package class="m-3 size-6 text-fleuve-200" aria-hidden="true" />{/if}
 				</div>
 				<div class="min-w-0">
 					<label for="kit-{p.id}" class="block leading-snug font-semibold">{p.nom}</label>
 					<p class="text-sm text-ardoise">
 						<span class="montant">{fcfa(p.prix_distributeur)}</span>
-						{#if saisies[p.id]} · <strong class="montant text-encre">{fcfa(p.prix_distributeur * saisies[p.id])}</strong>{/if}
+						{#if saisies[p.id]}
+							· <strong class="montant text-encre"
+								>{fcfa(p.prix_distributeur * saisies[p.id])}</strong
+							>{/if}
 					</p>
 				</div>
 				<input
@@ -90,14 +137,18 @@
 					min="0"
 					max="999"
 					value={saisies[p.id] || 0}
-					oninput={(e) => (saisies[p.id] = Math.max(0, Math.trunc(Number(e.currentTarget.value) || 0)))}
+					oninput={(e) =>
+						(saisies[p.id] = Math.max(0, Math.trunc(Number(e.currentTarget.value) || 0)))}
 					class="w-20! text-center"
 				/>
 			</li>
 		{/each}
 	</ul>
 
-	<div class="sticky bottom-20 z-10 rounded-xl bg-fleuve-800 p-4 text-white shadow-levee lg:bottom-4" aria-live="polite">
+	<div
+		class="sticky bottom-20 z-10 rounded-xl bg-fleuve-800 p-4 text-white shadow-levee lg:bottom-4"
+		aria-live="polite"
+	>
 		<div class="flex items-baseline justify-between gap-3">
 			<span>Montant de la souscription</span>
 			<strong class="montant font-display text-2xl">{fcfa(total)}</strong>

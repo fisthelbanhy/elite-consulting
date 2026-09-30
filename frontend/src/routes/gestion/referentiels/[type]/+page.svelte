@@ -20,13 +20,19 @@
 	import EtatVide from '$lib/components/ui/EtatVide.svelte';
 	import { champ } from '$lib/forms';
 	import { entier } from '$lib/format';
-	import { ETATS_REFERENTIEL, REFERENTIELS, valeurChemin } from '$lib/components/gestion/referentiels';
+	import {
+		ETATS_REFERENTIEL,
+		REFERENTIELS,
+		valeurChemin
+	} from '$lib/components/gestion/referentiels';
 
 	let { data, form } = $props();
 	const cfg = $derived(REFERENTIELS[data.cle]);
 	const f = $derived(data.filtres);
 	const el = $derived(data.element);
-	const filtreParent = $derived(cfg.parent === 'ville' ? 'ville_id' : cfg.parent === 'secteur' ? 'secteur_id' : null);
+	const filtreParent = $derived(
+		cfg.parent === 'ville' ? 'ville_id' : cfg.parent === 'secteur' ? 'secteur_id' : null
+	);
 
 	function lienModifier(id: number) {
 		const u = new URL(page.url);
@@ -56,16 +62,27 @@
 <EnTeteGestion
 	titre={cfg.titre}
 	sousTitre="{cfg.description} {data.liste.total} élément{data.liste.total > 1 ? 's' : ''}."
-	fil={[{ href: '/gestion/referentiels', label: 'Référentiels' }, { href: `/gestion/referentiels/${cfg.cle}`, label: cfg.titre }]}
+	fil={[
+		{ href: '/gestion/referentiels', label: 'Référentiels' },
+		{ href: `/gestion/referentiels/${cfg.cle}`, label: cfg.titre }
+	]}
 >
-	<Bouton href={lienNouveau} taille="sm"><Plus class="size-4" aria-hidden="true" />{cfg.nouveau}</Bouton>
+	<Bouton href={lienNouveau} taille="sm"
+		><Plus class="size-4" aria-hidden="true" />{cfg.nouveau}</Bouton
+	>
 </EnTeteGestion>
 
 <div class="mx-auto grid max-w-7xl gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
 	<div class="min-w-0 space-y-4">
-		{#if data.enregistre}<Alerte type="succes" titre={data.enregistre === 'cree' ? 'Enregistrement effectué.' : 'Modification effectuée.'} />{/if}
+		{#if data.enregistre}<Alerte
+				type="succes"
+				titre={data.enregistre === 'cree' ? 'Enregistrement effectué.' : 'Modification effectuée.'}
+			/>{/if}
 		{#if form?.cle === 'suppression'}
-			{#if form.succes}<Alerte type="succes" titre={form.succes} />{:else if form.message}<Alerte type="erreur" titre={form.message} />{/if}
+			{#if form.succes}<Alerte type="succes" titre={form.succes} />{:else if form.message}<Alerte
+					type="erreur"
+					titre={form.message}
+				/>{/if}
 		{/if}
 
 		<form method="GET" class="carte flex flex-wrap items-end gap-3 p-4" data-sveltekit-keepfocus>
@@ -73,16 +90,24 @@
 			<div class="min-w-48 flex-1">
 				<label for="q" class="mb-1 block text-sm font-semibold">Rechercher</label>
 				<div class="relative">
-					<Search class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-ardoise" aria-hidden="true" />
+					<Search
+						class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-ardoise"
+						aria-hidden="true"
+					/>
 					<input id="q" name="q" type="search" value={f.q} class="py-2 pl-9" />
 				</div>
 			</div>
 			{#if filtreParent}
 				<div class="min-w-40">
-					<label for="parent" class="mb-1 block text-sm font-semibold">{cfg.parent === 'ville' ? 'Ville' : 'Secteur'}</label>
+					<label for="parent" class="mb-1 block text-sm font-semibold"
+						>{cfg.parent === 'ville' ? 'Ville' : 'Secteur'}</label
+					>
 					<select id="parent" name={filtreParent} class="py-2">
 						<option value="">Tous</option>
-						{#each data.optionsParent as o (o.value)}<option value={String(o.value)} selected={f[filtreParent] === String(o.value)}>{o.label}</option>{/each}
+						{#each data.optionsParent as o (o.value)}<option
+								value={String(o.value)}
+								selected={f[filtreParent] === String(o.value)}>{o.label}</option
+							>{/each}
 					</select>
 				</div>
 			{/if}
@@ -91,7 +116,10 @@
 					<label for="etat" class="mb-1 block text-sm font-semibold">État</label>
 					<select id="etat" name="etat" class="py-2">
 						<option value="">Tous</option>
-						{#each ETATS_REFERENTIEL as o (o.value)}<option value={String(o.value)} selected={f.etat === String(o.value)}>{o.label}</option>{/each}
+						{#each ETATS_REFERENTIEL as o (o.value)}<option
+								value={String(o.value)}
+								selected={f.etat === String(o.value)}>{o.label}</option
+							>{/each}
 					</select>
 				</div>
 			{/if}
@@ -105,39 +133,75 @@
 					<thead class="bg-sable/60 text-sm text-ardoise">
 						<tr>
 							{#each cfg.colonnes as c (c.cle)}
-								<th scope="col" class="px-3 py-2.5 font-semibold {c.genre === 'nombre' ? 'text-right' : ''} {c.secondaire ? 'hidden md:table-cell' : ''}">{c.label}</th>
+								<th
+									scope="col"
+									class="px-3 py-2.5 font-semibold {c.genre === 'nombre'
+										? 'text-right'
+										: ''} {c.secondaire ? 'hidden md:table-cell' : ''}">{c.label}</th
+								>
 							{/each}
-							<th scope="col" class="px-3 py-2.5 text-right font-semibold"><span class="sr-only">Actions</span></th>
+							<th scope="col" class="px-3 py-2.5 text-right font-semibold"
+								><span class="sr-only">Actions</span></th
+							>
 						</tr>
 					</thead>
 					<tbody>
 						{#each data.liste.items as x (x.id)}
 							{@const nom = String(x[cfg.libelle] ?? '')}
-							<tr class="border-t border-fleuve-900/5 hover:bg-creme {el?.id === x.id ? 'bg-fleuve-50' : ''}">
+							<tr
+								class="border-t border-fleuve-900/5 hover:bg-creme {el?.id === x.id
+									? 'bg-fleuve-50'
+									: ''}"
+							>
 								{#each cfg.colonnes as c (c.cle)}
 									{@const v = valeurChemin(x, c.cle)}
-									<td class="px-3 py-2 {c.genre === 'nombre' ? 'montant text-right' : ''} {c.secondaire ? 'hidden md:table-cell' : ''}">
-										{#if c.genre === 'etat'}<BadgeEtat etat={Number(v)} libelles={{ 1: 'Non traité', 2: 'Autorisé', 3: 'Supprimé', 4: 'Clôturé' }} />
+									<td
+										class="px-3 py-2 {c.genre === 'nombre'
+											? 'montant text-right'
+											: ''} {c.secondaire ? 'hidden md:table-cell' : ''}"
+									>
+										{#if c.genre === 'etat'}<BadgeEtat
+												etat={Number(v)}
+												libelles={{ 1: 'Non traité', 2: 'Autorisé', 3: 'Supprimé', 4: 'Clôturé' }}
+											/>
 										{:else if c.genre === 'nombre'}{entier(Number(v ?? 0))}
 										{:else}{v ?? '—'}{/if}
 									</td>
 								{/each}
 								<td class="px-3 py-2">
 									<div class="flex justify-end gap-1">
-										<a href={lienModifier(x.id)} class="grid size-10 place-items-center rounded-lg text-fleuve-700 hover:bg-fleuve-50" title="Modifier">
-											<Pencil class="size-4" aria-hidden="true" /><span class="sr-only">Modifier {nom}</span>
+										<a
+											href={lienModifier(x.id)}
+											class="grid size-10 place-items-center rounded-lg text-fleuve-700 hover:bg-fleuve-50"
+											title="Modifier"
+										>
+											<Pencil class="size-4" aria-hidden="true" /><span class="sr-only"
+												>Modifier {nom}</span
+											>
 										</a>
 										{#if !(cfg.logique && x.etat === 3)}
 											<form
 												method="POST"
 												action="?/supprimer"
 												use:enhance={({ cancel }) => {
-													if (!confirm(cfg.logique ? `Supprimer « ${nom} » ? Il ne sera plus proposé (réversible en modifiant l'état).` : `Supprimer définitivement « ${nom} » ?`)) cancel();
+													if (
+														!confirm(
+															cfg.logique
+																? `Supprimer « ${nom} » ? Il ne sera plus proposé (réversible en modifiant l'état).`
+																: `Supprimer définitivement « ${nom} » ?`
+														)
+													)
+														cancel();
 												}}
 											>
 												<input type="hidden" name="id" value={x.id} />
-												<button class="grid size-10 place-items-center rounded-lg text-alerte hover:bg-alerte-50" title="Supprimer">
-													<Trash2 class="size-4" aria-hidden="true" /><span class="sr-only">Supprimer {nom}</span>
+												<button
+													class="grid size-10 place-items-center rounded-lg text-alerte hover:bg-alerte-50"
+													title="Supprimer"
+												>
+													<Trash2 class="size-4" aria-hidden="true" /><span class="sr-only"
+														>Supprimer {nom}</span
+													>
 												</button>
 											</form>
 										{/if}
@@ -151,13 +215,21 @@
 			<TaillePage taille={data.taille} />
 			<Pagination total={data.liste.total} page={data.liste.page} taille={data.liste.taille} />
 		{:else}
-			<EtatVide icone={Database} titre="Aucun élément" texte={f.q ? 'Aucun élément ne correspond à la recherche.' : 'Commencez par en créer un avec le formulaire.'} />
+			<EtatVide
+				icone={Database}
+				titre="Aucun élément"
+				texte={f.q
+					? 'Aucun élément ne correspond à la recherche.'
+					: 'Commencez par en créer un avec le formulaire.'}
+			/>
 		{/if}
 	</div>
 
 	<aside id="formulaire" class="scroll-mt-4 lg:sticky lg:top-4 lg:self-start">
 		<section class="carte p-5" aria-labelledby="titre-formulaire">
-			<h2 id="titre-formulaire" class="mb-4 text-lg font-bold">{el ? `Modifier « ${String(el[cfg.libelle] ?? '')} »` : cfg.nouveau}</h2>
+			<h2 id="titre-formulaire" class="mb-4 text-lg font-bold">
+				{el ? `Modifier « ${String(el[cfg.libelle] ?? '')} »` : cfg.nouveau}
+			</h2>
 			{#key el?.id ?? 'nouveau'}
 				<Formulaire action="?/enregistrer" {form} cle="edition">
 					{#snippet children({ envoi })}
@@ -168,15 +240,29 @@
 								{#if c.genre === 'zone'}
 									<Zone label={c.label} lignes={3} requis={c.requis} aide={c.aide} {...props} />
 								{:else if c.genre === 'etat'}
-									<Liste label={c.label} vide={null} options={ETATS_REFERENTIEL} aide={c.aide} {...props} />
+									<Liste
+										label={c.label}
+										vide={null}
+										options={ETATS_REFERENTIEL}
+										aide={c.aide}
+										{...props}
+									/>
 								{:else if c.genre === 'ville' || c.genre === 'secteur'}
-									<Liste label={c.label} requis={c.requis} options={data.optionsParent} aide={c.aide} {...props} />
+									<Liste
+										label={c.label}
+										requis={c.requis}
+										options={data.optionsParent}
+										aide={c.aide}
+										{...props}
+									/>
 								{:else}
 									<Saisie label={c.label} requis={c.requis} aide={c.aide} {...props} />
 								{/if}
 							{/each}
 							<div class="flex flex-wrap gap-2">
-								<Bouton type="submit" variante="fleuve" chargement={envoi}>{el ? 'Enregistrer' : 'Créer'}</Bouton>
+								<Bouton type="submit" variante="fleuve" chargement={envoi}
+									>{el ? 'Enregistrer' : 'Créer'}</Bouton
+								>
 								{#if el}<Bouton href={lienNouveau} variante="fantome">Annuler</Bouton>{/if}
 							</div>
 						</div>

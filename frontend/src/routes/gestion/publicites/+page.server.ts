@@ -23,7 +23,12 @@ export const load: PageServerLoad = async (event) => {
 		page: filtreEntier(u, 'page') || '1'
 	};
 	// `vue` ne concerne que l'affichage ; 50 lignes par page en gestion (ADR-0007 T2)
-	const requete = { ...filtres, vue: undefined, en_diffusion: filtres.en_diffusion || undefined, taille: 50 };
+	const requete = {
+		...filtres,
+		vue: undefined,
+		en_diffusion: filtres.en_diffusion || undefined,
+		taille: 50
+	};
 	const [liste, choix] = await Promise.all([
 		charger<Liste<PubliciteGestion>>(event, '/publicites', requete),
 		chargerOuDefaut<ChoixPublicite>(event, '/publicites/choix', { membres: [], entreprises: [] })

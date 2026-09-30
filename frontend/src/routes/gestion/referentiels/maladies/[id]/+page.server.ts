@@ -9,10 +9,20 @@ const nouveau = (id: string) => id === 'nouveau';
 export const load: PageServerLoad = async (event) => {
 	const id = event.params.id;
 	const [maladie, produits] = await Promise.all([
-		nouveau(id) ? Promise.resolve(null) : charger<MaladieDetail>(event, `/gestion/referentiels/maladies/${id}`),
+		nouveau(id)
+			? Promise.resolve(null)
+			: charger<MaladieDetail>(event, `/gestion/referentiels/maladies/${id}`),
 		charger<Liste<ProduitGestion>>(event, '/gestion/referentiels/produits', { taille: 500 })
 	]);
-	return { maladie, produits: produits.items.map((p) => ({ id: p.id, nom: p.nom, reference: p.reference, etat: p.etat })) };
+	return {
+		maladie,
+		produits: produits.items.map((p) => ({
+			id: p.id,
+			nom: p.nom,
+			reference: p.reference,
+			etat: p.etat
+		}))
+	};
 };
 
 export const actions: Actions = {
@@ -26,11 +36,15 @@ export const actions: Actions = {
 		const produits = ids
 			.map((p, i) => ({ produit_id: Number(p), posologie: (conseils[i] ?? '').trim() }))
 			.filter((l) => l.produit_id > 0);
-		const r = await soumettre<Ok>(event, `/gestion/referentiels/maladies${nouveau(id) ? '' : `/${id}`}`, {
-			method: nouveau(id) ? 'POST' : 'PUT',
-			body: { ...valeurs, produits },
-			valeurs: { ...valeurs, produits }
-		});
+		const r = await soumettre<Ok>(
+			event,
+			`/gestion/referentiels/maladies${nouveau(id) ? '' : `/${id}`}`,
+			{
+				method: nouveau(id) ? 'POST' : 'PUT',
+				body: { ...valeurs, produits },
+				valeurs: { ...valeurs, produits }
+			}
+		);
 		if (!r.ok) return r.echec;
 		redirect(303, `/gestion/referentiels/maladies?ok=${nouveau(id) ? 'cree' : 'modifie'}`);
 	}

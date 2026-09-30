@@ -5,7 +5,15 @@ import { chargerListe } from '$lib/server/tresorerie';
 import { actionDialogue } from '$lib/server/dialogues';
 import type { OperationResume, SyntheseLigne } from '$lib/types/tresorerie';
 
-const FILTRES_GESTION = ['date_min', 'date_max', 'banque_id', 'type_operation', 'montant_min', 'montant_max', 'reference'] as const;
+const FILTRES_GESTION = [
+	'date_min',
+	'date_max',
+	'banque_id',
+	'type_operation',
+	'montant_min',
+	'montant_max',
+	'reference'
+] as const;
 
 export const load: PageServerLoad = async (event) => {
 	const q = event.url.searchParams;
@@ -16,11 +24,20 @@ export const load: PageServerLoad = async (event) => {
 	const [donnees, synthese, liste] = await Promise.all([
 		chargerListe<OperationResume>(event, 'operations', extra, gestion ? 50 : 20),
 		gestion
-			? chargerOuDefaut<SyntheseLigne[]>(event, '/tresorerie/operations/synthese', [], { ...extra, q: q.get('q') ?? '', etat: q.get('etat') ?? '' })
+			? chargerOuDefaut<SyntheseLigne[]>(event, '/tresorerie/operations/synthese', [], {
+					...extra,
+					q: q.get('q') ?? '',
+					etat: q.get('etat') ?? ''
+				})
 			: Promise.resolve([] as SyntheseLigne[]),
 		banques(event)
 	]);
-	return { ...donnees, synthese, gestion, banques: liste.filter((b) => !/^autres?$/i.test(b.nom.trim())) };
+	return {
+		...donnees,
+		synthese,
+		gestion,
+		banques: liste.filter((b) => !/^autres?$/i.test(b.nom.trim()))
+	};
 };
 
 export const actions: Actions = { dialogue: actionDialogue };

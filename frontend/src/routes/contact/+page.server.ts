@@ -12,7 +12,10 @@ export const load: PageServerLoad = async (event) => {
 	// Un membre retrouve ses messages et les réponses (F-TRV-39) ; les gestionnaires ont leur écran
 	const mesMessages =
 		membre && !membre.est_gestionnaire
-			? await chargerOuDefaut<Liste<ContactMessage> | null>(event, '/contact', null, { page, taille: 20 })
+			? await chargerOuDefaut<Liste<ContactMessage> | null>(event, '/contact', null, {
+					page,
+					taille: 20
+				})
 			: null;
 	return { objet, mesMessages };
 };

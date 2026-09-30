@@ -1,6 +1,6 @@
 /**
- * Client de l'API FastAPI, utilisable uniquement côté serveur (architecture BFF, ADR-0002).
- * Le jeton de session vit dans un cookie httpOnly ; il est relayé à FastAPI en Bearer.
+ * Client de l'API, utilisable uniquement côté serveur (architecture BFF, ADR-0002).
+ * Le jeton de session vit dans un cookie httpOnly ; il est relayé à l'API en Bearer.
  */
 import { env } from '$env/dynamic/private';
 import { error, fail, redirect, type ActionFailure, type RequestEvent } from '@sveltejs/kit';
@@ -10,7 +10,8 @@ export const BACKEND_URL = (env.BACKEND_URL ?? 'http://127.0.0.1:8000').replace(
 export const API_URL = `${BACKEND_URL}/api`;
 export const COOKIE_SESSION = 'lf_session';
 
-type Evenement = Pick<RequestEvent, 'locals' | 'getClientAddress' | 'request'> & Partial<Pick<RequestEvent, 'url'>>;
+type Evenement = Pick<RequestEvent, 'locals' | 'getClientAddress' | 'request'> &
+	Partial<Pick<RequestEvent, 'url'>>;
 
 export class ApiError extends Error {
 	constructor(
@@ -75,7 +76,10 @@ export async function api<T>(event: Evenement, chemin: string, opts: OptionsApi 
 			body: corps
 		});
 	} catch {
-		throw new ApiError(503, 'Le service est momentanément indisponible. Réessayez dans un instant.');
+		throw new ApiError(
+			503,
+			'Le service est momentanément indisponible. Réessayez dans un instant.'
+		);
 	}
 
 	if (rep.status === 204) return undefined as T;
@@ -92,7 +96,11 @@ export async function api<T>(event: Evenement, chemin: string, opts: OptionsApi 
  * Pour les fonctions `load` : renvoie les données ou déclenche la page d'erreur adaptée
  * (401 → connexion avec retour, 403/404 → page d'erreur).
  */
-export async function charger<T>(event: Evenement, chemin: string, query?: OptionsApi['query']): Promise<T> {
+export async function charger<T>(
+	event: Evenement,
+	chemin: string,
+	query?: OptionsApi['query']
+): Promise<T> {
 	try {
 		return await api<T>(event, chemin, { query });
 	} catch (e) {
@@ -108,7 +116,12 @@ export async function charger<T>(event: Evenement, chemin: string, query?: Optio
 }
 
 /** Charge sans bloquer la page si l'appel échoue (bloc secondaire). */
-export async function chargerOuDefaut<T>(event: Evenement, chemin: string, defaut: T, query?: OptionsApi['query']): Promise<T> {
+export async function chargerOuDefaut<T>(
+	event: Evenement,
+	chemin: string,
+	defaut: T,
+	query?: OptionsApi['query']
+): Promise<T> {
 	try {
 		return await api<T>(event, chemin, { query });
 	} catch {
@@ -149,7 +162,12 @@ export async function soumettre<T>(
 			}
 			return {
 				ok: false,
-				echec: fail(e.statut, { cle, message: e.message, champs: e.champs, valeurs: sansSecrets(valeurs ?? {}) })
+				echec: fail(e.statut, {
+					cle,
+					message: e.message,
+					champs: e.champs,
+					valeurs: sansSecrets(valeurs ?? {})
+				})
 			};
 		}
 		throw e;
@@ -159,7 +177,8 @@ export async function soumettre<T>(
 /** Les mots de passe ne sont jamais renvoyés au navigateur pour réaffichage. */
 function sansSecrets(v: Record<string, unknown>) {
 	const copie = { ...v };
-	for (const k of Object.keys(copie)) if (/mot_de_passe|confirmation|actuel|nouveau|code_pin|pin/.test(k)) delete copie[k];
+	for (const k of Object.keys(copie))
+		if (/mot_de_passe|confirmation|actuel|nouveau|code_pin|pin/.test(k)) delete copie[k];
 	return copie;
 }
 
@@ -209,8 +228,13 @@ export function fichierJoint(fd: FormData, champ: string): File | null {
 	return f instanceof File && f.size > 0 ? f : null;
 }
 
-/** Envoie un fichier vers un endpoint d'upload FastAPI (multipart). */
-export async function televerser<T>(event: Evenement, chemin: string, champ: string, fichier: File): Promise<T> {
+/** Envoie un fichier vers une route de téléversement de l'API (multipart). */
+export async function televerser<T>(
+	event: Evenement,
+	chemin: string,
+	champ: string,
+	fichier: File
+): Promise<T> {
 	const fd = new FormData();
 	fd.set(champ, fichier, fichier.name);
 	return api<T>(event, chemin, { method: 'POST', body: fd });

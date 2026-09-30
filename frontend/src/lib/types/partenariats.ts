@@ -19,7 +19,13 @@ export interface InteretPartenariat {
 	id: number;
 	message: string;
 	date_creation: string;
-	membre: { id: number; pseudonyme: string; nom: string; telephone: string; email: string | null } | null;
+	membre: {
+		id: number;
+		pseudonyme: string;
+		nom: string;
+		telephone: string;
+		email: string | null;
+	} | null;
 }
 
 export interface PartenariatDetail extends PartenariatResume {

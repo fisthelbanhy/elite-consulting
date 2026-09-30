@@ -13,18 +13,30 @@
 </script>
 
 <svelte:head>
-	<title>{fiche ? `${fiche.libelle} — fiche bien-être` : 'Fiches bien-être'} — {data.parametres.nom_site}</title>
+	<title
+		>{fiche ? `${fiche.libelle} — fiche bien-être` : 'Fiches bien-être'} — {data.parametres
+			.nom_site}</title
+	>
 	<meta name="robots" content="noindex" />
 </svelte:head>
 
 {#if !data.actif || !fiche}
-	<EnTetePage titre="Fiches bien-être" fil={[{ href: '/boutique', label: 'Boutique' }, { href: '/bien-etre', label: 'Fiches bien-être' }]} />
+	<EnTetePage
+		titre="Fiches bien-être"
+		fil={[
+			{ href: '/boutique', label: 'Boutique' },
+			{ href: '/bien-etre', label: 'Fiches bien-être' }
+		]}
+	/>
 	<div class="conteneur py-8"><ModuleIndisponible /></div>
 {:else}
 	<EnTetePage
 		titre={fiche.libelle}
 		surtitre="Fiche bien-être"
-		fil={[{ href: '/boutique', label: 'Boutique' }, { href: '/bien-etre', label: 'Fiches bien-être' }]}
+		fil={[
+			{ href: '/boutique', label: 'Boutique' },
+			{ href: '/bien-etre', label: 'Fiches bien-être' }
+		]}
 	/>
 
 	<div class="conteneur space-y-8 py-8">
@@ -38,14 +50,19 @@
 		{/if}
 
 		<section aria-labelledby="titre-produits" class="space-y-4">
-			<h2 id="titre-produits" class="text-2xl font-bold">Produits conseillés et conseils d'utilisation</h2>
+			<h2 id="titre-produits" class="text-2xl font-bold">
+				Produits conseillés et conseils d'utilisation
+			</h2>
 			{#if fiche.produits.length}
 				<p class="text-[15px] text-ardoise">
-					Choisissez les quantités, puis ajoutez-les au panier en une fois. Suivez le conseil d'utilisation et demandez
-					l'avis de votre médecin si vous suivez un traitement.
+					Choisissez les quantités, puis ajoutez-les au panier en une fois. Suivez le conseil
+					d'utilisation et demandez l'avis de votre médecin si vous suivez un traitement.
 				</p>
 				<GrilleProduits
-					produits={fiche.produits.map((x) => ({ produit: x.produit, conseil: x.conseil_utilisation || undefined }))}
+					produits={fiche.produits.map((x) => ({
+						produit: x.produit,
+						conseil: x.conseil_utilisation || undefined
+					}))}
 					distributeur={fiche.distributeur}
 					{form}
 					colonnes="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
@@ -55,7 +72,10 @@
 					<p>Aucun produit n'est associé à cette fiche pour le moment.</p>
 					{#if data.parametres.whatsapp}
 						<Bouton
-							href={lienWhatsApp(data.parametres.whatsapp, `Bonjour la Frangine, j'ai une question au sujet de la fiche « ${fiche.libelle} ».`)}
+							href={lienWhatsApp(
+								data.parametres.whatsapp,
+								`Bonjour la Frangine, j'ai une question au sujet de la fiche « ${fiche.libelle} ».`
+							)}
 							variante="whatsapp"
 							target="_blank"
 							rel="noopener"

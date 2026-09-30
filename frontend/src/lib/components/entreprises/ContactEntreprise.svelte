@@ -13,7 +13,9 @@
 
 	let { entreprise: e }: { entreprise: EntrepriseDetail } = $props();
 	const site = $derived(lienSite(e.site_web));
-	const message = $derived(`Bonjour, j'ai trouvé ${e.nom} dans l'annuaire de ${page.data.parametres?.nom_site ?? 'La Frangine'}. `);
+	const message = $derived(
+		`Bonjour, j'ai trouvé ${e.nom} dans l'annuaire de ${page.data.parametres?.nom_site ?? 'La Frangine'}. `
+	);
 	const waFrangine = $derived(page.data.parametres?.whatsapp as string | undefined);
 	const rien = $derived(!e.telephone && !e.email && !site && !e.adresse);
 </script>
@@ -22,7 +24,13 @@
 	<h2 id="contact-titre" class="text-lg font-bold">Contacter l'entreprise</h2>
 	{#if e.telephone}
 		<div class="grid gap-2">
-			<Bouton href={lienWhatsApp(e.telephone, message)} variante="whatsapp" target="_blank" rel="noopener" pleineLargeur>
+			<Bouton
+				href={lienWhatsApp(e.telephone, message)}
+				variante="whatsapp"
+				target="_blank"
+				rel="noopener"
+				pleineLargeur
+			>
 				<MessageCircle class="size-5" aria-hidden="true" />Écrire sur WhatsApp
 			</Bouton>
 			<Bouton href={lienTel(e.telephone)} variante="secondaire" pleineLargeur>
@@ -34,13 +42,18 @@
 		{#if e.email}
 			<li class="flex items-start gap-2">
 				<Mail class="mt-0.5 size-4 shrink-0 text-ardoise" aria-hidden="true" />
-				<a href="mailto:{e.email}?subject={encodeURIComponent(`Contact via l'annuaire — ${e.nom}`)}" class="lien break-all">{e.email}</a>
+				<a
+					href="mailto:{e.email}?subject={encodeURIComponent(`Contact via l'annuaire — ${e.nom}`)}"
+					class="lien break-all">{e.email}</a
+				>
 			</li>
 		{/if}
 		{#if site}
 			<li class="flex items-start gap-2">
 				<Globe class="mt-0.5 size-4 shrink-0 text-ardoise" aria-hidden="true" />
-				<a href={site} target="_blank" rel="nofollow ugc noopener" class="lien break-all">{siteLisible(e.site_web)}</a>
+				<a href={site} target="_blank" rel="nofollow ugc noopener" class="lien break-all"
+					>{siteLisible(e.site_web)}</a
+				>
 			</li>
 		{/if}
 		{#if e.adresse || e.ville}
@@ -54,7 +67,10 @@
 		<p class="text-[15px] text-ardoise">Cette entreprise n'a pas encore publié ses coordonnées.</p>
 		{#if waFrangine}
 			<Bouton
-				href={lienWhatsApp(waFrangine, `Bonjour la Frangine, je souhaite entrer en contact avec l'entreprise ${e.nom} (${e.reference}).`)}
+				href={lienWhatsApp(
+					waFrangine,
+					`Bonjour la Frangine, je souhaite entrer en contact avec l'entreprise ${e.nom} (${e.reference}).`
+				)}
 				variante="whatsapp"
 				target="_blank"
 				rel="noopener"

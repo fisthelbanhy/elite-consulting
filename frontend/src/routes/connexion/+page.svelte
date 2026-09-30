@@ -22,7 +22,9 @@
 		<div class="mb-6 text-center">
 			<Logo compact />
 			<h1 class="mt-4 text-3xl font-bold">Content de vous revoir</h1>
-			<p class="mt-2 text-ardoise">Connectez-vous pour retrouver votre espace, vos annonces et vos échanges avec la frangine.</p>
+			<p class="mt-2 text-ardoise">
+				Connectez-vous pour retrouver votre espace, vos annonces et vos échanges avec la frangine.
+			</p>
 		</div>
 
 		<div class="carte p-6 sm:p-8">
@@ -47,10 +49,21 @@
 						>
 							{#snippet apres()}
 								<div class="flex items-center justify-between pt-1">
-									<button type="button" class="inline-flex items-center gap-1.5 text-sm font-medium text-fleuve-700" onclick={() => (voir = !voir)}>
-										{#if voir}<EyeOff class="size-4" aria-hidden="true" /> Masquer{:else}<Eye class="size-4" aria-hidden="true" /> Afficher{/if}
+									<button
+										type="button"
+										class="inline-flex items-center gap-1.5 text-sm font-medium text-fleuve-700"
+										onclick={() => (voir = !voir)}
+									>
+										{#if voir}<EyeOff class="size-4" aria-hidden="true" /> Masquer{:else}<Eye
+												class="size-4"
+												aria-hidden="true"
+											/> Afficher{/if}
 									</button>
-									<a href="/mot-de-passe-oublie" class="text-sm font-medium text-fleuve-700 underline underline-offset-4">Mot de passe oublié ?</a>
+									<a
+										href="/mot-de-passe-oublie"
+										class="text-sm font-medium text-fleuve-700 underline underline-offset-4"
+										>Mot de passe oublié ?</a
+									>
 								</div>
 							{/snippet}
 						</Saisie>
@@ -62,12 +75,24 @@
 
 		<p class="mt-6 text-center text-ardoise">
 			Pas encore membre ?
-			<a href="/inscription{data.suite ? `?suite=${encodeURIComponent(data.suite)}` : ''}" class="lien">Créer mon compte gratuitement</a>
+			<a
+				href="/inscription{data.suite ? `?suite=${encodeURIComponent(data.suite)}` : ''}"
+				class="lien">Créer mon compte gratuitement</a
+			>
 		</p>
 		{#if data.parametres.whatsapp}
 			<p class="mt-2 text-center text-sm text-ardoise">
 				Un souci pour vous connecter ?
-				<a href={lienWhatsApp(data.parametres.whatsapp, "Bonjour la Frangine, je n'arrive pas à me connecter.")} target="_blank" rel="noopener" class="font-semibold text-foret-700 underline underline-offset-4">Écrivez-nous sur WhatsApp</a>
+				<a
+					href={lienWhatsApp(
+						data.parametres.whatsapp,
+						"Bonjour la Frangine, je n'arrive pas à me connecter."
+					)}
+					target="_blank"
+					rel="noopener"
+					class="font-semibold text-foret-700 underline underline-offset-4"
+					>Écrivez-nous sur WhatsApp</a
+				>
 			</p>
 		{/if}
 	</div>

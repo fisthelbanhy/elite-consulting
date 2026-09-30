@@ -9,7 +9,10 @@
 	import { fcfa } from '$lib/format';
 	import type { StatutEpargne } from '$lib/types/epargne';
 
-	type Retour = { valeurs?: Record<string, unknown>; champs?: Record<string, string>; message?: string } | null | undefined;
+	type Retour =
+		| { valeurs?: Record<string, unknown>; champs?: Record<string, string>; message?: string }
+		| null
+		| undefined;
 
 	let { form, statut }: { form: Retour; statut: StatutEpargne } = $props();
 
@@ -32,8 +35,16 @@
 					bind:value={type}
 					erreur={erreur(form, 'type_fond')}
 					options={[
-						{ value: 1, label: 'Un don', description: `Un geste solidaire, à partir de ${fcfa(statut.don_minimum)}` },
-						{ value: 2, label: 'Un placement', description: `Pour ${statut.duree_min} à ${statut.duree_max} mois, à partir de ${fcfa(statut.placement_minimum)}` }
+						{
+							value: 1,
+							label: 'Un don',
+							description: `Un geste solidaire, à partir de ${fcfa(statut.don_minimum)}`
+						},
+						{
+							value: 2,
+							label: 'Un placement',
+							description: `Pour ${statut.duree_min} à ${statut.duree_max} mois, à partir de ${fcfa(statut.placement_minimum)}`
+						}
 					]}
 				/>
 			</fieldset>
@@ -41,7 +52,17 @@
 			<fieldset class="carte space-y-5 p-6">
 				<legend class="sr-only">Montant</legend>
 				<h2 class="text-xl font-bold">Montant{placement ? ' et durée' : ''}</h2>
-				<Saisie label="Montant" type="number" inputmode="numeric" min={minimum} step="1" suffixe="FCFA" requis aide="Minimum : {fcfa(minimum)}." {...champ(form, 'montant')} />
+				<Saisie
+					label="Montant"
+					type="number"
+					inputmode="numeric"
+					min={minimum}
+					step="1"
+					suffixe="FCFA"
+					requis
+					aide="Minimum : {fcfa(minimum)}."
+					{...champ(form, 'montant')}
+				/>
 				{#if type !== '1'}
 					<Saisie
 						label="Durée du placement (mois)"
@@ -56,24 +77,43 @@
 						{...champ(form, 'duree_mois', 12)}
 					/>
 				{/if}
-				<Zone label="Motivation (facultatif)" lignes={3} placeholder="Pourquoi ce geste, pour qui, pour quel projet…" {...champ(form, 'motivation')} />
+				<Zone
+					label="Motivation (facultatif)"
+					lignes={3}
+					placeholder="Pourquoi ce geste, pour qui, pour quel projet…"
+					{...champ(form, 'motivation')}
+				/>
 			</fieldset>
 
 			<fieldset class="carte space-y-5 p-6">
 				<legend class="sr-only">Souscripteur</legend>
 				<div>
 					<h2 class="text-xl font-bold">Au nom de qui ?</h2>
-					<p class="mt-1 text-[15px] text-ardoise">Laissez vide pour souscrire en votre nom. Si vous souscrivez pour un autre membre, il est prévenu par message et par e-mail pour le paiement.</p>
+					<p class="mt-1 text-[15px] text-ardoise">
+						Laissez vide pour souscrire en votre nom. Si vous souscrivez pour un autre membre, il
+						est prévenu par message et par e-mail pour le paiement.
+					</p>
 				</div>
-				<Saisie label="Pseudonyme ou téléphone du membre bénéficiaire" autocomplete="off" placeholder="ex. mireille ou 06 123 45 67" {...champ(form, 'souscripteur_membre')} />
+				<Saisie
+					label="Pseudonyme ou téléphone du membre bénéficiaire"
+					autocomplete="off"
+					placeholder="ex. mireille ou 06 123 45 67"
+					{...champ(form, 'souscripteur_membre')}
+				/>
 				<details open={autreNom} class="rounded-xl bg-creme p-4">
-					<summary class="cursor-pointer font-semibold text-fleuve-700">La personne n'est pas inscrite sur La Frangine</summary>
-					<div class="mt-3"><Saisie label="Nom et prénom de la personne" {...champ(form, 'souscripteur_nom')} /></div>
+					<summary class="cursor-pointer font-semibold text-fleuve-700"
+						>La personne n'est pas inscrite sur La Frangine</summary
+					>
+					<div class="mt-3">
+						<Saisie label="Nom et prénom de la personne" {...champ(form, 'souscripteur_nom')} />
+					</div>
 				</details>
 			</fieldset>
 
 			<div class="flex flex-wrap gap-3">
-				<Bouton type="submit" taille="lg" chargement={envoi}>Enregistrer {placement ? 'le placement' : type === '1' ? 'le don' : ''}</Bouton>
+				<Bouton type="submit" taille="lg" chargement={envoi}
+					>Enregistrer {placement ? 'le placement' : type === '1' ? 'le don' : ''}</Bouton
+				>
 				<Bouton href="/epargne/dons-placements" variante="fantome" taille="lg">Annuler</Bouton>
 			</div>
 		</div>

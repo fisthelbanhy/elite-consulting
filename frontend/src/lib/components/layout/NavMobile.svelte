@@ -21,9 +21,13 @@
 	function actif(it: (typeof items)[number]) {
 		const p = page.url.pathname;
 		if (it.href === '/') return p === '/';
-		if (it.pilier === 'moi') return p.startsWith('/espace') || p.startsWith('/connexion') || p.startsWith('/inscription');
+		if (it.pilier === 'moi')
+			return p.startsWith('/espace') || p.startsWith('/connexion') || p.startsWith('/inscription');
 		const pilier = PILIERS.find((x) => x.id === it.pilier);
-		return p.startsWith(it.href) || !!pilier?.liens.some((l) => p === l.href || p.startsWith(l.href + '/'));
+		return (
+			p.startsWith(it.href) ||
+			!!pilier?.liens.some((l) => p === l.href || p.startsWith(l.href + '/'))
+		);
 	}
 </script>
 
@@ -38,7 +42,9 @@
 				<a
 					href={it.href}
 					aria-current={a ? 'page' : undefined}
-					class="flex min-h-14 flex-col items-center justify-center gap-0.5 text-[11px] font-semibold {a ? 'text-laterite-700' : 'text-ardoise'}"
+					class="flex min-h-14 flex-col items-center justify-center gap-0.5 text-[11px] font-semibold {a
+						? 'text-laterite-700'
+						: 'text-ardoise'}"
 				>
 					<it.icone class="size-6" aria-hidden="true" strokeWidth={a ? 2.25 : 1.75} />
 					{it.label}

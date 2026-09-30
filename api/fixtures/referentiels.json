@@ -1,0 +1,3849 @@
+{
+ "parametre": [
+  {
+   "id": 1,
+   "nom_site": "La Frangine",
+   "adresse": "Avenue Nelson Mandela",
+   "telephone_1": "065697797",
+   "telephone_2": "050956286",
+   "email": "contact@lafrangine.com",
+   "whatsapp": "065697797",
+   "texte_aide": "Il est possible d'utiliser lafrangine.com sans s'inscrire. Dans cette condition certaines options ne sont pas diponibles.\r\nPour avoir accès a toutes les fonctionalités de lafrangine.com, il faut s'inscrire en tant que membre.\r\nPour s'inscrire, : Cliquer sur <strong>\"Pour s'inscrire cliquer ici »\"</strong>\r\nAprès l'apparition du formulaire d'inscription, veuillez le remplir avec les informations demandées.\r\n\r\nNB. Certaines informations sont obligatoires et d'autre peuvent être compléter ultérieurement.\r\n\r\nAprès la saisie des informations, cliquer sur enregistrer.\r\n\r\nNB. IL est possible de modifier après enregistrement les informations saisies. Pour y parvenir, cliquer sur <strong>\"Modifier\"</strong>",
+   "montant_minimum_placement": 100000,
+   "montant_minimum_course": 5000,
+   "commission_course": 4000,
+   "conditions_course": "Toute personne peut faire une commande de course.\r\nLes lieux d'achats doivent être sélectionnés dans la liste que nous vous proposons.\r\nLes lieux des livraison doivent également être accessibles",
+   "description_section_1": "Les informations utiles sont mises à disposition pour vous permettre de jouir des opportunités qui vous sont offertes",
+   "description_section_2": "Postez votre profil pour maximiser les chances d'obtention d'un emploi... votre besoin en ressources humaines peut également être exprimé",
+   "description_section_3": "Faites des ventes à distance de vos articles neufs ou d'occasion, profitez de notre plateforme pour atteindre un grand nombre de personnes... vos besoins peuvent également y être exprimés",
+   "description_section_4": "L'occasion vous est donnée de présenter votre projet et de lever des fonds auprès des personnes intéressées.",
+   "description_section_5": "Vous aide à formaliser votre idée par un business plan.  Vous pouvez également nouer des partenariats et faire du troc suivant le besoin exprimé et l'objectif à atteindre.",
+   "description_section_6": "Nous vous informons des appels d'offres privés et publics lancés sur le marché, un comparateur de prix est également mis à votre disposition",
+   "description_section_7": "Un conseiller clientèle est à votre disposition pour vous permettre de tirer avantage des services bancaires et bénéficier d'un accompagnement sur mesure",
+   "module_epargne_actif": true,
+   "module_sante_actif": true
+  }
+ ],
+ "ville": [
+  {
+   "id": 1,
+   "nom": "Autre ville"
+  },
+  {
+   "id": 2,
+   "nom": "Brazzaville"
+  },
+  {
+   "id": 3,
+   "nom": "Pointe-noire"
+  },
+  {
+   "id": 4,
+   "nom": "Dolisie"
+  }
+ ],
+ "quartier": [
+  {
+   "id": 1,
+   "ville_id": 1,
+   "nom": "Autre quartier"
+  },
+  {
+   "id": 2,
+   "ville_id": 2,
+   "nom": "Centre ville"
+  },
+  {
+   "id": 3,
+   "ville_id": 3,
+   "nom": "Centre ville"
+  },
+  {
+   "id": 4,
+   "ville_id": 2,
+   "nom": "Makelekele"
+  },
+  {
+   "id": 5,
+   "ville_id": 2,
+   "nom": "Bacongo"
+  },
+  {
+   "id": 6,
+   "ville_id": 2,
+   "nom": "Poto-Poto"
+  },
+  {
+   "id": 7,
+   "ville_id": 2,
+   "nom": "Moungali"
+  },
+  {
+   "id": 8,
+   "ville_id": 2,
+   "nom": "Ouendzé"
+  },
+  {
+   "id": 9,
+   "ville_id": 2,
+   "nom": "Mfilou"
+  },
+  {
+   "id": 10,
+   "ville_id": 2,
+   "nom": "Talangai"
+  },
+  {
+   "id": 11,
+   "ville_id": 2,
+   "nom": "Mikalou"
+  },
+  {
+   "id": 12,
+   "ville_id": 2,
+   "nom": "La Tiémé"
+  },
+  {
+   "id": 13,
+   "ville_id": 2,
+   "nom": "Massengo"
+  },
+  {
+   "id": 14,
+   "ville_id": 2,
+   "nom": "Kombo"
+  },
+  {
+   "id": 15,
+   "ville_id": 2,
+   "nom": "Djiri"
+  },
+  {
+   "id": 16,
+   "ville_id": 2,
+   "nom": "Makabadjilou"
+  },
+  {
+   "id": 17,
+   "ville_id": 2,
+   "nom": "La base"
+  },
+  {
+   "id": 18,
+   "ville_id": 2,
+   "nom": "Mouhoumi"
+  },
+  {
+   "id": 19,
+   "ville_id": 2,
+   "nom": "Pont du Djoué"
+  },
+  {
+   "id": 20,
+   "ville_id": 2,
+   "nom": "Matsimou"
+  },
+  {
+   "id": 21,
+   "ville_id": 2,
+   "nom": "Mafouta"
+  },
+  {
+   "id": 22,
+   "ville_id": 2,
+   "nom": "L'OMS"
+  }
+ ],
+ "secteur_activite": [
+  {
+   "id": 1,
+   "libelle": "Secteur d'activité indéfini",
+   "etat": 2
+  },
+  {
+   "id": 2,
+   "libelle": "Industrie du bois",
+   "etat": 2
+  },
+  {
+   "id": 3,
+   "libelle": "Activité minière",
+   "etat": 2
+  },
+  {
+   "id": 4,
+   "libelle": "Production et distribution d'énergie",
+   "etat": 2
+  },
+  {
+   "id": 5,
+   "libelle": "Activité pétrolières et Para-pétrolières",
+   "etat": 2
+  },
+  {
+   "id": 6,
+   "libelle": "Chaudrenerie, Constructions Metalliques et Autres Industries Mécaniques",
+   "etat": 2
+  },
+  {
+   "id": 7,
+   "libelle": "Agros-Industries, Chimie",
+   "etat": 2
+  },
+  {
+   "id": 8,
+   "libelle": "Import-Export, Distribution",
+   "etat": 2
+  },
+  {
+   "id": 9,
+   "libelle": "Informatique, Bureautique, Arts Graphiques",
+   "etat": 2
+  },
+  {
+   "id": 10,
+   "libelle": "Automobilme et activités complémentaires",
+   "etat": 2
+  },
+  {
+   "id": 11,
+   "libelle": "Engins travaux publics et forestier, Matériel industriel, Matériel et Matériaux de construction",
+   "etat": 2
+  },
+  {
+   "id": 12,
+   "libelle": "Entreprises de bâtiment, Travaux publics, Génie-Civil",
+   "etat": 2
+  },
+  {
+   "id": 13,
+   "libelle": "Entreprises de second-oeuvre",
+   "etat": 2
+  },
+  {
+   "id": 14,
+   "libelle": "Transport aérien et activités complémentaires",
+   "etat": 2
+  },
+  {
+   "id": 15,
+   "libelle": "Transport maritime et activités complémentaires",
+   "etat": 2
+  },
+  {
+   "id": 16,
+   "libelle": "Activités touristique",
+   "etat": 2
+  },
+  {
+   "id": 17,
+   "libelle": "Banques, Organismes financiers et activités complémentaires",
+   "etat": 2
+  },
+  {
+   "id": 18,
+   "libelle": "Assurances, Activités médicales et para médicales",
+   "etat": 2
+  },
+  {
+   "id": 19,
+   "libelle": "Bureaux d'études, Cabinets comptables, fiscaux, juridiques, Gestion immobilière",
+   "etat": 2
+  },
+  {
+   "id": 20,
+   "libelle": "Télécommunications",
+   "etat": 2
+  },
+  {
+   "id": 21,
+   "libelle": "Autre",
+   "etat": 2
+  }
+ ],
+ "domaine_activite": [
+  {
+   "id": 1,
+   "secteur_id": 2,
+   "libelle": "Bois (Exploitation forestière)",
+   "etat": 2
+  },
+  {
+   "id": 2,
+   "secteur_id": 2,
+   "libelle": "Bois (Négoce et exploitation)",
+   "etat": 2
+  },
+  {
+   "id": 3,
+   "secteur_id": 2,
+   "libelle": "Bois (Parc à bois)",
+   "etat": 2
+  },
+  {
+   "id": 4,
+   "secteur_id": 2,
+   "libelle": "Bois (Reboisement)",
+   "etat": 2
+  },
+  {
+   "id": 5,
+   "secteur_id": 2,
+   "libelle": "Bois (Scierie, Séchage, Transformation)",
+   "etat": 2
+  },
+  {
+   "id": 6,
+   "secteur_id": 4,
+   "libelle": "Energie electrique (Production, Distribution)",
+   "etat": 2
+  },
+  {
+   "id": 7,
+   "secteur_id": 4,
+   "libelle": "Energie Solaire",
+   "etat": 2
+  },
+  {
+   "id": 8,
+   "secteur_id": 2,
+   "libelle": "Matériel pour industrie du bois",
+   "etat": 2
+  },
+  {
+   "id": 9,
+   "secteur_id": 3,
+   "libelle": "Société exploitation minière",
+   "etat": 2
+  },
+  {
+   "id": 10,
+   "secteur_id": 5,
+   "libelle": "Carburant",
+   "etat": 2
+  },
+  {
+   "id": 11,
+   "secteur_id": 5,
+   "libelle": "Dépolution",
+   "etat": 2
+  },
+  {
+   "id": 12,
+   "secteur_id": 5,
+   "libelle": "Lubrifiant",
+   "etat": 2
+  },
+  {
+   "id": 13,
+   "secteur_id": 5,
+   "libelle": "Vente matériel pétrolier",
+   "etat": 2
+  },
+  {
+   "id": 14,
+   "secteur_id": 5,
+   "libelle": "Contracteurs de forages",
+   "etat": 2
+  },
+  {
+   "id": 15,
+   "secteur_id": 5,
+   "libelle": "Inspection, Contrôle",
+   "etat": 2
+  },
+  {
+   "id": 16,
+   "secteur_id": 5,
+   "libelle": "Logistique pétrolière",
+   "etat": 2
+  },
+  {
+   "id": 17,
+   "secteur_id": 5,
+   "libelle": "Maintenance et assistance technique",
+   "etat": 2
+  },
+  {
+   "id": 18,
+   "secteur_id": 5,
+   "libelle": "Mise à disposition du personnel",
+   "etat": 2
+  },
+  {
+   "id": 19,
+   "secteur_id": 5,
+   "libelle": "Raffinerie",
+   "etat": 2
+  },
+  {
+   "id": 20,
+   "secteur_id": 5,
+   "libelle": "Recherche, Production",
+   "etat": 2
+  },
+  {
+   "id": 21,
+   "secteur_id": 5,
+   "libelle": "Sous-Traitant",
+   "etat": 2
+  },
+  {
+   "id": 22,
+   "secteur_id": 5,
+   "libelle": "Trading",
+   "etat": 2
+  },
+  {
+   "id": 23,
+   "secteur_id": 5,
+   "libelle": "Distribution",
+   "etat": 2
+  },
+  {
+   "id": 24,
+   "secteur_id": 5,
+   "libelle": "Entroposage",
+   "etat": 2
+  },
+  {
+   "id": 25,
+   "secteur_id": 5,
+   "libelle": "Station de service",
+   "etat": 2
+  },
+  {
+   "id": 26,
+   "secteur_id": 5,
+   "libelle": "Travaux maritimes et sous-marines",
+   "etat": 2
+  },
+  {
+   "id": 27,
+   "secteur_id": 6,
+   "libelle": "Fabrication Articles Mnagers",
+   "etat": 2
+  },
+  {
+   "id": 28,
+   "secteur_id": 6,
+   "libelle": "Bache, Sellerie",
+   "etat": 2
+  },
+  {
+   "id": 29,
+   "secteur_id": 6,
+   "libelle": "Charpentes Metalliques",
+   "etat": 2
+  },
+  {
+   "id": 30,
+   "secteur_id": 6,
+   "libelle": "Chaudronnerie",
+   "etat": 2
+  },
+  {
+   "id": 31,
+   "secteur_id": 6,
+   "libelle": "Construction Metallique",
+   "etat": 2
+  },
+  {
+   "id": 32,
+   "secteur_id": 6,
+   "libelle": "Construction navale",
+   "etat": 2
+  },
+  {
+   "id": 33,
+   "secteur_id": 6,
+   "libelle": "Containers, Conteneurs",
+   "etat": 2
+  },
+  {
+   "id": 34,
+   "secteur_id": 6,
+   "libelle": "Echafaudages",
+   "etat": 2
+  },
+  {
+   "id": 35,
+   "secteur_id": 6,
+   "libelle": "Fabrication Elingues",
+   "etat": 2
+  },
+  {
+   "id": 36,
+   "secteur_id": 6,
+   "libelle": "Ferronnerie",
+   "etat": 2
+  },
+  {
+   "id": 37,
+   "secteur_id": 6,
+   "libelle": "Fabrication flexibles",
+   "etat": 2
+  },
+  {
+   "id": 38,
+   "secteur_id": 6,
+   "libelle": "Maintenance Industrielle",
+   "etat": 2
+  },
+  {
+   "id": 39,
+   "secteur_id": 6,
+   "libelle": "Mecanique Générale",
+   "etat": 2
+  },
+  {
+   "id": 40,
+   "secteur_id": 6,
+   "libelle": "Construction de Pipeline",
+   "etat": 2
+  },
+  {
+   "id": 41,
+   "secteur_id": 6,
+   "libelle": "Rebobinage",
+   "etat": 2
+  },
+  {
+   "id": 42,
+   "secteur_id": 6,
+   "libelle": "Sablage, Décapage industriel",
+   "etat": 2
+  },
+  {
+   "id": 43,
+   "secteur_id": 6,
+   "libelle": "Soudure Industrielle",
+   "etat": 2
+  },
+  {
+   "id": 44,
+   "secteur_id": 6,
+   "libelle": "Fabrication Tôles ondulées metaliques",
+   "etat": 2
+  },
+  {
+   "id": 45,
+   "secteur_id": 6,
+   "libelle": "Tuyauterie",
+   "etat": 2
+  },
+  {
+   "id": 46,
+   "secteur_id": 8,
+   "libelle": "Accessoires de mode",
+   "etat": 2
+  },
+  {
+   "id": 47,
+   "secteur_id": 8,
+   "libelle": "Agent de marque",
+   "etat": 2
+  },
+  {
+   "id": 48,
+   "secteur_id": 7,
+   "libelle": "Agro-industrie",
+   "etat": 2
+  },
+  {
+   "id": 49,
+   "secteur_id": 7,
+   "libelle": "Allimentation, animale",
+   "etat": 2
+  },
+  {
+   "id": 50,
+   "secteur_id": 8,
+   "libelle": "Bazar",
+   "etat": 2
+  },
+  {
+   "id": 51,
+   "secteur_id": 7,
+   "libelle": "Fabrication et embouteillage de Boissons",
+   "etat": 2
+  },
+  {
+   "id": 52,
+   "secteur_id": 7,
+   "libelle": "Boulangerie Insdustrielle",
+   "etat": 2
+  },
+  {
+   "id": 53,
+   "secteur_id": 7,
+   "libelle": "Brasserie",
+   "etat": 2
+  },
+  {
+   "id": 54,
+   "secteur_id": 8,
+   "libelle": "Centrale d'achat",
+   "etat": 2
+  },
+  {
+   "id": 55,
+   "secteur_id": 8,
+   "libelle": "Commerce général",
+   "etat": 2
+  },
+  {
+   "id": 56,
+   "secteur_id": 7,
+   "libelle": "Confection textile",
+   "etat": 2
+  },
+  {
+   "id": 57,
+   "secteur_id": 7,
+   "libelle": "Cosmétique",
+   "etat": 2
+  },
+  {
+   "id": 58,
+   "secteur_id": 7,
+   "libelle": "Cultures maraichères",
+   "etat": 2
+  },
+  {
+   "id": 59,
+   "secteur_id": 7,
+   "libelle": "Production eaux minérales",
+   "etat": 2
+  },
+  {
+   "id": 60,
+   "secteur_id": 8,
+   "libelle": "Electromenager",
+   "etat": 2
+  },
+  {
+   "id": 61,
+   "secteur_id": 7,
+   "libelle": "Elevage",
+   "etat": 2
+  },
+  {
+   "id": 62,
+   "secteur_id": 7,
+   "libelle": "Production farine",
+   "etat": 2
+  },
+  {
+   "id": 63,
+   "secteur_id": 7,
+   "libelle": "Production Gaz industriels et médicaux",
+   "etat": 2
+  },
+  {
+   "id": 64,
+   "secteur_id": 7,
+   "libelle": "Produit Hygiène",
+   "etat": 2
+  },
+  {
+   "id": 65,
+   "secteur_id": 8,
+   "libelle": "Import-Export",
+   "etat": 2
+  },
+  {
+   "id": 66,
+   "secteur_id": 7,
+   "libelle": "Fabrication Lait, yaourt",
+   "etat": 2
+  },
+  {
+   "id": 67,
+   "secteur_id": 8,
+   "libelle": "Meubles, Mobiliers",
+   "etat": 2
+  },
+  {
+   "id": 68,
+   "secteur_id": 7,
+   "libelle": "Pèche industrielle et artisanales",
+   "etat": 2
+  },
+  {
+   "id": 69,
+   "secteur_id": 7,
+   "libelle": "Fabrication de peinture",
+   "etat": 2
+  },
+  {
+   "id": 70,
+   "secteur_id": 7,
+   "libelle": "Transformation de plastique",
+   "etat": 2
+  },
+  {
+   "id": 71,
+   "secteur_id": 8,
+   "libelle": "Négoce et distribution produits alimentaires",
+   "etat": 2
+  },
+  {
+   "id": 72,
+   "secteur_id": 8,
+   "libelle": "Négoce produit chimique",
+   "etat": 2
+  },
+  {
+   "id": 73,
+   "secteur_id": 8,
+   "libelle": "Produit pytosanitaire",
+   "etat": 2
+  },
+  {
+   "id": 74,
+   "secteur_id": 7,
+   "libelle": "Produits phytosanitaires",
+   "etat": 2
+  },
+  {
+   "id": 75,
+   "secteur_id": 8,
+   "libelle": "Produit pour l'agriculture",
+   "etat": 2
+  },
+  {
+   "id": 76,
+   "secteur_id": 8,
+   "libelle": "Produit surgelés et congelés",
+   "etat": 2
+  },
+  {
+   "id": 77,
+   "secteur_id": 7,
+   "libelle": "Savon, Savonnerie",
+   "etat": 2
+  },
+  {
+   "id": 78,
+   "secteur_id": 8,
+   "libelle": "Equipements articles Sports et loisirs",
+   "etat": 2
+  },
+  {
+   "id": 79,
+   "secteur_id": 8,
+   "libelle": "Supermarchés",
+   "etat": 2
+  },
+  {
+   "id": 80,
+   "secteur_id": 7,
+   "libelle": "Tabac",
+   "etat": 2
+  },
+  {
+   "id": 81,
+   "secteur_id": 8,
+   "libelle": "Vêtement, Prêt à porter",
+   "etat": 2
+  },
+  {
+   "id": 82,
+   "secteur_id": 9,
+   "libelle": "Agences conseil en communication",
+   "etat": 2
+  },
+  {
+   "id": 83,
+   "secteur_id": 9,
+   "libelle": "Bureautique",
+   "etat": 2
+  },
+  {
+   "id": 84,
+   "secteur_id": 9,
+   "libelle": "Editions, Publications",
+   "etat": 2
+  },
+  {
+   "id": 85,
+   "secteur_id": 9,
+   "libelle": "Enseignes (Fabrication, vente, installation)",
+   "etat": 2
+  },
+  {
+   "id": 86,
+   "secteur_id": 9,
+   "libelle": "Evénementiel",
+   "etat": 2
+  },
+  {
+   "id": 87,
+   "secteur_id": 9,
+   "libelle": "Impression numérique",
+   "etat": 2
+  },
+  {
+   "id": 88,
+   "secteur_id": 9,
+   "libelle": "Imprimeries",
+   "etat": 2
+  },
+  {
+   "id": 89,
+   "secteur_id": 9,
+   "libelle": "Informatique (Matériel et fournitures)",
+   "etat": 2
+  },
+  {
+   "id": 90,
+   "secteur_id": 9,
+   "libelle": "Informatique (Réseaux, cablage)",
+   "etat": 2
+  },
+  {
+   "id": 91,
+   "secteur_id": 9,
+   "libelle": "Informatique (Services, conseil, formation)",
+   "etat": 2
+  },
+  {
+   "id": 92,
+   "secteur_id": 9,
+   "libelle": "Internet (Création de site)",
+   "etat": 2
+  },
+  {
+   "id": 93,
+   "secteur_id": 9,
+   "libelle": "Location sonorisation, éclairage",
+   "etat": 2
+  },
+  {
+   "id": 94,
+   "secteur_id": 9,
+   "libelle": "Matériel et mobilier de bureau",
+   "etat": 2
+  },
+  {
+   "id": 95,
+   "secteur_id": 9,
+   "libelle": "Monétique",
+   "etat": 2
+  },
+  {
+   "id": 96,
+   "secteur_id": 9,
+   "libelle": "Objets publicitaires",
+   "etat": 2
+  },
+  {
+   "id": 97,
+   "secteur_id": 9,
+   "libelle": "Papeterie et fournitures de bureau",
+   "etat": 2
+  },
+  {
+   "id": 98,
+   "secteur_id": 9,
+   "libelle": "Photo, Video (Studio, labo)",
+   "etat": 2
+  },
+  {
+   "id": 99,
+   "secteur_id": 9,
+   "libelle": "Publicité",
+   "etat": 2
+  },
+  {
+   "id": 100,
+   "secteur_id": 9,
+   "libelle": "Sérigraphie",
+   "etat": 2
+  },
+  {
+   "id": 101,
+   "secteur_id": 10,
+   "libelle": "Accesoires, pièces détéchées automobiles",
+   "etat": 2
+  },
+  {
+   "id": 102,
+   "secteur_id": 10,
+   "libelle": "Concessionnaire automobiles",
+   "etat": 2
+  },
+  {
+   "id": 103,
+   "secteur_id": 10,
+   "libelle": "Contrôle technique automobiles",
+   "etat": 2
+  },
+  {
+   "id": 104,
+   "secteur_id": 10,
+   "libelle": "Vente occassion automobiles",
+   "etat": 2
+  },
+  {
+   "id": 105,
+   "secteur_id": 10,
+   "libelle": "Camions-Poids lourds",
+   "etat": 2
+  },
+  {
+   "id": 106,
+   "secteur_id": 10,
+   "libelle": "Climatisation automobile",
+   "etat": 2
+  },
+  {
+   "id": 107,
+   "secteur_id": 7,
+   "libelle": "Déménagement",
+   "etat": 2
+  },
+  {
+   "id": 108,
+   "secteur_id": 10,
+   "libelle": "Transport et Livraison eau potable",
+   "etat": 2
+  },
+  {
+   "id": 109,
+   "secteur_id": 10,
+   "libelle": "Garage",
+   "etat": 2
+  },
+  {
+   "id": 110,
+   "secteur_id": 10,
+   "libelle": "Injection diesel",
+   "etat": 2
+  },
+  {
+   "id": 111,
+   "secteur_id": 10,
+   "libelle": "Location voiture",
+   "etat": 2
+  },
+  {
+   "id": 112,
+   "secteur_id": 10,
+   "libelle": "Logistique",
+   "etat": 2
+  },
+  {
+   "id": 113,
+   "secteur_id": 10,
+   "libelle": "Mécanique auto",
+   "etat": 2
+  },
+  {
+   "id": 114,
+   "secteur_id": 10,
+   "libelle": "Messagerie, Routage",
+   "etat": 2
+  },
+  {
+   "id": 115,
+   "secteur_id": 10,
+   "libelle": "Pneus - Pneumatiques",
+   "etat": 2
+  },
+  {
+   "id": 116,
+   "secteur_id": 10,
+   "libelle": "Transport d'hydrocarbure",
+   "etat": 2
+  },
+  {
+   "id": 117,
+   "secteur_id": 10,
+   "libelle": "Transport ferroviaire",
+   "etat": 2
+  },
+  {
+   "id": 118,
+   "secteur_id": 10,
+   "libelle": "Transport routier",
+   "etat": 2
+  },
+  {
+   "id": 119,
+   "secteur_id": 11,
+   "libelle": "Agrégats (Production et vente)",
+   "etat": 2
+  },
+  {
+   "id": 120,
+   "secteur_id": 11,
+   "libelle": "Alarme, Matériel de sécurité",
+   "etat": 2
+  },
+  {
+   "id": 121,
+   "secteur_id": 11,
+   "libelle": "Appareils respiratoires",
+   "etat": 2
+  },
+  {
+   "id": 122,
+   "secteur_id": 11,
+   "libelle": "Carrelage, Sanitaires",
+   "etat": 2
+  },
+  {
+   "id": 123,
+   "secteur_id": 11,
+   "libelle": "Carrières (exploitation)",
+   "etat": 2
+  },
+  {
+   "id": 124,
+   "secteur_id": 11,
+   "libelle": "Ciment (Importation, distribution)",
+   "etat": 2
+  },
+  {
+   "id": 125,
+   "secteur_id": 11,
+   "libelle": "Electricité (Matériel et fournitures)",
+   "etat": 2
+  },
+  {
+   "id": 126,
+   "secteur_id": 11,
+   "libelle": "Engins TP (Location-vente)",
+   "etat": 2
+  },
+  {
+   "id": 127,
+   "secteur_id": 11,
+   "libelle": "Equipements de protection individuelle",
+   "etat": 2
+  },
+  {
+   "id": 128,
+   "secteur_id": 11,
+   "libelle": "Extincteurs",
+   "etat": 2
+  },
+  {
+   "id": 129,
+   "secteur_id": 11,
+   "libelle": "Groupes électrogènes",
+   "etat": 2
+  },
+  {
+   "id": 130,
+   "secteur_id": 11,
+   "libelle": "Matériel de construction (Négoce)",
+   "etat": 2
+  },
+  {
+   "id": 131,
+   "secteur_id": 11,
+   "libelle": "Matériel agricole et forestier",
+   "etat": 2
+  },
+  {
+   "id": 132,
+   "secteur_id": 11,
+   "libelle": "Matériel de levage",
+   "etat": 2
+  },
+  {
+   "id": 133,
+   "secteur_id": 11,
+   "libelle": "Matériel de manutention (Location - Vente)",
+   "etat": 2
+  },
+  {
+   "id": 134,
+   "secteur_id": 11,
+   "libelle": "Matériel industriel",
+   "etat": 2
+  },
+  {
+   "id": 135,
+   "secteur_id": 11,
+   "libelle": "Peinture (Matériel et fournitures)",
+   "etat": 2
+  },
+  {
+   "id": 136,
+   "secteur_id": 11,
+   "libelle": "Produits métallurgiques",
+   "etat": 2
+  },
+  {
+   "id": 137,
+   "secteur_id": 11,
+   "libelle": "Profilés, fer à béton",
+   "etat": 2
+  },
+  {
+   "id": 138,
+   "secteur_id": 11,
+   "libelle": "Protection (Vêtements)",
+   "etat": 2
+  },
+  {
+   "id": 139,
+   "secteur_id": 11,
+   "libelle": "Quicaillerie",
+   "etat": 2
+  },
+  {
+   "id": 140,
+   "secteur_id": 11,
+   "libelle": "Radeaux de sauvetage (Réparation)",
+   "etat": 2
+  },
+  {
+   "id": 141,
+   "secteur_id": 11,
+   "libelle": "Sécurité incendie",
+   "etat": 2
+  },
+  {
+   "id": 142,
+   "secteur_id": 11,
+   "libelle": "Soudure (Matériel et fournitures)",
+   "etat": 2
+  },
+  {
+   "id": 143,
+   "secteur_id": 12,
+   "libelle": "Batiment (Entreprises)",
+   "etat": 2
+  },
+  {
+   "id": 144,
+   "secteur_id": 12,
+   "libelle": "Forages, sondages",
+   "etat": 2
+  },
+  {
+   "id": 145,
+   "secteur_id": 12,
+   "libelle": "Geotechnique (études)",
+   "etat": 2
+  },
+  {
+   "id": 146,
+   "secteur_id": 12,
+   "libelle": "Hydraulique (Travaux, études)",
+   "etat": 2
+  },
+  {
+   "id": 147,
+   "secteur_id": 12,
+   "libelle": "Hydraulique villageoise",
+   "etat": 2
+  },
+  {
+   "id": 148,
+   "secteur_id": 12,
+   "libelle": "Laboratoire de bâtiment",
+   "etat": 2
+  },
+  {
+   "id": 149,
+   "secteur_id": 12,
+   "libelle": "Promotion immobilière",
+   "etat": 2
+  },
+  {
+   "id": 150,
+   "secteur_id": 12,
+   "libelle": "Terrassement",
+   "etat": 2
+  },
+  {
+   "id": 151,
+   "secteur_id": 12,
+   "libelle": "Topographie",
+   "etat": 2
+  },
+  {
+   "id": 152,
+   "secteur_id": 12,
+   "libelle": "Travaux public, Genie Civil",
+   "etat": 2
+  },
+  {
+   "id": 153,
+   "secteur_id": 13,
+   "libelle": "Adduction d'eau",
+   "etat": 2
+  },
+  {
+   "id": 154,
+   "secteur_id": 13,
+   "libelle": "Ascenseurs",
+   "etat": 2
+  },
+  {
+   "id": 155,
+   "secteur_id": 13,
+   "libelle": "Assainissement",
+   "etat": 2
+  },
+  {
+   "id": 156,
+   "secteur_id": 13,
+   "libelle": "Couverture, Etanchéité",
+   "etat": 2
+  },
+  {
+   "id": 157,
+   "secteur_id": 13,
+   "libelle": "Curage et vidange de fosses",
+   "etat": 2
+  },
+  {
+   "id": 158,
+   "secteur_id": 13,
+   "libelle": "Décharges controlées privées",
+   "etat": 2
+  },
+  {
+   "id": 159,
+   "secteur_id": 13,
+   "libelle": "Décoration, Agencement",
+   "etat": 2
+  },
+  {
+   "id": 160,
+   "secteur_id": 13,
+   "libelle": "Désinfection, Dératisation, Desinsectisation",
+   "etat": 2
+  },
+  {
+   "id": 161,
+   "secteur_id": 13,
+   "libelle": "Electricité (entreprise)",
+   "etat": 2
+  },
+  {
+   "id": 162,
+   "secteur_id": 13,
+   "libelle": "Electricité (Instrumentation)",
+   "etat": 2
+  },
+  {
+   "id": 163,
+   "secteur_id": 13,
+   "libelle": "Electricité industrielle",
+   "etat": 2
+  },
+  {
+   "id": 164,
+   "secteur_id": 13,
+   "libelle": "Espaces verts (Entretien)",
+   "etat": 2
+  },
+  {
+   "id": 165,
+   "secteur_id": 13,
+   "libelle": "Etanchéité, Isolation",
+   "etat": 2
+  },
+  {
+   "id": 166,
+   "secteur_id": 13,
+   "libelle": "Froid - Climatisation (entreprise)",
+   "etat": 2
+  },
+  {
+   "id": 167,
+   "secteur_id": 13,
+   "libelle": "Luminanires",
+   "etat": 2
+  },
+  {
+   "id": 168,
+   "secteur_id": 13,
+   "libelle": "Menuiserie - Ebénisterie",
+   "etat": 2
+  },
+  {
+   "id": 169,
+   "secteur_id": 13,
+   "libelle": "Ménuiserie de bâtiment",
+   "etat": 2
+  },
+  {
+   "id": 170,
+   "secteur_id": 13,
+   "libelle": "Meubles, Mobilier (fabrication)",
+   "etat": 2
+  },
+  {
+   "id": 171,
+   "secteur_id": 13,
+   "libelle": "Netoyage industriel",
+   "etat": 2
+  },
+  {
+   "id": 172,
+   "secteur_id": 13,
+   "libelle": "Peintres, Carreleurs, Ravalement",
+   "etat": 2
+  },
+  {
+   "id": 173,
+   "secteur_id": 13,
+   "libelle": "Piscines (Construction, Entretien)",
+   "etat": 2
+  },
+  {
+   "id": 174,
+   "secteur_id": 13,
+   "libelle": "Piscines (Matériel, fourniture)",
+   "etat": 2
+  },
+  {
+   "id": 175,
+   "secteur_id": 8,
+   "libelle": "Plomberie (Entreprises)",
+   "etat": 2
+  },
+  {
+   "id": 176,
+   "secteur_id": 13,
+   "libelle": "Recyclage",
+   "etat": 2
+  },
+  {
+   "id": 177,
+   "secteur_id": 14,
+   "libelle": "Acceuil aéroport, Assitance, Formalités",
+   "etat": 2
+  },
+  {
+   "id": 178,
+   "secteur_id": 14,
+   "libelle": "Aéroport (Assistance portuaire)",
+   "etat": 2
+  },
+  {
+   "id": 179,
+   "secteur_id": 14,
+   "libelle": "Aéroport (Gestion)",
+   "etat": 2
+  },
+  {
+   "id": 180,
+   "secteur_id": 14,
+   "libelle": "Compagnies Aériennes",
+   "etat": 2
+  },
+  {
+   "id": 181,
+   "secteur_id": 14,
+   "libelle": "Courrier express, Coursiers",
+   "etat": 2
+  },
+  {
+   "id": 182,
+   "secteur_id": 14,
+   "libelle": "Fret aérien",
+   "etat": 2
+  },
+  {
+   "id": 183,
+   "secteur_id": 14,
+   "libelle": "Prestataires de services aériens",
+   "etat": 2
+  },
+  {
+   "id": 184,
+   "secteur_id": 15,
+   "libelle": "Aconnage",
+   "etat": 2
+  },
+  {
+   "id": 185,
+   "secteur_id": 15,
+   "libelle": "Affretements maritimes",
+   "etat": 2
+  },
+  {
+   "id": 186,
+   "secteur_id": 15,
+   "libelle": "Amarteurs-Armement",
+   "etat": 2
+  },
+  {
+   "id": 187,
+   "secteur_id": 15,
+   "libelle": "Consignation maritime",
+   "etat": 2
+  },
+  {
+   "id": 188,
+   "secteur_id": 15,
+   "libelle": "Containers, Conteneurs (Location)",
+   "etat": 2
+  },
+  {
+   "id": 189,
+   "secteur_id": 15,
+   "libelle": "Conteneurs (Terminal a conteneur)",
+   "etat": 2
+  },
+  {
+   "id": 190,
+   "secteur_id": 15,
+   "libelle": "Expertise maritime",
+   "etat": 2
+  },
+  {
+   "id": 191,
+   "secteur_id": 15,
+   "libelle": "Fret maritime",
+   "etat": 2
+  },
+  {
+   "id": 192,
+   "secteur_id": 15,
+   "libelle": "Levage, manutention",
+   "etat": 2
+  },
+  {
+   "id": 193,
+   "secteur_id": 15,
+   "libelle": "Location de bateau",
+   "etat": 2
+  },
+  {
+   "id": 194,
+   "secteur_id": 15,
+   "libelle": "Manutention portuaire",
+   "etat": 2
+  },
+  {
+   "id": 195,
+   "secteur_id": 15,
+   "libelle": "Matelotage",
+   "etat": 2
+  },
+  {
+   "id": 196,
+   "secteur_id": 15,
+   "libelle": "Ports (Autorité portuaire)",
+   "etat": 2
+  },
+  {
+   "id": 197,
+   "secteur_id": 15,
+   "libelle": "Ports (Exploitation, Gestion)",
+   "etat": 2
+  },
+  {
+   "id": 198,
+   "secteur_id": 15,
+   "libelle": "Remorquage",
+   "etat": 2
+  },
+  {
+   "id": 199,
+   "secteur_id": 15,
+   "libelle": "Schichandler",
+   "etat": 2
+  },
+  {
+   "id": 200,
+   "secteur_id": 15,
+   "libelle": "Transitaires",
+   "etat": 2
+  },
+  {
+   "id": 201,
+   "secteur_id": 15,
+   "libelle": "Transport maritime",
+   "etat": 2
+  },
+  {
+   "id": 202,
+   "secteur_id": 16,
+   "libelle": "Agences de voyage",
+   "etat": 2
+  },
+  {
+   "id": 203,
+   "secteur_id": 16,
+   "libelle": "Casinos et jeux",
+   "etat": 2
+  },
+  {
+   "id": 204,
+   "secteur_id": 16,
+   "libelle": "Catering",
+   "etat": 2
+  },
+  {
+   "id": 205,
+   "secteur_id": 16,
+   "libelle": "Centre de remise en forme",
+   "etat": 2
+  },
+  {
+   "id": 206,
+   "secteur_id": 16,
+   "libelle": "Coiffeurs",
+   "etat": 2
+  },
+  {
+   "id": 207,
+   "secteur_id": 16,
+   "libelle": "Esthétique, Instituts de beauté",
+   "etat": 2
+  },
+  {
+   "id": 208,
+   "secteur_id": 16,
+   "libelle": "Hôtels",
+   "etat": 2
+  },
+  {
+   "id": 209,
+   "secteur_id": 16,
+   "libelle": "Location de salles",
+   "etat": 2
+  },
+  {
+   "id": 210,
+   "secteur_id": 16,
+   "libelle": "Parcs d'attraction, de loisirs",
+   "etat": 2
+  },
+  {
+   "id": 211,
+   "secteur_id": 16,
+   "libelle": "Patisserie, Salons de thé",
+   "etat": 2
+  },
+  {
+   "id": 212,
+   "secteur_id": 16,
+   "libelle": "Restaurants",
+   "etat": 2
+  },
+  {
+   "id": 213,
+   "secteur_id": 16,
+   "libelle": "Restauration d'entreprise",
+   "etat": 2
+  },
+  {
+   "id": 214,
+   "secteur_id": 16,
+   "libelle": "Toiletatge pour chiens",
+   "etat": 2
+  },
+  {
+   "id": 215,
+   "secteur_id": 16,
+   "libelle": "Tourisme (Organisation de circuits)",
+   "etat": 2
+  },
+  {
+   "id": 216,
+   "secteur_id": 16,
+   "libelle": "Tourisme (Promotion)",
+   "etat": 2
+  },
+  {
+   "id": 217,
+   "secteur_id": 16,
+   "libelle": "Traiteur",
+   "etat": 2
+  },
+  {
+   "id": 218,
+   "secteur_id": 17,
+   "libelle": "Banques",
+   "etat": 2
+  },
+  {
+   "id": 219,
+   "secteur_id": 17,
+   "libelle": "Bourse (Sociétés et organismes)",
+   "etat": 2
+  },
+  {
+   "id": 220,
+   "secteur_id": 17,
+   "libelle": "Bureau de change",
+   "etat": 2
+  },
+  {
+   "id": 221,
+   "secteur_id": 17,
+   "libelle": "Crédit (Organismes financiers)",
+   "etat": 2
+  },
+  {
+   "id": 222,
+   "secteur_id": 17,
+   "libelle": "Crédit-Bail, Léasing",
+   "etat": 2
+  },
+  {
+   "id": 223,
+   "secteur_id": 17,
+   "libelle": "Cynotechnie",
+   "etat": 2
+  },
+  {
+   "id": 224,
+   "secteur_id": 17,
+   "libelle": "Gardiennage",
+   "etat": 2
+  },
+  {
+   "id": 225,
+   "secteur_id": 17,
+   "libelle": "Microfinance",
+   "etat": 2
+  },
+  {
+   "id": 226,
+   "secteur_id": 17,
+   "libelle": "Sécurité (Entreprise)",
+   "etat": 2
+  },
+  {
+   "id": 227,
+   "secteur_id": 17,
+   "libelle": "Télésurveillance",
+   "etat": 2
+  },
+  {
+   "id": 228,
+   "secteur_id": 17,
+   "libelle": "Transfert d'argent",
+   "etat": 2
+  },
+  {
+   "id": 229,
+   "secteur_id": 18,
+   "libelle": "Assurances (Agent général)",
+   "etat": 2
+  },
+  {
+   "id": 230,
+   "secteur_id": 18,
+   "libelle": "Assurances (Compagnie)",
+   "etat": 2
+  },
+  {
+   "id": 231,
+   "secteur_id": 18,
+   "libelle": "Assurances (Courtier)",
+   "etat": 2
+  },
+  {
+   "id": 232,
+   "secteur_id": 18,
+   "libelle": "Assurances (Maladie)",
+   "etat": 2
+  },
+  {
+   "id": 233,
+   "secteur_id": 18,
+   "libelle": "Cabinet dentaire",
+   "etat": 2
+  },
+  {
+   "id": 234,
+   "secteur_id": 18,
+   "libelle": "Cabinet médical, médecins",
+   "etat": 2
+  },
+  {
+   "id": 235,
+   "secteur_id": 18,
+   "libelle": "Evacuations sanitaires",
+   "etat": 2
+  },
+  {
+   "id": 236,
+   "secteur_id": 18,
+   "libelle": "Hôpital, Clinique, Polyclinique",
+   "etat": 2
+  },
+  {
+   "id": 237,
+   "secteur_id": 18,
+   "libelle": "Laboratoire d'analyse médicale",
+   "etat": 2
+  },
+  {
+   "id": 238,
+   "secteur_id": 18,
+   "libelle": "Matériel médical et consommable",
+   "etat": 2
+  },
+  {
+   "id": 239,
+   "secteur_id": 18,
+   "libelle": "Opticiens, Optique",
+   "etat": 2
+  },
+  {
+   "id": 240,
+   "secteur_id": 18,
+   "libelle": "Pharmacies",
+   "etat": 2
+  },
+  {
+   "id": 241,
+   "secteur_id": 18,
+   "libelle": "Produits pharmaceutiques (Distribution)",
+   "etat": 2
+  },
+  {
+   "id": 242,
+   "secteur_id": 18,
+   "libelle": "Produits pharmaceutiques (Fabrication)",
+   "etat": 2
+  },
+  {
+   "id": 243,
+   "secteur_id": 18,
+   "libelle": "Santé publique (Organismes, fondations)",
+   "etat": 2
+  },
+  {
+   "id": 244,
+   "secteur_id": 18,
+   "libelle": "Vétérinaire (Cabinet, clinique)",
+   "etat": 2
+  },
+  {
+   "id": 245,
+   "secteur_id": 19,
+   "libelle": "Agences immobilières",
+   "etat": 2
+  },
+  {
+   "id": 246,
+   "secteur_id": 19,
+   "libelle": "Architectes - Architectures (cabinet)",
+   "etat": 2
+  },
+  {
+   "id": 247,
+   "secteur_id": 19,
+   "libelle": "Assistance comptable",
+   "etat": 2
+  },
+  {
+   "id": 248,
+   "secteur_id": 19,
+   "libelle": "Assistance juridique",
+   "etat": 2
+  },
+  {
+   "id": 249,
+   "secteur_id": 19,
+   "libelle": "Audit, Commisariat aux comptes",
+   "etat": 2
+  },
+  {
+   "id": 250,
+   "secteur_id": 19,
+   "libelle": "Bureaux d'études",
+   "etat": 2
+  },
+  {
+   "id": 251,
+   "secteur_id": 19,
+   "libelle": "Certifications, Normalisations",
+   "etat": 2
+  },
+  {
+   "id": 252,
+   "secteur_id": 19,
+   "libelle": "Comptables - Comptabilité",
+   "etat": 2
+  },
+  {
+   "id": 253,
+   "secteur_id": 19,
+   "libelle": "Conseil en gestion de ressources humaines",
+   "etat": 2
+  },
+  {
+   "id": 254,
+   "secteur_id": 19,
+   "libelle": "Conseil en organisation",
+   "etat": 2
+  },
+  {
+   "id": 255,
+   "secteur_id": 19,
+   "libelle": "Conseil juridique et fiscal",
+   "etat": 2
+  },
+  {
+   "id": 256,
+   "secteur_id": 19,
+   "libelle": "Contôle, Expertise",
+   "etat": 2
+  },
+  {
+   "id": 257,
+   "secteur_id": 19,
+   "libelle": "Contrôle, suivi de travaux",
+   "etat": 2
+  },
+  {
+   "id": 258,
+   "secteur_id": 19,
+   "libelle": "Création d'entreprise, Domiciliation",
+   "etat": 2
+  },
+  {
+   "id": 259,
+   "secteur_id": 19,
+   "libelle": "Démarches administratives",
+   "etat": 2
+  },
+  {
+   "id": 260,
+   "secteur_id": 19,
+   "libelle": "Développement économique (Organismes)",
+   "etat": 2
+  },
+  {
+   "id": 261,
+   "secteur_id": 19,
+   "libelle": "Emploi (Recherche et Offre)",
+   "etat": 2
+  },
+  {
+   "id": 262,
+   "secteur_id": 19,
+   "libelle": "Enseignement (Ecoles, instituts)",
+   "etat": 2
+  },
+  {
+   "id": 263,
+   "secteur_id": 19,
+   "libelle": "Enseignement (Fondation, formation)",
+   "etat": 2
+  },
+  {
+   "id": 264,
+   "secteur_id": 19,
+   "libelle": "Environnement (Etudes et impacts)",
+   "etat": 2
+  },
+  {
+   "id": 265,
+   "secteur_id": 19,
+   "libelle": "Etude de faisabilité",
+   "etat": 2
+  },
+  {
+   "id": 266,
+   "secteur_id": 19,
+   "libelle": "Expertise comptable",
+   "etat": 2
+  },
+  {
+   "id": 267,
+   "secteur_id": 19,
+   "libelle": "Formation, Coaching",
+   "etat": 2
+  },
+  {
+   "id": 268,
+   "secteur_id": 19,
+   "libelle": "Gestion immobilière",
+   "etat": 2
+  },
+  {
+   "id": 269,
+   "secteur_id": 19,
+   "libelle": "Ingénierie - Enginering",
+   "etat": 2
+  },
+  {
+   "id": 270,
+   "secteur_id": 19,
+   "libelle": "Intérim",
+   "etat": 2
+  },
+  {
+   "id": 271,
+   "secteur_id": 19,
+   "libelle": "Maitrise d'eouvre suivi de chantier",
+   "etat": 2
+  },
+  {
+   "id": 272,
+   "secteur_id": 19,
+   "libelle": "Management, Marketing",
+   "etat": 2
+  },
+  {
+   "id": 273,
+   "secteur_id": 19,
+   "libelle": "Métrologie",
+   "etat": 2
+  },
+  {
+   "id": 274,
+   "secteur_id": 19,
+   "libelle": "Notaires",
+   "etat": 2
+  },
+  {
+   "id": 275,
+   "secteur_id": 19,
+   "libelle": "Traitement des eaux (Ingénierie)",
+   "etat": 2
+  },
+  {
+   "id": 276,
+   "secteur_id": 20,
+   "libelle": "Internet (FAI)",
+   "etat": 2
+  },
+  {
+   "id": 277,
+   "secteur_id": 20,
+   "libelle": "Network Engineering",
+   "etat": 2
+  },
+  {
+   "id": 278,
+   "secteur_id": 20,
+   "libelle": "Radiocommunication",
+   "etat": 2
+  },
+  {
+   "id": 279,
+   "secteur_id": 20,
+   "libelle": "Radiodiffusion",
+   "etat": 2
+  },
+  {
+   "id": 280,
+   "secteur_id": 20,
+   "libelle": "Télécommunications (Systèmes intégrés)",
+   "etat": 2
+  },
+  {
+   "id": 281,
+   "secteur_id": 20,
+   "libelle": "Télédiffusion",
+   "etat": 2
+  },
+  {
+   "id": 282,
+   "secteur_id": 20,
+   "libelle": "Téélphone cellulaire (Opérateur)",
+   "etat": 2
+  },
+  {
+   "id": 283,
+   "secteur_id": 20,
+   "libelle": "Téléphone satellitaire",
+   "etat": 2
+  },
+  {
+   "id": 284,
+   "secteur_id": 20,
+   "libelle": "Télévision par satellite (Distributeurs)",
+   "etat": 2
+  },
+  {
+   "id": 285,
+   "secteur_id": 21,
+   "libelle": "Autres",
+   "etat": 2
+  }
+ ],
+ "diplome": [
+  {
+   "id": 1,
+   "code": "00000",
+   "libelle": "Autres"
+  },
+  {
+   "id": 2,
+   "code": "BTS",
+   "libelle": "Brevet de Technicien Supérieur"
+  },
+  {
+   "id": 3,
+   "code": "MASTER",
+   "libelle": "Master"
+  },
+  {
+   "id": 4,
+   "code": "BAC",
+   "libelle": "Brevet Académique"
+  },
+  {
+   "id": 5,
+   "code": "LICENCE",
+   "libelle": "Licence"
+  },
+  {
+   "id": 6,
+   "code": "DOCTORAT",
+   "libelle": "Doctorat"
+  },
+  {
+   "id": 7,
+   "code": "LICENCE PR",
+   "libelle": "Licence Pro"
+  },
+  {
+   "id": 8,
+   "code": "CERTIFICAT",
+   "libelle": "Certificat"
+  },
+  {
+   "id": 9,
+   "code": "AUTRE",
+   "libelle": "Autre formation"
+  }
+ ],
+ "famille_article": [
+  {
+   "id": 1,
+   "libelle": "Autres"
+  },
+  {
+   "id": 2,
+   "libelle": "Chaussure"
+  },
+  {
+   "id": 3,
+   "libelle": "Tableau"
+  },
+  {
+   "id": 4,
+   "libelle": "Vin de Table"
+  },
+  {
+   "id": 5,
+   "libelle": "Sac à Main"
+  },
+  {
+   "id": 6,
+   "libelle": "Jouet"
+  }
+ ],
+ "banque": [
+  {
+   "id": 1,
+   "sigle": "",
+   "nom": "Autres",
+   "telephones": "",
+   "adresse": "",
+   "email": "",
+   "site_web": "",
+   "etat": 2
+  },
+  {
+   "id": 2,
+   "sigle": "",
+   "nom": "Crédit Du Congo",
+   "telephones": "",
+   "adresse": "Avenue Amilcar Cabral Centre ville",
+   "email": "",
+   "site_web": "",
+   "etat": 2
+  },
+  {
+   "id": 3,
+   "sigle": "",
+   "nom": "BGFIBank Congo",
+   "telephones": "",
+   "adresse": "Avenue Amilcar Cabral Centre ville",
+   "email": "",
+   "site_web": "",
+   "etat": 2
+  },
+  {
+   "id": 4,
+   "sigle": "SG",
+   "nom": "Société Générale",
+   "telephones": "",
+   "adresse": "Avenue Amilcar Cabral Centre ville",
+   "email": "",
+   "site_web": "",
+   "etat": 2
+  },
+  {
+   "id": 5,
+   "sigle": "BSCA",
+   "nom": "BSCA",
+   "telephones": "",
+   "adresse": "Avenue de l'amitié Centre Ville",
+   "email": "",
+   "site_web": "",
+   "etat": 2
+  },
+  {
+   "id": 6,
+   "sigle": "LCB",
+   "nom": "LCB Bank",
+   "telephones": "",
+   "adresse": "Avenue Amilcar Cabral Centre ville",
+   "email": "",
+   "site_web": "",
+   "etat": 2
+  },
+  {
+   "id": 7,
+   "sigle": "",
+   "nom": "BGFIBANK",
+   "telephones": "",
+   "adresse": "Boulevard Denis Sassou Ngesso",
+   "email": "",
+   "site_web": "",
+   "etat": 3
+  },
+  {
+   "id": 8,
+   "sigle": "BP",
+   "nom": "Banque Postale",
+   "telephones": "",
+   "adresse": "Boulevard Denis Sassou Ngesso",
+   "email": "",
+   "site_web": "",
+   "etat": 2
+  },
+  {
+   "id": 9,
+   "sigle": "BCI",
+   "nom": "BCI",
+   "telephones": "",
+   "adresse": "Avenue Amilcar Cabral Centre ville",
+   "email": "",
+   "site_web": "",
+   "etat": 2
+  },
+  {
+   "id": 10,
+   "sigle": "MUCODEC",
+   "nom": "MUCODEC",
+   "telephones": "",
+   "adresse": "Boulevard Denis Sassou Ngesso",
+   "email": "",
+   "site_web": "",
+   "etat": 2
+  },
+  {
+   "id": 11,
+   "sigle": "ECOBANK",
+   "nom": "ECOBANK",
+   "telephones": "",
+   "adresse": "Avenue Amilcar Cabral Centre ville",
+   "email": "",
+   "site_web": "",
+   "etat": 2
+  },
+  {
+   "id": 12,
+   "sigle": "UBA",
+   "nom": "UBA",
+   "telephones": "",
+   "adresse": "Centre ville",
+   "email": "",
+   "site_web": "",
+   "etat": 2
+  }
+ ],
+ "produit": [
+  {
+   "id": 1,
+   "reference": "199",
+   "nom": "Ecran solaire Aloes",
+   "description": "La Crème Solaire Aloès vous protège des rayons UVA et UVB grâce à sa haute protection solaire (SPF 30). Sa formule agréable permet une excellente résistance à l'eau. Elle est transparente sur la peau et facile à étaler.",
+   "groupe": 13,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 2,
+   "reference": "319",
+   "nom": "Aloe spray écran solaires",
+   "description": "Sa formule à la texture non grasse est enrichie en gel d'aloès et en filtres UVAUVB et elle est extrêmement résistante à l'eau. Ultra-pratique, ce spray permet de pulvériser la lotion uniformément sur la peau.",
+   "groupe": 12,
+   "prix_distributeur": 2500,
+   "prix_non_distributeur": 3000,
+   "prix_public": 3250,
+   "quantite_stock": 19,
+   "etat": 2
+  },
+  {
+   "id": 3,
+   "reference": "21",
+   "nom": "Stick Aloe lèvres",
+   "description": "Le stick Aloe lèvre de Forever contient une formule riche en agents hydratants*, réparateurs et anti-desséchements associés à des filtres solaires puissants",
+   "groupe": 13,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 4,
+   "reference": "40",
+   "nom": "Aloe first",
+   "description": "Aloe First est facile à appliquer, ce spray, au pH équilibré, vous offre une action apaisante et adoucissante pour les peaux irritées ou sensibles. Il devrait vous accompagner partout.",
+   "groupe": 13,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 5,
+   "reference": "51",
+   "nom": "Aloe Propolis Crème",
+   "description": "Aloe Propolis Crème associe deux spécialités de Forever Living Products : le gel d'Aloe vera stabilisé (74%), connu pour son pouvoir régénérant et cicatrisant, et la Propolis, assainissante. Enrichie en Camomille et en Vitamine A et E, cette crème atténue la sensibilité, calme les irritations tout en nourrissant les peaux sèches.",
+   "groupe": 13,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 6,
+   "reference": "61",
+   "nom": "Gelée Aloes",
+   "description": "Avec 85% de gel naturel d'Aloès, la Gelée d'Aloès est extrêmement proche du précieux mucilage de la plante. Les propriétés apaisantes, réparatrices et hydratantes(*) de ce gel frais 100% stabilisé d'Aloe vera en font un soin idéal contre les affections de la peau, telles que les crevasses, écorchures, gerçures, rougeurs et les piqûres d'insectes.",
+   "groupe": 13,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 1,
+   "etat": 2
+  },
+  {
+   "id": 7,
+   "reference": "62",
+   "nom": "Emulsion Aloes",
+   "description": "L'Emulsion Aloès est une crème extrêmement pure contenant 66% de gel d'Aloe vera stabilisé et des extraits de plantes. Particulièrement recommandée pour les peaux sèches ou très sèches, elle peut être utilisée pour les mains et le corps, mais aussi pour le visage. Rapidement absorbée, l'Emulsion Aloès nourrit votre peau en profondeur.",
+   "groupe": 13,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 8,
+   "reference": "64",
+   "nom": "Emulsion thermogène",
+   "description": "L'Émulsion thermogène procure une étonnante sensation de chaleur localisée. La richesse du gel de la plante d'Aloès est associée aux extraits d'Eucalyptus et de Menthol, connus pour leurs propriétés apaisantes. Utilisée comme crème de massage, l'Émulsion thermogène vous procure un intense moment de bien-être et de relaxation.",
+   "groupe": 13,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 9,
+   "reference": "205",
+   "nom": "Aloes MSM gel",
+   "description": "Formulé à base de gel d'Aloe vera stabilisé (40 %), et enrichi en Methyl Sulfonyl Methane, source de Soufre pour les articulations, Aloe MSM Gel intervient dans la stabilité et l'intégrité du tissu conjonctif (cartilage, os…). Utilisé comme gel de massage, Aloe MSM Gel soulage et apaise vos douleurs articulaires.",
+   "groupe": 13,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 10,
+   "reference": "26",
+   "nom": "Forever bee Pollen",
+   "description": "Produit naturel des ruches, le pollen est récolté par les abeilles sur les étamines des fleurs. Forever Pollen est un complément alimentaire formidablement riche et concentré. C'est le complément forme idéal !  Cet apport contribue à conserver en bonne santé les systèmes circulatoire, digestif, immunitaire et nerveux. C'est certainement le complément alimentaire le plus complet actuellement disponible.",
+   "groupe": 3,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 11,
+   "reference": "36",
+   "nom": "Forever royal jelly (gelée royale)",
+   "description": "Pour vous redynamiser et stimuler votre organisme, La Gelée Royale issue de nos produits de la ruche, est le complément alimentaire idéal. Reconnue pour ses propriétés tonifiantes et revitalisantes, elle agit pour combattre les effets de la fatigue, du stress ou du vieillissement. Chaque comprimé vous offre le meilleur de la ruche pour le bien-être de votre organisme.",
+   "groupe": 3,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 12,
+   "reference": "27",
+   "nom": "Forever bee Propolis",
+   "description": "La propolis est une substance végétale que collectent les abeilles pour renforcer et protéger la ruche contre les agressions extérieures. Apposée sur les parois de la ruche, ses actions germicides, bactéricide et antifongique créent un univers sain et propice au développement de la colonie.  Enrichi de gelée royale, Forever Propolis contient des acides aminés, des enzymes, des vitamines et d'autres éléments essentiels qui aident votre corps à renforcer ses défenses naturelles.",
+   "groupe": 3,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 13,
+   "reference": "207",
+   "nom": "Forever miel",
+   "description": "Forever Miel est un produit pur, naturel et de qualité supérieure. Le Miel Forever se distingue par sa provenance : les hauts plateaux désertiques de l'Arizona, et par ses arômes. Le miel contient beaucoup de vitamines, minéraux et enzymes qui font du miel un riche fournisseur d'énergie quotidienne. Régalez-vous avec une portion quotidienne de Miel Forever !",
+   "groupe": 3,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 14,
+   "reference": "320",
+   "nom": "Forever Argi +",
+   "description": "Vitalité, force, endurance, sport extrême, Forever Argi + est un complément à base de L-arginine, ribose, vitamines et plantes avec sucres et édulcorants, pour un accompagnement efficace pendant et après un effort extrême. Les vitamines C, B6 et B9",
+   "groupe": 6,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 15,
+   "reference": "206",
+   "nom": "Forever calcium",
+   "description": "Forever calcium participe au bon fonctionnement nerveux, musculaire et cardiaque. Son association à la vitamine D et au magnésium dans Forever Calcium optimise l'absorption et sa fixation dans l'organisme.",
+   "groupe": 6,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 16,
+   "reference": "47",
+   "nom": "Gin Chia",
+   "description": "Forever Gin-Chia, contribue à la protection des constituants cellulaires contre les dommages oxydatifs, stimule les défenses naturelles de l'organisme et participe au métabolisme énergétique pour un tonus et une énergie retrouvés.",
+   "groupe": 6,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 17,
+   "reference": "196",
+   "nom": "Forever freedom",
+   "description": "Pour soulager les douleurs articulaires, Forever Freedom est une solution naturelle pour vous sentir mieux. Il contient du sulfate de Glucasamine, du sulfate de Chondroïtine, du Gel stabilisé d'Aloe Vera, de la Vitamine C et du MSM, une source primaire de soufre bio-disponible dont le corps a besoin pour maintenir en bonne santé les tissus conjonctifs et le système articulaire.",
+   "groupe": 6,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 18,
+   "reference": "30",
+   "nom": "Freedom 2Go",
+   "description": "Pour soulager les douleurs articulaires, Forever Freedom est une solution naturelle pour vous sentir mieux. Il contient du sulfate de Glucasamine, du sulfate de Chondroïtine, du Gel stabilisé d'Aloe Vera, de la Vitamine C et du MSM, une source primaire de soufre bio-disponible dont le corps a besoin pour maintenir en bonne santé les tissus conjonctifs et le système articulaire.",
+   "groupe": 6,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 19,
+   "reference": "340",
+   "nom": "FAB Forever Active Boost",
+   "description": "Le FAB est différent d'autres boissons énergisantes parce qu'il vous donne à la fois l'énergie immédiate et à long terme. Le coup de fouet immédiat vient du guarana, alors que le mélange exclusif d'herbes répond à vos besoins d'énergie dans la durée.",
+   "groupe": 6,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 20,
+   "reference": "440",
+   "nom": "FAB X Forever Active Boost light",
+   "description": "Le FAB X est différent d'autres boissons énergisantes parce qu'il vous donne à la fois l'énergie immédiate et à long terme. Le coup de fouet immédiat vient du guarana, alors que le mélange exclusif d'herbes répond à vos besoins d'énergie dans la durée. Sans sucre ni calories.",
+   "groupe": 6,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 21,
+   "reference": "289",
+   "nom": "Forever Lean (120 capsules)",
+   "description": "Forever Lean est un complément alimentaire à base de feuilles de Neopuntia et de graines de haricots blancs et de chrome. Ce dernier contribue au maintien normal des taux de glucose sanguin et à celui du métabolisme des macronutriments.",
+   "groupe": 5,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 22,
+   "reference": "71",
+   "nom": "Forever Garcinia Plus (70 capsules)",
+   "description": "Le Forever Garcinia favorise la régulation de l'apétit et bloque la transformation des sucres en graisses. Forever Garcinia Plus contient également du chrome qui favorise la stabilisation et la normalisation des taux de sucres et d'insuline dans le sang.",
+   "groupe": 5,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 23,
+   "reference": "463",
+   "nom": "Forever Therm (60 comprimés)",
+   "description": "Forever Therm™ est un brûleur de graisses qui contient des extraits de plantes (thé vert, café vert, guarana) associés à des vitamines du groupe B et de la vitamine C. Il aide à maintenir et à contrôler le poids, réduire les corps gras, à accroître l’oxydation des graisses et à réduire la fatigue.",
+   "groupe": 5,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 24,
+   "reference": "337",
+   "nom": "Coffret aloe fleur de jouvence",
+   "description": "Pour une prise en charge globale de votre peau, les soins Fleur de Jouvence sont réunis dans ce coffret. Associés dans le cadre d'un véritable programme, le Lait exfoliant Aloès, le Fluide tonifiant Aloès, la Crème de Base Aloès, le Soin de Nuit Aloès, la Poudre à Masque Facial et l'Activateur Aloès garantissent à votre peau réparation et prévention.",
+   "groupe": 10,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 25,
+   "reference": "338",
+   "nom": "Lotion fraîche",
+   "description": "Transparent et frais, la lotion fraîche parfait le démaquillage en éliminant en douceur les dernières traces d'impuretés. Sans alcool, il respecte l'intégrité de l'épiderme, laisse la peau parfaitement nette et douce. Avec ses 41.5% de gel d'Aloe vera stabilisé, la peau est réhydratée.",
+   "groupe": 10,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 26,
+   "reference": "339",
+   "nom": "Démaquillant Eclat",
+   "description": "Parfait sur tous les types de peau. Sa texture onctueuse élimine en douceur les impuretés et le maquillage.",
+   "groupe": 10,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 27,
+   "reference": "340",
+   "nom": "Soin fermeté jour",
+   "description": "Sa texture fondante, riche en Aloe Vera, raffermit et repulpe intensément votre peau pour un effet jeunesse immédiat.",
+   "groupe": 10,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 28,
+   "reference": "342",
+   "nom": "Crème ressourçante nuit",
+   "description": "Un soin qui permet à votre visage de récupérer pendant la nuit et efface toute trace de fatigue. Les rides, repulpées, sont comme lissées, le teint est frais et sublime.",
+   "groupe": 10,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 29,
+   "reference": "341",
+   "nom": "Masque poudre visage",
+   "description": "Le Masque Poudre Visage est une combinaison unique d'actifs détoxinants et purifiants qui permet à la peau de retrouver tout son éclat.",
+   "groupe": 10,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 30,
+   "reference": "343",
+   "nom": "Activateur aloès",
+   "description": "L' Activateur Aloès contient du gel d'Aloe Vera stabilisé et de l'allantoïne, un composé de dégradation de l'acide urique et un agent apaisant très puissant. L' Activateur Aloès est un superbe agent hydratant(*), contenant des enzymes, des acides aminés et des polysaccharides. C'est le partenaire idéal pour agir en liaison avec notre Poudre à Masque Facial pour hydrater(*), nettoyer et traiter la peau.",
+   "groupe": 10,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 31,
+   "reference": "57",
+   "nom": "Crème corps tonus",
+   "description": "La Crème Corps Tonus, à base de gel d'Aloe vera stabilisé (34.7%), est enrichie d'huiles végétales et d'extraits de plantes, utilisée seule sur les parties du corps à raffermir. Elle est idéale pour le buste et le cou.",
+   "groupe": 9,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 32,
+   "reference": "48",
+   "nom": "Absorbent C",
+   "description": "Absorbent C est formulée dans une base composée de son d'avoine et enrichie de miel, la vitamine C favorise la production de collagène et stimule la circulation cutanée.",
+   "groupe": 9,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 33,
+   "reference": "2",
+   "nom": "Crème contour des yeux",
+   "description": "Forever Crème Contour des yeux est un soin complet, léger et frais, spécialement conçu pour atténuer les cernes, et décongestionner les yeux. Cette crème, contenant du bisabolol, apaise et combat le gonflement.",
+   "groupe": 9,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 34,
+   "reference": "69",
+   "nom": "R3 Factor Aloes",
+   "description": "R3 factor Aloes restaure la souplesse de la peau, et renouvelle son aspect. Estompe les rides et ridules grâce à ses acides de fruits qui renouvellent l'épiderme et activent la régénération cellulaire.",
+   "groupe": 9,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 35,
+   "reference": "187",
+   "nom": "Sérum Alpha E Factor",
+   "description": "Le sérum Alpha E factor nourrit l'épiderme et protège la peau des agressions extérieures. Quelques gouttes suffisent pour redonner souplesse et vitalité à votre peau.",
+   "groupe": 9,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 36,
+   "reference": "337",
+   "nom": "Coffret Aloes fleur de Jouvence",
+   "description": "Pour une prise en charge globale de votre peau, les soins Fleur de Jouvence sont réunis dans ce coffret. Associés dans le cadre d'un véritable programme, le Lait exfoliant Aloès, le Fluide tonifiant Aloès, la Crème de Base Aloès, le Soin de Nuit Aloès, la Poudre à Masque Facial et l'Activateur Aloès garantissent à votre peau réparation et prévention.",
+   "groupe": 8,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 37,
+   "reference": "187",
+   "nom": "Démaquillant pour les yeux Sonya",
+   "description": "Cette formule non grasse, élimine parfaitement et tout en douceur toutes traces d'impuretés et de maquillage, il laisse le contour de l'oeil bien hydraté.\r\nSon actif principal, l'Aloe vera, hydrate, rafraîchit, tonifie la peau et lui redonne son éclat originel.",
+   "groupe": 8,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 38,
+   "reference": "238",
+   "nom": "Aloe scrub",
+   "description": "Forever Aloe Scrub permet l'élimination en douceur des cellules mortes accumulées à la surface de la peau. Ce gommage affine le grain de peau et active le renouvellement cellulaire. Le teint retrouve ainsi son éclat, la peau respire. Cette formule exclusive convient à tous les types de peau.",
+   "groupe": 8,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 39,
+   "reference": "234",
+   "nom": "Forever marine mask",
+   "description": "Grâce à ses minéraux naturels extraits du varech et d'algues marines, il rétablit l'équilibre de votre peau, tout en l'hydratant(*) grâce à l'association de l'aloès, du miel et du concombre. Fraîcheur et vitalité seront les signes de cet équilibre retrouvé.",
+   "groupe": 8,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 40,
+   "reference": "187",
+   "nom": "Sérum Alpha E-Factor",
+   "description": "Alpha E-Factor est un fluide léger, anti-oxydant qui renferme de précieux actifs pour les peaux sensibles. Formulé à partir d'huile de bourrache, d'huile de Soja et de gel d'Aloès, enrichi en bisabolol et en vitamines E, A et C, ce soin nourrit l'épiderme et protège la peau des agressions extérieures.",
+   "groupe": 8,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 41,
+   "reference": "69",
+   "nom": "R3 Facteur Aloès",
+   "description": "R3 Facteur Aloès protège la peau des agressions extérieures qui fragilisent l'épiderme. Cette crème restaure la souplesse de la peau, et renouvelle son aspect. La peau est plus douce, plus souple. Débarrassée des cellules mortes, mieux hydratée(*), grâce à ses 42% de gel d'Aloe vera stabilisé, la peau resplendit d'un nouvel éclat.",
+   "groupe": 8,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 42,
+   "reference": "236",
+   "nom": "Forever Epiblanc",
+   "description": "Forever Epiblanc est une formule unique et exclusive pour unifier le teint et pour freiner l'apparition des tâches brunes. Cette crème favorise l'élimination des cellules épidermiques de surface, riches en mélanine, grâce à l'Arbutine (agent éclaircissant naturel), et grâce à ses 42% de gel d'Aloe vera stabilisé. Les irrégularités s'effacent, les taches s'atténuent, la peau est lissée et son grain affiné.",
+   "groupe": 8,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 43,
+   "reference": "6",
+   "nom": "Emulsion visage Aloes",
+   "description": "Cette émulsion, de texture plus épaisse, est enrichie par de l'élastine et du collagène associés au gel d'Aloès. Emulsion Visage raffermit et tonifie votre peau, et lutte contre les effets du vieillissement cutané.",
+   "groupe": 8,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 44,
+   "reference": "55",
+   "nom": "Coffret soins du corps Aloes",
+   "description": "Conçu pour tonifier, raffermir et hydrater(*) votre corps.  L'association de la Gelée de Bain Aloès pour la détente, de la Crème Modelante et de la Crème Corps Tonus permet une action optimale pour raffermir et densifier les tissus. Le coffret comprend : Crème corps Modelante / Crème corps Tonus / Gelée de bain / Luffa et rouleau de cellophane.",
+   "groupe": 7,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 45,
+   "reference": "14",
+   "nom": "Gelée de bain minceur Aloes",
+   "description": "La Gelée de Bain minceur Aloès, associant 42 % de gel d'Aloe vera stabilisé à des extraits d'algues et de plantes, vous procure une agréable sensation de bien-être et de détente. Utilisée quotidiennement, elle nettoie la peau en douceur, sans la dessécher. Une gelée de bain onctueuse au parfum léger qui mettre l'Aloe Vera dans votre bain.",
+   "groupe": 7,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 46,
+   "reference": "56",
+   "nom": "Crème corps modelante",
+   "description": "La Crème Corps Modelante a été spécialement formulée pour raffermir et embellir votre corps. Contenant 36.5% de gel d'Aloe vera stabilisé et un mélange de plantes sélectionnées pour votre bien-être, cette crème, riche et onctueuse, vous procurera une agréable sensation de chaleur et d'apaisement.",
+   "groupe": 7,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 47,
+   "reference": "28",
+   "nom": "Sels de Bain Relaxant",
+   "description": "Plongez dans un bain apaisant et relaxant, loin vos soucis quotidiens, grâce à une composition exceptionnelle associant des sels de la Mer Morte, à la lavande et autre huile essentielle.\r\nBienfaits : Aide à maintenir l'hydratation* de votre peau, à la parfumer et à vous détendre.",
+   "groupe": 7,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 48,
+   "reference": "287",
+   "nom": "Gel de douche relaxant",
+   "description": "Appréciez la perfection d'un soin de peau chaque fois que vous utilisez notre Gel aromatique. Il contient de l'Aloe vera, des huiles essentielles et des extraits de fruits, et ses vertus relaxantes nettoient en douceur. Ce gel relaxant utilisé le soir vous permettra d'oublier votre journée et vous donnera une peau douce et parfumée toute la nuit.",
+   "groupe": 7,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 49,
+   "reference": "288",
+   "nom": "Soin Nutri-Relaxant",
+   "description": "Offrez-vous l'expérience des qualités réconfortante et adoucissantes de l'Aloe vera, des huiles essentielles, du thé blanc, et des extraits de fruits, avec cette lotion de massage adoucissante et non grasse. Cette lotion exceptionnelle est idéale en complément des sels de bain relaxants ou du gel de douche relaxant.",
+   "groupe": 7,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 50,
+   "reference": "285",
+   "nom": "Coffret aroma SPA collection",
+   "description": "Eveillez vos sens avec notre nouvelle gamme de trois produits d'aromathérapie. Plongez avec délices dans un bain de Sels Relaxants, purifiez votre peau avec le Gel de Douche Relaxant, et réconfortez-vous avec la Lotion de Massage Relaxante pour une séance de détente SPA à la maison !",
+   "groupe": 7,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 51,
+   "reference": "28",
+   "nom": "Forever bright",
+   "description": "Ce gel dentaire, sans fluor et non abrasif, ravive l'émail de vos dents. Son complexe à la chlorophylle (sans menthol) procure une sensation de fraîcheur naturelle. Il convient à toute la famille.",
+   "groupe": 14,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 52,
+   "reference": "284",
+   "nom": "Savon corps et visage à l'avocat",
+   "description": "Constitué de beurre pur d'avocat, l'Avocado Soap prend soin de votre visage et de votre corps tout en les nettoyant, en les hydratant(*) et en préservant la jeunesse de votre peau.",
+   "groupe": 14,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 53,
+   "reference": "38",
+   "nom": "Crème lavante aloes",
+   "description": "Onctueuse et douce, la Crème lavante Aloès nettoie délicatement votre peau, la nourrit et la protège du dessèchement (33% de gel d'Aloe vera stabilisé).",
+   "groupe": 14,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 54,
+   "reference": "67",
+   "nom": "Stick déodorant Aloès de Forever",
+   "description": "Extrait directement du coeur de la feuille d'Aloès, le gel d'Aloe vera est reconnu pour ses propriétés revitalisantes et rééquilibrantes adouci grâce à un arôme naturel de pêche.",
+   "groupe": 14,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 55,
+   "reference": "70",
+   "nom": "Gentleman's pride",
+   "description": "Pour soulager les douleurs articulaires, Forever Freedom est une solution naturelle pour vous sentir mieux. Il contient du sulfate de Glucasamine, du sulfate de Chondroïtine, du Gel stabilisé d'Aloe Vera, de la Vitamine C et du MSM, une source primaire de soufre bio-disponible dont le corps a besoin pour maintenir en bonne santé les tissus conjonctifs et le système articulaire.",
+   "groupe": 14,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 56,
+   "reference": "318",
+   "nom": "Hand sanitizer",
+   "description": "Pour soulager les douleurs articulaires, Forever Freedom est une solution naturelle pour vous sentir mieux. Il contient du sulfate de Glucasamine, du sulfate de Chondroïtine, du Gel stabilisé d'Aloe Vera, de la Vitamine C et du MSM, une source primaire de soufre bio-disponible dont le corps a besoin pour maintenir en bonne santé les tissus conjonctifs et le système articulaire.",
+   "groupe": 14,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 57,
+   "reference": "194",
+   "nom": "Gel coiffant aloes",
+   "description": "Il permet de sculpter la chevelure et de placer les mèches dans le mouvement souhaité. Sa formule sans alcool résiste à l'eau, ne dessèche pas et n'agresse pas vos cheveux, tout en leur procurant brillance, volume et éclat. Il s'élimine facilement au brossage.",
+   "groupe": 15,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 58,
+   "reference": "260",
+   "nom": "Shampoing Aloe jojoba",
+   "description": "Le shampooing Aloe Jojoba apaise et réduit les démangeaisons. Enrichi en Provitamine B5, il redonne souplesse et brillance à la chevelure. Rééquilibrés à la racine, les cheveux sont plus forts, plus beaux.",
+   "groupe": 15,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 59,
+   "reference": "261",
+   "nom": "Après shampoing Aloe jojoba",
+   "description": "Outre l'Aloe vera, cet après-shampooing est enrichi en vitamines B complexe, et en protéines hydrolisées. Aussi, il apporte en conséquence à vos cheveux une hydratation optimale et une meilleure tenue.",
+   "groupe": 15,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 60,
+   "reference": "249",
+   "nom": "Shampoing hydratant réparateur onya",
+   "description": "Cheveux déshydratés, abîmés, fragilisés par les multiples traitements auxquels ils sont soumis. Coloration, fers à boucler ou à lisser, casque de moto, mais également shampoings et soins inadaptés.",
+   "groupe": 15,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 61,
+   "reference": "350",
+   "nom": "Après-shampoing hydratant réparateur Sonya",
+   "description": "Cheveux déshydratés, abîmés, fragilisés par les multiples traitements auxquels ils sont soumis. Coloration, fers à boucler ou à lisser, casque de moto, mais également shampoings et soins inadaptés.",
+   "groupe": 15,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 62,
+   "reference": "351",
+   "nom": "Shampoing volume Sonya",
+   "description": "Le Shampoing Volume redonne à la chevelure tout son volume et son éclat en trouvant le juste équilibre entre épaisseur et tenue du cheveu.",
+   "groupe": 15,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 63,
+   "reference": "352",
+   "nom": "Après-shampoing volume Sonya",
+   "description": "Sa formule exclusive renforce le volume, l'épaisseur et améliore la tenue de vos cheveux, tout en leur donnat douceur et en facilitant le coiffage.",
+   "groupe": 15,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 64,
+   "reference": "354",
+   "nom": "Forever Kids",
+   "description": "Rythme scolaire soutenu, emploi du temps surchargé, mais également mauvaises habitudes alimentaires et manque de sommeil peuvent provoquer une fatigue persistante chez l’enfant, ne pas le donner aux enfants en dessous de 6ans",
+   "groupe": 16,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 65,
+   "reference": "215",
+   "nom": "Forever Multi-Maca",
+   "description": "Pour hommes et pour femmes.\r\nStimuler le désir sexuel. Booster l’énergie physique et les performances intellectuelles. Favoriser l’équilibre hormonal des femmes pendant la ménopause. Maintenir un confort et une fonction urinaire normale chez les hommes.",
+   "groupe": 17,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 66,
+   "reference": "22",
+   "nom": "Stick Aloes lèvres",
+   "description": "Ce baume délicatement parfumé associe l'Aloe vera, le jojoba et la cire d'abeille. Il sera votre compagnon quotidien, été comme hiver, pour la une protection et l'hydratation(*) optimales de vos lèvres gercées ou fendillées.",
+   "groupe": 17,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 67,
+   "reference": "15",
+   "nom": "Pulpe Aloes",
+   "description": "Le jus d'aloes est traditionnellement reconnu pour ses propriétés digestives, fortifiantes et reconstituantes, autant de propriétés dont peuvent profiter Les animaux, petits ou grands. Cette boisson apéritive, riche en éléments nutritifs (vitamines, minéraux, enzymes, acides aminés) permet de limiter les risques de dysfonctionnement alimentaire ou de baisse d'appétit.",
+   "groupe": 19,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 68,
+   "reference": "34",
+   "nom": "Aloe berry nectar",
+   "description": "L'Aloe berry nectar contient de l'extrait de canneberge, fruit réputé pour ses propriétés protectrices des voies urinaires. Il agit en synergie avec l'Aloe vera. La canneberge limite la fixation des bactéries sur le tractus urinaire. Comme la pomme elle apporte de la vitamine C.",
+   "groupe": 19,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 69,
+   "reference": "73",
+   "nom": "Forever GInkgo plus",
+   "description": "Forever Ginkgo Plus est un mélange unique de 3 plantes chinoises dont le Ginkgo biloba et le reishi traditionnellement utilisées pour leur effet sur la  circulation périphérique. en prévention et à la gestion des troubles liés au vieillissement.",
+   "groupe": 19,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 70,
+   "reference": "65",
+   "nom": "Forever Ail et Thym",
+   "description": "Forever Ail et Thym est une combinaison unique de 2 extraits de plantes qui assure un meilleur confort digestif (1 capsule equivaux à 1000 mg d'ail frais. Facilite la digestion, vermufigation naturelle par l'ail décrite en usage traditionnel.",
+   "groupe": 19,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 71,
+   "reference": "30",
+   "nom": "Formule animale",
+   "description": "La Formule Animale Aloès leur est spécialement destinée. La Formule Animale est un produit de soins exceptionnel pour les animaux. Ses propriétés apaisantes, adoucissantes et revitalisantes leur procureront un soulagement intense.",
+   "groupe": 19,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 72,
+   "reference": "51",
+   "nom": "Aloes propolis crème",
+   "description": "L'aloe vera, connu pour son pouvoir régénérant et cicatrisant, associé à la propolis, protectrice, font de cette crème un véritable soin réparateur. Enrichie en Camomille et en vitamines A et E, cette crème calme aussi les irritations.",
+   "groupe": 19,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 73,
+   "reference": "260",
+   "nom": "Shampoing Aloes Jojoba",
+   "description": "Ce shampoing débarrasse en douceur les impuretés du pelage, il régule les sécrétions cutanées et rend le poil brillant et doux au toucher.",
+   "groupe": 19,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 74,
+   "reference": "261",
+   "nom": "Après-shampoing Aloes Jojoba",
+   "description": "Cet après shampoing est enrichi en vitamines B complexes, en protéines hydrolysées et en Aloe vera. Il facilite le démêlage et lubrifie les poils longs et fragiles des chiens.",
+   "groupe": 19,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 75,
+   "reference": "15",
+   "nom": "Pulpe Aloes",
+   "description": "Pulpe Aloes, Imaginez que vous tranchiez une feuille d'Aloe Vera et que vous consommiez directement le gel. Notre Pulpe d'Aloès stabilisée est aussi proche de cette réalité.  L'Aloe Vera Gel contient 96,3 % de gel d'aloe vera stabilisé composé de 200 composants différents dont 75 nutriments, 20 minéraux, 18 acides aminés et 12 vitamines.",
+   "groupe": 1,
+   "prix_distributeur": 10839,
+   "prix_non_distributeur": 14189,
+   "prix_public": 15641,
+   "quantite_stock": 98,
+   "etat": 2
+  },
+  {
+   "id": 76,
+   "reference": "270",
+   "nom": "Aloe 2Go",
+   "description": "Aloe 2Go, Idéal pour le voyage en conditionnement d'une dose par jour. Appréciez tous les bienfaits de la pulpe d'Aloès associée au savoureux goût et aux bienfaits nutritionnels de la grenade, du mangoustan et autres fruits exotiques. Conditionnement en pack de 30 sachets (90ml)  journaliers pour vous accompagner partout.",
+   "groupe": 1,
+   "prix_distributeur": 41078,
+   "prix_non_distributeur": 53775,
+   "prix_public": 59279,
+   "quantite_stock": 100,
+   "etat": 2
+  },
+  {
+   "id": 77,
+   "reference": "77",
+   "nom": "Coeur Aloes",
+   "description": "Coeur Aloes, Extrait directement du coeur de la feuille d'Aloès, le gel d'Aloe vera est reconnu pour ses propriétés revitalisantes et rééquilibrantes adouci grâce à un arôme naturel de pêche.  Ce produit,  contient des morceaux d'Aloe Vera pur baignés dans un bouquet de pêches mûries au soleil, lui donnant un goût unique.",
+   "groupe": 1,
+   "prix_distributeur": 10839,
+   "prix_non_distributeur": 14189,
+   "prix_public": 15641,
+   "quantite_stock": 100,
+   "etat": 2
+  },
+  {
+   "id": 78,
+   "reference": "321",
+   "nom": "FAB",
+   "description": "FAB est différent d'autres boissons énergisantes parce qu'il vous donne à la fois l'énergie immédiate et à long terme. Le coup de fouet immédiat vient du guarana, alors que le mélange exclusif d'herbes répond à vos besoins d'énergie dans la durée.",
+   "groupe": 1,
+   "prix_distributeur": 2059,
+   "prix_non_distributeur": 2696,
+   "prix_public": 2972,
+   "quantite_stock": 100,
+   "etat": 2
+  },
+  {
+   "id": 79,
+   "reference": "440",
+   "nom": "FAB X",
+   "description": "FAB X est différent d'autres boissons énergisantes parce qu'il vous donne à la fois l'énergie immédiate et à long terme. Le coup de fouet immédiat vient du guarana, alors que le mélange exclusif d'herbes répond à vos besoins d'énergie dans la durée.",
+   "groupe": 1,
+   "prix_distributeur": 2059,
+   "prix_non_distributeur": 2696,
+   "prix_public": 2972,
+   "quantite_stock": 100,
+   "etat": 2
+  },
+  {
+   "id": 80,
+   "reference": "262",
+   "nom": "Pomesteen power",
+   "description": "Pomesteen power, Découvrez toute la puissance des agents antioxydants de la Grenade, du Mangoustan et d'autres fruits exotiques dans Forever Pomesteen Power !",
+   "groupe": 1,
+   "prix_distributeur": 10405,
+   "prix_non_distributeur": 13621,
+   "prix_public": 15015,
+   "quantite_stock": 100,
+   "etat": 2
+  },
+  {
+   "id": 81,
+   "reference": "465-466",
+   "nom": "Forever Pro X2",
+   "description": "Un association idéale de protéines animales et végétales pour vous apporter une satiété importante jusqu’au repas suivant. Pour tous ceux qui ressentent le besoin de prendre une collation gourmande avec un minimum de calories au gout de chocolat ou cannelle.",
+   "groupe": 5,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 82,
+   "reference": "470-471",
+   "nom": "Forever Lite Ultra",
+   "description": "Les personnes qui suivent le programme Forme & Minceur de Forever sont susceptibles de ressentir un petit creux entre les repas. Pour éviter de succomber aux fringales et parce qu’elles souhaitent atteindre leur objectif, elles cherchent la collation idéale, rassasiante, vitalisante.",
+   "groupe": 5,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 83,
+   "reference": "475-476",
+   "nom": "Programme Détox C9",
+   "description": "Le C9 est la première phase du programme Forever F.I.T., programme Minceur & Fitness. Il s’effectue sur 9 JOURS pour purifier son organisme en éliminant les toxines. Les résultats apparaissent dès les premiers jours : perte de poids, sensation de légèreté et énergie retrouvée.",
+   "groupe": 5,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 84,
+   "reference": "479-486",
+   "nom": "FIT1 programme minceur",
+   "description": "Le FIT1 est la 2e phase du programme Forever F.I.T. Il permet, en 30 jours, d’acquérir de bonnes bases alimentaires, d’intégrer une activité physique régulière pour reprendre son corps en main et consolider une perte de poids durable.",
+   "groupe": 5,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 85,
+   "reference": "491-498",
+   "nom": "FIT2 tonifier et stabiliser",
+   "description": "Le FIT2 est la 3e phase de stabilisation du programme Forever F.I.T. Il permet, en 30 jours, de poursuivre la transformation de son corps en tonifiant et sculptant sa silhouette.",
+   "groupe": 5,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 86,
+   "reference": "456-457",
+   "nom": "Vital 5 contenant",
+   "description": "Vital5™ contient les 5 produits essentiels de Forever pour garantir un bien-être au quotidien. Les actifs de ces produits agissent en synergie pour rétablir l’équilibre de votre flore intestinale. Ainsi l’absorption des nutriments est optimisée ainsi que l’élimination des toxines.",
+   "groupe": 4,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 87,
+   "reference": "475-476",
+   "nom": "Programme Détox C9 - 2",
+   "description": "Le C9 est la première phase du programme Forever F.I.T., programme Minceur & Fitness. Il s’effectue sur 9 JOURS pour purifier son organisme en éliminant les toxines. Les résultats apparaissent dès les premiers jours : perte de poids, sensation de légèreté et énergie retrouvée.",
+   "groupe": 4,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 88,
+   "reference": "479-486",
+   "nom": "FIT1",
+   "description": "Le FIT1 est la 2e phase du programme Forever F.I.T. Il permet, en 30 jours, d’acquérir de bonnes bases alimentaires, d’intégrer une activité physique régulière pour reprendre son corps en main et consolider une perte de poids durable.",
+   "groupe": 4,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 89,
+   "reference": "491-4",
+   "nom": "FIT2",
+   "description": "Le FIT2 est la 3e phase du programme Forever F.I.T. Il permet, en 30 jours, de poursuivre la transformation de son corps en tonifiant et sculptant sa silhouette. Ce programme est destiné à stabilisé votre poids en douceur et retrouver la silhouette.",
+   "groupe": 4,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 90,
+   "reference": "34",
+   "nom": "Aloe Berry Nectar",
+   "description": "Aloe Berry Nectar possède tous les principes actifs naturels de la Pulpe Aloès.  Enrichi d'extraits de canneberge et de pommes, deux sources naturelles de vitamines A et C, de potassium et de pectine, ce nectar au goût délicieux, vous aidera à purifier votre système digestif en vous apportant les éléments essentiels dont vous avez besoin.",
+   "groupe": 1,
+   "prix_distributeur": 10839,
+   "prix_non_distributeur": 14189,
+   "prix_public": 15641,
+   "quantite_stock": 100,
+   "etat": 2
+  },
+  {
+   "id": 91,
+   "reference": "196",
+   "nom": "Forever Freedom",
+   "description": "Forever Freedom, Pour soulager les douleurs articulaires, Forever Freedom est une solution naturelle pour vous sentir mieux. Il contient du sulfate de Glucasamine, du sulfate de Chondroïtine, du Gel stabilisé d'Aloe Vera, de la Vitamine C et du MSM, une source primaire de soufre bio-disponible dont le corps a besoin pour maintenir en bonne santé les tissus conjonctifs et le système articulaire.",
+   "groupe": 1,
+   "prix_distributeur": 15824,
+   "prix_non_distributeur": 20716,
+   "prix_public": 22836,
+   "quantite_stock": 100,
+   "etat": 2
+  },
+  {
+   "id": 92,
+   "reference": "306",
+   "nom": "Freedom 2Go",
+   "description": "Freedom 2Go, Pour soulager les douleurs articulaires, Forever Freedom est une solution naturelle pour vous sentir mieux. Il contient du sulfate de Glucasamine, du sulfate de Chondroïtine, du Gel stabilisé d'Aloe Vera, de la Vitamine C et du MSM, une source primaire de soufre bio-disponible dont le corps a besoin pour maintenir en bonne santé les tissus conjonctifs et le système articulaire.",
+   "groupe": 1,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 100,
+   "etat": 2
+  },
+  {
+   "id": 93,
+   "reference": "196",
+   "nom": "Forever Freedom 3",
+   "description": "Pour soulager ou apaiser les problèmes articulaires, Forever Freedom est la solution idéale. Il contient du sulfate de Glucasamine, du sulfate de Chondroïtine, du Gel stabilisé d'Aloe Vera, de la Vitamine C et du MSM, une source primaire de soufre bio-disponible dont son organisme a besoin pour maintenir en bonne santé les tissus conjonctifs et le système articulaire.",
+   "groupe": 19,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 94,
+   "reference": "27",
+   "nom": "Forever bee Propolis 2",
+   "description": "La propolis est collectée par les abeilles et utilisée pour protéger la ruche des infections bactériennes et mycosiques, au même titre, elle protégera l'organisme de votre animal des infections. Ce comprimé est sécable donc facilement transformable en poudre.",
+   "groupe": 19,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 95,
+   "reference": "320",
+   "nom": "Forever Argi + 2",
+   "description": "Forever Argi + est un complément à base de L-arginine, ribose, vitamines et plantes avec sucres et édulcorants, pour un accompagnement efficace pendant et après un effort extrême.",
+   "groupe": 19,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 96,
+   "reference": "61",
+   "nom": "Gelée Aloes 2",
+   "description": "Ce gel particulièrement riche en aloe vera hydrate, apaise et régénère l'épiderme. Il est idéal sur les petites plaies et les irritations locales. A appliquer de nombreuses fois par jour car l'animal peut se lécher sans aucun risque pour sa santé.",
+   "groupe": 19,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 97,
+   "reference": "64",
+   "nom": "Emulsion thermogène 2",
+   "description": "Cette émulsion contient des agents qui apportent des propriétés chauffantes et décongestionnantes. Ce baune de massage est idéal pour soulager les zones musculaires contractées.",
+   "groupe": 19,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 98,
+   "reference": "38",
+   "nom": "Crème lavante Aloes 2",
+   "description": "Ce savon doux peut être aussi utilisé aussi bien pour le pelage de vos chiens et de vos chats que pour nettoyer les plaies.",
+   "groupe": 19,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 99,
+   "reference": "206",
+   "nom": "Forever calcium 2",
+   "description": "Idéal pour les femmes enceintes, les fumeurs, les grands consommateurs de thé ou café et les femmes ménopausées qui peuvent être confrontées à de l’ostéoporose. La densité osseuse diminue, entrainant alors un risque accru de fracture. Les ongles deviennent cassants.",
+   "groupe": 17,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 100,
+   "reference": "234",
+   "nom": "Forever marine mask 2",
+   "description": "Forever Marine Mask agit sur votre peau en profondeur afin de nettoyer, assainir et resserrer les pores durablement, vous offrant ainsi une apparence plus jeune et plus saine. Il rétablit l'équilibre de votre peau, tout en l'hydratant grâce à l'association de l'aloès, du miel et du concombre.",
+   "groupe": 17,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 101,
+   "reference": "34",
+   "nom": "Activateur Aloes 2",
+   "description": "L' Activateur Aloès contient 99.6% de gel d'Aloe Vera stabilisé et de l'allantoïne, un composé de dégradation de l'acide urique et un agent apaisant très puissant.  L' Activateur Aloès est un superbe agent hydratant.",
+   "groupe": 17,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 102,
+   "reference": "51",
+   "nom": "Aloe propolis crème 2",
+   "description": "Pour les boutons disgracieux, nettoyez votre peau avec l'Aloe scrub, puis nettoyez avec Activateur Aloes et appliquez enfin Aloe propolis crème ou en crème hydratante diluée avec quelques gouttes de l'activateur Aloes.",
+   "groupe": 17,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 103,
+   "reference": "233",
+   "nom": "Crème contour des yeux 2",
+   "description": "Forever Crème Contour des yeux est un soin complet, léger et frais, spécialement conçu pour atténuer les cernes, et décongestionner les yeux. Cette crème, contenant du bisabolol, apaise et combat le gonflement. Dès son application, la peau est lissée mais aussi hydratée.",
+   "groupe": 17,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 104,
+   "reference": "28",
+   "nom": "Forever bright 2",
+   "description": "Ce gel dentaire, sans fluor et non abrasif, ravive l'émail de vos dents. Son complexe à la chlorophylle (sans menthol) procure une sensation de fraîcheur naturelle. Il est idéal pour toute la famille.",
+   "groupe": 16,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 105,
+   "reference": "38",
+   "nom": "Crème lavante Aloes 3",
+   "description": "Notre crème lavante Aloes est une crème lavante tout en un, aussi efficace pour le corps que les cheveux, de plus elle ne pique pas les yeux, cette crème lavante hydrate la peau en douceur.",
+   "groupe": 16,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 106,
+   "reference": "61",
+   "nom": "Gelée aloes 3",
+   "description": "Les propriétés apaisantes, réparatrices et hydratantes(*) de ce gel frais en font un soin idéal contre les affections de la peau, telles que les crevasses, écorchures, gerçures, rougeurs et les piqûres d'insectes.",
+   "groupe": 16,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 107,
+   "reference": "40",
+   "nom": "Aloe first 2",
+   "description": "Sur les cheveux abîmés,  les sécher d’abord délicatement avec une serviette, puis vaporiser l’Aloe First.  A utiliser chaque matin comme tonique capillaire. S'utilise aussi pour accompagner colorations et permanentes.",
+   "groupe": 15,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 108,
+   "reference": "57",
+   "nom": "Crème corps tonus 2",
+   "description": "La Crème Corps Tonus, à base de gel d'Aloe vera stabilisé (34.7%), est enrichie d'huiles végétales et d'extraits de plantes. Cette crème tonifiante est le partenaire idéal de la Crème Corps Modelante mais peut également être utilisée seule sur les parties du corps à raffermir. Elle est idéale pour le buste et le cou.",
+   "groupe": 7,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 109,
+   "reference": "339",
+   "nom": "Démaquillant éclat 2",
+   "description": "Le démaquillant éclat, formule non grasse, élimine parfaitement et tout en douceur, Parfait sur tous les types de peau. Sa texture onctueuse élimine en douceur les impuretés et le maquillage.",
+   "groupe": 8,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 110,
+   "reference": "233",
+   "nom": "Crème contour des yeux 3",
+   "description": "Forever Crème Contour des yeux est un soin complet, léger et frais, spécialement conçu pour atténuer les cernes, et décongestionner les yeux. Cette crème, contenant du bisabolol, apaise et combat le gonflement. Dès son application, la peau est lissée mais aussi hydratée(*). Jour après jour, votre regard devient rayonnant de jeunesse.",
+   "groupe": 8,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 111,
+   "reference": "343",
+   "nom": "Activateur Aloes 3",
+   "description": "L' Activateur Aloès contient du gel d'Aloe Vera stabilisé et de l'allantoïne et un agent apaisant très puissant. Imbibé un coton d'activateur Aloes puis déposez le sur le contour des yeux pour les faire dégonfler.",
+   "groupe": 9,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 112,
+   "reference": "64",
+   "nom": "Emulsion thermogène 3",
+   "description": "L'Émulsion thermogène procure une étonnante sensation de chaleur localisée. La richesse du gel de la plante d'Aloès est associée aux extraits d'Eucalyptus et de Menthol, connus pour leurs propriétés apaisantes. Utilisée comme crème de massage, l'Émulsion thermogène vous procure un intense moment de bien-être et de relaxation.",
+   "groupe": 6,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 113,
+   "reference": "20",
+   "nom": "Aloes MSM gel 2",
+   "description": "Formulé à base de gel d'Aloe vera stabilisé (40 %), et enrichi en Methyl Sulfonyl Methane, source de Soufre pour les articulations, Aloe MSM Gel intervient dans la stabilité et l'intégrité du tissu conjonctif (cartilage, os…). Utilisé comme gel de massage, Aloe MSM Gel soulage et apaise vos douleurs articulaires.",
+   "groupe": 6,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 0,
+   "etat": 2
+  },
+  {
+   "id": 114,
+   "reference": "439",
+   "nom": "Forever Daily",
+   "description": "Pour une absorption et une assimilation optimales des vitamines, minéraux, antioxydants pour maximiser son capital santé au quotidien.",
+   "groupe": 2,
+   "prix_distributeur": 8671,
+   "prix_non_distributeur": 11351,
+   "prix_public": 12513,
+   "quantite_stock": 2,
+   "etat": 2
+  },
+  {
+   "id": 115,
+   "reference": "354",
+   "nom": "FOREVER KIDS",
+   "description": "Rythme scolaire soutenu, emploi du temps surchargé, mais également mauvaises habitudes alimentaires et manque de sommeil peuvent provoquer une fatigue persistante chez l’enfant. Il est recommandé de ne pas le donner aux enfants en dessous de 6ans",
+   "groupe": 2,
+   "prix_distributeur": 6503,
+   "prix_non_distributeur": 8513,
+   "prix_public": 9385,
+   "quantite_stock": 2,
+   "etat": 2
+  },
+  {
+   "id": 116,
+   "reference": "72",
+   "nom": "FOREVER LYCIUM PLUS",
+   "description": "Forever Lycium plus est composé de baie de Goji est utilisée pour ses propriétés bénéfiques sur la santé liées à sa teneur en anti-oxydants, en vitamines, en oligo-éléments et stimule les défenses naturelles.",
+   "groupe": 2,
+   "prix_distributeur": 13006,
+   "prix_non_distributeur": 17026,
+   "prix_public": 18769,
+   "quantite_stock": 2,
+   "etat": 2
+  },
+  {
+   "id": 117,
+   "reference": "355",
+   "nom": "FOREVER IMMUBLEND",
+   "description": "Stimule les défenses immunitaires en toute saison.",
+   "groupe": 2,
+   "prix_distributeur": 10080,
+   "prix_non_distributeur": 13195,
+   "prix_public": 14546,
+   "quantite_stock": 2,
+   "etat": 2
+  },
+  {
+   "id": 118,
+   "reference": "65",
+   "nom": "FOREVER GARLIC THYME",
+   "description": "Confort et bien-être digestif\r\nAlimentation déséquilibrée, repas pris trop rapidement, excès alimentaire et stress peuvent influer sur votre confort et bien-être digestif. Forever Ail et Thym est une combinaison unique de 2 extraits de plantes qui vous assure un meilleur confort digestif.",
+   "groupe": 2,
+   "prix_distributeur": 7804,
+   "prix_non_distributeur": 10261,
+   "prix_public": 11261,
+   "quantite_stock": 2,
+   "etat": 2
+  },
+  {
+   "id": 119,
+   "reference": "68",
+   "nom": "FOREVER FIELDS OF GREENS",
+   "description": "Pour le confort digestif, idéal pour les enfants ayant une alimentation désiquilibrée.",
+   "groupe": 2,
+   "prix_distributeur": 5528,
+   "prix_non_distributeur": 7236,
+   "prix_public": 7977,
+   "quantite_stock": 2,
+   "etat": 2
+  },
+  {
+   "id": 120,
+   "reference": "222",
+   "nom": "FOREVER ACTIVE PROBIOTIC",
+   "description": "Confort digestif et intestinal. Surmenage, fatigue, alimentation déséquilibrée…. peuvent nuire à l’équilibre de la flore intestinale et ainsi provoquer un inconfort intestinal.",
+   "groupe": 2,
+   "prix_distributeur": 12789,
+   "prix_non_distributeur": 16743,
+   "prix_public": 18456,
+   "quantite_stock": 2,
+   "etat": 2
+  },
+  {
+   "id": 121,
+   "reference": "464",
+   "nom": "FOREVER FIBER",
+   "description": "Forever Fiber apporte 5 g de fibres hydrosolubles pour stimuler les fonctions intestinales et retrouver un bon confort digestif.",
+   "groupe": 2,
+   "prix_distributeur": 12464,
+   "prix_non_distributeur": 16317,
+   "prix_public": 17987,
+   "quantite_stock": 2,
+   "etat": 5
+  },
+  {
+   "id": 122,
+   "reference": "200",
+   "nom": "ALOE BLOSSOM HERBAL TEA",
+   "description": "Cette boisson, au subtil et délicat arôme de fleur d'aloès, associe les goûts fruités et acidulés de l'écorce d'orange et du zeste de citron, les saveurs épicées de la cannelle et du clou de girofle et la fraîcheur parfumée du poivre de Jamaïque et du gingembre.",
+   "groupe": 1,
+   "prix_distributeur": 7587,
+   "prix_non_distributeur": 9932,
+   "prix_public": 10949,
+   "quantite_stock": 2,
+   "etat": 1
+  },
+  {
+   "id": 123,
+   "reference": "36",
+   "nom": "FOREVER ROYAL JELLY",
+   "description": "Froid, vent et journées plus courtes marquent l'arrivée de l'hiver. Forever Royal Jelly est idéale pour se prémunir contre les conséquences de la période hivernale. Forever Royal Jelly renforce en douceur les défenses naturelles de l‘organisme et permet d'attaquer l'hiver en forme.",
+   "groupe": 3,
+   "prix_distributeur": 14090,
+   "prix_non_distributeur": 18445,
+   "prix_public": 20333,
+   "quantite_stock": 2,
+   "etat": 3
+  },
+  {
+   "id": 124,
+   "reference": "26",
+   "nom": "FOREVER BEE POLLEN",
+   "description": "Collecté sur les fleurs par les abeilles, Forever Bee Pollen, récolté et mis dans des containers en acier inoxydable qui lui permettent de conserver toute sa fraîcheur et qualité, améliore la vitalité et la résistance de l'organisme lors des changements",
+   "groupe": 3,
+   "prix_distributeur": 6503,
+   "prix_non_distributeur": 8513,
+   "prix_public": 9385,
+   "quantite_stock": 2,
+   "etat": 4
+  },
+  {
+   "id": 125,
+   "reference": "27",
+   "nom": "FOREVER BEE PROPOLIS",
+   "description": "La propolis est une résine collectée et métabolisée par les abeilles mellifères à partir des arbres et utilisée pour protéger la ruche. Cette substance ayant des propriétés anti-microbiennes, la ruche est ainsi protégée de la prolifération de champignons et de bactéries.",
+   "groupe": 3,
+   "prix_distributeur": 14090,
+   "prix_non_distributeur": 18445,
+   "prix_public": 20333,
+   "quantite_stock": 2,
+   "etat": 3
+  },
+  {
+   "id": 126,
+   "reference": "214",
+   "nom": "FOREVER ECHINACEA SUPREME",
+   "description": "L’Echinacea est une plante provenant de l’Amérique du Nord. Traditionnellement utilisée pour ses actions immunostimulantes, elle est particulièrement consommée en hiver pour soulager les picotements de la gorge et du pharynx. En prévention, elle favorise le bon fonctionnement du système de défense de l’organisme.",
+   "groupe": 2,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 2,
+   "etat": 3
+  },
+  {
+   "id": 127,
+   "reference": "37",
+   "nom": "FOREVER NATURE MIN",
+   "description": "OOOOOOOOOOOOOO",
+   "groupe": 2,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 2,
+   "etat": 2
+  },
+  {
+   "id": 128,
+   "reference": "Justice",
+   "nom": "Justice1",
+   "description": "Produit de qualité",
+   "groupe": 10,
+   "prix_distributeur": 1000,
+   "prix_non_distributeur": 1500,
+   "prix_public": 1750,
+   "quantite_stock": 2,
+   "etat": 10
+  },
+  {
+   "id": 129,
+   "reference": "439",
+   "nom": "Forever Daily",
+   "description": "Pour une absorption et une assimilation optimales des vitamines, minéraux, antioxydants pour maximiser son capital santé au quotidien.",
+   "groupe": 2,
+   "prix_distributeur": 0,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 2,
+   "etat": 2
+  },
+  {
+   "id": 130,
+   "reference": "234",
+   "nom": "FOREVER KIDS",
+   "description": "BON POUR LA SANTE DE LENFANT",
+   "groupe": 2,
+   "prix_distributeur": 10000,
+   "prix_non_distributeur": 0,
+   "prix_public": 0,
+   "quantite_stock": 2,
+   "etat": 2
+  }
+ ],
+ "maladie": [
+  {
+   "id": 1,
+   "libelle": "Paludisme",
+   "description": "Paludisme est due a une moustique.",
+   "etat": 2
+  },
+  {
+   "id": 2,
+   "libelle": "Courbature",
+   "description": "",
+   "etat": 2
+  },
+  {
+   "id": 3,
+   "libelle": "Fievre jaune",
+   "description": "",
+   "etat": 2
+  },
+  {
+   "id": 4,
+   "libelle": "Ebola",
+   "description": "",
+   "etat": 2
+  },
+  {
+   "id": 5,
+   "libelle": "Hemoroide",
+   "description": "",
+   "etat": 2
+  },
+  {
+   "id": 6,
+   "libelle": "L'hypertention",
+   "description": "DEFINITION: La tension artérielle correspond à la pression de sang dans les artères lorsque cette tension est supérieure à la normale, elle st dite hypertension et hypotension est inférieure à la normale",
+   "etat": 2
+  },
+  {
+   "id": 7,
+   "libelle": "Le Diabète",
+   "description": "Par définition on entend par le diabète l’excès du taux de sucre dans le système sanguin.\r\nLa maladie de diabète est due à la non production de l’insuline par le pancréas et souvent cette maladie est héréditaire se transmet de père en fils. La vieillesse, la mauvaise alimentation et les grossesses peuvent aussi être également à l’origine de la manifestation de cette maladie chez certains individus.",
+   "etat": 2
+  }
+ ],
+ "maladie_produit": [
+  {
+   "id": 1,
+   "maladie_id": 6,
+   "produit_id": 32,
+   "posologie": "3X1 cps/J avec de eau",
+   "ordre": 1
+  },
+  {
+   "id": 2,
+   "maladie_id": 6,
+   "produit_id": 3,
+   "posologie": "3X1 gel/J avec eau",
+   "ordre": 2
+  },
+  {
+   "id": 3,
+   "maladie_id": 6,
+   "produit_id": 4,
+   "posologie": "2X1co/j pendant le repas",
+   "ordre": 3
+  },
+  {
+   "id": 4,
+   "maladie_id": 6,
+   "produit_id": 5,
+   "posologie": "2X1co/j peut être pris n'importe quand",
+   "ordre": 4
+  },
+  {
+   "id": 5,
+   "maladie_id": 6,
+   "produit_id": 6,
+   "posologie": "2X1co/jour",
+   "ordre": 5
+  },
+  {
+   "id": 6,
+   "maladie_id": 7,
+   "produit_id": 75,
+   "posologie": "3 X 1/ 4 de verre / jour à jeun",
+   "ordre": 1
+  },
+  {
+   "id": 7,
+   "maladie_id": 1,
+   "produit_id": 2,
+   "posologie": "Pour le paludisme\r\n2 massages / jour",
+   "ordre": 1
+  },
+  {
+   "id": 8,
+   "maladie_id": 6,
+   "produit_id": 2,
+   "posologie": "",
+   "ordre": 6
+  },
+  {
+   "id": 9,
+   "maladie_id": 2,
+   "produit_id": 4,
+   "posologie": "",
+   "ordre": 1
+  },
+  {
+   "id": 10,
+   "maladie_id": 4,
+   "produit_id": 8,
+   "posologie": "",
+   "ordre": 1
+  }
+ ]
+}

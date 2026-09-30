@@ -13,8 +13,16 @@
 
 <EnTetePage
 	titre="Modifier le projet {p.reference}"
-	fil={[{ href: '/marches?onglet=projets', label: 'Projets' }, { href: `/marches/projets/${p.id}`, label: p.reference }]}
+	fil={[
+		{ href: '/marches?onglet=projets', label: 'Projets' },
+		{ href: `/marches/projets/${p.id}`, label: p.reference }
+	]}
 />
 <div class="conteneur max-w-3xl py-8">
-	<FormulaireProjet {form} initial={p} annuler="/marches/projets/{p.id}" libelleBouton="Enregistrer les modifications" />
+	<FormulaireProjet
+		{form}
+		initial={p}
+		annuler="/marches/projets/{p.id}"
+		libelleBouton="Enregistrer les modifications"
+	/>
 </div>

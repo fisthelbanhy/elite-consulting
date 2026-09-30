@@ -9,11 +9,13 @@ export const GET: RequestHandler = async (event) => {
 	const rep = await fetch(`${API_URL}/gestion/membres/export${event.url.search}`, {
 		headers: { Authorization: `Bearer ${event.locals.jeton}` }
 	}).catch(() => null);
-	if (!rep || !rep.ok) error(rep?.status ?? 503, "L'export n'a pas pu être généré. Réessayez dans un instant.");
+	if (!rep || !rep.ok)
+		error(rep?.status ?? 503, "L'export n'a pas pu être généré. Réessayez dans un instant.");
 	return new Response(rep.body, {
 		headers: {
 			'content-type': rep.headers.get('content-type') ?? 'text/csv; charset=utf-8',
-			'content-disposition': rep.headers.get('content-disposition') ?? 'attachment; filename="membres.csv"',
+			'content-disposition':
+				rep.headers.get('content-disposition') ?? 'attachment; filename="membres.csv"',
 			'cache-control': 'no-store'
 		}
 	});

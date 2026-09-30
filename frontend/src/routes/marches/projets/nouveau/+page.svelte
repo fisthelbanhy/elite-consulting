@@ -13,7 +13,10 @@
 <EnTetePage
 	titre="Publier un projet"
 	sousTitre="Présentez un programme qui cherche des partenaires, des prestataires ou des bénéficiaires."
-	fil={[{ href: '/marches', label: 'Marchés et projets' }, { href: '/marches?onglet=projets', label: 'Projets' }]}
+	fil={[
+		{ href: '/marches', label: 'Marchés et projets' },
+		{ href: '/marches?onglet=projets', label: 'Projets' }
+	]}
 />
 <div class="conteneur max-w-3xl py-8">
 	<FormulaireProjet {form} annuler="/marches?onglet=projets" />

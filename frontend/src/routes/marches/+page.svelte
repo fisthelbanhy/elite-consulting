@@ -46,20 +46,37 @@
 		? 'Des programmes et projets qui cherchent des partenaires, des prestataires ou des bénéficiaires.'
 		: 'Les avis publiés par les membres et relus par nos équipes, avec leur date limite bien en vue.'}
 	surtitre="Opportunités"
-	fil={[{ href: '/opportunites', label: 'Opportunités' }, { href: '/marches', label: 'Marchés et projets' }]}
+	fil={[
+		{ href: '/opportunites', label: 'Opportunités' },
+		{ href: '/marches', label: 'Marchés et projets' }
+	]}
 >
 	{#if projets}
-		<Bouton href="/marches/projets/nouveau"><Plus class="size-5" aria-hidden="true" />Publier un projet</Bouton>
+		<Bouton href="/marches/projets/nouveau"
+			><Plus class="size-5" aria-hidden="true" />Publier un projet</Bouton
+		>
 	{:else}
-		<Bouton href="/marches/nouveau"><Plus class="size-5" aria-hidden="true" />Publier un appel d'offres</Bouton>
+		<Bouton href="/marches/nouveau"
+			><Plus class="size-5" aria-hidden="true" />Publier un appel d'offres</Bouton
+		>
 	{/if}
 	{#snippet bas()}
 		<div class="mt-6">
 			<Onglets
 				label="Marchés et projets"
 				onglets={[
-					{ href: '/marches', label: "Marchés et appels d'offres", compteur: c?.marches_ouverts ?? null, actif: !projets },
-					{ href: '/marches?onglet=projets', label: 'Projets', compteur: c?.projets ?? null, actif: projets }
+					{
+						href: '/marches',
+						label: "Marchés et appels d'offres",
+						compteur: c?.marches_ouverts ?? null,
+						actif: !projets
+					},
+					{
+						href: '/marches?onglet=projets',
+						label: 'Projets',
+						compteur: c?.projets ?? null,
+						actif: projets
+					}
 				]}
 			/>
 		</div>
@@ -74,18 +91,25 @@
 		{#if data.marches.items.length}
 			<div>
 				<p class="mb-4 text-ardoise" aria-live="polite">
-					{data.marches.total} marché{data.marches.total > 1 ? 's' : ''}{#if c && !f.ouverts} · {c.marches_ouverts} encore ouvert{c.marches_ouverts > 1 ? 's' : ''}{/if}
+					{data.marches.total} marché{data.marches.total > 1 ? 's' : ''}{#if c && !f.ouverts}
+						· {c.marches_ouverts} encore ouvert{c.marches_ouverts > 1 ? 's' : ''}{/if}
 				</p>
 				<ul class="grid gap-4 md:grid-cols-2">
 					{#each data.marches.items as m (m.id)}<li><CarteMarche marche={m} /></li>{/each}
 				</ul>
-				<Pagination total={data.marches.total} page={data.marches.page} taille={data.marches.taille} />
+				<Pagination
+					total={data.marches.total}
+					page={data.marches.page}
+					taille={data.marches.taille}
+				/>
 			</div>
 			<AlerteWhatsApp />
 		{:else}
 			<EtatVide
 				icone={Landmark}
-				titre={filtre ? 'Aucun marché ne correspond à votre recherche' : "Pas d'appel d'offres ouvert pour l'instant"}
+				titre={filtre
+					? 'Aucun marché ne correspond à votre recherche'
+					: "Pas d'appel d'offres ouvert pour l'instant"}
 				texte="Laissez-nous votre secteur et votre ville : on vous envoie les nouveaux marchés dès leur publication."
 				messageWhatsApp="Bonjour la Frangine, je souhaite recevoir les nouveaux marchés et appels d'offres sur WhatsApp. Mon secteur : … Ma ville : …"
 			>
@@ -93,24 +117,45 @@
 			</EtatVide>
 		{/if}
 	{:else if data.projets}
-		<form method="GET" class="carte flex flex-col gap-3 p-4 sm:flex-row sm:items-end" data-sveltekit-keepfocus>
+		<form
+			method="GET"
+			class="carte flex flex-col gap-3 p-4 sm:flex-row sm:items-end"
+			data-sveltekit-keepfocus
+		>
 			<input type="hidden" name="onglet" value="projets" />
 			<div class="flex-1">
 				<label for="q" class="mb-1.5 block text-[15px] font-semibold">Rechercher un projet</label>
 				<div class="relative">
-					<Search class="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-ardoise" aria-hidden="true" />
-					<input id="q" name="q" type="search" value={f.q} placeholder="Agriculture, formation, bailleur…" class="pl-10" maxlength="100" />
+					<Search
+						class="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-ardoise"
+						aria-hidden="true"
+					/>
+					<input
+						id="q"
+						name="q"
+						type="search"
+						value={f.q}
+						placeholder="Agriculture, formation, bailleur…"
+						class="pl-10"
+						maxlength="100"
+					/>
 				</div>
 			</div>
 			<Bouton type="submit" variante="fleuve">Rechercher</Bouton>
 		</form>
 		{#if data.projets.items.length}
 			<div>
-				<p class="mb-4 text-ardoise" aria-live="polite">{data.projets.total} projet{data.projets.total > 1 ? 's' : ''}</p>
+				<p class="mb-4 text-ardoise" aria-live="polite">
+					{data.projets.total} projet{data.projets.total > 1 ? 's' : ''}
+				</p>
 				<ul class="grid gap-4 md:grid-cols-2">
 					{#each data.projets.items as p (p.id)}<li><CarteProjet projet={p} /></li>{/each}
 				</ul>
-				<Pagination total={data.projets.total} page={data.projets.page} taille={data.projets.taille} />
+				<Pagination
+					total={data.projets.total}
+					page={data.projets.page}
+					taille={data.projets.taille}
+				/>
 			</div>
 		{:else}
 			<EtatVide

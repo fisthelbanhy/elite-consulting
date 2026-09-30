@@ -34,11 +34,15 @@ export const actions: Actions = {
 		const duree_saisie_ms = debut ? Math.max(1, Date.now() - debut) : 0;
 		// Un seul champ mot de passe avec bouton « Afficher » : il sert aussi de confirmation
 		const corps = { ...valeurs, confirmation: valeurs.mot_de_passe, duree_saisie_ms };
-		const r = await soumettre<{ jeton: string; expire: string; membre: MembreMoi }>(event, '/auth/inscription', {
-			body: corps,
-			valeurs,
-			jeton: null
-		});
+		const r = await soumettre<{ jeton: string; expire: string; membre: MembreMoi }>(
+			event,
+			'/auth/inscription',
+			{
+				body: corps,
+				valeurs,
+				jeton: null
+			}
+		);
 		if (!r.ok) return r.echec;
 		ouvrirSession(event.cookies, r.data.jeton, r.data.expire);
 		redirect(303, suiteSure(String(fd.get('suite') ?? ''), '/espace?bienvenue=1'));

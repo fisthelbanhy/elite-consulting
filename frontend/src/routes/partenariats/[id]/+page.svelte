@@ -29,24 +29,48 @@
 
 <svelte:head>
 	<title>{p.actif} — partenariat & troc ({p.reference}) — {data.parametres.nom_site}</title>
-	<meta name="description" content={tronquer(`J'ai : ${p.actif}. Je cherche : ${p.recherche}. ${p.objectif}`, 155)} />
+	<meta
+		name="description"
+		content={tronquer(`J'ai : ${p.actif}. Je cherche : ${p.recherche}. ${p.objectif}`, 155)}
+	/>
 </svelte:head>
 
-<EnTetePage titre={p.actif} surtitre="Partenariat & troc" fil={[{ href: '/partenariats', label: 'Partenariat & troc' }]}>
-	<Bouton href={lienPartageWhatsApp(`Partenariat : ${p.actif} — ${page.url.href}`)} variante="secondaire" target="_blank" rel="noopener">
+<EnTetePage
+	titre={p.actif}
+	surtitre="Partenariat & troc"
+	fil={[{ href: '/partenariats', label: 'Partenariat & troc' }]}
+>
+	<Bouton
+		href={lienPartageWhatsApp(`Partenariat : ${p.actif} — ${page.url.href}`)}
+		variante="secondaire"
+		target="_blank"
+		rel="noopener"
+	>
 		<Share2 class="size-5" aria-hidden="true" />Partager
 	</Bouton>
 </EnTetePage>
 
 <div class="conteneur grid gap-8 py-8 lg:grid-cols-[1fr_22rem]">
 	<div class="space-y-6">
-		{#if data.enregistre}<Alerte type="succes" titre="Votre recherche de partenariat & troc a bien été enregistrée.">Référence {p.reference}.</Alerte>{/if}
+		{#if data.enregistre}<Alerte
+				type="succes"
+				titre="Votre recherche de partenariat & troc a bien été enregistrée."
+				>Référence {p.reference}.</Alerte
+			>{/if}
 
 		<section class="carte space-y-5 p-6">
 			<div class="flex flex-wrap items-center gap-2 text-sm text-ardoise">
 				<Badge ton="foret">{p.reference}</Badge>
-				<span>Publiée le {date(p.date_creation)}{#if p.auteur} par <strong class="text-encre">{p.auteur.pseudonyme}</strong>{/if}</span>
-				<span class="flex items-center gap-1"><Users class="size-4" aria-hidden="true" />{p.nombre_interets} intéressé{p.nombre_interets > 1 ? 's' : ''}</span>
+				<span
+					>Publiée le {date(p.date_creation)}{#if p.auteur}
+						par <strong class="text-encre">{p.auteur.pseudonyme}</strong>{/if}</span
+				>
+				<span class="flex items-center gap-1"
+					><Users class="size-4" aria-hidden="true" />{p.nombre_interets} intéressé{p.nombre_interets >
+					1
+						? 's'
+						: ''}</span
+				>
 			</div>
 			<dl class="space-y-4">
 				{#each blocs as b (b.titre)}
@@ -66,24 +90,52 @@
 			<section class="carte p-5">
 				<h2 class="text-lg font-bold">Cette proposition vous intéresse ?</h2>
 				{#if !data.membre}
-					<p class="mt-2 text-[15px] text-ardoise">Créez votre compte gratuit pour vous manifester : l'auteur reçoit votre message par La Frangine.</p>
+					<p class="mt-2 text-[15px] text-ardoise">
+						Créez votre compte gratuit pour vous manifester : l'auteur reçoit votre message par La
+						Frangine.
+					</p>
 					<div class="mt-4 space-y-2">
-						<Bouton href="/inscription?suite={page.url.pathname}" pleineLargeur>Je suis intéressé·e</Bouton>
-						<Bouton href="/connexion?suite={page.url.pathname}" variante="fantome" pleineLargeur>J'ai déjà un compte</Bouton>
+						<Bouton href="/inscription?suite={page.url.pathname}" pleineLargeur
+							>Je suis intéressé·e</Bouton
+						>
+						<Bouton href="/connexion?suite={page.url.pathname}" variante="fantome" pleineLargeur
+							>J'ai déjà un compte</Bouton
+						>
 					</div>
 				{:else if p.mon_interet || (form?.cle === 'interet' && form?.succes)}
-					<Alerte type="succes" titre={form?.cle === 'interet' && form?.succes ? form.succes : 'Vous vous êtes déjà manifesté·e.'} class="mt-3">L'auteur de la proposition a été prévenu.</Alerte>
+					<Alerte
+						type="succes"
+						titre={form?.cle === 'interet' && form?.succes
+							? form.succes
+							: 'Vous vous êtes déjà manifesté·e.'}
+						class="mt-3">L'auteur de la proposition a été prévenu.</Alerte
+					>
 				{:else}
 					<Formulaire action="?/interet" {form} cle="interet" class="mt-3">
 						{#snippet children({ envoi })}
-							<Zone label="Votre intéressement" lignes={4} requis placeholder="Ce que vous proposez, vos disponibilités…" aide="5 caractères minimum." {...champ(form, 'message', '', 'interet')} />
-							<Bouton type="submit" pleineLargeur chargement={envoi} class="mt-4">Enregistrer mon intéressement</Bouton>
+							<Zone
+								label="Votre intéressement"
+								lignes={4}
+								requis
+								placeholder="Ce que vous proposez, vos disponibilités…"
+								aide="5 caractères minimum."
+								{...champ(form, 'message', '', 'interet')}
+							/>
+							<Bouton type="submit" pleineLargeur chargement={envoi} class="mt-4"
+								>Enregistrer mon intéressement</Bouton
+							>
 						{/snippet}
 					</Formulaire>
 				{/if}
 			</section>
 		{/if}
 
-		<PanneauModeration etat={p.etat} peutModerer={p.peut_moderer} peutModifier={p.peut_modifier} lienModifier="/partenariats/{p.id}/modifier" {form} />
+		<PanneauModeration
+			etat={p.etat}
+			peutModerer={p.peut_moderer}
+			peutModifier={p.peut_modifier}
+			lienModifier="/partenariats/{p.id}/modifier"
+			{form}
+		/>
 	</aside>
 </div>

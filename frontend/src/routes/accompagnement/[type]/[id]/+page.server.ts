@@ -14,10 +14,15 @@ export const load: PageServerLoad = async (event) => {
 	const q = liste.find((x) => x.type === dossier.type_dossier);
 	// URL cohérente avec le type réel du dossier
 	if (q && q.slug !== event.params.type) redirect(301, `/accompagnement/${q.slug}/${dossier.id}`);
-	return { dossier, questionnaire: q ?? (await questionnaire(event, event.params.type)), statut: event.url.searchParams.get('statut') };
+	return {
+		dossier,
+		questionnaire: q ?? (await questionnaire(event, event.params.type)),
+		statut: event.url.searchParams.get('statut')
+	};
 };
 
 export const actions: Actions = {
 	...actionsModeration((p) => `/accompagnement/${p.id}`, '/accompagnement'),
-	default: async (event) => enregistrerDossier(event, await questionnaire(event, event.params.type), event.params.id)
+	default: async (event) =>
+		enregistrerDossier(event, await questionnaire(event, event.params.type), event.params.id)
 };

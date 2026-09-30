@@ -21,9 +21,14 @@
 		libelleBouton?: string;
 	} = $props();
 
-	const f = $derived(form as { valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null);
+	const f = $derived(
+		form as { valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null
+	);
 	// Legacy : liste 0 à 120 mois
-	const durees = Array.from({ length: 121 }, (_, n) => ({ value: n, label: n === 0 ? 'Moins d’un mois' : `${n} mois` }));
+	const durees = Array.from({ length: 121 }, (_, n) => ({
+		value: n,
+		label: n === 0 ? 'Moins d’un mois' : `${n} mois`
+	}));
 </script>
 
 <Formulaire {form}>
@@ -32,23 +37,64 @@
 			<fieldset class="carte space-y-5 p-6">
 				<legend class="sr-only">Le projet</legend>
 				<h2 class="text-xl font-bold">Le projet</h2>
-				<Saisie label="Libellé" requis maxlength={150} aide="Le nom court du projet (ex. PDAC)." {...champ(f, 'libelle', initial?.libelle)} />
-				<Saisie label="Objet du projet" requis maxlength={150} {...champ(f, 'objet', initial?.objet)} />
+				<Saisie
+					label="Libellé"
+					requis
+					maxlength={150}
+					aide="Le nom court du projet (ex. PDAC)."
+					{...champ(f, 'libelle', initial?.libelle)}
+				/>
+				<Saisie
+					label="Objet du projet"
+					requis
+					maxlength={150}
+					{...champ(f, 'objet', initial?.objet)}
+				/>
 				<Saisie label="Objectif" maxlength={500} {...champ(f, 'objectif', initial?.objectif)} />
-				<Zone label="Description du projet" lignes={5} {...champ(f, 'description', initial?.description)} />
+				<Zone
+					label="Description du projet"
+					lignes={5}
+					{...champ(f, 'description', initial?.description)}
+				/>
 				<div class="grid gap-5 sm:grid-cols-2">
-					<Liste label="Durée" requis options={durees} vide="Choisir la durée…" {...champ(f, 'duree_mois', initial?.duree_mois)} />
-					<Saisie label="Date de lancement" type="date" {...champ(f, 'date_lancement', initial?.date_lancement)} />
+					<Liste
+						label="Durée"
+						requis
+						options={durees}
+						vide="Choisir la durée…"
+						{...champ(f, 'duree_mois', initial?.duree_mois)}
+					/>
+					<Saisie
+						label="Date de lancement"
+						type="date"
+						{...champ(f, 'date_lancement', initial?.date_lancement)}
+					/>
 				</div>
-				<Zone label="Conditions d'éligibilité" lignes={4} aide="Qui peut répondre ou participer ?" {...champ(f, 'conditions', initial?.conditions)} />
+				<Zone
+					label="Conditions d'éligibilité"
+					lignes={4}
+					aide="Qui peut répondre ou participer ?"
+					{...champ(f, 'conditions', initial?.conditions)}
+				/>
 			</fieldset>
 
 			<fieldset class="carte space-y-5 p-6">
 				<legend class="sr-only">Porteurs</legend>
 				<h2 class="text-xl font-bold">Porteurs du projet</h2>
 				<div class="grid gap-5 sm:grid-cols-2">
-					<Saisie label="Responsable" requis maxlength={150} {...champ(f, 'responsable', initial?.responsable)} />
-					<Saisie label="Promoteur" requis maxlength={150} aide="Organisme ou bailleur." {...champ(f, 'promoteur', initial?.promoteur)} />
+					<Saisie
+						label="Responsable"
+						requis
+						maxlength={150}
+						{...champ(f, 'responsable', initial?.responsable)}
+					/>
+					<Saisie
+						label="Promoteur"
+						requis
+						maxlength={150}
+						aide="Organisme ou bailleur."
+						{...champ(f, 'promoteur', initial?.promoteur)}
+					/>
 				</div>
 				<Saisie label="Adresse" maxlength={300} {...champ(f, 'adresse', initial?.adresse)} />
 			</fieldset>

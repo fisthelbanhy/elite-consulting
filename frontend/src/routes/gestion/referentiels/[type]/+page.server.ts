@@ -16,8 +16,20 @@ function config(type: string) {
 export const load: PageServerLoad = async (event) => {
 	const cfg = config(event.params.type);
 	const api = `/gestion/referentiels/${cfg.cle}`;
-	const f = filtres(event.url, ['q', 'etat', 'ville_id', 'secteur_id', 'page', 'modifier'] as const);
-	const parentApi = cfg.parent === 'ville' ? '/gestion/referentiels/villes' : cfg.parent === 'secteur' ? '/gestion/referentiels/secteurs' : null;
+	const f = filtres(event.url, [
+		'q',
+		'etat',
+		'ville_id',
+		'secteur_id',
+		'page',
+		'modifier'
+	] as const);
+	const parentApi =
+		cfg.parent === 'ville'
+			? '/gestion/referentiels/villes'
+			: cfg.parent === 'secteur'
+				? '/gestion/referentiels/secteurs'
+				: null;
 	const [liste, parents, element] = await Promise.all([
 		charger<Liste<LigneReferentiel>>(event, api, {
 			q: f.q,
@@ -27,10 +39,15 @@ export const load: PageServerLoad = async (event) => {
 			page: f.page,
 			taille: taillePage(event.url)
 		}),
-		parentApi ? charger<Liste<LigneReferentiel>>(event, parentApi, { taille: 500 }) : Promise.resolve(null),
+		parentApi
+			? charger<Liste<LigneReferentiel>>(event, parentApi, { taille: 500 })
+			: Promise.resolve(null),
 		f.modifier ? charger<LigneReferentiel>(event, `${api}/${f.modifier}`) : Promise.resolve(null)
 	]);
-	const optionsParent = (parents?.items ?? []).map((p) => ({ value: p.id, label: String(p.nom ?? p.libelle ?? '') }));
+	const optionsParent = (parents?.items ?? []).map((p) => ({
+		value: p.id,
+		label: String(p.nom ?? p.libelle ?? '')
+	}));
 	return {
 		cle: cfg.cle,
 		liste,
@@ -58,7 +75,8 @@ export const actions: Actions = {
 		invaliderReferentiels();
 		// Après enregistrement : retour à la liste (les filtres sont conservés, le formulaire se vide)
 		const u = new URL(event.url);
-		for (const k of [...u.searchParams.keys()]) if (k.startsWith('/') || k === 'modifier') u.searchParams.delete(k);
+		for (const k of [...u.searchParams.keys()])
+			if (k.startsWith('/') || k === 'modifier') u.searchParams.delete(k);
 		u.searchParams.set('ok', id ? 'modifie' : 'cree');
 		redirect(303, `${u.pathname}${u.search}`);
 	},

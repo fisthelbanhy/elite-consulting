@@ -29,21 +29,47 @@
 		aide?: string;
 	} = $props();
 
-	const initial = () => (valeur !== null && valeur !== undefined && valeur !== '' ? String(valeur) : valeurLibre ? 'autre' : '');
+	const initial = () =>
+		valeur !== null && valeur !== undefined && valeur !== ''
+			? String(valeur)
+			: valeurLibre
+				? 'autre'
+				: '';
 	let choix = $state(initial());
+	// Ce drapeau vaut « le composant tourne côté navigateur » : un `$derived` s'évaluerait aussi
+	// au rendu serveur, où il doit rester faux pour que le formulaire marche sans JavaScript.
+	// eslint-disable-next-line svelte/prefer-writable-derived
 	let monte = $state(false);
 	$effect(() => {
 		monte = true;
 	});
 	const options = $derived([
-		...banques.map((b) => ({ value: b.id, label: b.sigle && b.sigle !== b.nom ? `${b.nom} (${b.sigle})` : b.nom })),
+		...banques.map((b) => ({
+			value: b.id,
+			label: b.sigle && b.sigle !== b.nom ? `${b.nom} (${b.sigle})` : b.nom
+		})),
 		{ value: 'autre', label: 'Autre banque (non listée)' }
 	]);
 </script>
 
 <div class="space-y-3">
-	<Liste {label} {name} {options} bind:value={choix} {erreur} {requis} {aide} vide="Choisir la banque…" />
+	<Liste
+		{label}
+		{name}
+		{options}
+		bind:value={choix}
+		{erreur}
+		{requis}
+		{aide}
+		vide="Choisir la banque…"
+	/>
 	{#if !monte || choix === 'autre'}
-		<Saisie label="Nom de la banque (si non listée)" name={nomLibre} value={valeurLibre} maxlength={130} autocomplete="off" />
+		<Saisie
+			label="Nom de la banque (si non listée)"
+			name={nomLibre}
+			value={valeurLibre}
+			maxlength={130}
+			autocomplete="off"
+		/>
 	{/if}
 </div>

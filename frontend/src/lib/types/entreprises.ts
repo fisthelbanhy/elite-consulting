@@ -1,4 +1,4 @@
-/** Annuaire des entreprises — aligné sur `backend/app/schemas/entreprises.py`. */
+/** Annuaire des entreprises — aligné sur `api/src/routes/entreprises.ts`. */
 import type { Auteur } from '$lib/types';
 
 export interface Libelle {

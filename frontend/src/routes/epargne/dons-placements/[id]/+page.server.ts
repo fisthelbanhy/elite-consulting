@@ -16,8 +16,17 @@ export const load: PageServerLoad = async (event) => {
 export const actions: Actions = {
 	etat: actionsModeration((p) => `/epargne/fonds/${p.id}`, '/epargne/dons-placements').etat,
 	modifier: async (event) => {
-		const valeurs = lireFormulaire(await event.request.formData(), { motivation: 'texte', montant: 'entier', duree_mois: 'entier' });
-		const r = await soumettre<Ok>(event, `/epargne/fonds/${event.params.id}`, { method: 'PUT', body: valeurs, valeurs, cle: 'modifier' });
+		const valeurs = lireFormulaire(await event.request.formData(), {
+			motivation: 'texte',
+			montant: 'entier',
+			duree_mois: 'entier'
+		});
+		const r = await soumettre<Ok>(event, `/epargne/fonds/${event.params.id}`, {
+			method: 'PUT',
+			body: valeurs,
+			valeurs,
+			cle: 'modifier'
+		});
 		if (!r.ok) return r.echec;
 		return { cle: 'modifier', succes: r.data.message };
 	}

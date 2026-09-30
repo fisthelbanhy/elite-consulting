@@ -20,7 +20,11 @@
 	import type { MembreMoi } from '$lib/types';
 	import type { Compteurs } from '$lib/types/gestion';
 
-	let { gestionnaire, compteurs, nomSite }: { gestionnaire: MembreMoi; compteurs: Compteurs; nomSite: string } = $props();
+	let {
+		gestionnaire,
+		compteurs,
+		nomSite
+	}: { gestionnaire: MembreMoi; compteurs: Compteurs; nomSite: string } = $props();
 
 	type Lien = { href: string; label: string; icone: Component; badge?: number; exact?: boolean };
 	const groupes: { titre: string; liens: Lien[] }[] = $derived([
@@ -28,22 +32,52 @@
 			titre: 'Pilotage',
 			liens: [
 				{ href: '/gestion', label: 'Tableau de bord', icone: LayoutDashboard, exact: true },
-				{ href: '/gestion/moderation', label: 'Modération', icone: ShieldCheck, badge: compteurs.fiches_en_attente }
+				{
+					href: '/gestion/moderation',
+					label: 'Modération',
+					icone: ShieldCheck,
+					badge: compteurs.fiches_en_attente
+				}
 			]
 		},
 		{
 			titre: 'Membres',
 			liens: [
-				{ href: '/gestion/membres', label: 'Membres', icone: Users, badge: compteurs.nouveaux_membres },
-				{ href: '/gestion/reinitialisations', label: 'Mots de passe oubliés', icone: KeyRound, badge: compteurs.reinitialisations_en_attente },
-				{ href: '/gestion/paiements', label: 'Paiements', icone: Wallet, badge: compteurs.paiements_en_attente }
+				{
+					href: '/gestion/membres',
+					label: 'Membres',
+					icone: Users,
+					badge: compteurs.nouveaux_membres
+				},
+				{
+					href: '/gestion/reinitialisations',
+					label: 'Mots de passe oubliés',
+					icone: KeyRound,
+					badge: compteurs.reinitialisations_en_attente
+				},
+				{
+					href: '/gestion/paiements',
+					label: 'Paiements',
+					icone: Wallet,
+					badge: compteurs.paiements_en_attente
+				}
 			]
 		},
 		{
 			titre: 'Relation',
 			liens: [
-				{ href: '/gestion/messages', label: 'Messages', icone: MessagesSquare, badge: compteurs.messages_non_lus },
-				{ href: '/gestion/contacts', label: 'Contacts', icone: Inbox, badge: compteurs.contacts_a_traiter },
+				{
+					href: '/gestion/messages',
+					label: 'Messages',
+					icone: MessagesSquare,
+					badge: compteurs.messages_non_lus
+				},
+				{
+					href: '/gestion/contacts',
+					label: 'Contacts',
+					icone: Inbox,
+					badge: compteurs.contacts_a_traiter
+				},
 				{ href: '/gestion/suggestions', label: 'Suggestions', icone: Lightbulb },
 				{ href: '/gestion/publicites', label: 'Publicités', icone: Megaphone }
 			]
@@ -66,7 +100,10 @@
 
 <div class="flex h-full flex-col bg-fleuve-900 text-fleuve-100">
 	<div class="flex items-center gap-3 border-b border-white/10 px-4 py-4">
-		<span class="grid size-10 shrink-0 place-items-center rounded-full bg-laterite-600 font-display text-lg font-bold text-white" aria-hidden="true">
+		<span
+			class="grid size-10 shrink-0 place-items-center rounded-full bg-laterite-600 font-display text-lg font-bold text-white"
+			aria-hidden="true"
+		>
 			{nomSite.slice(0, 1)}
 		</span>
 		<div class="min-w-0">
@@ -77,7 +114,9 @@
 
 	<nav aria-label="Navigation de la gestion" class="flex-1 overflow-y-auto px-2 py-3">
 		{#each groupes as g (g.titre)}
-			<p class="px-3 pt-3 pb-1 text-[11px] font-bold tracking-wider text-fleuve-300 uppercase">{g.titre}</p>
+			<p class="px-3 pt-3 pb-1 text-[11px] font-bold tracking-wider text-fleuve-300 uppercase">
+				{g.titre}
+			</p>
 			<ul>
 				{#each g.liens as l (l.href)}
 					{@const a = actif(l)}
@@ -89,7 +128,10 @@
 								? 'bg-white/10 text-white'
 								: 'text-fleuve-100 hover:bg-white/5 hover:text-white'}"
 						>
-							<l.icone class="size-5 shrink-0 {a ? 'text-soleil-300' : 'text-fleuve-300'}" aria-hidden="true" />
+							<l.icone
+								class="size-5 shrink-0 {a ? 'text-soleil-300' : 'text-fleuve-300'}"
+								aria-hidden="true"
+							/>
 							<span class="flex-1">{l.label}</span>
 							{#if l.badge}
 								<span class="rounded-full bg-laterite-600 px-2 py-0.5 text-xs font-bold text-white">
@@ -105,21 +147,36 @@
 
 	<div class="space-y-1 border-t border-white/10 px-2 py-3">
 		<div class="flex items-center gap-3 px-3 py-2">
-			<Avatar src={gestionnaire.photo_url} nom={gestionnaire.pseudonyme || gestionnaire.nom} taille="sm" />
+			<Avatar
+				src={gestionnaire.photo_url}
+				nom={gestionnaire.pseudonyme || gestionnaire.nom}
+				taille="sm"
+			/>
 			<div class="min-w-0 text-sm">
-				<p class="truncate font-semibold text-white">{gestionnaire.pseudonyme || gestionnaire.nom}</p>
+				<p class="truncate font-semibold text-white">
+					{gestionnaire.pseudonyme || gestionnaire.nom}
+				</p>
 				<p class="truncate text-xs text-fleuve-300">
-					{[gestionnaire.droit_attribution && 'Attribution', gestionnaire.droit_caisse && 'Caisse', gestionnaire.droit_activation && 'Activation']
+					{[
+						gestionnaire.droit_attribution && 'Attribution',
+						gestionnaire.droit_caisse && 'Caisse',
+						gestionnaire.droit_activation && 'Activation'
+					]
 						.filter(Boolean)
 						.join(' · ') || 'Consultation'}
 				</p>
 			</div>
 		</div>
-		<a href="/" class="flex min-h-11 items-center gap-3 rounded-lg px-3 text-[15px] font-medium hover:bg-white/5 hover:text-white">
+		<a
+			href="/"
+			class="flex min-h-11 items-center gap-3 rounded-lg px-3 text-[15px] font-medium hover:bg-white/5 hover:text-white"
+		>
 			<ExternalLink class="size-5 text-fleuve-300" aria-hidden="true" />Voir le site
 		</a>
 		<form method="POST" action="/deconnexion">
-			<button class="flex min-h-11 w-full items-center gap-3 rounded-lg px-3 text-left text-[15px] font-medium text-laterite-100 hover:bg-white/5">
+			<button
+				class="flex min-h-11 w-full items-center gap-3 rounded-lg px-3 text-left text-[15px] font-medium text-laterite-100 hover:bg-white/5"
+			>
 				<LogOut class="size-5" aria-hidden="true" />Se déconnecter
 			</button>
 		</form>

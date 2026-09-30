@@ -5,7 +5,11 @@ import type { PartenariatResume } from '$lib/types/partenariats';
 
 export const load: PageServerLoad = async (event) => {
 	const u = event.url.searchParams;
-	const filtres = { q: u.get('q') ?? '', miennes: u.get('miennes') ?? '', page: u.get('page') ?? '1' };
+	const filtres = {
+		q: u.get('q') ?? '',
+		miennes: u.get('miennes') ?? '',
+		page: u.get('page') ?? '1'
+	};
 	const [liste, compteur] = await Promise.all([
 		charger<Liste<PartenariatResume>>(event, '/partenariats', { ...filtres, taille: 20 }),
 		chargerOuDefaut(event, '/partenariats/compteur', { publies: 0 })

@@ -51,7 +51,10 @@ export function lireCourse(fd: FormData) {
 		date_livraison: jour && heure ? `${jour}T${heure}` : null,
 		lignes: [
 			...lignes,
-			...Object.entries(catalogue).map(([id, quantite]) => ({ article_catalogue_id: Number(id), quantite }))
+			...Object.entries(catalogue).map(([id, quantite]) => ({
+				article_catalogue_id: Number(id),
+				quantite
+			}))
 		]
 	};
 	const valeurs = { ...champs, jour_livraison: jour, heure_livraison: heure, lignes, catalogue };
@@ -108,7 +111,11 @@ export async function enregistrerArticleCatalogue(event: RequestEvent, id?: stri
 			await televerser(event, `/courses/catalogue/${r.data.id}/photo`, 'fichier', photo);
 		} catch (e) {
 			if (e instanceof ApiError) {
-				return fail(e.statut, { message: `Article enregistré, mais photo refusée : ${e.message}`, champs: e.champs, valeurs });
+				return fail(e.statut, {
+					message: `Article enregistré, mais photo refusée : ${e.message}`,
+					champs: e.champs,
+					valeurs
+				});
 			}
 			throw e;
 		}

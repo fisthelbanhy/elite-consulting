@@ -22,7 +22,12 @@
 		onchange?: (v: string) => void;
 	} = $props();
 
-	const grilles = { 1: '', 2: 'sm:grid-cols-2', 3: 'sm:grid-cols-3', 4: 'sm:grid-cols-2 lg:grid-cols-4' };
+	const grilles = {
+		1: '',
+		2: 'sm:grid-cols-2',
+		3: 'sm:grid-cols-3',
+		4: 'sm:grid-cols-2 lg:grid-cols-4'
+	};
 </script>
 
 <fieldset class="space-y-2" aria-invalid={erreur ? 'true' : undefined} id="champ-{name}">

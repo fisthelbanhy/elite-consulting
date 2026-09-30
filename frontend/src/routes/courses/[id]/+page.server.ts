@@ -16,7 +16,10 @@ export const actions: Actions = {
 	etatCourse: async (event) => {
 		const fd = await event.request.formData();
 		const etat_course = Number(fd.get('etat_course'));
-		const r = await soumettre<Ok>(event, `/courses/${event.params.id}/etat-course`, { body: { etat_course }, cle: 'suivi' });
+		const r = await soumettre<Ok>(event, `/courses/${event.params.id}/etat-course`, {
+			body: { etat_course },
+			cle: 'suivi'
+		});
 		if (!r.ok) return r.echec;
 		return { cle: 'suivi', succes: r.data.message };
 	}

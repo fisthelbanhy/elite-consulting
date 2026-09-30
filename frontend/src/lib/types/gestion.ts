@@ -139,7 +139,8 @@ export interface OptionMembre {
 	label: string;
 }
 
-export type StatutReinitialisation = 'en_attente' | 'prise_en_charge' | 'ignoree' | 'lien_actif' | 'utilise' | 'expire';
+export type StatutReinitialisation =
+	'en_attente' | 'prise_en_charge' | 'ignoree' | 'lien_actif' | 'utilise' | 'expire';
 
 export interface ReinitialisationLigne {
 	id: number;

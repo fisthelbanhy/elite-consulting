@@ -11,7 +11,8 @@ async function ficheCible(event: RequestEvent) {
 	const autre = event.url.searchParams.get('fiche');
 	if (autre && /^\d+$/.test(autre)) {
 		const fiche = await charger<ReussiteDetail>(event, `/reussites/${autre}`);
-		if (!fiche.peut_modifier) error(403, "Seul l'auteur ou un gestionnaire habilité peut modifier ce témoignage.");
+		if (!fiche.peut_modifier)
+			error(403, "Seul l'auteur ou un gestionnaire habilité peut modifier ce témoignage.");
 		return fiche;
 	}
 	return charger<ReussiteDetail | null>(event, '/reussites/moi');
@@ -20,7 +21,12 @@ async function ficheCible(event: RequestEvent) {
 export const load: PageServerLoad = async (event) => {
 	exigerConnexion(event);
 	const [fiche, sects] = await Promise.all([ficheCible(event), secteurs(event)]);
-	return { fiche, secteurs: sects, autre: !!fiche && !fiche.est_auteur, enregistre: event.url.searchParams.has('enregistre') };
+	return {
+		fiche,
+		secteurs: sects,
+		autre: !!fiche && !fiche.est_auteur,
+		enregistre: event.url.searchParams.has('enregistre')
+	};
 };
 
 export const actions: Actions = {

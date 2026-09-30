@@ -24,18 +24,39 @@
 
 <EnTetePage
 	titre="Fiches Découverte de soi"
-	sousTitre="{data.liste.total} fiche{data.liste.total > 1 ? 's' : ''} Lisungui. Cliquez sur une référence pour lire la fiche et répondre au membre."
+	sousTitre="{data.liste.total} fiche{data.liste.total > 1
+		? 's'
+		: ''} Lisungui. Cliquez sur une référence pour lire la fiche et répondre au membre."
 	surtitre="Gestion"
-	fil={[{ href: '/gestion', label: 'Gestion' }, { href: '/decouverte-de-soi/fiches', label: 'Découverte de soi' }]}
+	fil={[
+		{ href: '/gestion', label: 'Gestion' },
+		{ href: '/decouverte-de-soi/fiches', label: 'Découverte de soi' }
+	]}
 >
 	{#snippet bas()}
 		<div class="mt-6">
 			<Onglets
 				onglets={[
-					{ href: '/decouverte-de-soi/fiches', label: 'Toutes', actif: !f.cloturee && !f.diagnostic },
-					{ href: '/decouverte-de-soi/fiches?diagnostic=true', label: 'Avec diagnostic', actif: f.diagnostic === 'true' },
-					{ href: '/decouverte-de-soi/fiches?cloturee=2', label: 'Ouvertes', actif: f.cloturee === '2' },
-					{ href: '/decouverte-de-soi/fiches?cloturee=1', label: 'Clôturées', actif: f.cloturee === '1' }
+					{
+						href: '/decouverte-de-soi/fiches',
+						label: 'Toutes',
+						actif: !f.cloturee && !f.diagnostic
+					},
+					{
+						href: '/decouverte-de-soi/fiches?diagnostic=true',
+						label: 'Avec diagnostic',
+						actif: f.diagnostic === 'true'
+					},
+					{
+						href: '/decouverte-de-soi/fiches?cloturee=2',
+						label: 'Ouvertes',
+						actif: f.cloturee === '2'
+					},
+					{
+						href: '/decouverte-de-soi/fiches?cloturee=1',
+						label: 'Clôturées',
+						actif: f.cloturee === '1'
+					}
 				]}
 			/>
 		</div>
@@ -44,17 +65,36 @@
 
 <div class="conteneur py-8">
 	{#if form?.cle === 'liste'}
-		<Alerte type={form.succes ? 'succes' : 'erreur'} titre={form.succes ?? form.message} class="mb-6" />
+		<Alerte
+			type={form.succes ? 'succes' : 'erreur'}
+			titre={form.succes ?? form.message}
+			class="mb-6"
+		/>
 	{/if}
 
-	<form method="GET" role="search" class="carte mb-6 flex flex-col gap-3 p-4 sm:flex-row sm:items-end" data-sveltekit-keepfocus>
+	<form
+		method="GET"
+		role="search"
+		class="carte mb-6 flex flex-col gap-3 p-4 sm:flex-row sm:items-end"
+		data-sveltekit-keepfocus
+	>
 		{#if f.cloturee}<input type="hidden" name="cloturee" value={f.cloturee} />{/if}
 		{#if f.diagnostic}<input type="hidden" name="diagnostic" value={f.diagnostic} />{/if}
 		<div class="flex-1">
 			<label for="q" class="mb-1.5 block text-[15px] font-semibold">Rechercher</label>
 			<div class="relative">
-				<Search class="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-ardoise" aria-hidden="true" />
-				<input id="q" name="q" type="search" value={f.q} placeholder="Référence, nom ou pseudonyme du membre" class="pl-10" />
+				<Search
+					class="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-ardoise"
+					aria-hidden="true"
+				/>
+				<input
+					id="q"
+					name="q"
+					type="search"
+					value={f.q}
+					placeholder="Référence, nom ou pseudonyme du membre"
+					class="pl-10"
+				/>
 			</div>
 		</div>
 		<Bouton type="submit" variante="fleuve">Rechercher</Bouton>
@@ -70,13 +110,19 @@
 						<th scope="col" class="px-4 py-3 font-semibold">Date</th>
 						<th scope="col" class="px-4 py-3 font-semibold">Membre</th>
 						<th scope="col" class="px-4 py-3 font-semibold">Suivi</th>
-						{#if peutSupprimer}<th scope="col" class="px-4 py-3 font-semibold"><span class="sr-only">Actions</span></th>{/if}
+						{#if peutSupprimer}<th scope="col" class="px-4 py-3 font-semibold"
+								><span class="sr-only">Actions</span></th
+							>{/if}
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-fleuve-900/5">
 					{#each data.liste.items as fi (fi.id)}
 						<tr>
-							<td class="px-4 py-3"><a href="/decouverte-de-soi/fiches/{fi.id}" class="lien font-semibold">{fi.reference}</a></td>
+							<td class="px-4 py-3"
+								><a href="/decouverte-de-soi/fiches/{fi.id}" class="lien font-semibold"
+									>{fi.reference}</a
+								></td
+							>
 							<td class="px-4 py-3 whitespace-nowrap">{dateCourte(fi.date_creation)}</td>
 							<td class="px-4 py-3">
 								<a href="/gestion/membres/{fi.membre.id}" class="lien">{fi.membre.nom}</a>
@@ -84,17 +130,30 @@
 							</td>
 							<td class="px-4 py-3">
 								<div class="flex flex-wrap gap-1.5">
-									{#if fi.date_diagnostic}<Badge ton="laterite">Diagnostic {dateCourte(fi.date_diagnostic)}</Badge>{/if}
-									<Badge ton={fi.cloturee === 1 ? 'neutre' : 'foret'}>{fi.cloturee === 1 ? 'Clôturée' : 'Ouverte'}</Badge>
+									{#if fi.date_diagnostic}<Badge ton="laterite"
+											>Diagnostic {dateCourte(fi.date_diagnostic)}</Badge
+										>{/if}
+									<Badge ton={fi.cloturee === 1 ? 'neutre' : 'foret'}
+										>{fi.cloturee === 1 ? 'Clôturée' : 'Ouverte'}</Badge
+									>
 									{#if fi.etat_fiche === 1}<Badge ton="soleil">À étudier</Badge>{/if}
 								</div>
 							</td>
 							{#if peutSupprimer}
 								<td class="px-4 py-3 text-right">
-									<Formulaire action="?/supprimer" confirmer="Supprimer la fiche {fi.reference} de {fi.membre.nom} ?">
+									<Formulaire
+										action="?/supprimer"
+										confirmer="Supprimer la fiche {fi.reference} de {fi.membre.nom} ?"
+									>
 										{#snippet children({ envoi })}
 											<input type="hidden" name="id" value={fi.id} />
-											<Bouton type="submit" variante="danger" taille="sm" chargement={envoi} aria-label="Supprimer la fiche {fi.reference}">
+											<Bouton
+												type="submit"
+												variante="danger"
+												taille="sm"
+												chargement={envoi}
+												aria-label="Supprimer la fiche {fi.reference}"
+											>
 												<Trash2 class="size-4" aria-hidden="true" />Supprimer
 											</Bouton>
 										{/snippet}

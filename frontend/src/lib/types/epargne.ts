@@ -1,4 +1,4 @@
-/** Épargne solidaire — alignés sur `backend/app/schemas/epargne.py`. */
+/** Épargne solidaire — alignés sur `api/src/routes/epargne.ts`. */
 import type { Auteur, Liste } from '$lib/types';
 
 export interface StatutEpargne {

@@ -10,14 +10,14 @@
 
 | Couche | Fichiers |
 |---|---|
-| API | `backend/app/routers/{entreprises,comparateur,marches}.py`, `app/schemas/{entreprises,comparateur,marches}.py`, `app/services/entreprises.py` |
-| Tests | `backend/tests/test_entreprises.py` (8), `test_comparateur.py` (7), `test_marches.py` (7) |
+| API | `api/src/routes/{entreprises,comparateur,marches}.ts`, `api/src/services/entreprises.ts` (schémas Zod dans les routeurs) |
+| Tests | `api/tests/entreprises.test.ts` (8), `comparateur.test.ts` (7), `marches.test.ts` (7) |
 | Pages | `src/routes/opportunites`, `src/routes/entreprises/**`, `src/routes/comparateur-prix/**`, `src/routes/marches/**` |
 | Composants | `src/lib/components/{entreprises,comparateur,marches}/*` |
 | Serveur / types | `src/lib/server/{entreprises,comparateur,marches}.ts`, `src/lib/types/{entreprises,comparateur,marches}.ts` |
 
 Modèles utilisés sans modification : `Entreprise`, `ProduitProspective`, `FicheProspective`,
-`LigneProspective`, `Marche`, `Projet` (`app/models/entreprises.py`). **Aucune colonne ajoutée.**
+`LigneProspective`, `Marche`, `Projet` (`api/src/schema/entreprises.ts`). **Aucune colonne ajoutée.**
 
 ## 2. Pages
 
@@ -98,7 +98,7 @@ Ne pas confondre avec `/projets` (appels de fonds, section 4).
 | F-S6-01 | Onglets annuaire / comparateur / marchés et projets (`OngletsSection`, compteur des projets publiés) ; sous-onglets Marchés / Projets |
 | F-S6-02 à F-S6-13 | Couverts (voir écarts E1, E2 pour la visibilité) |
 | F-S6-14, F-S6-15 | Message exact ; la personne morale accède à sa fiche par « Gérer ma fiche de prix » (voir E8) |
-| F-S6-16 à F-S6-22 | Couverts (accès : E7) ; F-S6-17 : reprise déjà faite par `reprise_legacy.py` |
+| F-S6-16 à F-S6-22 | Couverts (accès : E7) ; F-S6-17 : reprise déjà faite par la reprise legacy |
 | F-S6-23 à F-S6-31 | Couverts |
 | F-S6-32 | Tranché : limite de 20 caractères levée à 150 (colonnes `text`) |
 | F-S6-33 | **Non couvert** : pas de composant « Publicités » disponible (autre module) — à insérer quand il existera |
@@ -133,7 +133,7 @@ Ne pas confondre avec `/projets` (appels de fonds, section 4).
 - `frontend/src/lib/server/redirections.ts` : `choix6.php?rere=3&mept=2` → `/marches?onglet=projets` ;
   `ient={id}` → `/entreprises/{id}`, `imch={id}` → `/marches/{id}`, `ipjt={id}` → `/marches/projets/{id}`.
 - `frontend/src/routes/sitemap.xml/+server.ts` : ajouter `['/marches/projets', '/marches/projets']`.
-- `backend/scripts/reprise_legacy.py` : décoder les entités HTML et les `\'` des textes repris
+- `api/src/scripts/reprise-legacy.ts` : décoder les entités HTML et les `\'` des textes repris
   (ex. « CECILIA &amp; SARICKA ») et remplir `entreprise.secteur_id` depuis le domaine.
 - Module Publicités : un composant d'encart réutilisable pour F-S6-33.
 - Suggestion : `ville_id` / `secteur_id` sur `marche` pour des alertes par secteur et ville et des

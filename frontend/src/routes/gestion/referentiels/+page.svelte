@@ -37,19 +37,33 @@
 	<title>Référentiels — Gestion — {data.parametres.nom_site}</title>
 </svelte:head>
 
-<EnTeteGestion titre="Référentiels" sousTitre="Les listes de référence utilisées partout sur le site." fil={[{ href: '/gestion/referentiels', label: 'Référentiels' }]} />
+<EnTeteGestion
+	titre="Référentiels"
+	sousTitre="Les listes de référence utilisées partout sur le site."
+	fil={[{ href: '/gestion/referentiels', label: 'Référentiels' }]}
+/>
 
 <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6">
 	<ul class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
 		{#each data.sommaire as r (r.cle)}
 			{@const Icone = icones[r.cle] ?? Layers}
 			<li>
-				<a href="/gestion/referentiels/{r.cle}" class="carte flex h-full items-start gap-4 p-4 transition-shadow hover:shadow-levee">
-					<span class="grid size-11 shrink-0 place-items-center rounded-xl bg-fleuve-50 text-fleuve-700"><Icone class="size-6" aria-hidden="true" /></span>
+				<a
+					href="/gestion/referentiels/{r.cle}"
+					class="carte flex h-full items-start gap-4 p-4 transition-shadow hover:shadow-levee"
+				>
+					<span
+						class="grid size-11 shrink-0 place-items-center rounded-xl bg-fleuve-50 text-fleuve-700"
+						><Icone class="size-6" aria-hidden="true" /></span
+					>
 					<span class="min-w-0">
 						<span class="block font-display text-lg font-bold text-fleuve-800">{r.libelle}</span>
-						<span class="block text-sm text-ardoise">{REFERENTIELS[r.cle]?.description ?? descriptions[r.cle] ?? ''}</span>
-						<span class="montant mt-1 block text-sm font-semibold">{r.total} élément{r.total > 1 ? 's' : ''} actif{r.total > 1 ? 's' : ''}</span>
+						<span class="block text-sm text-ardoise"
+							>{REFERENTIELS[r.cle]?.description ?? descriptions[r.cle] ?? ''}</span
+						>
+						<span class="montant mt-1 block text-sm font-semibold"
+							>{r.total} élément{r.total > 1 ? 's' : ''} actif{r.total > 1 ? 's' : ''}</span
+						>
 					</span>
 				</a>
 			</li>

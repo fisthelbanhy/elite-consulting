@@ -8,7 +8,10 @@ import type { MembreChoix } from '$lib/types/likelemba';
 export const load: PageServerLoad = async (event) => {
 	const membre = exigerConnexion(event);
 	if (!membre.est_gestionnaire || !membre.droit_activation) {
-		error(403, "La création d'un likelemba est réservée à la frangine. Écrivez-nous pour installer votre groupe.");
+		error(
+			403,
+			"La création d'un likelemba est réservée à la frangine. Écrivez-nous pour installer votre groupe."
+		);
 	}
 	return { membres: await charger<MembreChoix[]>(event, '/likelemba/membres') };
 };

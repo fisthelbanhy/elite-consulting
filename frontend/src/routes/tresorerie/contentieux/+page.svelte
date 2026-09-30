@@ -21,16 +21,28 @@
 	<meta name="robots" content="noindex" />
 </svelte:head>
 
-<EnTeteTresorerie titre="Contentieux" sousTitre="Crédit en difficulté ? On fait le point ensemble et on prépare la renégociation." compteurs={data.compteurs}>
-	<Bouton href="/tresorerie/contentieux/nouveau"><Plus class="size-5" aria-hidden="true" />Nouveau dossier</Bouton>
+<EnTeteTresorerie
+	titre="Contentieux"
+	sousTitre="Crédit en difficulté ? On fait le point ensemble et on prépare la renégociation."
+	compteurs={data.compteurs}
+>
+	<Bouton href="/tresorerie/contentieux/nouveau"
+		><Plus class="size-5" aria-hidden="true" />Nouveau dossier</Bouton
+	>
 </EnTeteTresorerie>
 
 <div class="conteneur space-y-8 py-8">
 	{#if data.supprime}<Alerte type="succes" titre="Le dossier est annulé." />{/if}
 	<div>
-		<BarreFiltres q={data.filtres.q} etat={data.filtres.etat} etats={gestion ? ETATS_TRESORERIE : undefined} />
+		<BarreFiltres
+			q={data.filtres.q}
+			etat={data.filtres.etat}
+			etats={gestion ? ETATS_TRESORERIE : undefined}
+		/>
 		{#if data.liste.items.length}
-			<p class="mb-4 text-ardoise" aria-live="polite">{data.liste.total} dossier{data.liste.total > 1 ? 's' : ''}</p>
+			<p class="mb-4 text-ardoise" aria-live="polite">
+				{data.liste.total} dossier{data.liste.total > 1 ? 's' : ''}
+			</p>
 			<ul class="grid gap-4 md:grid-cols-2">
 				{#each data.liste.items as c (c.id)}
 					<li>
@@ -56,7 +68,9 @@
 		{:else}
 			<EtatVide
 				icone={Scale}
-				titre={data.filtres.q ? 'Aucun dossier ne correspond à votre recherche' : 'Des échéances trop lourdes ?'}
+				titre={data.filtres.q
+					? 'Aucun dossier ne correspond à votre recherche'
+					: 'Des échéances trop lourdes ?'}
 				texte="N’attendez pas la saisie : décrivez votre situation, un conseiller prépare avec vous une proposition de restructuration."
 				messageWhatsApp="Bonjour la Frangine, j’ai du mal à rembourser mon crédit. Pouvez-vous m’aider ?"
 			>

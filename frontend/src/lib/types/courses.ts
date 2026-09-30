@@ -1,4 +1,4 @@
-/** Types des courses & livraison et du catalogue boutique, alignés sur `backend/app/schemas/courses.py`. */
+/** Types des courses & livraison et du catalogue boutique, alignés sur `api/src/routes/courses.ts`. */
 import type { Auteur } from '$lib/types';
 import type { ContactMembre } from './immobilier';
 
@@ -36,7 +36,13 @@ export interface CourseDetail extends CourseResume {
 	lieu_livraison: string;
 	observation: string;
 	contact_client: ContactMembre | null;
-	paiement: { id: number; date_paiement: string; mode: number; montant: number; etat: number } | null;
+	paiement: {
+		id: number;
+		date_paiement: string;
+		mode: number;
+		montant: number;
+		etat: number;
+	} | null;
 	est_client: boolean;
 	peut_modifier: boolean;
 	peut_annuler: boolean;

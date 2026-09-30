@@ -36,7 +36,11 @@ export async function enregistrerAnnonce(event: RequestEvent, id?: string) {
 	} catch (e) {
 		if (e instanceof ApiError) {
 			// La fiche est enregistrée ; seul le fichier est refusé
-			return fail(e.statut, { message: `Fiche enregistrée, mais fichier refusé : ${e.message}`, champs: e.champs, valeurs });
+			return fail(e.statut, {
+				message: `Fiche enregistrée, mais fichier refusé : ${e.message}`,
+				champs: e.champs,
+				valeurs
+			});
 		}
 		throw e;
 	}

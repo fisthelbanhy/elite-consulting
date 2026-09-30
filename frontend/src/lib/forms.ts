@@ -1,6 +1,9 @@
 /** Aides pour réafficher un formulaire après une action (valeurs saisies + erreurs par champ). */
 
-type Retour = { cle?: string; valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null | undefined;
+type Retour =
+	| { cle?: string; valeurs?: Record<string, unknown>; champs?: Record<string, string> }
+	| null
+	| undefined;
 
 /**
  * `<Saisie label="Nom" {...champ(form, 'nom', data.fiche?.nom)} />`

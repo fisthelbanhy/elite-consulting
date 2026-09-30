@@ -17,10 +17,20 @@ export const load: PageServerLoad = async (event) => {
 	}
 	await exigerEpargne(event);
 	const q = event.url.searchParams;
-	const choix = { operation: q.get('operation') ?? '', membre: q.get('membre') ?? '', q: q.get('q') ?? '' };
+	const choix = {
+		operation: q.get('operation') ?? '',
+		membre: q.get('membre') ?? '',
+		q: q.get('q') ?? ''
+	};
 	const [titulaires, titulaire] = await Promise.all([
 		chargerOuDefaut<Titulaire[]>(event, '/epargne/pointages/titulaires', [], { q: choix.q }),
-		choix.membre ? chargerOuDefaut<TitulaireDetail | null>(event, `/epargne/pointages/titulaires/${choix.membre}`, null) : Promise.resolve(null)
+		choix.membre
+			? chargerOuDefaut<TitulaireDetail | null>(
+					event,
+					`/epargne/pointages/titulaires/${choix.membre}`,
+					null
+				)
+			: Promise.resolve(null)
 	]);
 	return { titulaires, titulaire, choix, maintenant: new Date().toISOString() };
 };

@@ -18,7 +18,16 @@
 	import { champ } from '$lib/forms';
 	import type { FicheDetail } from '$lib/types/decouverte';
 
-	type Retour = { cle?: string; message?: string; champs?: Record<string, string>; succes?: string; valeurs?: Record<string, unknown> } | null | undefined;
+	type Retour =
+		| {
+				cle?: string;
+				message?: string;
+				champs?: Record<string, string>;
+				succes?: string;
+				valeurs?: Record<string, unknown>;
+		  }
+		| null
+		| undefined;
 
 	let {
 		form,
@@ -63,12 +72,24 @@
 	{#snippet children({ envoi })}
 		{#if mode === 'etapes'}
 			<!-- Bouton par défaut (touche Entrée) : « continuer », placé avant la navigation -->
-			<button type="submit" name="etape_suivante" value={courante < total ? courante + 1 : 'fin'} class="sr-only" tabindex="-1" aria-hidden="true">Continuer</button>
+			<button
+				type="submit"
+				name="etape_suivante"
+				value={courante < total ? courante + 1 : 'fin'}
+				class="sr-only"
+				tabindex="-1"
+				aria-hidden="true">Continuer</button
+			>
 			<div class="mb-6">
 				<p class="mb-2 flex justify-between text-[15px] font-semibold text-ardoise">
 					<span>Étape {courante} sur {total}</span><span>{ETAPES_FICHE[courante - 1].titre}</span>
 				</p>
-				<Jauge valeur={courante} max={total} couleur="laterite" label="Progression du questionnaire" />
+				<Jauge
+					valeur={courante}
+					max={total}
+					couleur="laterite"
+					label="Progression du questionnaire"
+				/>
 				<nav aria-label="Étapes du questionnaire" class="mt-4 overflow-x-auto">
 					<ol class="flex min-w-max gap-2">
 						{#each ETAPES_FICHE as e, i (e.titre)}
@@ -92,9 +113,20 @@
 		{/if}
 
 		{#each ETAPES_FICHE as e, i (e.titre)}
-			<fieldset class="carte mb-6 space-y-6 p-6" hidden={mode === 'etapes' && i + 1 !== courante} aria-labelledby="titre-etape-{i + 1}">
+			<fieldset
+				class="carte mb-6 space-y-6 p-6"
+				hidden={mode === 'etapes' && i + 1 !== courante}
+				aria-labelledby="titre-etape-{i + 1}"
+			>
 				<div>
-					<h2 id="titre-etape-{i + 1}" class="text-xl font-bold" tabindex="-1" bind:this={titres[i]}>{e.titre}</h2>
+					<h2
+						id="titre-etape-{i + 1}"
+						class="text-xl font-bold"
+						tabindex="-1"
+						bind:this={titres[i]}
+					>
+						{e.titre}
+					</h2>
 					<p class="mt-1 text-ardoise">{e.intro}</p>
 				</div>
 				{#each e.questions as q (q.champ)}
@@ -106,7 +138,13 @@
 
 		<div class="flex flex-wrap items-center gap-3">
 			{#if mode === 'etapes' && courante < total}
-				<Bouton type="submit" name="etape_suivante" value={courante + 1} taille="lg" chargement={envoi}>
+				<Bouton
+					type="submit"
+					name="etape_suivante"
+					value={courante + 1}
+					taille="lg"
+					chargement={envoi}
+				>
 					Enregistrer et continuer <ArrowRight class="size-5" aria-hidden="true" />
 				</Bouton>
 			{:else}
@@ -115,12 +153,20 @@
 				</Bouton>
 			{/if}
 			{#if mode === 'etapes' && courante > 1}
-				<Bouton type="submit" name="etape_suivante" value={courante - 1} variante="fantome" taille="lg">
+				<Bouton
+					type="submit"
+					name="etape_suivante"
+					value={courante - 1}
+					variante="fantome"
+					taille="lg"
+				>
 					<ArrowLeft class="size-5" aria-hidden="true" />Étape précédente
 				</Bouton>
 			{/if}
 			{#if mode === 'etapes' && courante < total}
-				<Bouton type="submit" name="etape_suivante" value="fin" variante="fantome">Enregistrer et finir plus tard</Bouton>
+				<Bouton type="submit" name="etape_suivante" value="fin" variante="fantome"
+					>Enregistrer et finir plus tard</Bouton
+				>
 			{/if}
 		</div>
 	{/snippet}

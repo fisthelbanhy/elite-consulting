@@ -25,7 +25,10 @@
 <EnTetePage
 	titre="Paniers produits des membres"
 	sousTitre="Toutes les lignes de panier de la boutique, avec leur état de paiement. La confirmation des paiements se fait dans la caisse."
-	fil={[{ href: '/boutique', label: 'Boutique' }, { href: '/panier/suivi', label: 'Suivi des paniers' }]}
+	fil={[
+		{ href: '/boutique', label: 'Boutique' },
+		{ href: '/panier/suivi', label: 'Suivi des paniers' }
+	]}
 />
 
 <div class="conteneur space-y-6 py-8">
@@ -38,14 +41,19 @@
 			<label for="etat_paiement" class="mb-1.5 block text-[15px] font-semibold">État</label>
 			<select id="etat_paiement" name="etat_paiement">
 				<option value="">Tous</option>
-				{#each [1, 2, 3] as e (e)}<option value={e} selected={f.etat_paiement === String(e)}>{etats[e as 1 | 2 | 3].long}</option>{/each}
+				{#each [1, 2, 3] as e (e)}<option value={e} selected={f.etat_paiement === String(e)}
+						>{etats[e as 1 | 2 | 3].long}</option
+					>{/each}
 			</select>
 		</div>
 		<Bouton type="submit" variante="fleuve">Filtrer</Bouton>
 	</form>
 
 	{#if l.items.length}
-		<p class="text-ardoise" aria-live="polite">{l.total} ligne{l.total > 1 ? 's' : ''} pour un total de <strong class="montant text-encre">{fcfa(l.somme)}</strong></p>
+		<p class="text-ardoise" aria-live="polite">
+			{l.total} ligne{l.total > 1 ? 's' : ''} pour un total de
+			<strong class="montant text-encre">{fcfa(l.somme)}</strong>
+		</p>
 		<div class="carte overflow-x-auto">
 			<table class="w-full min-w-[46rem] text-left text-[15px]">
 				<thead class="bg-sable text-sm text-ardoise">
@@ -67,14 +75,21 @@
 							<td class="px-4 py-3">
 								{#if li.membre}
 									<span class="font-semibold">{li.membre.nom}</span>
-									<span class="block text-sm text-ardoise">{li.membre.pseudonyme}{#if li.membre.telephone} · {telephone(li.membre.telephone)}{/if}</span>
+									<span class="block text-sm text-ardoise"
+										>{li.membre.pseudonyme}{#if li.membre.telephone}
+											· {telephone(li.membre.telephone)}{/if}</span
+									>
 								{/if}
 							</td>
 							<td class="px-4 py-3">{li.produit?.nom ?? 'Produit retiré'}</td>
 							<td class="montant px-4 py-3 text-right">{fcfa(li.prix_unitaire)}</td>
 							<td class="px-4 py-3 text-right">{li.quantite}</td>
 							<td class="montant px-4 py-3 text-right font-semibold">{fcfa(li.montant)}</td>
-							<td class="px-4 py-3"><Badge ton={e.ton}><abbr title={e.long} class="no-underline">{e.court}</abbr></Badge></td>
+							<td class="px-4 py-3"
+								><Badge ton={e.ton}
+									><abbr title={e.long} class="no-underline">{e.court}</abbr></Badge
+								></td
+							>
 						</tr>
 					{/each}
 				</tbody>
@@ -82,6 +97,9 @@
 		</div>
 		<Pagination total={l.total} page={l.page} taille={l.taille} />
 	{:else}
-		<EtatVide titre="Aucune ligne de panier" texte="Aucune commande ne correspond à ces critères." />
+		<EtatVide
+			titre="Aucune ligne de panier"
+			texte="Aucune commande ne correspond à ces critères."
+		/>
 	{/if}
 </div>

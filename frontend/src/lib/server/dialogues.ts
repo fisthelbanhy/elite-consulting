@@ -12,7 +12,10 @@ import type { Conversation, DonneesDialogue, MessageDialogue } from '$lib/types/
 
 const VIDE: Liste<MessageDialogue> = { items: [], total: 0, page: 1, taille: 50 };
 
-export async function chargerDialogue(event: RequestEvent, type: number): Promise<DonneesDialogue | null> {
+export async function chargerDialogue(
+	event: RequestEvent,
+	type: number
+): Promise<DonneesDialogue | null> {
 	const membre = event.locals.membre;
 	if (!membre) return null; // un visiteur ne voit rien (F-TRV-58)
 	const q = event.url.searchParams;
@@ -26,14 +29,20 @@ export async function chargerDialogue(event: RequestEvent, type: number): Promis
 			membre_id: gestionnaire ? fil : null,
 			taille: 50
 		}),
-		gestionnaire ? chargerOuDefaut<Conversation[]>(event, '/dialogues/conversations', [], { type }) : Promise.resolve([])
+		gestionnaire
+			? chargerOuDefaut<Conversation[]>(event, '/dialogues/conversations', [], { type })
+			: Promise.resolve([])
 	]);
 	return { type, messages, conversations, fil, recherche, gestionnaire };
 }
 
 export async function actionDialogue(event: RequestEvent) {
 	const fd = await event.request.formData();
-	const valeurs = lireFormulaire(fd, { type_dialogue: 'entier', texte: 'texte', destinataire_id: 'entier?' });
+	const valeurs = lireFormulaire(fd, {
+		type_dialogue: 'entier',
+		texte: 'texte',
+		destinataire_id: 'entier?'
+	});
 	const r = await soumettre<Ok>(event, '/dialogues', { body: valeurs, valeurs, cle: 'dialogue' });
 	if (!r.ok) return r.echec;
 	return { cle: 'dialogue', succes: r.data.message };

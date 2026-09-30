@@ -9,14 +9,22 @@
 	import { champ, erreur, valeur } from '$lib/forms';
 	import type { GroupeDetail, MembreChoix } from '$lib/types/likelemba';
 
-	type Retour = { valeurs?: Record<string, unknown>; champs?: Record<string, string>; message?: string } | null | undefined;
+	type Retour =
+		| { valeurs?: Record<string, unknown>; champs?: Record<string, string>; message?: string }
+		| null
+		| undefined;
 
 	let {
 		form,
 		membres,
 		initial,
 		libelleBouton = 'Créer le likelemba'
-	}: { form: Retour; membres: MembreChoix[]; initial?: GroupeDetail | null; libelleBouton?: string } = $props();
+	}: {
+		form: Retour;
+		membres: MembreChoix[];
+		initial?: GroupeDetail | null;
+		libelleBouton?: string;
+	} = $props();
 </script>
 
 <Formulaire {form}>
@@ -29,10 +37,22 @@
 					label="Responsable (chef du likelemba)"
 					requis
 					aide="Il inscrit les membres et valide les reçus. Il est prévenu par message."
-					options={membres.map((m) => ({ value: m.id, label: m.pseudonyme ? `${m.nom} (${m.pseudonyme})` : m.nom }))}
+					options={membres.map((m) => ({
+						value: m.id,
+						label: m.pseudonyme ? `${m.nom} (${m.pseudonyme})` : m.nom
+					}))}
 					{...champ(form, 'responsable_id', initial?.responsable?.id)}
 				/>
-				<Saisie label="Cotisation par personne" type="number" inputmode="numeric" min="1" step="1" suffixe="FCFA" requis {...champ(form, 'montant_cotisation', initial?.montant_cotisation)} />
+				<Saisie
+					label="Cotisation par personne"
+					type="number"
+					inputmode="numeric"
+					min="1"
+					step="1"
+					suffixe="FCFA"
+					requis
+					{...champ(form, 'montant_cotisation', initial?.montant_cotisation)}
+				/>
 				<Choix
 					legende="Périodicité"
 					name="periodicite"
@@ -46,12 +66,26 @@
 						{ value: 3, label: 'Mensuelle', description: 'Chaque mois' }
 					]}
 				/>
-				<Saisie label="Date de début" type="date" aide="Sert à établir le calendrier indicatif des tours." {...champ(form, 'date_debut', initial?.date_debut)} />
-				<Zone label="Observation" lignes={3} placeholder="Qui sont les membres, lieu de rencontre, règles particulières…" {...champ(form, 'observation', initial?.observation)} />
+				<Saisie
+					label="Date de début"
+					type="date"
+					aide="Sert à établir le calendrier indicatif des tours."
+					{...champ(form, 'date_debut', initial?.date_debut)}
+				/>
+				<Zone
+					label="Observation"
+					lignes={3}
+					placeholder="Qui sont les membres, lieu de rencontre, règles particulières…"
+					{...champ(form, 'observation', initial?.observation)}
+				/>
 			</fieldset>
 			<div class="flex flex-wrap gap-3">
 				<Bouton type="submit" taille="lg" chargement={envoi}>{libelleBouton}</Bouton>
-				<Bouton href={initial ? `/likelemba/${initial.id}` : '/likelemba'} variante="fantome" taille="lg">Annuler</Bouton>
+				<Bouton
+					href={initial ? `/likelemba/${initial.id}` : '/likelemba'}
+					variante="fantome"
+					taille="lg">Annuler</Bouton
+				>
 			</div>
 		</div>
 	{/snippet}

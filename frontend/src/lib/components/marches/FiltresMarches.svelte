@@ -4,16 +4,35 @@
 	import Search from '@lucide/svelte/icons/search';
 	import Bouton from '$lib/components/ui/Bouton.svelte';
 
-	let { filtres }: { filtres: { q: string; type: string; ouverts: string; montant_min: string; tri: string } } = $props();
-	const soumettre = (e: Event) => (e.currentTarget as HTMLInputElement | HTMLSelectElement).form?.requestSubmit();
+	let {
+		filtres
+	}: { filtres: { q: string; type: string; ouverts: string; montant_min: string; tri: string } } =
+		$props();
+	const soumettre = (e: Event) =>
+		(e.currentTarget as HTMLInputElement | HTMLSelectElement).form?.requestSubmit();
 </script>
 
-<form method="GET" class="carte grid gap-3 p-4 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr_auto] lg:items-end" data-sveltekit-keepfocus>
+<form
+	method="GET"
+	class="carte grid gap-3 p-4 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr_auto] lg:items-end"
+	data-sveltekit-keepfocus
+>
 	<div class="sm:col-span-2 lg:col-span-1">
 		<label for="q" class="mb-1.5 block text-[15px] font-semibold">Rechercher</label>
 		<div class="relative">
-			<Search class="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-ardoise" aria-hidden="true" />
-			<input id="q" name="q" type="search" value={filtres.q} placeholder="Travaux, fournitures, ministère…" class="pl-10" maxlength="100" />
+			<Search
+				class="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-ardoise"
+				aria-hidden="true"
+			/>
+			<input
+				id="q"
+				name="q"
+				type="search"
+				value={filtres.q}
+				placeholder="Travaux, fournitures, ministère…"
+				class="pl-10"
+				maxlength="100"
+			/>
 		</div>
 	</div>
 	<div>
@@ -37,13 +56,21 @@
 		<label for="tri" class="mb-1.5 block text-[15px] font-semibold">Trier par</label>
 		<select id="tri" name="tri" onchange={soumettre}>
 			<option value="">Plus récents</option>
-			<option value="cloture" selected={filtres.tri === 'cloture'}>Date limite la plus proche</option>
+			<option value="cloture" selected={filtres.tri === 'cloture'}
+				>Date limite la plus proche</option
+			>
 			<option value="montant" selected={filtres.tri === 'montant'}>Montant le plus élevé</option>
 		</select>
 	</div>
 	<Bouton type="submit" variante="fleuve">Filtrer</Bouton>
 	<label class="flex min-h-12 cursor-pointer items-center gap-3 sm:col-span-2 lg:col-span-5">
-		<input type="checkbox" name="ouverts" value="1" checked={filtres.ouverts === '1'} onchange={soumettre} />
+		<input
+			type="checkbox"
+			name="ouverts"
+			value="1"
+			checked={filtres.ouverts === '1'}
+			onchange={soumettre}
+		/>
 		<span class="text-[15px] font-semibold">Seulement les marchés encore ouverts</span>
 	</label>
 </form>

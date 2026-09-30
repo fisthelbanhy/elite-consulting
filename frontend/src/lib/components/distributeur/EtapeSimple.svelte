@@ -9,16 +9,31 @@
 	import { champ, valeur } from '$lib/forms';
 	import type { SouscriptionDetail } from '$lib/types/distributeur';
 
-	type Retour = { valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null | undefined;
-	let { etape, souscription: s, form }: { etape: number; souscription: SouscriptionDetail | null; form: Retour } = $props();
+	type Retour =
+		{ valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null | undefined;
+	let {
+		etape,
+		souscription: s,
+		form
+	}: { etape: number; souscription: SouscriptionDetail | null; form: Retour } = $props();
 </script>
 
 <TexteBloc bloc={INTRODUCTIONS[etape]} />
 
 {#if etape === 1}
-	<Zone label="Mes trois objectifs prioritaires" lignes={5} placeholder="1. …&#10;2. …&#10;3. …" {...champ(form, 'objectifs', s?.objectifs)} />
+	<Zone
+		label="Mes trois objectifs prioritaires"
+		lignes={5}
+		placeholder="1. …&#10;2. …&#10;3. …"
+		{...champ(form, 'objectifs', s?.objectifs)}
+	/>
 {:else if etape === 2}
-	<Zone label="Mon histoire" lignes={6} aide="Pourquoi vous lancez-vous ? Quelques phrases suffisent." {...champ(form, 'mon_histoire', s?.mon_histoire)} />
+	<Zone
+		label="Mon histoire"
+		lignes={6}
+		aide="Pourquoi vous lancez-vous ? Quelques phrases suffisent."
+		{...champ(form, 'mon_histoire', s?.mon_histoire)}
+	/>
 {:else if etape === 3}
 	<Choix
 		legende="Nombre d'heures par semaine"
@@ -31,7 +46,9 @@
 	<div class="space-y-4">
 		{#each SCENARIOS as sc (sc.titre)}
 			<figure class="rounded-xl bg-creme p-4">
-				<figcaption class="flex items-center gap-2 font-semibold text-fleuve-800"><Phone class="size-4" aria-hidden="true" />{sc.titre}</figcaption>
+				<figcaption class="flex items-center gap-2 font-semibold text-fleuve-800">
+					<Phone class="size-4" aria-hidden="true" />{sc.titre}
+				</figcaption>
 				<blockquote class="mt-2 text-[16px] italic">{sc.texte}</blockquote>
 			</figure>
 		{/each}

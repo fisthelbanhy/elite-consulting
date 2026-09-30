@@ -12,7 +12,10 @@
 
 <EnTetePage
 	titre="Ajouter un article"
-	fil={[{ href: '/courses', label: 'Courses & livraison' }, { href: '/courses/catalogue', label: 'Catalogue' }]}
+	fil={[
+		{ href: '/courses', label: 'Courses & livraison' },
+		{ href: '/courses/catalogue', label: 'Catalogue' }
+	]}
 />
 <div class="conteneur max-w-3xl py-8">
 	<FormulaireArticleCatalogue {form} boutiques={data.boutiques} />

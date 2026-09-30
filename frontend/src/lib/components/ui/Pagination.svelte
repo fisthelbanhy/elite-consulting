@@ -23,7 +23,8 @@
 	<nav aria-label="Pagination" class="mt-8 flex items-center justify-between gap-2">
 		<a
 			href={lien(page - 1)}
-			class="inline-flex min-h-11 items-center gap-1 rounded-xl px-3 font-semibold text-fleuve-700 hover:bg-fleuve-50 {page <= 1
+			class="inline-flex min-h-11 items-center gap-1 rounded-xl px-3 font-semibold text-fleuve-700 hover:bg-fleuve-50 {page <=
+			1
 				? 'pointer-events-none opacity-40'
 				: ''}"
 			aria-disabled={page <= 1}
@@ -47,7 +48,8 @@
 		<span class="text-sm text-ardoise sm:hidden">Page {page} / {pages}</span>
 		<a
 			href={lien(page + 1)}
-			class="inline-flex min-h-11 items-center gap-1 rounded-xl px-3 font-semibold text-fleuve-700 hover:bg-fleuve-50 {page >= pages
+			class="inline-flex min-h-11 items-center gap-1 rounded-xl px-3 font-semibold text-fleuve-700 hover:bg-fleuve-50 {page >=
+			pages
 				? 'pointer-events-none opacity-40'
 				: ''}"
 			aria-disabled={page >= pages}

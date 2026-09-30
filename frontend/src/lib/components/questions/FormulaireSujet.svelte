@@ -8,7 +8,10 @@
 	import { champ, valeur } from '$lib/forms';
 	import type { SujetDetail } from '$lib/types/questions';
 
-	type Retour = { valeurs?: Record<string, unknown>; champs?: Record<string, string>; message?: string } | null | undefined;
+	type Retour =
+		| { valeurs?: Record<string, unknown>; champs?: Record<string, string>; message?: string }
+		| null
+		| undefined;
 
 	let {
 		form,
@@ -24,7 +27,9 @@
 		annuler?: string;
 	} = $props();
 
-	const confidentialite = $derived(String(valeur(form, 'confidentialite', initial?.confidentialite ?? confidentialiteInitiale)));
+	const confidentialite = $derived(
+		String(valeur(form, 'confidentialite', initial?.confidentialite ?? confidentialiteInitiale))
+	);
 </script>
 
 <Formulaire {form}>
@@ -38,8 +43,16 @@
 					requis
 					erreur={form?.champs?.confidentialite}
 					options={[
-						{ value: '2', label: 'Public', description: 'Tous les visiteurs la lisent ; les membres peuvent répondre.' },
-						{ value: '1', label: 'Privé', description: 'Seule la frangine la lit et vous répond. Personne d’autre ne la voit.' }
+						{
+							value: '2',
+							label: 'Public',
+							description: 'Tous les visiteurs la lisent ; les membres peuvent répondre.'
+						},
+						{
+							value: '1',
+							label: 'Privé',
+							description: 'Seule la frangine la lit et vous répond. Personne d’autre ne la voit.'
+						}
 					]}
 				/>
 				<Saisie
@@ -59,7 +72,8 @@
 				/>
 			</div>
 			<p class="text-sm text-ardoise">
-				Soyez bienveillant·e. Ne publiez jamais votre numéro de téléphone, votre code Mobile Money ni vos papiers dans un sujet public.
+				Soyez bienveillant·e. Ne publiez jamais votre numéro de téléphone, votre code Mobile Money
+				ni vos papiers dans un sujet public.
 			</p>
 			<div class="flex flex-wrap gap-3">
 				<Bouton type="submit" taille="lg" chargement={envoi}>{libelleBouton}</Bouton>

@@ -44,7 +44,9 @@
 		{#if liste.length}
 			<ul class="list-disc space-y-0.5 pl-5">
 				{#each liste as [cle, msg] (cle)}
-					<li><a href="#champ-{cle.split('.')[0]}" class="underline underline-offset-2">{msg}</a></li>
+					<li>
+						<a href="#champ-{cle.split('.')[0]}" class="underline underline-offset-2">{msg}</a>
+					</li>
 				{/each}
 			</ul>
 		{/if}

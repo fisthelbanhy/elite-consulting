@@ -7,7 +7,10 @@ import type { SouscriptionDetail } from '$lib/types/distributeur';
 export const load: PageServerLoad = async (event) => {
 	const membre = exigerConnexion(event);
 	if (!membre.est_gestionnaire) error(403, 'Espace réservé aux gestionnaires.');
-	const souscription = await charger<SouscriptionDetail>(event, `/distributeur/souscriptions/${event.params.id}`);
+	const souscription = await charger<SouscriptionDetail>(
+		event,
+		`/distributeur/souscriptions/${event.params.id}`
+	);
 	return { souscription };
 };
 

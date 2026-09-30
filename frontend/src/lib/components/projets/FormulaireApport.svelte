@@ -9,17 +9,31 @@
 	import { champ, erreur, valeur } from '$lib/forms';
 	import { fcfa } from '$lib/format';
 
-	type Retour = { cle?: string; valeurs?: Record<string, unknown>; champs?: Record<string, string>; message?: string; succes?: string } | null | undefined;
+	type Retour =
+		| {
+				cle?: string;
+				valeurs?: Record<string, unknown>;
+				champs?: Record<string, string>;
+				message?: string;
+				succes?: string;
+		  }
+		| null
+		| undefined;
 
 	let { form, besoin }: { form: Retour; besoin: number } = $props();
 
-	const echeances = Array.from({ length: 13 }, (_, i) => ({ value: i, label: i === 0 ? 'Sans échéance' : `${i} mois` }));
+	const echeances = Array.from({ length: 13 }, (_, i) => ({
+		value: i,
+		label: i === 0 ? 'Sans échéance' : `${i} mois`
+	}));
 </script>
 
 <Formulaire action="?/apport" {form} cle="apport">
 	{#snippet children({ envoi })}
 		<div class="space-y-5">
-			<p class="rounded-xl bg-creme p-3 text-[15px]">Besoin de financement : <strong class="montant">{fcfa(besoin)}</strong></p>
+			<p class="rounded-xl bg-creme p-3 text-[15px]">
+				Besoin de financement : <strong class="montant">{fcfa(besoin)}</strong>
+			</p>
 			<Choix
 				legende="Type d'apport"
 				name="type_apport"
@@ -33,9 +47,29 @@
 					{ value: 3, label: 'Actionnariat', description: 'Vous entrez au capital du projet' }
 				]}
 			/>
-			<Saisie label="Montant promis" type="number" inputmode="numeric" min="1" max={besoin} step="1" suffixe="FCFA" requis {...champ(form, 'montant_promis', '', 'apport')} />
-			<Liste label="Échéance de versement" vide={null} options={echeances} {...champ(form, 'echeance_mois', 0, 'apport')} />
-			<Zone label="Remarque (facultatif)" lignes={3} placeholder="Conditions, calendrier de versement…" {...champ(form, 'remarque', '', 'apport')} />
+			<Saisie
+				label="Montant promis"
+				type="number"
+				inputmode="numeric"
+				min="1"
+				max={besoin}
+				step="1"
+				suffixe="FCFA"
+				requis
+				{...champ(form, 'montant_promis', '', 'apport')}
+			/>
+			<Liste
+				label="Échéance de versement"
+				vide={null}
+				options={echeances}
+				{...champ(form, 'echeance_mois', 0, 'apport')}
+			/>
+			<Zone
+				label="Remarque (facultatif)"
+				lignes={3}
+				placeholder="Conditions, calendrier de versement…"
+				{...champ(form, 'remarque', '', 'apport')}
+			/>
 			<Bouton type="submit" pleineLargeur chargement={envoi}>Je soutiens ce projet</Bouton>
 		</div>
 	{/snippet}

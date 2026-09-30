@@ -14,20 +14,34 @@
 
 	const soumettre = (e: Event) => (e.currentTarget as HTMLSelectElement).form?.requestSubmit();
 	const compte = (p: Produit) => {
-		const n = [p.offres ? `${p.offres} offre${p.offres > 1 ? 's' : ''}` : '', p.demandes ? `${p.demandes} demande${p.demandes > 1 ? 's' : ''}` : '']
+		const n = [
+			p.offres ? `${p.offres} offre${p.offres > 1 ? 's' : ''}` : '',
+			p.demandes ? `${p.demandes} demande${p.demandes > 1 ? 's' : ''}` : ''
+		]
 			.filter(Boolean)
 			.join(', ');
 		return n ? `${p.nom} (${n})` : p.nom;
 	};
 </script>
 
-<form method="GET" class="carte grid gap-3 p-4 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr_auto] lg:items-end" data-sveltekit-keepfocus>
-	{#if filtres.entreprise_id}<input type="hidden" name="entreprise_id" value={filtres.entreprise_id} />{/if}
+<form
+	method="GET"
+	class="carte grid gap-3 p-4 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr_auto] lg:items-end"
+	data-sveltekit-keepfocus
+>
+	{#if filtres.entreprise_id}<input
+			type="hidden"
+			name="entreprise_id"
+			value={filtres.entreprise_id}
+		/>{/if}
 	<div class="sm:col-span-2 lg:col-span-1">
 		<label for="produit_id" class="mb-1.5 block text-[15px] font-semibold">Produit</label>
 		<select id="produit_id" name="produit_id" onchange={soumettre}>
 			<option value="">Tous les produits</option>
-			{#each produits as p (p.id)}<option value={p.id} selected={String(p.id) === filtres.produit_id}>{compte(p)}</option>{/each}
+			{#each produits as p (p.id)}<option
+					value={p.id}
+					selected={String(p.id) === filtres.produit_id}>{compte(p)}</option
+				>{/each}
 		</select>
 	</div>
 	<div>
@@ -41,8 +55,19 @@
 	<div>
 		<label for="q" class="mb-1.5 block text-[15px] font-semibold">Mots</label>
 		<div class="relative">
-			<Search class="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-ardoise" aria-hidden="true" />
-			<input id="q" name="q" type="search" value={filtres.q} placeholder="Produit, entreprise…" class="pl-10" maxlength="100" />
+			<Search
+				class="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-ardoise"
+				aria-hidden="true"
+			/>
+			<input
+				id="q"
+				name="q"
+				type="search"
+				value={filtres.q}
+				placeholder="Produit, entreprise…"
+				class="pl-10"
+				maxlength="100"
+			/>
 		</div>
 	</div>
 	<div>

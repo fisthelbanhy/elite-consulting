@@ -5,7 +5,12 @@ import type { Ok } from '$lib/types';
 
 export async function enregistrerPartenariat(event: RequestEvent, id?: string) {
 	const fd = await event.request.formData();
-	const valeurs = lireFormulaire(fd, { actif: 'texte', description: 'texte', recherche: 'texte', objectif: 'texte' });
+	const valeurs = lireFormulaire(fd, {
+		actif: 'texte',
+		description: 'texte',
+		recherche: 'texte',
+		objectif: 'texte'
+	});
 	const r = await soumettre<Ok>(event, id ? `/partenariats/${id}` : '/partenariats', {
 		method: id ? 'PUT' : 'POST',
 		body: valeurs,

@@ -8,12 +8,25 @@ import type { ArticleCatalogue, Boutique, CourseDetail } from '$lib/types/course
 export const load: PageServerLoad = async (event) => {
 	exigerConnexion(event);
 	const course = await charger<CourseDetail>(event, `/courses/${event.params.id}`);
-	if (!course.peut_modifier) error(403, "Cette course n'est plus modifiable (elle n'est plus en attente ou elle est déjà payée).");
+	if (!course.peut_modifier)
+		error(
+			403,
+			"Cette course n'est plus modifiable (elle n'est plus en attente ou elle est déjà payée)."
+		);
 	const boutiques = await chargerOuDefaut<Boutique[]>(event, '/courses/boutiques', []);
-	const demandee = event.url.searchParams.get('boutique') ?? (course.boutique_id ? String(course.boutique_id) : '');
+	const demandee =
+		event.url.searchParams.get('boutique') ??
+		(course.boutique_id ? String(course.boutique_id) : '');
 	const choisie = boutiques.find((b) => String(b.id) === demandee) ?? null;
 	const catalogue = choisie
-		? (await chargerOuDefaut<Liste<ArticleCatalogue>>(event, '/courses/catalogue', { items: [], total: 0, page: 1, taille: 100 }, { boutique_id: choisie.id, taille: 100 })).items
+		? (
+				await chargerOuDefaut<Liste<ArticleCatalogue>>(
+					event,
+					'/courses/catalogue',
+					{ items: [], total: 0, page: 1, taille: 100 },
+					{ boutique_id: choisie.id, taille: 100 }
+				)
+			).items
 		: [];
 	return { course, boutiques, boutique: choisie, catalogue, aujourdhui: aujourdhui() };
 };

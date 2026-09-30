@@ -25,10 +25,15 @@
 		lignesInitiales?: number;
 	} = $props();
 
-	type Retour = { cle?: string; valeurs?: Record<string, unknown>; champs?: Record<string, string> } | null;
+	type Retour = {
+		cle?: string;
+		valeurs?: Record<string, unknown>;
+		champs?: Record<string, string>;
+	} | null;
 	// Seul le retour de ce formulaire (la page porte aussi le dialogue et le suivi)
 	const f = $derived((form as Retour)?.cle === 'fiche' ? (form as Retour) : null);
-	const depart = () => Math.min(MAX, Math.max(1, Number(valeur(f, 'nombre_lignes', lignesInitiales)) || 1));
+	const depart = () =>
+		Math.min(MAX, Math.max(1, Number(valeur(f, 'nombre_lignes', lignesInitiales)) || 1));
 	let nombre = $state(depart());
 	const erreursLigne = (i: number) => Object.keys(f?.champs ?? {}).some((k) => k.endsWith(`_${i}`));
 </script>
@@ -56,20 +61,29 @@
 						<Minus class="size-5" aria-hidden="true" />Retirer la dernière
 					</Bouton>
 				{/if}
-				<noscript><a href="?lignes={Math.min(MAX, nombre + 1)}" class="lien">Ajouter une ligne</a></noscript>
+				<noscript
+					><a href="?lignes={Math.min(MAX, nombre + 1)}" class="lien">Ajouter une ligne</a
+					></noscript
+				>
 				<span class="text-sm text-ardoise">{nombre} / {MAX} opérations</span>
 			</div>
 
 			<div class="flex items-start gap-3 rounded-xl bg-foret-50 p-4 text-[15px] text-foret-700">
 				<ShieldCheck class="mt-0.5 size-5 shrink-0" aria-hidden="true" />
 				<p>
-					Si vous indiquez l'e-mail de votre banque (ou si elle en a un dans notre annuaire), l'ordre lui est transmis automatiquement.
-					<strong>La Frangine ne détient jamais vos fonds</strong> : votre banque exécute l'ordre après ses propres vérifications.
+					Si vous indiquez l'e-mail de votre banque (ou si elle en a un dans notre annuaire),
+					l'ordre lui est transmis automatiquement.
+					<strong>La Frangine ne détient jamais vos fonds</strong> : votre banque exécute l'ordre après
+					ses propres vérifications.
 				</p>
 			</div>
 
 			<div class="flex flex-wrap gap-3">
-				<Bouton type="submit" taille="lg" chargement={envoi}><Send class="size-5" aria-hidden="true" />Envoyer {nombre > 1 ? `les ${nombre} opérations` : "l'opération"}</Bouton>
+				<Bouton type="submit" taille="lg" chargement={envoi}
+					><Send class="size-5" aria-hidden="true" />Envoyer {nombre > 1
+						? `les ${nombre} opérations`
+						: "l'opération"}</Bouton
+				>
 				<Bouton href="/tresorerie/operations" variante="fantome" taille="lg">Annuler</Bouton>
 			</div>
 		</div>

@@ -31,9 +31,14 @@
 	titre={q.libelle}
 	sousTitre={q.description}
 	surtitre="Accompagnement"
-	fil={[{ href: '/accompagnement', label: 'Accompagnement' }, { href: `/accompagnement/${q.slug}`, label: q.libelle }]}
+	fil={[
+		{ href: '/accompagnement', label: 'Accompagnement' },
+		{ href: `/accompagnement/${q.slug}`, label: q.libelle }
+	]}
 >
-	{#if data.membre}<Bouton href="/accompagnement/{q.slug}/nouveau"><Plus class="size-5" aria-hidden="true" />Nouveau dossier</Bouton>{/if}
+	{#if data.membre}<Bouton href="/accompagnement/{q.slug}/nouveau"
+			><Plus class="size-5" aria-hidden="true" />Nouveau dossier</Bouton
+		>{/if}
 	{#snippet bas()}
 		<div class="mt-6">
 			<Onglets
@@ -53,22 +58,41 @@
 	<div class="space-y-6">
 		{#if data.supprime}<Alerte type="succes" titre="Le dossier a été supprimé." />{/if}
 		{#if !data.dossiers}
-			<AccesReserve texte="Créez votre compte gratuit pour démarrer votre dossier : vos réponses restent confidentielles, un conseiller vous accompagne." />
+			<AccesReserve
+				texte="Créez votre compte gratuit pour démarrer votre dossier : vos réponses restent confidentielles, un conseiller vous accompagne."
+			/>
 		{:else}
 			{#if gestion}
-				<form method="GET" class="carte grid gap-3 p-4 sm:grid-cols-[1fr_auto_auto] sm:items-end" data-sveltekit-keepfocus>
+				<form
+					method="GET"
+					class="carte grid gap-3 p-4 sm:grid-cols-[1fr_auto_auto] sm:items-end"
+					data-sveltekit-keepfocus
+				>
 					<div>
 						<label for="q" class="mb-1.5 block text-[15px] font-semibold">Rechercher</label>
 						<div class="relative">
-							<Search class="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-ardoise" aria-hidden="true" />
-							<input id="q" name="q" type="search" value={f.q} placeholder="Objet, référence…" class="pl-10" />
+							<Search
+								class="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-ardoise"
+								aria-hidden="true"
+							/>
+							<input
+								id="q"
+								name="q"
+								type="search"
+								value={f.q}
+								placeholder="Objet, référence…"
+								class="pl-10"
+							/>
 						</div>
 					</div>
 					<div>
 						<label for="etat" class="mb-1.5 block text-[15px] font-semibold">État</label>
 						<select id="etat" name="etat">
 							<option value="">Tous</option>
-							{#each Object.entries(ETATS_DOSSIER) as [v, l] (v)}<option value={v} selected={v === f.etat}>{l}</option>{/each}
+							{#each Object.entries(ETATS_DOSSIER) as [v, l] (v)}<option
+									value={v}
+									selected={v === f.etat}>{l}</option
+								>{/each}
 						</select>
 					</div>
 					<Bouton type="submit" variante="fleuve">Filtrer</Bouton>
@@ -76,21 +100,40 @@
 			{/if}
 
 			{#if data.dossiers.items.length}
-				<h2 class="text-xl font-bold">{gestion ? `Dossiers des membres (${data.dossiers.total})` : 'Mes dossiers'}</h2>
+				<h2 class="text-xl font-bold">
+					{gestion ? `Dossiers des membres (${data.dossiers.total})` : 'Mes dossiers'}
+				</h2>
 				<ul class="space-y-3">
 					{#each data.dossiers.items as d (d.id)}
 						<li>
-							<a href="/accompagnement/{q.slug}/{d.id}" class="carte flex items-center gap-4 p-5 transition-shadow hover:shadow-levee">
+							<a
+								href="/accompagnement/{q.slug}/{d.id}"
+								class="carte flex items-center gap-4 p-5 transition-shadow hover:shadow-levee"
+							>
 								<div class="min-w-0 flex-1 space-y-2">
 									<div class="flex flex-wrap items-center gap-2">
-										<span class="text-xs font-semibold text-ardoise">{d.reference} · {dateCourte(d.date_creation)}</span>
+										<span class="text-xs font-semibold text-ardoise"
+											>{d.reference} · {dateCourte(d.date_creation)}</span
+										>
 										<BadgeEtat etat={d.etat} libelles={ETATS_DOSSIER} />
-										{#if gestion && d.membre}<span class="text-sm text-ardoise">· {d.membre.pseudonyme}</span>{/if}
+										{#if gestion && d.membre}<span class="text-sm text-ardoise"
+												>· {d.membre.pseudonyme}</span
+											>{/if}
 									</div>
-									<p class="font-display text-lg font-bold text-fleuve-800">{tronquer(d.objet, 100)}</p>
+									<p class="font-display text-lg font-bold text-fleuve-800">
+										{tronquer(d.objet, 100)}
+									</p>
 									<div class="flex items-center gap-3">
-										<div class="flex-1"><Jauge valeur={d.nombre_repondues} max={d.nombre_questions} label="Progression du dossier" /></div>
-										<span class="text-sm text-ardoise">{d.nombre_repondues}/{d.nombre_questions}</span>
+										<div class="flex-1">
+											<Jauge
+												valeur={d.nombre_repondues}
+												max={d.nombre_questions}
+												label="Progression du dossier"
+											/>
+										</div>
+										<span class="text-sm text-ardoise"
+											>{d.nombre_repondues}/{d.nombre_questions}</span
+										>
 									</div>
 								</div>
 								<ChevronRight class="size-5 shrink-0 text-ardoise" aria-hidden="true" />
@@ -98,7 +141,11 @@
 						</li>
 					{/each}
 				</ul>
-				<Pagination total={data.dossiers.total} page={data.dossiers.page} taille={data.dossiers.taille} />
+				<Pagination
+					total={data.dossiers.total}
+					page={data.dossiers.page}
+					taille={data.dossiers.taille}
+				/>
 			{:else}
 				<EtatVide
 					icone={FolderOpen}
@@ -114,7 +161,9 @@
 
 	<aside class="carte h-fit space-y-4 p-6">
 		<h2 class="text-lg font-bold">Ce que contient le dossier</h2>
-		<p class="text-sm text-ardoise">{q.nombre_questions} questions en {q.sections.length} parties. {q.pour_qui}</p>
+		<p class="text-sm text-ardoise">
+			{q.nombre_questions} questions en {q.sections.length} parties. {q.pour_qui}
+		</p>
 		<PlanQuestionnaire questionnaire={q} details />
 	</aside>
 </div>

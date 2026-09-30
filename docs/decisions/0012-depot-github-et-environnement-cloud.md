@@ -44,25 +44,24 @@ Sans le dump, une session cloud aurait une base vide. Deux scripts :
   messages). Mot de passe commun `demo1234`, code de pointage `1234` ; le script **refuse de
   s'exécuter hors développement**.
 
-Travailler sur les vraies données reste possible en local avec `reprise_legacy.py` et le dump,
-qui ne quitte jamais le poste.
+Travailler sur les vraies données reste possible en local avec `npm run donnees:legacy` et le
+dump, qui ne quitte jamais le poste.
 
 ### 3. Commandes indépendantes du système
 
-Le cloud tourne sous Linux, le poste du porteur sous Windows. Les chemins du type
-`backend/.venv/Scripts/python.exe` ne fonctionnent que sous Windows. Ajoutés :
+Le cloud tourne sous Linux, le poste du porteur sous Windows : aucune commande du projet ne doit
+dépendre d'un chemin propre à l'un des deux. Ajoutés :
 
-- `scripts/py.mjs` : trouve le Python du projet (`.venv/Scripts`, `.venv/bin`, sinon le système)
-  et l'exécute depuis `backend/` ;
-- `scripts/setup.mjs` : installe tout (environnement Python, dépendances, base de démonstration) ;
-- un `package.json` à la racine qui expose les commandes : `npm run setup`, `dev:api`, `dev:site`,
-  `test`, `lint`, `check`, `build`, `donnees:demo`, `donnees:legacy` ;
+- `scripts/setup.mjs` : installe tout (dépendances, base de démonstration) ;
+- `scripts/dev.mjs` : lance les serveurs de développement dans un seul terminal ;
+- un `package.json` à la racine qui expose les commandes : `npm run setup`, `dev`, `dev:api`,
+  `dev:site`, `test`, `lint`, `check`, `build`, `start`, `donnees:demo`, `donnees:legacy` ;
 - `.claude/launch.json` réécrit pour passer par ces commandes.
 
 ### 4. Environnement cloud
 
-`.devcontainer/devcontainer.json` (Python 3.12 + Node 22, `postCreateCommand: npm run setup`,
-ports 5173 et 8000). Une session cloud, un Codespace ou un nouveau poste obtiennent ainsi un
+`.devcontainer/devcontainer.json` (Node 22, `postCreateCommand: npm run setup`, ports 5173 et
+8000). Une session cloud, un Codespace ou un nouveau poste obtiennent ainsi un
 environnement identique en une commande.
 
 ## Conséquences

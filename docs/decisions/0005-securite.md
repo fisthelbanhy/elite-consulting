@@ -4,7 +4,7 @@
 
 ## Décisions
 
-1. **Mots de passe** hachés en Argon2id (`pwdlib`). Les 68 mots de passe legacy en clair sont
+1. **Mots de passe** hachés en Argon2id. Les 68 mots de passe legacy en clair sont
    hachés pendant la reprise : les membres existants se connectent avec le même mot de passe,
    qui n'est plus lisible par personne. Longueur minimale pour les nouveaux comptes : 8 caractères
    (le legacy n'imposait que « différent de l'identifiant », règle conservée en plus).
@@ -21,7 +21,7 @@
    Cloudflare Turnstile pourra être activé par configuration si du spam apparaît.
 5. **Fichiers téléversés** : extensions et type MIME vérifiés (images jpg/png/webp, PDF, audio mp3,
    vidéo mp4), 4 Mo max par défaut (comme le legacy, configurable), images re-encodées et
-   redimensionnées par Pillow (supprime les métadonnées EXIF, dont la géolocalisation),
+   redimensionnées à l'enregistrement (ce qui supprime les métadonnées EXIF, dont la géolocalisation),
    noms de fichiers générés côté serveur.
 6. **Autorisations** vérifiées côté API pour chaque action, d'après le type de compte
    (Gestionnaire / Master / Membre) et les 4 droits legacy explicités en booléens :

@@ -7,8 +7,12 @@ import type { ArticleCatalogueDetail } from '$lib/types/courses';
 
 export const load: PageServerLoad = async (event) => {
 	exigerConnexion(event);
-	const article = await charger<ArticleCatalogueDetail>(event, `/courses/catalogue/${event.params.id}`);
-	if (!article.peut_modifier) error(403, 'Seule la boutique ou un gestionnaire habilité peut modifier cet article.');
+	const article = await charger<ArticleCatalogueDetail>(
+		event,
+		`/courses/catalogue/${event.params.id}`
+	);
+	if (!article.peut_modifier)
+		error(403, 'Seule la boutique ou un gestionnaire habilité peut modifier cet article.');
 	return { article };
 };
 

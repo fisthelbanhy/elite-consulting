@@ -67,17 +67,37 @@ export const CHAPITRES: Chapitre[] = [
 /** Petit lexique (ajout) pour les sigles FLP employés dans les textes. */
 export const LEXIQUE = [
 	{ terme: 'FLP', definition: 'Forever Living Products, fabricant des produits à l’aloe vera.' },
-	{ terme: 'POA', definition: 'Présentation de l’opportunité d’affaires, réunion d’information organisée par les distributeurs.' },
-	{ terme: 'PC', definition: 'Point caisse : unité de volume de ventes utilisée pour calculer les qualifications et les bonus.' }
+	{
+		terme: 'POA',
+		definition:
+			'Présentation de l’opportunité d’affaires, réunion d’information organisée par les distributeurs.'
+	},
+	{
+		terme: 'PC',
+		definition:
+			'Point caisse : unité de volume de ventes utilisée pour calculer les qualifications et les bonus.'
+	}
 ];
 
 /** Titres des 10 étapes (`$arrayetapeadhesion`) et libellés courts pour la barre de progression. */
 export const ETAPES: { numero: number; titre: string; court: string }[] = [
-	{ numero: 1, titre: 'Préalables au développement de votre entreprise : fixez-vous des objectifs', court: 'Objectifs' },
+	{
+		numero: 1,
+		titre: 'Préalables au développement de votre entreprise : fixez-vous des objectifs',
+		court: 'Objectifs'
+	},
 	{ numero: 2, titre: 'Votre propre histoire', court: 'Mon histoire' },
-	{ numero: 3, titre: "Combien d'heures par semaine pensez-vous pouvoir consacrer à votre activité ?", court: 'Disponibilité' },
+	{
+		numero: 3,
+		titre: "Combien d'heures par semaine pensez-vous pouvoir consacrer à votre activité ?",
+		court: 'Disponibilité'
+	},
 	{ numero: 4, titre: 'Votre liste de noms', court: 'Liste de noms' },
-	{ numero: 5, titre: 'Comment devenir compétent dans le marketing de réseau', court: 'Formations' },
+	{
+		numero: 5,
+		titre: 'Comment devenir compétent dans le marketing de réseau',
+		court: 'Formations'
+	},
 	{ numero: 6, titre: 'Contactez vos prospects par téléphone', court: 'Contacts' },
 	{ numero: 7, titre: 'Rendez-vous individuel', court: 'Rendez-vous' },
 	{ numero: 8, titre: "Nombre d'intéressés", court: 'Intéressés' },
@@ -155,7 +175,9 @@ export const INTRODUCTIONS: Record<number, Bloc> = {
 			'Au début, votre parrain devra assister à ces présentations pour que vous sachiez comment se passe un rendez-vous individuel.',
 			'Une brochure « Choix de carrière » vous aidera à développer votre compétence dans cette étape cruciale du cycle FLP.'
 		],
-		apres: ['Maintenant, discutez avec votre parrain du nombre de rendez-vous individuels que vous pouvez faire lors du premier mois.']
+		apres: [
+			'Maintenant, discutez avec votre parrain du nombre de rendez-vous individuels que vous pouvez faire lors du premier mois.'
+		]
 	},
 	8: {
 		paragraphes: [
@@ -194,7 +216,11 @@ export const SCENARIOS = [
 
 export const RAPPELS_SCENARIOS = {
 	intro: 'Quel que soit le scénario téléphonique que vous privilégiez, retenez :',
-	puces: ["qu'il faut être bref ;", "qu'il ne faut pas rentrer dans le détail ;", "qu'il faut faire preuve d'enthousiasme."],
+	puces: [
+		"qu'il faut être bref ;",
+		"qu'il ne faut pas rentrer dans le détail ;",
+		"qu'il faut faire preuve d'enthousiasme."
+	],
 	fin: 'Si vous estimez avoir besoin d’une formation au contact téléphonique, signalez-le à votre parrain.'
 };
 

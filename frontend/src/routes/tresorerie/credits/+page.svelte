@@ -21,16 +21,29 @@
 	<meta name="robots" content="noindex" />
 </svelte:head>
 
-<EnTeteTresorerie titre="Demandes de crédit" sousTitre="Présentez votre besoin une seule fois : nous le portons auprès des banques." compteurs={data.compteurs}>
-	<Bouton href="/tresorerie/credits/nouveau"><Plus class="size-5" aria-hidden="true" />Nouvelle demande</Bouton>
+<EnTeteTresorerie
+	titre="Demandes de crédit"
+	sousTitre="Présentez votre besoin une seule fois : nous le portons auprès des banques."
+	compteurs={data.compteurs}
+>
+	<Bouton href="/tresorerie/credits/nouveau"
+		><Plus class="size-5" aria-hidden="true" />Nouvelle demande</Bouton
+	>
 </EnTeteTresorerie>
 
 <div class="conteneur space-y-8 py-8">
 	{#if data.supprime}<Alerte type="succes" titre="La demande est annulée." />{/if}
 	<div>
-		<BarreFiltres q={data.filtres.q} etat={data.filtres.etat} etats={gestion ? ETATS_TRESORERIE : undefined} placeholder="Référence, objet, garantie…" />
+		<BarreFiltres
+			q={data.filtres.q}
+			etat={data.filtres.etat}
+			etats={gestion ? ETATS_TRESORERIE : undefined}
+			placeholder="Référence, objet, garantie…"
+		/>
 		{#if data.liste.items.length}
-			<p class="mb-4 text-ardoise" aria-live="polite">{data.liste.total} demande{data.liste.total > 1 ? 's' : ''}</p>
+			<p class="mb-4 text-ardoise" aria-live="polite">
+				{data.liste.total} demande{data.liste.total > 1 ? 's' : ''}
+			</p>
 			<ul class="grid gap-4 md:grid-cols-2">
 				{#each data.liste.items as c (c.id)}
 					<li>
@@ -55,7 +68,9 @@
 		{:else}
 			<EtatVide
 				icone={HandCoins}
-				titre={data.filtres.q ? 'Aucune demande ne correspond à votre recherche' : 'Besoin de financement ?'}
+				titre={data.filtres.q
+					? 'Aucune demande ne correspond à votre recherche'
+					: 'Besoin de financement ?'}
 				texte="Montant, objet, durée, garantie : en 3 minutes, votre demande est prête à être présentée aux banques."
 				messageWhatsApp="Bonjour la Frangine, je cherche un crédit. Pouvez-vous m’aider à monter ma demande ?"
 			>

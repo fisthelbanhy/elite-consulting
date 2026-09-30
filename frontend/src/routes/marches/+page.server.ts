@@ -17,7 +17,11 @@ export const load: PageServerLoad = async (event) => {
 	const compteurs = chargerOuDefaut<CompteursMarches | null>(event, '/marches/compteurs', null);
 	if (onglet === 'projets') {
 		const [projets, c] = await Promise.all([
-			charger<Liste<ProjetResume>>(event, '/marches/projets', { q: filtres.q, page: filtres.page, taille: 20 }),
+			charger<Liste<ProjetResume>>(event, '/marches/projets', {
+				q: filtres.q,
+				page: filtres.page,
+				taille: 20
+			}),
 			compteurs
 		]);
 		return { onglet, filtres, projets, marches: null, compteurs: c, supprime: q.has('supprime') };

@@ -18,7 +18,9 @@
 	import { fcfa } from '$lib/format';
 
 	let { data, form } = $props();
-	const titre = $derived(data.gestionnaire ? '' : (ETAPES.find((e) => e.numero === data.etape)?.titre ?? ''));
+	const titre = $derived(
+		data.gestionnaire ? '' : (ETAPES.find((e) => e.numero === data.etape)?.titre ?? '')
+	);
 	const s = $derived(data.gestionnaire ? null : data.souscription);
 	const verrouillee = $derived(!!s && (s.etat === 2 || s.etat === 4));
 </script>
@@ -31,13 +33,19 @@
 <EnTetePage
 	titre="Mon adhésion distributeur"
 	sousTitre="Dix étapes pour préparer votre activité, à votre rythme : tout est sauvegardé au fur et à mesure."
-	fil={[{ href: '/boutique', label: 'Bien-être' }, { href: '/devenir-distributeur', label: 'Devenir distributeur' }]}
+	fil={[
+		{ href: '/boutique', label: 'Bien-être' },
+		{ href: '/devenir-distributeur', label: 'Devenir distributeur' }
+	]}
 />
 
 <div class="conteneur max-w-4xl space-y-6 py-8">
 	{#if data.gestionnaire}
 		<Alerte type="info" titre="L'adhésion distributeur est réservée aux membres.">
-			En tant que gestionnaire, suivez les souscriptions depuis <a href="/devenir-distributeur/suivi" class="lien">l'écran de suivi</a>.
+			En tant que gestionnaire, suivez les souscriptions depuis <a
+				href="/devenir-distributeur/suivi"
+				class="lien">l'écran de suivi</a
+			>.
 		</Alerte>
 	{:else}
 		<Progression etape={data.etape} atteinte={data.atteinte} />
@@ -49,7 +57,10 @@
 				<EtapeFin souscription={s} whatsapp={data.parametres.whatsapp} paye={data.paye} />
 				<p><a href="?etape=9" class="lien">Revenir à la commande des produits</a></p>
 			{:else if data.etape === 9 && verrouillee && s}
-				<Alerte type="succes" titre="Votre souscription est validée : le kit ne peut plus être modifié.">
+				<Alerte
+					type="succes"
+					titre="Votre souscription est validée : le kit ne peut plus être modifié."
+				>
 					Kit de <span class="montant">{fcfa(s.montant)}</span>, référence {s.reference}.
 				</Alerte>
 				<Bouton href="?etape=10" variante="secondaire">Voir ma souscription</Bouton>
@@ -72,10 +83,18 @@
 						</div>
 
 						<!-- Le bouton « avancer » vient en premier dans le DOM : c'est lui que déclenche la touche Entrée -->
-						<div class="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-fleuve-900/10 pt-6">
+						<div
+							class="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-fleuve-900/10 pt-6"
+						>
 							{#if data.etape === 9}
 								<div class="order-2 flex flex-wrap gap-3">
-									<Bouton type="submit" name="nav" value="sauvegarder" variante="secondaire" chargement={envoi}>
+									<Bouton
+										type="submit"
+										name="nav"
+										value="sauvegarder"
+										variante="secondaire"
+										chargement={envoi}
+									>
 										<Save class="size-5" aria-hidden="true" />Sauvegarder
 									</Bouton>
 									<Bouton type="submit" name="nav" value="envoyer" chargement={envoi}>
@@ -88,7 +107,14 @@
 								</Bouton>
 							{/if}
 							{#if data.etape > 1}
-								<Bouton type="submit" name="nav" value="precedent" variante="fantome" disabled={envoi} class="order-1">
+								<Bouton
+									type="submit"
+									name="nav"
+									value="precedent"
+									variante="fantome"
+									disabled={envoi}
+									class="order-1"
+								>
 									<ArrowLeft class="size-5" aria-hidden="true" />Précédent
 								</Bouton>
 							{:else}
@@ -101,7 +127,10 @@
 		</section>
 
 		<p class="text-sm text-ardoise">
-			Besoin d'aide ? Votre frangine et votre parrain vous accompagnent à chaque étape : <a href="/contact" class="lien">écrivez-nous</a>.
+			Besoin d'aide ? Votre frangine et votre parrain vous accompagnent à chaque étape : <a
+				href="/contact"
+				class="lien">écrivez-nous</a
+			>.
 		</p>
 	{/if}
 </div>

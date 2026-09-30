@@ -33,7 +33,10 @@
 	} = $props();
 
 	const ident = $derived(id ?? `champ-${name}`);
-	const decrit = $derived([aide ? `${ident}-aide` : '', erreur ? `${ident}-erreur` : ''].filter(Boolean).join(' ') || undefined);
+	const decrit = $derived(
+		[aide ? `${ident}-aide` : '', erreur ? `${ident}-erreur` : ''].filter(Boolean).join(' ') ||
+			undefined
+	);
 </script>
 
 <div class="space-y-1.5 {classe}">
@@ -43,7 +46,10 @@
 	{#if aide}<p id="{ident}-aide" class="text-sm text-ardoise">{aide}</p>{/if}
 	<div class="relative flex items-stretch">
 		{#if prefixe}
-			<span class="inline-flex items-center rounded-l-xl border border-r-0 border-fleuve-100 bg-sable px-3 text-sm font-medium text-ardoise">{prefixe}</span>
+			<span
+				class="inline-flex items-center rounded-l-xl border border-r-0 border-fleuve-100 bg-sable px-3 text-sm font-medium text-ardoise"
+				>{prefixe}</span
+			>
 		{/if}
 		<input
 			id={ident}
@@ -57,7 +63,10 @@
 			{...rest}
 		/>
 		{#if suffixe}
-			<span class="inline-flex items-center rounded-r-xl border border-l-0 border-fleuve-100 bg-sable px-3 text-sm font-medium text-ardoise">{suffixe}</span>
+			<span
+				class="inline-flex items-center rounded-r-xl border border-l-0 border-fleuve-100 bg-sable px-3 text-sm font-medium text-ardoise"
+				>{suffixe}</span
+			>
 		{/if}
 	</div>
 	{@render apres?.()}

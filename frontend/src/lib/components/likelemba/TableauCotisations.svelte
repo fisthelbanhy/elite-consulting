@@ -15,7 +15,13 @@
 		enums,
 		afficherAdherent = true,
 		validation = true
-	}: { cotisations: Cotisation[]; total: number; enums: Enums; afficherAdherent?: boolean; validation?: boolean } = $props();
+	}: {
+		cotisations: Cotisation[];
+		total: number;
+		enums: Enums;
+		afficherAdherent?: boolean;
+		validation?: boolean;
+	} = $props();
 
 	const tons = { 1: 'soleil', 2: 'foret', 3: 'alerte', 4: 'neutre' } as const;
 </script>
@@ -26,8 +32,13 @@
 			<li class="flex flex-wrap items-center gap-x-4 gap-y-2 py-3">
 				<div class="min-w-0 flex-1">
 					<p class="flex flex-wrap items-center gap-2">
-						<span class="font-semibold {c.etat === 3 ? 'text-ardoise line-through' : 'text-fleuve-800'}">{c.recu_valide ? `Reçu ${c.numero_recu}` : 'Reçu à activer'}</span>
-						<Badge ton={tons[c.etat as 1 | 2 | 3 | 4] ?? 'neutre'}>{ETATS_COTISATION[c.etat] ?? '—'}</Badge>
+						<span
+							class="font-semibold {c.etat === 3 ? 'text-ardoise line-through' : 'text-fleuve-800'}"
+							>{c.recu_valide ? `Reçu ${c.numero_recu}` : 'Reçu à activer'}</span
+						>
+						<Badge ton={tons[c.etat as 1 | 2 | 3 | 4] ?? 'neutre'}
+							>{ETATS_COTISATION[c.etat] ?? '—'}</Badge
+						>
 					</p>
 					<p class="text-sm text-ardoise">
 						{dateCourte(c.date_paiement)}
@@ -42,7 +53,9 @@
 					<Formulaire action="?/valider">
 						{#snippet children({ envoi })}
 							<input type="hidden" name="cotisation" value={c.id} />
-							<Bouton type="submit" variante="secondaire" taille="sm" chargement={envoi}><BadgeCheck class="size-4" aria-hidden="true" />Valider</Bouton>
+							<Bouton type="submit" variante="secondaire" taille="sm" chargement={envoi}
+								><BadgeCheck class="size-4" aria-hidden="true" />Valider</Bouton
+							>
 						{/snippet}
 					</Formulaire>
 				{/if}

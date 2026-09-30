@@ -9,7 +9,12 @@
 	import Fichier from '$lib/components/ui/Fichier.svelte';
 	import Bouton from '$lib/components/ui/Bouton.svelte';
 	import { champ, valeur } from '$lib/forms';
-	import { ETATS_PUBLICITE, GENRE_PAR_TYPE, type ChoixPublicite, type PubliciteDetail } from '$lib/types/publicites';
+	import {
+		ETATS_PUBLICITE,
+		GENRE_PAR_TYPE,
+		type ChoixPublicite,
+		type PubliciteDetail
+	} from '$lib/types/publicites';
 
 	let {
 		form,
@@ -28,7 +33,12 @@
 		libelleBouton?: string;
 	} = $props();
 
-	type Retour = { valeurs?: Record<string, unknown>; champs?: Record<string, string>; message?: string; succes?: string };
+	type Retour = {
+		valeurs?: Record<string, unknown>;
+		champs?: Record<string, string>;
+		message?: string;
+		succes?: string;
+	};
 	const f = $derived(form as Retour | null);
 	// État local initialisé une fois (les valeurs saisies priment après une erreur)
 	// svelte-ignore state_referenced_locally
@@ -36,8 +46,19 @@
 	// svelte-ignore state_referenced_locally
 	let debut = $state(String(valeur(f, 'date_debut', initial?.date_debut ?? '')));
 
-	const accept = $derived(type === '2' ? 'audio/mpeg,.mp3' : type === '3' ? 'video/mp4,.mp4' : 'image/jpeg,image/png,image/webp');
-	const discordance = $derived(!!initial?.fichier_url && !!initial.genre && !!type && GENRE_PAR_TYPE[Number(type)] !== initial.genre);
+	const accept = $derived(
+		type === '2'
+			? 'audio/mpeg,.mp3'
+			: type === '3'
+				? 'video/mp4,.mp4'
+				: 'image/jpeg,image/png,image/webp'
+	);
+	const discordance = $derived(
+		!!initial?.fichier_url &&
+			!!initial.genre &&
+			!!type &&
+			GENRE_PAR_TYPE[Number(type)] !== initial.genre
+	);
 </script>
 
 <Formulaire {action} form={f} fichiers>
@@ -47,7 +68,13 @@
 				<legend class="sr-only">Annonceur</legend>
 				<h2 class="text-xl font-bold">Annonceur</h2>
 				<div class="grid gap-5 sm:grid-cols-2">
-					<Liste label="Demandeur" requis options={choix.membres} aide="Le membre ou le gestionnaire qui demande la publicité." {...champ(f, 'demandeur_id', initial?.demandeur?.id)} />
+					<Liste
+						label="Demandeur"
+						requis
+						options={choix.membres}
+						aide="Le membre ou le gestionnaire qui demande la publicité."
+						{...champ(f, 'demandeur_id', initial?.demandeur?.id)}
+					/>
 					<Liste
 						label="Entreprise"
 						requis
@@ -61,11 +88,39 @@
 			<fieldset class="carte space-y-5 p-5 sm:p-6">
 				<legend class="sr-only">Contenu</legend>
 				<h2 class="text-xl font-bold">Contenu</h2>
-				<Zone label="Texte de la publicité" requis lignes={5} minlength={6} maxlength={4000} aide="Affiché sous le visuel. Les sauts de ligne sont conservés." {...champ(f, 'texte', initial?.texte)} />
-				<Saisie label="Lien (facultatif)" type="url" inputmode="url" placeholder="https://www.monentreprise.cg" aide="Site ou page de l'annonceur, ouvert dans un nouvel onglet." {...champ(f, 'lien', initial?.lien)} />
+				<Zone
+					label="Texte de la publicité"
+					requis
+					lignes={5}
+					minlength={6}
+					maxlength={4000}
+					aide="Affiché sous le visuel. Les sauts de ligne sont conservés."
+					{...champ(f, 'texte', initial?.texte)}
+				/>
+				<Saisie
+					label="Lien (facultatif)"
+					type="url"
+					inputmode="url"
+					placeholder="https://www.monentreprise.cg"
+					aide="Site ou page de l'annonceur, ouvert dans un nouvel onglet."
+					{...champ(f, 'lien', initial?.lien)}
+				/>
 				<div class="grid gap-5 sm:grid-cols-2">
-					<Saisie label="Début de diffusion" type="date" requis bind:value={debut} name="date_debut" erreur={f?.champs?.date_debut} />
-					<Saisie label="Fin de diffusion" type="date" requis min={debut || undefined} {...champ(f, 'date_fin', initial?.date_fin)} />
+					<Saisie
+						label="Début de diffusion"
+						type="date"
+						requis
+						bind:value={debut}
+						name="date_debut"
+						erreur={f?.champs?.date_debut}
+					/>
+					<Saisie
+						label="Fin de diffusion"
+						type="date"
+						requis
+						min={debut || undefined}
+						{...champ(f, 'date_fin', initial?.date_fin)}
+					/>
 				</div>
 			</fieldset>
 
@@ -101,7 +156,14 @@
 					erreur={f?.champs?.fichier}
 				/>
 				{#if initial?.fichier_url && initial.genre !== 'image'}
-					<p class="text-sm text-ardoise">Fichier actuel : <a href={initial.fichier_url} class="lien" target="_blank" rel="noopener">écouter ou voir</a> (conservé si vous n'en joignez pas d'autre).</p>
+					<p class="text-sm text-ardoise">
+						Fichier actuel : <a
+							href={initial.fichier_url}
+							class="lien"
+							target="_blank"
+							rel="noopener">écouter ou voir</a
+						> (conservé si vous n'en joignez pas d'autre).
+					</p>
 				{/if}
 			</fieldset>
 
@@ -111,17 +173,27 @@
 					<Liste
 						label="État à la création"
 						vide={null}
-						options={Object.entries(ETATS_PUBLICITE).map(([v, l]) => ({ value: Number(v), label: l }))}
+						options={Object.entries(ETATS_PUBLICITE).map(([v, l]) => ({
+							value: Number(v),
+							label: l
+						}))}
 						{...champ(f, 'etat', 1)}
 					/>
 				</fieldset>
 			{:else if !initial}
-				<p class="text-[15px] text-ardoise">La publicité sera créée « En attente » : un gestionnaire ayant le droit Activation la mettra en ligne.</p>
+				<p class="text-[15px] text-ardoise">
+					La publicité sera créée « En attente » : un gestionnaire ayant le droit Activation la
+					mettra en ligne.
+				</p>
 			{/if}
 
 			<div class="flex flex-wrap gap-3">
 				<Bouton type="submit" taille="lg" chargement={envoi}>{libelleBouton}</Bouton>
-				<Bouton href={initial ? `/gestion/publicites/${initial.id}` : '/gestion/publicites'} variante="fantome" taille="lg">Annuler</Bouton>
+				<Bouton
+					href={initial ? `/gestion/publicites/${initial.id}` : '/gestion/publicites'}
+					variante="fantome"
+					taille="lg">Annuler</Bouton
+				>
 			</div>
 		</div>
 	{/snippet}
