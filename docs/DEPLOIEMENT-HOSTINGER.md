@@ -2,6 +2,26 @@
 
 L’application Express sert son API et le frontend SvelteKit dans un seul processus.
 
+## Fabriquer l’archive à téléverser
+
+```bash
+npm run build     # api/dist et frontend/build
+npm run paquet    # elite-consulting-hostinger.zip
+```
+
+`npm run paquet` (script `scripts/paquet.mjs`) assemble l’arborescence complète — sources, code
+compilé, migrations, documentation, `api/.env.example` — **sans** `node_modules` (les binaires
+natifs de Windows ne tourneraient pas chez l’hébergeur) et sans rien de ce qui ne doit pas sortir
+du poste : dump legacy, `site.txt`, code PHP de l’ancien site, fichiers `.env` réels.
+
+Les données de production sont placées dans un dossier **`donnees-production/`** distinct (base
+SQLite, `media/`, rapport de reprise et marche à suivre), et non dans `api/data` qu’un
+redéploiement écraserait. Le script refuse de travailler si un journal WAL traîne à côté de la
+base : il faut arrêter le serveur local d’abord, sinon l’archive emporterait une base incomplète.
+
+`npm run paquet -- sans-donnees` produit la même archive sans les données — c’est la seule
+version qui puisse circuler, l’autre contenant les données personnelles des membres.
+
 ## Paramètres de déploiement
 
 - Node.js 24.x
@@ -19,7 +39,9 @@ Reporter les valeurs de `api/.env.example`, en remplaçant les exemples. Défini
 
 ## Persistance SQLite et médias
 
-L’application utilise SQLite, pas MySQL. Faire confirmer par Hostinger un emplacement persistant hors du répertoire de version et de `public_html`, accessible en écriture par Node. Y placer le fichier désigné par `LF_DATABASE_URL` et le dossier `LF_MEDIA_DIR`. Les chemins de `api/.env.example` sont des exemples, pas des chemins garantis par Hostinger. Si le forfait n’offre aucun stockage persistant adapté, utiliser un VPS ou porter l’application vers une base et un stockage externes. Les migrations de schéma sont appliquées au démarrage ; sauvegarder la base et les médias avant les migrations. Une base neuve ne contient pas les données métier ni un compte administrateur : organiser leur reprise séparément. Ne pas exécuter `npm run setup` ou `donnees:demo` en production.
+L’application utilise SQLite, pas MySQL. Faire confirmer par Hostinger un emplacement persistant hors du répertoire de version et de `public_html`, accessible en écriture par Node. Y placer le fichier désigné par `LF_DATABASE_URL` et le dossier `LF_MEDIA_DIR`. Les chemins de `api/.env.example` sont des exemples, pas des chemins garantis par Hostinger. Si le forfait n’offre aucun stockage persistant adapté, utiliser un VPS ou porter l’application vers une base et un stockage externes. Les migrations de schéma sont appliquées au démarrage ; sauvegarder la base et les médias avant les migrations. Ne pas exécuter `npm run setup` ou `donnees:demo` en production.
+
+**Les données sont fournies dans l’archive**, dans `donnees-production/` : base complète (68 membres, 11 548 lignes) et 49 fichiers médias repris de l’ancien site. Les copier à l’emplacement persistant **avant le premier `npm start`** — la marche à suivre détaillée est dans `donnees-production/LISEZ-MOI.md` (également versionnée : [LISEZ-MOI-donnees-production.md](LISEZ-MOI-donnees-production.md)). Si l’application démarre avant, elle crée une base vide à l’emplacement configuré : arrêter le processus, remplacer le fichier, redémarrer.
 
 ## Vérifications après publication
 

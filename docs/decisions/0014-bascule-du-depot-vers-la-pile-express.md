@@ -91,6 +91,26 @@ La perte silencieuse de `--images` mérite d'être retenue au-delà de ce projet
 chargement de données qui peut être perdue en route **sans erreur** est un piège. D'où le choix
 du positionnel, qu'aucun intermédiaire ne peut avaler.
 
+### 5. L'archive de déploiement est fabriquée par un script, et porte les données à part
+
+`npm run paquet` (`scripts/paquet.mjs`) remplace l'assemblage manuel. Deux choix y sont figés :
+
+- **Les données ne vont pas dans `api/data`** mais dans un dossier `donnees-production/` de
+  l'archive, avec la marche à suivre. `api/data` est dans l'arborescence de l'application, qu'un
+  redéploiement remplace : la base et les photos des membres y seraient perdues au premier
+  correctif publié. Elles doivent vivre à l'emplacement persistant que désignent
+  `LF_DATABASE_URL` et `LF_MEDIA_DIR`.
+- **Le script refuse de s'exécuter si un journal WAL traîne** à côté de la base. Une copie de
+  fichier SQLite faite pendant qu'un serveur tourne emporte une base amputée des dernières
+  écritures — panne silencieuse, découverte en production. Il faut arrêter le serveur, ce qui
+  replie le journal.
+
+L'archive exclut `node_modules` (binaires natifs de Windows), le dump legacy, `site.txt`, le code
+PHP de l'ancien site et les `.env` réels ; elle conserve `api/.env.example`, qui est la liste des
+variables à saisir chez l'hébergeur. Elle **contient des données personnelles** : elle ne doit être
+ni versionnée (`*.zip` est ignoré) ni diffusée. `npm run paquet -- sans-donnees` donne la version
+qui peut circuler.
+
 ## Conséquences
 
 - **Un seul langage, un seul processus** : plus de dépendance Python, `npm run setup` suffit sur un

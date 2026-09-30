@@ -105,5 +105,9 @@ modules, état d'avancement.
 
 ## Hébergement Hostinger
 
+Archive à téléverser : `npm run build` puis `npm run paquet` → `elite-consulting-hostinger.zip`
+(code compilé + `donnees-production/`, sans `node_modules`). `npm run paquet -- sans-donnees`
+pour une archive sans données personnelles.
+
 Voir [le guide de déploiement](docs/DEPLOIEMENT-HOSTINGER.md) et les variables de api/.env.example. L'installation à la racine installe automatiquement les dépendances des deux sous-projets ; server.mjs est le point d'entrée de production.
 

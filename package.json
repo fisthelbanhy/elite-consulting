@@ -18,6 +18,7 @@
     "migrer": "npm --prefix api run migrer",
     "donnees:demo": "npm --prefix api run donnees:demo",
     "donnees:legacy": "node scripts/donnees-legacy.mjs",
+    "paquet": "node scripts/paquet.mjs",
     "postinstall": "npm --prefix api install --include=dev --no-package-lock && npm --prefix frontend ci --include=dev"
   },
   "engines": {
