@@ -99,7 +99,34 @@ async function demarrer(): Promise<void> {
 		console.log(`  API    : http://127.0.0.1:${config.port}/api/sante`);
 		console.log(`  Base   : ${config.cheminSqlite}`);
 		console.log(`  Médias : ${config.mediaDir}`);
+		console.log(`  Site → API : ${process.env.BACKEND_URL ?? '(non défini)'}`);
+		if (site) void verifierBoucleLocale();
 	});
+}
+
+/**
+ * Le site (BFF) joint l'API par la boucle locale. Si cet aller-retour échoue, **chaque page**
+ * perd ses données et **chaque formulaire** répond « Le service est momentanément indisponible »,
+ * alors que l'API, interrogée de l'extérieur, répond parfaitement : le symptôme ne désigne pas sa
+ * cause. Ce contrôle au démarrage la nomme, dans le journal, avant le premier visiteur.
+ */
+async function verifierBoucleLocale(): Promise<void> {
+	const url = `${process.env.BACKEND_URL}/api/sante`;
+	try {
+		const rep = await fetch(url);
+		if (rep.ok) {
+			console.log(`  Site → API : aller-retour local vérifié (${url}).`);
+			return;
+		}
+		console.error(`  Site → API : ${url} répond ${rep.status}. Les pages seront sans données.`);
+	} catch (e) {
+		console.error(
+			`  Site → API : impossible de joindre ${url} (${(e as Error).message}).\n` +
+				'    Le site ne pourra afficher aucune donnée ni accepter aucun formulaire.\n' +
+				"    Posez BACKEND_URL sur l'adresse locale réelle de ce processus si l'hébergeur\n" +
+				'    n’autorise pas 127.0.0.1 (par exemple http://localhost:PORT).'
+		);
+	}
 }
 
 demarrer().catch((e) => {

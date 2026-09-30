@@ -95,15 +95,17 @@ if (avecDonnees) {
 		'api/data/lafrangine.sqlite3',
 		'Reprenez les données (`npm run donnees:legacy`) ou passez --sans-donnees.'
 	);
-	// Un journal WAL laissé à côté signifie des écritures non repliées dans le fichier copié.
-	for (const suffixe of ['-wal', '-shm']) {
-		if (existsSync(base + suffixe)) {
-			console.error(
-				`✗ ${base + suffixe} existe : arrêtez le serveur avant de fabriquer le paquet,\n` +
-					'  sinon la base embarquée serait incomplète.'
-			);
-			process.exit(1);
-		}
+	// Un journal WAL **non vide** porte des écritures absentes du fichier principal : la base
+	// copiée serait amputée. Un WAL de zéro octet, lui, ne dit rien d'autre qu'« un processus a
+	// ouvert cette base puis l'a repliée » — c'est l'état normal après un arrêt propre, et le
+	// refuser n'apporterait rien qu'un faux positif.
+	const wal = base + '-wal';
+	if (existsSync(wal) && statSync(wal).size > 0) {
+		console.error(
+			`✗ ${wal} contient des écritures non repliées : arrêtez le serveur avant de\n` +
+				'  fabriquer le paquet, sinon la base embarquée serait incomplète.'
+		);
+		process.exit(1);
 	}
 	const donnees = join(chantier, 'donnees-production');
 	mkdirSync(donnees, { recursive: true });
