@@ -52,6 +52,8 @@ function fichierExclu(chemin) {
 	return (
 		nom.endsWith('.zip') ||
 		nom === 'site.txt' ||
+		// Le dump de production, à n'importe quelle profondeur. Pas « tout `.sql` » : les
+		// migrations en sont, et elles doivent partir avec l'archive.
 		nom === 'cp1019011_lafrangine.sql' ||
 		// `.env.example` reste : c'est la liste des variables à saisir chez l'hébergeur.
 		(nom.startsWith('.env') && nom !== '.env.example') ||
@@ -181,8 +183,9 @@ function verifier() {
 			f.startsWith('lafrangine/') ||
 			f.startsWith('.ancien-fastapi/') ||
 			f === 'api/package-lock.json' ||
-			f === 'site.txt' ||
-			f === 'cp1019011_lafrangine.sql' ||
+			// À n'importe quelle profondeur : ces fichiers peuvent être rangés ailleurs qu'à la
+			// racine, et ce contrôle est le dernier avant l'envoi chez l'hébergeur.
+			/(^|\/)(site\.txt|cp1019011_lafrangine\.sql)$/.test(f) ||
 			f.endsWith('.zip') ||
 			/(^|\/)\.env$/.test(f)
 	);
