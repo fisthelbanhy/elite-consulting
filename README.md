@@ -103,6 +103,23 @@ Tout est dans [`docs/`](docs/README.md) : inventaire fonctionnel (483 points de 
 marché, décisions d'architecture (12 ADR), conventions de développement, documentation des
 modules, état d'avancement.
 
+## Montrer le site depuis son poste (tunnel)
+
+`npm run dev` puis `ngrok http 5173` : les domaines de ngrok, Cloudflare et localtunnel sont déjà
+déclarés dans `frontend/vite.config.ts`. Sans cela Vite répond **403 « Blocked request »**, car il
+n'accepte que les `Host` qu'il connaît. Un autre fournisseur s'ajoute sans toucher au fichier :
+
+```bash
+LF_HOTES_AUTORISES=.mon-tunnel.example npm run dev
+```
+
+Pour une démonstration fidèle à la production (un seul processus, site compilé), tunnelez plutôt
+le port 8000 après `npm run build`, en posant l'adresse publique du tunnel :
+
+```bash
+LF_SITE_URL=https://xxxx.ngrok-free.dev npm start
+```
+
 ## Hébergement Hostinger
 
 Archive à téléverser : `npm run build` puis `npm run paquet` → `elite-consulting-hostinger.zip`

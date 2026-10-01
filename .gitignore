@@ -33,3 +33,7 @@ site.zip
 # Sauvegarde de l'arborescence FastAPI remplacée le 30/09/2026 (ADR-0014) : conservée sur le
 # poste le temps de valider la nouvelle pile, jamais versionnée — l'historique git en garde trace.
 .ancien-fastapi/
+
+# Outils telecharges localement (tunnels, utilitaires) : jamais versionnes
+ngrok.exe
+cloudflared.exe
