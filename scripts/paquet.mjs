@@ -86,17 +86,16 @@ function exiger(chemin, message) {
 	}
 }
 
+// Tous les contrôles d'abord : un échec après la copie laisserait le chantier `.paquet/` sur le
+// disque, au milieu du dépôt, où un `git add -A` l'embarquerait.
+const base = join(racine, 'api', 'data', 'lafrangine.sqlite3');
+
 exiger('api/dist/serveur.js', 'Lancez `npm run build` avant de fabriquer le paquet.');
 exiger('frontend/build/index.js', 'Lancez `npm run build` avant de fabriquer le paquet.');
-
-if (existsSync(chantier)) rmSync(chantier, { recursive: true, force: true });
-copier(racine, chantier);
-
 if (avecDonnees) {
-	const base = join(racine, 'api', 'data', 'lafrangine.sqlite3');
 	exiger(
 		'api/data/lafrangine.sqlite3',
-		'Reprenez les données (`npm run donnees:legacy`) ou passez --sans-donnees.'
+		'Reprenez les données (`npm run donnees:legacy`) ou passez `sans-donnees`.'
 	);
 	// Un journal WAL **non vide** porte des écritures absentes du fichier principal : la base
 	// copiée serait amputée. Un WAL de zéro octet, lui, ne dit rien d'autre qu'« un processus a
@@ -110,6 +109,12 @@ if (avecDonnees) {
 		);
 		process.exit(1);
 	}
+}
+
+if (existsSync(chantier)) rmSync(chantier, { recursive: true, force: true });
+copier(racine, chantier);
+
+if (avecDonnees) {
 	const donnees = join(chantier, 'donnees-production');
 	mkdirSync(donnees, { recursive: true });
 	cpSync(base, join(donnees, 'lafrangine.sqlite3'));
