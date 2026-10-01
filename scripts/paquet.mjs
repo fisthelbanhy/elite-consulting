@@ -51,6 +51,9 @@ function fichierExclu(chemin) {
 	const nom = chemin.slice(chemin.lastIndexOf('/') + 1);
 	return (
 		nom.endsWith('.zip') ||
+		// Binaires Windows déposés à la racine (ngrok, cloudflared…) : inutiles sur un hôte Linux,
+		// et lourds — 30 Mo passeraient inaperçus dans l'archive.
+		/\.(exe|dll|msi)$/i.test(nom) ||
 		nom === 'site.txt' ||
 		// Le dump de production, à n'importe quelle profondeur. Pas « tout `.sql` » : les
 		// migrations en sont, et elles doivent partir avec l'archive.
