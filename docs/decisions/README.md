@@ -21,3 +21,4 @@ numérotation signale un ADR retiré, dont l'historique Git garde la trace.
 | [0012](0012-depot-github-et-environnement-cloud.md) | Dépôt GitHub privé, données de démonstration, environnement cloud | Accepté | 2026-09-26 |
 | [0013](0013-pile-technique-et-processus-unique.md) | Pile technique : SvelteKit + Express, déployés en un seul processus Node | Accepté | 2026-09-28 |
 | [0014](0014-bascule-du-depot-vers-la-pile-express.md) | Bascule du dépôt vers la pile Express et reprise des vraies données | Accepté | 2026-09-30 |
+| [0015](0015-moteur-de-base-et-stockage-persistant.md) | Moteur de base : SQLite conservé, MySQL conditionné au stockage persistant | Accepté | 2026-10-14 |

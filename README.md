@@ -96,11 +96,15 @@ LF_SITE_URL=https://… LF_ENVIRONNEMENT=prod npm start
 
 Le processus applique les migrations en attente au démarrage, purge les sessions expirées, puis
 écoute sur `LF_PORT`. Il se place derrière un reverse proxy HTTPS avec compression gzip (ADR-0002).
+Au démarrage, il indique aussi s'il atteint bien sa propre API (ligne « Site → API ») : sans cet
+aller-retour, le site s'affiche sans aucune donnée et refuse tous les formulaires.
+
+Pour un déploiement réel, suivez [le guide](docs/DEPLOIEMENT-HOSTINGER.md) — voir ci-dessous.
 
 ## Documentation
 
 Tout est dans [`docs/`](docs/README.md) : inventaire fonctionnel (483 points de recette), étude de
-marché, décisions d'architecture (12 ADR), conventions de développement, documentation des
+marché, décisions d'architecture (15 ADR), conventions de développement, documentation des
 modules, état d'avancement.
 
 ## Montrer le site depuis son poste (tunnel)
@@ -120,11 +124,21 @@ le port 8000 après `npm run build`, en posant l'adresse publique du tunnel :
 LF_SITE_URL=https://xxxx.ngrok-free.dev npm start
 ```
 
-## Hébergement Hostinger
+## Mise en production
 
-Archive à téléverser : `npm run build` puis `npm run paquet` → `elite-consulting-hostinger.zip`
-(code compilé + `donnees-production/`, sans `node_modules`). `npm run paquet -- sans-donnees`
-pour une archive sans données personnelles.
+Tout est dans [le guide de déploiement](docs/DEPLOIEMENT-HOSTINGER.md), dans l'ordre : fabriquer
+l'archive (`npm run build && npm run paquet`), saisir les cinq variables d'environnement, installer
+les données **avant** le premier démarrage, puis vérifier :
+
+```bash
+npm run verifier:production -- https://votre-domaine
+```
+
+Ce diagnostic interroge le site déployé et nomme ce qui manque — base vide, photos absentes, site
+qui n'atteint pas son API, formulaires rejetés — au lieu de laisser deviner.
+
+Préalable qui conditionne tout : l'hébergement doit offrir un **chemin de fichiers persistant**,
+hors du répertoire de version, pour la base et les photos (ADR-0015).
 
 Voir [le guide de déploiement](docs/DEPLOIEMENT-HOSTINGER.md) et les variables de api/.env.example. L'installation à la racine installe automatiquement les dépendances des deux sous-projets ; server.mjs est le point d'entrée de production.
 

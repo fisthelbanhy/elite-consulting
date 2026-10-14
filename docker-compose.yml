@@ -1,0 +1,36 @@
+# MySQL de développement, au plus près de celui de l'hébergeur.
+#
+#   docker compose up -d        démarre la base
+#   docker compose down         l'arrête (les données restent dans le volume)
+#   docker compose down -v      l'arrête et efface les données
+#
+# Les identifiants sont ceux du poste de développement : ils n'ont aucune valeur ailleurs et ne
+# doivent jamais être repris en production, où ils viennent des variables de l'hébergeur.
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: lafrangine-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: racine-dev
+      MYSQL_DATABASE: lafrangine
+      MYSQL_USER: lafrangine
+      MYSQL_PASSWORD: lafrangine-dev
+    command:
+      # utf8mb4 : le site est en français et accepte les emojis dans les messages.
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      # Les dates legacy comportent des 0000-00-00 : le mode strict les refuserait à la reprise.
+      - --sql-mode=NO_ENGINE_SUBSTITUTION
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-donnees:/var/lib/mysql
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '-ulafrangine', '-plafrangine-dev']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  mysql-donnees:

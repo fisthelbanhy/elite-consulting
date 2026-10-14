@@ -19,7 +19,8 @@
     "donnees:demo": "npm --prefix api run donnees:demo",
     "donnees:legacy": "node scripts/donnees-legacy.mjs",
     "paquet": "node scripts/paquet.mjs",
-    "postinstall": "npm --prefix api install --include=dev --no-package-lock && npm --prefix frontend ci --include=dev"
+    "postinstall": "npm --prefix api install --include=dev --no-package-lock && npm --prefix frontend ci --include=dev",
+    "verifier:production": "node scripts/verifier-production.mjs"
   },
   "engines": {
     "node": "^22.13.0 || >=24.0.0"
